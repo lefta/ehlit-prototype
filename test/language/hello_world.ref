@@ -1,0 +1,7 @@
+import stdio
+
+int main(int ac, str[] av)
+{
+	printf("Hello, world!\n")
+	return 0
+}
