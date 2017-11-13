@@ -161,3 +161,6 @@ class SourceWriter:
 
   def writeNumber(self, num):
     self.file.write(num.num)
+
+  def writeNullStmt(self, stmt):
+    self.file.write('NULL')

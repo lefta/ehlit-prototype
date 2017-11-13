@@ -154,3 +154,6 @@ class DumpWriter:
 
   def dumpString(self, string):
     self.dump('String: ' + string.string)
+
+  def dumpNullStmt(self, stmt):
+    self.dump('NullStatement')

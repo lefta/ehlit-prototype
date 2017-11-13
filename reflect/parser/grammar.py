@@ -50,9 +50,14 @@ class Number(Grammar):
   def parse(self):
     return ast.Number(str(self[0]))
 
+class NullStmt(Grammar):
+  grammar = ('null')
+
+  def parse(self):
+    return ast.NullStmt()
 
 class VariableUsage(Grammar):
-  grammar = (OR(Symbol, String, Number))
+  grammar = (OR(NullStmt, Symbol, String, Number))
 
   def parse(self):
     return ast.VariableUsage(self[0].parse())
