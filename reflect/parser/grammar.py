@@ -79,11 +79,11 @@ class Return(Grammar):
   def parse(self):
     return ast.Return(self[2].parse())
 
-class Instruction(Grammar):
-  grammar = (OR(Return, Expression))
+class Assignment(Grammar):
+  grammar = '=', OptionalWhitespace, Expression
 
   def parse(self):
-    return ast.Instruction(self[0].parse())
+    return ast.Assignment(self[2].parse())
 
 
 class BuiltinType(Grammar):
@@ -116,6 +116,26 @@ class Declaration(Grammar):
 
   def parse(self):
     return ast.Declaration(self[0].parse(), self[2].parse())
+
+class VariableDeclaration(Grammar):
+  grammar = (Declaration, OptionalWhitespace, OPTIONAL(Assignment))
+
+  def parse(self):
+    assign = self[2].parse() if self[2] is not None else None
+    return ast.VariableDeclaration(self[0].parse(), assign)
+
+class VariableAssignment(Grammar):
+  grammar = (Symbol, OptionalWhitespace, Assignment)
+
+  def parse(self):
+    return ast.VariableAssignment(self[0].parse(), self[2].parse())
+
+class Instruction(Grammar):
+  grammar = (OR(Return, VariableDeclaration, VariableAssignment, Expression))
+
+  def parse(self):
+    return ast.Instruction(self[0].parse())
+
 
 class ArgumentDefinitionList(Grammar):
   grammar = (LIST_OF(Declaration, sep=ArgumentSeparator))

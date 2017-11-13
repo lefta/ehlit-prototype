@@ -82,6 +82,14 @@ class DumpWriter:
     self.print_node(decl.typ)
     self.print_node(decl.sym, False)
 
+  def dumpVariableDeclaration(self, decl):
+    self.dump('VariableDeclaration')
+    if decl.assign is not None:
+      self.print_node(decl.decl)
+      self.print_node(decl.assign, False)
+    else:
+      self.print_node(decl.decl, False)
+
   def dumpFunctionDeclaration(self, fun):
     self.dump('FunctionDeclaration')
     self.print_node(fun.typ)
@@ -113,6 +121,15 @@ class DumpWriter:
   def dumpVariableUsage(self, use):
     self.dump('VariableUsage')
     self.print_node(use.var, False)
+
+  def dumpVariableAssignment(self, assign):
+    self.dump('VariableAssignment')
+    self.print_node(assign.var)
+    self.print_node(assign.assign, False)
+
+  def dumpAssignment(self, assign):
+    self.dump('Assignment')
+    self.print_node(assign.expr)
 
   def dumpReturn(self, ret):
     self.dump('Return')

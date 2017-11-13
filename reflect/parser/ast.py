@@ -38,10 +38,24 @@ class Type:
   def is_builtin(self):
     return type(self.sym) == BuiltinType
 
+class VariableAssignment:
+  def __init__(self, var, assign):
+    self.var = var
+    self.assign = assign
+
+class Assignment:
+  def __init__(self, expr):
+    self.expr = expr
+
 class Declaration:
   def __init__(self, typ, sym):
     self.typ = typ
     self.sym = sym
+
+class VariableDeclaration:
+  def __init__(self, decl, assign):
+    self.decl = decl
+    self.assign = assign
 
 class FunctionDeclaration:
   def __init__(self, typ, sym, args):

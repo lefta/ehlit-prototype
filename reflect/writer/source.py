@@ -68,6 +68,11 @@ class SourceWriter:
     self.file.write(' ')
     self.write(decl.sym)
 
+  def writeVariableDeclaration(self, decl):
+    self.write(decl.decl)
+    if decl.assign is not None:
+      self.write(decl.assign)
+
   def writeArgumentDefinitionList(self, args):
     if len(args) == 0:
       self.file.write('void')
@@ -117,6 +122,14 @@ class SourceWriter:
       i += 1
       if i < count:
         self.file.write(' ')
+
+  def writeAssignment(self, assign):
+    self.file.write(' = ')
+    self.write(assign.expr)
+
+  def writeVariableAssignment(self, assign):
+    self.write(assign.var)
+    self.write(assign.assign)
 
   def writeFunctionCall(self, call):
     self.write(call.sym)
