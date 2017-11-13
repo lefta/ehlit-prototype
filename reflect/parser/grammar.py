@@ -52,7 +52,7 @@ class Number(Grammar):
 
 
 class VariableUsage(Grammar):
-  grammar = (OR(Symbol, String))
+  grammar = (OR(Symbol, String, Number))
 
   def parse(self):
     return ast.VariableUsage(self[0].parse())
@@ -65,7 +65,7 @@ class FunctionCall(Grammar):
     return ast.FunctionCall(self[0].parse(), parse_list(self[4]))
 
 class Expression(Grammar):
-  grammar = (OR(FunctionCall, Number))
+  grammar = (OR(FunctionCall, VariableUsage))
 
   def parse(self):
     expr = ast.Expression()
