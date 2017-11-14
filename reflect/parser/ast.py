@@ -38,6 +38,10 @@ class Type:
   def is_builtin(self):
     return type(self.sym) == BuiltinType
 
+class Operator:
+  def __init__(self, op):
+    self.op = op
+
 class VariableAssignment:
   def __init__(self, var, assign):
     self.var = var

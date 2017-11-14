@@ -69,12 +69,19 @@ class FunctionCall(Grammar):
   def parse(self):
     return ast.FunctionCall(self[0].parse(), parse_list(self[4]))
 
+class Operator(Grammar):
+  grammar = (OptionalWhitespace, OR("==", "!=", ">", "<", ">=", "<=", "+", "-", "*", "/", "%"),
+    OptionalWhitespace)
+
+  def parse(self):
+    return ast.Operator(str(self[1]))
+
 class Expression(Grammar):
-  grammar = (OR(FunctionCall, VariableUsage))
+  grammar = (LIST_OF(OR(FunctionCall, VariableUsage), sep=Operator))
 
   def parse(self):
     expr = ast.Expression()
-    for node in self.elements:
+    for node in self[0].elements:
       expr.append(node.parse())
     return expr
 

@@ -135,6 +135,9 @@ class DumpWriter:
     self.dump('Return')
     self.print_node(ret.expr, False)
 
+  def dumpOperator(self, op):
+    self.dump('Operator: ' + op.op)
+
   def dumpType(self, typ):
     self.dump('Type')
     self.print_node(typ.sym, False)

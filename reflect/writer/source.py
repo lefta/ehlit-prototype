@@ -148,6 +148,9 @@ class SourceWriter:
     self.write(ret.expr)
     self.file.write(')')
 
+  def writeOperator(self, op):
+    self.file.write(op.op)
+
   def writeSymbol(self, sym):
     self.file.write(sym.name)
 
