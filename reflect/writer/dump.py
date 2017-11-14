@@ -99,7 +99,7 @@ class DumpWriter:
   def dumpFunctionDefinition(self, fun):
     self.dump('FunctionDefinition')
     self.print_node(fun.proto)
-    self.print_node_list('FunctionBody', fun.content, False)
+    self.print_node_list('FunctionBody', fun.body, False)
 
   def dumpInstruction(self, instruction):
     self.dump('Instruction')

@@ -100,11 +100,8 @@ class SourceWriter:
     self.file.write("{\n")
 
     self.indent += 1
-    i = 0
-    count = len(fun.content)
-    while i < count:
-      self.write(fun.content[i])
-      i += 1
+    for instruction in fun.body:
+      self.write(instruction)
     self.indent -= 1
 
     self.file.write("}\n")

@@ -64,9 +64,9 @@ class FunctionDeclaration:
     self.args = args
 
 class FunctionDefinition:
-  def __init__(self, proto, content):
+  def __init__(self, proto, body):
     self.proto = proto
-    self.content = content
+    self.body = body
 
 
 class Instruction:
