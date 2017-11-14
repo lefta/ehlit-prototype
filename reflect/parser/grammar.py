@@ -92,7 +92,7 @@ class Return(Grammar):
     return ast.Return(self[2].parse())
 
 class Assignment(Grammar):
-  grammar = '=', OptionalWhitespace, Expression
+  grammar = ('=', OptionalWhitespace, Expression)
 
   def parse(self):
     return ast.Assignment(self[2].parse())
