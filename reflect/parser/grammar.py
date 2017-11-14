@@ -142,6 +142,12 @@ class Instruction(Grammar):
     return ast.Instruction(self[0].parse())
 
 
+class StructureBody(Grammar):
+  grammar = ("{", OptionalWhitespace, LIST_OF(Instruction, sep=Whitespace), Whitespace, "}")
+
+  def parse(self):
+    return parse_list(self[2])
+
 class ArgumentDefinitionList(Grammar):
   grammar = (LIST_OF(Declaration, sep=ArgumentSeparator))
 
@@ -157,11 +163,10 @@ class FunctionDeclaration(Grammar):
     return ast.FunctionDeclaration(self[0].parse(), self[2].parse(), args)
 
 class FunctionDefinition(Grammar):
-  grammar = (FunctionDeclaration, OptionalWhitespace, "{", OptionalWhitespace,
-    LIST_OF(Instruction, sep=Whitespace), OptionalWhitespace, "}")
+  grammar = (FunctionDeclaration, OptionalWhitespace, StructureBody)
 
   def parse(self):
-    return ast.FunctionDefinition(self[0].parse(), parse_list(self[4]))
+    return ast.FunctionDefinition(self[0].parse(), self[2].parse())
 
 class Function(Grammar):
   grammar = OR(FunctionDefinition, FunctionDeclaration)
