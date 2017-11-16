@@ -120,7 +120,7 @@ class Number:
   def __init__(self, num):
     self.num = num
 
-class NullStmt:
+class NullValue:
   pass
 
 

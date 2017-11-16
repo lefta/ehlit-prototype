@@ -170,5 +170,5 @@ class DumpWriter:
   def dumpString(self, string):
     self.dump('String: ' + string.string)
 
-  def dumpNullStmt(self, stmt):
+  def dumpNullValue(self, stmt):
     self.dump('NullStatement')
