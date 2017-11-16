@@ -118,10 +118,6 @@ class DumpWriter:
     self.print_node(call.sym)
     self.print_node_list('Arguments', call.args, False)
 
-  def dumpVariableUsage(self, use):
-    self.dump('VariableUsage')
-    self.print_node(use.var, False)
-
   def dumpVariableAssignment(self, assign):
     self.dump('VariableAssignment')
     self.print_node(assign.var)

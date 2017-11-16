@@ -103,10 +103,6 @@ class Return:
   def __init__(self, expr):
     self.expr = expr
 
-class VariableUsage:
-  def __init__(self, var):
-    self.var = var
-
 
 class Symbol:
   def __init__(self, name):

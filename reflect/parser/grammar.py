@@ -58,9 +58,7 @@ class NullValue(Grammar):
 
 class VariableUsage(Grammar):
   grammar = (OR(NullValue, Symbol, String, Number))
-
-  def parse(self):
-    return ast.VariableUsage(self[0].parse())
+  grammar_collapse = True
 
 class FunctionCall(Grammar):
   grammar = (Symbol, OptionalWhitespace, "(", OptionalWhitespace,

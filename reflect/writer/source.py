@@ -147,9 +147,6 @@ class SourceWriter:
         self.file.write(', ')
     self.file.write(')')
 
-  def writeVariableUsage(self, use):
-    self.write(use.var)
-
   def writeControlStructure(self, struct):
     self.write_indent()
     self.file.write(self.control_structures[struct.name])
