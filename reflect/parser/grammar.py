@@ -56,13 +56,13 @@ class NullValue(Grammar):
   def parse(self):
     return ast.NullValue()
 
-class VariableUsage(Grammar):
+class Value(Grammar):
   grammar = (OR(NullValue, Symbol, String, Number))
   grammar_collapse = True
 
 class FunctionCall(Grammar):
   grammar = (Symbol, OptionalWhitespace, "(", OptionalWhitespace,
-    LIST_OF(VariableUsage, sep=ArgumentSeparator), OptionalWhitespace, ")")
+    LIST_OF(Value, sep=ArgumentSeparator), OptionalWhitespace, ")")
 
   def parse(self):
     return ast.FunctionCall(self[0].parse(), parse_list(self[4]))
@@ -75,7 +75,7 @@ class Operator(Grammar):
     return ast.Operator(str(self[1]))
 
 class Expression(Grammar):
-  grammar = (LIST_OF(OR(FunctionCall, VariableUsage), sep=Operator))
+  grammar = (LIST_OF(OR(FunctionCall, Value), sep=Operator))
 
   def parse(self):
     expr = ast.Expression()
