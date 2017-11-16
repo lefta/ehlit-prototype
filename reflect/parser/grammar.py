@@ -150,7 +150,8 @@ class Instruction(Grammar):
 
 
 class StructureBody(Grammar):
-  grammar = ("{", OptionalWhitespace, LIST_OF(Instruction, sep=Whitespace), Whitespace, "}")
+  grammar = ("{", OptionalWhitespace, LIST_OF(Instruction, sep=Whitespace), OptionalWhitespace,
+    "}")
 
   def parse(self):
     return parse_list(self[2])
