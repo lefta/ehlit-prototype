@@ -73,7 +73,7 @@ class FunctionDefinition:
     self.body = body
 
 
-class Instruction:
+class Statement:
   def __init__(self, expr):
     self.expr = expr
 
@@ -88,6 +88,16 @@ class FunctionCall:
   def __init__(self, sym, args):
     self.sym = sym
     self.args = args
+
+class ControlStructure:
+  def __init__(self, name, cond, body):
+    self.name = name
+    self.cond = cond
+    self.body = body
+
+class Condition:
+  def __init__(self, branches):
+    self.branches = branches
 
 class Return:
   def __init__(self, expr):

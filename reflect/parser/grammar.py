@@ -142,12 +142,15 @@ class VariableAssignment(Grammar):
   def parse(self):
     return ast.VariableAssignment(self[0].parse(), self[2].parse())
 
-class Instruction(Grammar):
+class Statement(Grammar):
   grammar = (OR(Return, VariableDeclaration, VariableAssignment, Expression))
 
   def parse(self):
-    return ast.Instruction(self[0].parse())
+    return ast.Statement(self[0].parse())
 
+class Instruction(Grammar):
+  grammar = (OR(REF('Condition'), REF('WhileLoop'), Statement))
+  grammar_collapse = True
 
 class StructureBody(Grammar):
   grammar = ("{", OptionalWhitespace, LIST_OF(Instruction, sep=Whitespace), OptionalWhitespace,
@@ -155,6 +158,52 @@ class StructureBody(Grammar):
 
   def parse(self):
     return parse_list(self[2])
+
+
+class ControlStructure(Grammar):
+  grammar = (Expression, Whitespace, OR(Instruction, StructureBody))
+
+  def parse(self, name):
+    return ast.ControlStructure(name, self[0].parse(),
+      self[2].parse() if type(self[2]) is StructureBody else [self[2].parse()])
+
+class IfCondition(Grammar):
+  grammar = ("if", Whitespace, ControlStructure)
+
+  def parse(self):
+    return self[2].parse("if")
+
+class ElseIfCondition(Grammar):
+  grammar = ("elif", Whitespace, ControlStructure)
+
+  def parse(self):
+    return self[2].parse("elif")
+
+class ElseCondition(Grammar):
+  grammar = ("else", Whitespace, OR(Instruction, StructureBody))
+
+  def parse(self):
+    return ast.ControlStructure("else", None,
+      self[2].parse() if type(self[2]) is StructureBody else [self[2].parse()])
+
+class Condition(Grammar):
+  grammar = (IfCondition, OptionalWhitespace,
+    OPTIONAL(LIST_OF(ElseIfCondition, sep=OptionalWhitespace)), OptionalWhitespace,
+    OPTIONAL(ElseCondition))
+
+  def parse(self):
+    branches = [self[0].parse()]
+    if self[2] is not None:
+      branches += parse_list(self[2])
+    if self[4] is not None:
+      branches.append(self[4].parse())
+    return ast.Condition(branches)
+
+class WhileLoop(Grammar):
+  grammar = ("while", Whitespace, ControlStructure)
+
+  def parse(self):
+    return self[2].parse("while")
 
 class ArgumentDefinitionList(Grammar):
   grammar = (LIST_OF(Declaration, sep=ArgumentSeparator))

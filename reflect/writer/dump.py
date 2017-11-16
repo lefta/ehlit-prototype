@@ -101,9 +101,9 @@ class DumpWriter:
     self.print_node(fun.proto)
     self.print_node_list('FunctionBody', fun.body, False)
 
-  def dumpInstruction(self, instruction):
-    self.dump('Instruction')
-    self.print_node(instruction.expr, False)
+  def dumpStatement(self, stmt):
+    self.dump('Statement')
+    self.print_node(stmt.expr, False)
 
   def dumpExpression(self, expr):
     # Dirty hack to compensate that we do not print anything. This deforms the AST a little, but
@@ -130,6 +130,18 @@ class DumpWriter:
   def dumpAssignment(self, assign):
     self.dump('Assignment')
     self.print_node(assign.expr)
+
+  def dumpControlStructure(self, struct):
+    self.dump('ControlStructure: ' + struct.name)
+    if struct.cond is not None:
+      self.print_node(struct.cond)
+    self.print_node_list("ControlStructureBody", struct.body, False)
+
+  def dumpCondition(self, cond):
+    # Same dirty hack than dumpExpression
+    self.decrement_prefix()
+    self.print_node_list("ConditionBranches", cond.branches, False)
+    self.increment_prefix(False)
 
   def dumpReturn(self, ret):
     self.dump('Return')

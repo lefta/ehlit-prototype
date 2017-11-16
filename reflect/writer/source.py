@@ -34,6 +34,13 @@ class SourceWriter:
       'size': 'size_t',
     }
 
+    self.control_structures = {
+      'if': 'if',
+      'elif': 'else if',
+      'else': 'else',
+      'while': 'while',
+    }
+
     for node in ast:
       self.write(node)
 
@@ -106,9 +113,9 @@ class SourceWriter:
 
     self.file.write("}\n")
 
-  def writeInstruction(self, instruction):
+  def writeStatement(self, stmt):
     self.write_indent()
-    self.write(instruction.expr)
+    self.write(stmt.expr)
     self.file.write(';\n')
 
   def writeExpression(self, expr):
@@ -142,6 +149,29 @@ class SourceWriter:
 
   def writeVariableUsage(self, use):
     self.write(use.var)
+
+  def writeControlStructure(self, struct):
+    self.write_indent()
+    self.file.write(self.control_structures[struct.name])
+    if struct.cond is not None:
+      self.file.write(' (')
+      self.write(struct.cond)
+      self.file.write(')')
+    self.file.write('\n')
+
+    self.write_indent()
+    self.file.write('{\n')
+    self.indent += 1
+    for instruction in struct.body:
+      self.write(instruction)
+    self.indent -= 1
+
+    self.write_indent()
+    self.file.write('}\n')
+
+  def writeCondition(self, cond):
+    for branch in cond.branches:
+      self.write(branch)
 
   def writeReturn(self, ret):
     self.file.write('return (')
