@@ -125,7 +125,7 @@ class DumpWriter:
 
   def dumpAssignment(self, assign):
     self.dump('Assignment')
-    self.print_node(assign.expr)
+    self.print_node(assign.expr, False)
 
   def dumpControlStructure(self, struct):
     self.dump('ControlStructure: ' + struct.name)
