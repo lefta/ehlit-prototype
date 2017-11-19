@@ -21,6 +21,14 @@
 
 import logging
 
+def indent(fn):
+  def fn_wrapper(cls, node, is_next=True):
+    cls.increment_prefix(is_next)
+    fn(cls, node)
+    cls.decrement_prefix()
+  return fn_wrapper
+
+
 class DumpWriter:
   def __init__(self, ast):
     self.prefix = ''
@@ -57,10 +65,8 @@ class DumpWriter:
     self.upd_prefix = True
 
   def print_node(self, node, is_next=True):
-    self.increment_prefix(is_next)
     func = getattr(self, 'dump' + type(node).__name__)
-    func(node)
-    self.decrement_prefix()
+    func(node, is_next)
 
   def print_node_list(self, string, lst, is_next=True):
     self.increment_prefix(is_next)
@@ -73,15 +79,18 @@ class DumpWriter:
     self.decrement_prefix()
 
 
+  @indent
   def dumpImport(self, imp):
     self.dump('Import')
     self.print_node(imp.lib, False)
 
+  @indent
   def dumpDeclaration(self, decl):
     self.dump('Declaration')
     self.print_node(decl.typ)
     self.print_node(decl.sym, False)
 
+  @indent
   def dumpVariableDeclaration(self, decl):
     self.dump('VariableDeclaration')
     if decl.assign is not None:
@@ -90,81 +99,89 @@ class DumpWriter:
     else:
       self.print_node(decl.decl, False)
 
+  @indent
   def dumpFunctionDeclaration(self, fun):
     self.dump('FunctionDeclaration')
     self.print_node(fun.typ)
     self.print_node(fun.sym)
     self.print_node_list('Arguments', fun.args, False)
 
+  @indent
   def dumpFunctionDefinition(self, fun):
     self.dump('FunctionDefinition')
     self.print_node(fun.proto)
     self.print_node_list('FunctionBody', fun.body, False)
 
+  @indent
   def dumpStatement(self, stmt):
     self.dump('Statement')
     self.print_node(stmt.expr, False)
 
-  def dumpExpression(self, expr):
-    # Dirty hack to compensate that we do not print anything. This deforms the AST a little, but
-    # give us more clarity by removing useless informations (an expression is always a list of
-    # operations resulting in a single value)
-    self.decrement_prefix()
-    self.print_node_list('Expression', expr.contents, False)
-    self.increment_prefix(False)
+  def dumpExpression(self, expr, is_next):
+    self.print_node_list('Expression', expr.contents, is_next)
 
+  @indent
   def dumpFunctionCall(self, call):
     self.dump('FunctionCall')
     self.print_node(call.sym)
     self.print_node_list('Arguments', call.args, False)
 
+  @indent
   def dumpVariableAssignment(self, assign):
     self.dump('VariableAssignment')
     self.print_node(assign.var)
     self.print_node(assign.assign, False)
 
+  @indent
   def dumpAssignment(self, assign):
     self.dump('Assignment')
     self.print_node(assign.expr, False)
 
+  @indent
   def dumpControlStructure(self, struct):
     self.dump('ControlStructure: ' + struct.name)
     if struct.cond is not None:
       self.print_node(struct.cond)
     self.print_node_list("ControlStructureBody", struct.body, False)
 
-  def dumpCondition(self, cond):
-    # Same dirty hack than dumpExpression
-    self.decrement_prefix()
-    self.print_node_list("ConditionBranches", cond.branches, False)
-    self.increment_prefix(False)
+  def dumpCondition(self, cond, is_next):
+    self.print_node_list("ConditionBranches", cond.branches, is_next)
 
+  @indent
   def dumpReturn(self, ret):
     self.dump('Return')
     self.print_node(ret.expr, False)
 
+  @indent
   def dumpOperator(self, op):
     self.dump('Operator: ' + op.op)
 
+  @indent
   def dumpType(self, typ):
     self.dump('Type')
     self.print_node(typ.sym, False)
 
+  @indent
   def dumpBuiltinType(self, typ):
     self.dump('BuiltinType: ' + typ.name)
 
+  @indent
   def dumpArray(self, arr):
     self.dump('Array')
     self.print_node(arr.typ, False)
 
+  @indent
   def dumpSymbol(self, sym):
     self.dump('Symbol: ' + sym.name)
 
+  @indent
   def dumpNumber(self, num):
     self.dump('Number: ' + num.num)
 
+  @indent
   def dumpString(self, string):
     self.dump('String: ' + string.string)
 
+  @indent
   def dumpNullValue(self, stmt):
     self.dump('NullStatement')
