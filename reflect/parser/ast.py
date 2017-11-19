@@ -19,9 +19,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import logging
+
 class Node:
   def build(self, parent):
     self.parent = parent
+
+  def find_declaration(self, sym):
+    return self.parent.find_declaration(sym)
+
+  def get_declaration(self, sym):
+    return None
+
+  def error(self, msg):
+    self.parent.error(msg)
+
+  def warn(self, msg):
+    self.parent.warn(msg)
 
 
 class Import(Node):
@@ -49,7 +63,12 @@ class Type(Node):
 
   def build(self, parent):
     super().build(parent)
-    self.sym.build(self)
+    if not self.is_builtin():
+      sym = self.find_declaration(self.sym)
+      if sym is None:
+        self.warn("use of undeclared type %s" % self.sym.name)
+      else:
+        self.sym = sym
 
 class Operator(Node):
   def __init__(self, op):
@@ -62,7 +81,11 @@ class VariableAssignment(Node):
 
   def build(self, parent):
     super().build(parent)
-    self.var.build(self)
+    var = self.find_declaration(self.var.name)
+    if var is None:
+      self.warn("use of undeclared variable %s" % self.var.name)
+    else:
+      self.var = var
     self.assign.build(self)
 
 class Assignment(Node):
@@ -83,6 +106,11 @@ class Declaration(Node):
     self.typ.build(self)
     self.sym.build(self)
 
+  def get_declaration(self, sym):
+    if self.sym.name == sym:
+      return self
+    return None
+
 class VariableDeclaration(Node):
   def __init__(self, decl, assign):
     self.decl = decl
@@ -93,6 +121,9 @@ class VariableDeclaration(Node):
     self.decl.build(self)
     if self.assign is not None:
       self.assign.build(self)
+
+  def get_declaration(self, sym):
+    return self.decl.get_declaration(sym)
 
 class FunctionDeclaration(Node):
   def __init__(self, typ, sym, args):
@@ -118,6 +149,14 @@ class FunctionDefinition(Node):
     for s in self.body:
       s.build(self)
 
+  def get_declaration(self, sym):
+    if self.proto.sym.name == sym:
+      return self
+    for s in self.body:
+      decl = s.get_declaration(sym)
+      if decl is not None:
+        return decl
+
 
 class Statement(Node):
   def __init__(self, expr):
@@ -126,6 +165,9 @@ class Statement(Node):
   def build(self, parent):
     super().build(parent)
     self.expr.build(self)
+
+  def get_declaration(self, sym):
+    return self.expr.get_declaration(sym)
 
 class Expression(Node):
   def __init__(self):
@@ -146,7 +188,11 @@ class FunctionCall(Node):
 
   def build(self, parent):
     super().build(parent)
-    self.sym.build(self)
+    sym = self.find_declaration(self.sym)
+    if sym is None:
+      self.warn("use of undeclared function %s" % self.sym.name)
+    else:
+      self.sym = sym
     for a in self.args:
       a.build(self)
 
@@ -200,6 +246,8 @@ class NullValue(Node):
 class AST(Node):
   def __init__(self):
     self.nodes = []
+    self.errors = 0
+    self.warnings = 0
 
   def append(self, n):
     self.nodes.append(n)
@@ -217,3 +265,21 @@ class AST(Node):
     self.parent = None
     for n in self.nodes:
       n.build(self)
+    if self.errors != 0:
+      raise ParseError("build failed with %d errors and %d warnings" % self.errors, self.warnings)
+    elif self.warnings != 0:
+      logging.info("build finished with %d warnings" % self.warnings)
+
+  def error(self, msg):
+    logging.error(msg)
+    self.errors += 1
+
+  def warn(self, msg):
+    logging.warning(msg)
+    self.warnings += 1
+
+  def find_declaration(self, sym):
+    for n in self.nodes:
+      res = n.get_declaration(sym)
+      if res is not None:
+        return res

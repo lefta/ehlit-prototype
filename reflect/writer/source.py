@@ -64,7 +64,7 @@ class SourceWriter:
     if typ.is_builtin():
       self.file.write(self.types[typ.sym.name])
     else:
-      self.write(typ.sym)
+      self.write(typ.sym.sym)
 
   def writeArray(self, arr):
     self.write(arr.typ)
@@ -132,11 +132,16 @@ class SourceWriter:
     self.write(assign.expr)
 
   def writeVariableAssignment(self, assign):
-    self.write(assign.var)
+    self.write(assign.var.sym)
     self.write(assign.assign)
 
   def writeFunctionCall(self, call):
-    self.write(call.sym)
+    # This is a workaround for undefined functions.
+    # TODO: Remove it once we get C header parsing and undefined symbols become an error
+    if type(call.sym).__name__ == "Symbol":
+      self.write(call.sym)
+    else:
+      self.write(call.sym.sym)
     self.file.write('(')
     i = 0
     count = len(call.args)
