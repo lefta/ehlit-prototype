@@ -19,108 +19,185 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-class Import:
+class Node:
+  def build(self, parent):
+    self.parent = parent
+
+
+class Import(Node):
   def __init__(self, lib):
     self.lib = lib
 
-class BuiltinType:
+class BuiltinType(Node):
   def __init__(self, name):
     self.name = name
 
-class Array:
+class Array(Node):
   def __init__(self, typ):
     self.typ = typ
 
-class Type:
+  def build(self, parent):
+    super().build(parent)
+    self.typ.build(self)
+
+class Type(Node):
   def __init__(self, sym):
     self.sym = sym
 
   def is_builtin(self):
     return type(self.sym) == BuiltinType
 
-class Operator:
+  def build(self, parent):
+    super().build(parent)
+    self.sym.build(self)
+
+class Operator(Node):
   def __init__(self, op):
     self.op = op
 
-class VariableAssignment:
+class VariableAssignment(Node):
   def __init__(self, var, assign):
     self.var = var
     self.assign = assign
 
-class Assignment:
+  def build(self, parent):
+    super().build(parent)
+    self.var.build(self)
+    self.assign.build(self)
+
+class Assignment(Node):
   def __init__(self, expr):
     self.expr = expr
 
-class Declaration:
+  def build(self, parent):
+    super().build(parent)
+    self.expr.build(self)
+
+class Declaration(Node):
   def __init__(self, typ, sym):
     self.typ = typ
     self.sym = sym
 
-class VariableDeclaration:
+  def build(self, parent):
+    super().build(parent)
+    self.typ.build(self)
+    self.sym.build(self)
+
+class VariableDeclaration(Node):
   def __init__(self, decl, assign):
     self.decl = decl
     self.assign = assign
 
-class FunctionDeclaration:
+  def build(self, parent):
+    super().build(parent)
+    self.decl.build(self)
+    if self.assign is not None:
+      self.assign.build(self)
+
+class FunctionDeclaration(Node):
   def __init__(self, typ, sym, args):
     self.typ = typ
     self.sym = sym
     self.args = args
 
-class FunctionDefinition:
+  def build(self, parent):
+    super().build(parent)
+    self.typ.build(self)
+    self.sym.build(self)
+    for a in self.args:
+      a.build(self)
+
+class FunctionDefinition(Node):
   def __init__(self, proto, body):
     self.proto = proto
     self.body = body
 
+  def build(self, parent):
+    super().build(parent)
+    self.proto.build(self)
+    for s in self.body:
+      s.build(self)
 
-class Statement:
+
+class Statement(Node):
   def __init__(self, expr):
     self.expr = expr
 
-class Expression:
+  def build(self, parent):
+    super().build(parent)
+    self.expr.build(self)
+
+class Expression(Node):
   def __init__(self):
     self.contents = []
 
   def append(self, c):
     self.contents.append(c)
 
-class FunctionCall:
+  def build(self, parent):
+    super().build(parent)
+    for e in self.contents:
+      e.build(self)
+
+class FunctionCall(Node):
   def __init__(self, sym, args):
     self.sym = sym
     self.args = args
 
-class ControlStructure:
+  def build(self, parent):
+    super().build(parent)
+    self.sym.build(self)
+    for a in self.args:
+      a.build(self)
+
+class ControlStructure(Node):
   def __init__(self, name, cond, body):
     self.name = name
     self.cond = cond
     self.body = body
 
-class Condition:
+  def build(self, parent):
+    super().build(parent)
+    if self.cond is not None:
+      self.cond.build(self)
+    for s in self.body:
+      s.build(self)
+
+class Condition(Node):
   def __init__(self, branches):
     self.branches = branches
 
-class Return:
+  def build(self, parent):
+    super().build(parent)
+    for b in self.branches:
+      b.build(self)
+
+class Return(Node):
   def __init__(self, expr):
     self.expr = expr
 
+  def build(self, parent):
+    super().build(parent)
+    self.expr.build(self)
 
-class Symbol:
+
+class Symbol(Node):
   def __init__(self, name):
     self.name = name
 
-class String:
+class String(Node):
   def __init__(self, string):
     self.string = string
 
-class Number:
+class Number(Node):
   def __init__(self, num):
     self.num = num
 
-class NullValue:
+class NullValue(Node):
   pass
 
 
-class AST:
+class AST(Node):
   def __init__(self):
     self.nodes = []
 
@@ -135,3 +212,8 @@ class AST:
 
   def __len__(self):
     return len(self.nodes)
+
+  def build(self):
+    self.parent = None
+    for n in self.nodes:
+      n.build(self)

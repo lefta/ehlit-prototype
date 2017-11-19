@@ -32,4 +32,5 @@ def build(args):
   ast = parse(args.source)
   if args.verbose:
     WriteDump(ast)
+  ast.build()
   WriteSource(ast, args.output_file)
