@@ -141,7 +141,7 @@ class VariableAssignment(Grammar):
     return ast.VariableAssignment(self[0].parse(), self[2].parse())
 
 class Statement(Grammar):
-  grammar = (OR(Return, VariableDeclaration, VariableAssignment, Expression))
+  grammar = (OR(Return, VariableAssignment, VariableDeclaration, Expression))
 
   def parse(self):
     return ast.Statement(self[0].parse())
