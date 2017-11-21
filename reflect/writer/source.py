@@ -60,11 +60,11 @@ class SourceWriter:
     self.write(imp.lib)
     self.file.write('.h>\n')
 
+  def writeBuiltinType(self, typ):
+    self.file.write(self.types[typ.name])
+
   def writeType(self, typ):
-    if typ.is_builtin():
-      self.file.write(self.types[typ.sym.name])
-    else:
-      self.write(typ.sym.sym)
+    self.write(typ.sym)
 
   def writeArray(self, arr):
     self.write(arr.typ)
