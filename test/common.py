@@ -77,6 +77,7 @@ class Pipe():
 class ReflectTestCase(TestCase):
 	def __init__(self, arg):
 		super().__init__(arg)
+		self.maxDiff = None
 		os.chdir(file_dir)
 		logging.basicConfig(format='%(message)s', level=logging.INFO)
 
