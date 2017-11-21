@@ -26,7 +26,10 @@ class Node:
     self.parent = parent
 
   def find_declaration(self, sym):
-    return self.parent.find_declaration(sym)
+    decl = self.get_declaration(sym)
+    if decl is None:
+      return self.parent.find_declaration(sym)
+    return decl
 
   def get_declaration(self, sym):
     return None
@@ -98,9 +101,6 @@ class Declaration(Node):
     self.typ.build(self)
     self.sym.build(self)
 
-  def find_declaration(self, sym):
-    return self.get_declaration(sym)
-
   def get_declaration(self, sym):
     if self.name == sym:
       return self
@@ -133,6 +133,15 @@ class FunctionDeclaration(Node):
     for a in self.args:
       a.build(self)
 
+  def get_declaration(self, sym):
+    if self.sym.name == sym:
+      return self
+    for a in self.args:
+      decl = a.get_declaration(sym)
+      if decl is not None:
+        return decl
+    return None
+
 class FunctionDefinition(Node):
   def __init__(self, proto, body):
     self.proto = proto
@@ -146,8 +155,10 @@ class FunctionDefinition(Node):
       s.build(self)
 
   def get_declaration(self, sym):
-    if self.proto.sym.name == sym:
-      return self
+    decl = self.proto.get_declaration(sym)
+    if decl is not None:
+      return decl
+
     for s in self.body:
       decl = s.get_declaration(sym)
       if decl is not None:
