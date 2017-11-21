@@ -134,6 +134,7 @@ class FunctionDeclaration(Node):
     self.typ = typ
     self.sym = sym
     self.args = args
+    self.name = sym.name
 
   def build(self, parent):
     super().build(parent)
@@ -158,6 +159,7 @@ class FunctionDefinition(Node):
   def __init__(self, proto, body):
     self.proto = proto
     self.name = proto.sym.name
+    self.typ = proto.typ
     self.body = body
 
   def build(self, parent):
