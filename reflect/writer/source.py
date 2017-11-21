@@ -132,16 +132,11 @@ class SourceWriter:
     self.write(assign.expr)
 
   def writeVariableAssignment(self, assign):
-    self.write(assign.var.sym)
+    self.write(assign.var)
     self.write(assign.assign)
 
   def writeFunctionCall(self, call):
-    # This is a workaround for undefined functions.
-    # TODO: Remove it once we get C header parsing and undefined symbols become an error
-    if type(call.sym).__name__ == "Symbol":
-      self.write(call.sym)
-    else:
-      self.write(call.sym.sym)
+    self.write(call.sym)
     self.file.write('(')
     i = 0
     count = len(call.args)
@@ -184,7 +179,10 @@ class SourceWriter:
     self.file.write(op.op)
 
   def writeSymbol(self, sym):
-    self.file.write(sym.name)
+    if sym.decl is not None:
+      self.file.write(sym.decl.name)
+    else:
+      self.file.write(sym.name)
 
   def writeString(self, s):
     self.file.write('"')

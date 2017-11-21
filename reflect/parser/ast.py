@@ -63,12 +63,7 @@ class Type(Node):
 
   def build(self, parent):
     super().build(parent)
-    if not self.is_builtin():
-      sym = self.find_declaration(self.sym)
-      if sym is None:
-        self.warn("use of undeclared type %s" % self.sym.name)
-      else:
-        self.sym = sym
+    self.sym.build(self)
 
 class Operator(Node):
   def __init__(self, op):
@@ -81,11 +76,7 @@ class VariableAssignment(Node):
 
   def build(self, parent):
     super().build(parent)
-    var = self.find_declaration(self.var.name)
-    if var is None:
-      self.warn("use of undeclared variable %s" % self.var.name)
-    else:
-      self.var = var
+    self.var.build(self)
     self.assign.build(self)
 
 class Assignment(Node):
@@ -99,6 +90,7 @@ class Assignment(Node):
 class Declaration(Node):
   def __init__(self, typ, sym):
     self.typ = typ
+    self.name = sym.name
     self.sym = sym
 
   def build(self, parent):
@@ -106,8 +98,11 @@ class Declaration(Node):
     self.typ.build(self)
     self.sym.build(self)
 
+  def find_declaration(self, sym):
+    return self.get_declaration(sym)
+
   def get_declaration(self, sym):
-    if self.sym.name == sym:
+    if self.name == sym:
       return self
     return None
 
@@ -141,6 +136,7 @@ class FunctionDeclaration(Node):
 class FunctionDefinition(Node):
   def __init__(self, proto, body):
     self.proto = proto
+    self.name = proto.sym.name
     self.body = body
 
   def build(self, parent):
@@ -188,11 +184,7 @@ class FunctionCall(Node):
 
   def build(self, parent):
     super().build(parent)
-    sym = self.find_declaration(self.sym)
-    if sym is None:
-      self.warn("use of undeclared function %s" % self.sym.name)
-    else:
-      self.sym = sym
+    self.sym.build(self)
     for a in self.args:
       a.build(self)
 
@@ -230,6 +222,13 @@ class Return(Node):
 class Symbol(Node):
   def __init__(self, name):
     self.name = name
+    self.decl = None
+
+  def build(self, parent):
+    super().build(parent)
+    self.decl = self.find_declaration(self.name)
+    if self.decl is None:
+      self.warn("use of undeclared identifier %s" % self.name)
 
 class String(Node):
   def __init__(self, string):
