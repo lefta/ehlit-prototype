@@ -19,22 +19,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from modgrammar import ParseError as mgParseError
+class ParseError(Exception):
+  def __init__(self, error):
+    if type(error) == str:
+      self.msg = error
+    else:
+      self.msg = "%d:%d: %s" % (error.line, error.col, error.msg)
 
-from reflect.parser.grammar import ReflectGrammar
-from reflect.parser.ast import AST
-from reflect.parser.error import ParseError
-
-def parse(source):
-  parser = ReflectGrammar.parser()
-
-  try:
-    ast_generator = parser.parse_file(source)
-    ast = AST()
-    for node in ast_generator:
-      ast_node = node.parse()
-      if ast_node is not None:
-        ast.append(ast_node)
-  except mgParseError as err:
-    raise ParseError(err)
-  return ast
+  def __str__(self):
+    return self.msg

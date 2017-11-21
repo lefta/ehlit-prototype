@@ -37,7 +37,7 @@ try:
   build(opts)
 
 except ParseError as err:
-  logging.error('%d:%d: %s' % (err.line, err.col, err.msg))
+  logging.error(err)
   exit(-1)
 
 except options.ArgError as err:

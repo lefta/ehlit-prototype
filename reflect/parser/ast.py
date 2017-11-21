@@ -20,6 +20,7 @@
 # SOFTWARE.
 
 import logging
+from reflect.parser.error import ParseError
 
 class Node:
   def build(self, parent):
@@ -317,7 +318,7 @@ class AST(Node):
     for n in self.nodes:
       n.build(self)
     if self.errors != 0:
-      raise ParseError("build failed with %d errors and %d warnings" % self.errors, self.warnings)
+      raise ParseError("build failed with %d errors and %d warnings" % (self.errors, self.warnings))
     elif self.warnings != 0:
       logging.info("build finished with %d warnings" % self.warnings)
 
