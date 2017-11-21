@@ -184,4 +184,4 @@ class DumpWriter:
 
   @indent
   def dumpNullValue(self, stmt):
-    self.dump('NullStatement')
+    self.dump('NullValue')
