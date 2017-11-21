@@ -25,6 +25,9 @@ class Node:
   def build(self, parent):
     self.parent = parent
 
+  def is_declaration(self):
+    return False
+
   def find_declaration(self, sym):
     decl = self.get_declaration(sym)
     if decl is None:
@@ -106,6 +109,9 @@ class Declaration(Node):
       return self
     return None
 
+  def is_declaration(self):
+    return True
+
 class VariableDeclaration(Node):
   def __init__(self, decl, assign):
     self.decl = decl
@@ -119,6 +125,9 @@ class VariableDeclaration(Node):
 
   def get_declaration(self, sym):
     return self.decl.get_declaration(sym)
+
+  def is_declaration(self):
+    return True
 
 class FunctionDeclaration(Node):
   def __init__(self, typ, sym, args):
@@ -141,6 +150,9 @@ class FunctionDeclaration(Node):
       if decl is not None:
         return decl
     return None
+
+  def is_declaration(self):
+    return True
 
 class FunctionDefinition(Node):
   def __init__(self, proto, body):
@@ -237,9 +249,10 @@ class Symbol(Node):
 
   def build(self, parent):
     super().build(parent)
-    self.decl = self.find_declaration(self.name)
-    if self.decl is None:
-      self.warn("use of undeclared identifier %s" % self.name)
+    if not parent.is_declaration():
+      self.decl = self.find_declaration(self.name)
+      if self.decl is None:
+        self.warn("use of undeclared identifier %s" % self.name)
 
 class String(Node):
   def __init__(self, string):
