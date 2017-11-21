@@ -60,12 +60,21 @@ class Array(Node):
     super().build(parent)
     self.typ.build(self)
 
+class Reference(Node):
+  def __init__(self, typ):
+    self.typ = typ
+
+  def build(self, parent):
+    super().build(parent)
+    self.typ.build(self)
+
 class Type(Node):
   def __init__(self, sym):
     self.sym = sym
 
   def is_builtin(self):
-    return type(self.sym) == BuiltinType
+    typ = type(self.sym)
+    return typ == BuiltinType or typ == Reference
 
   def build(self, parent):
     super().build(parent)
@@ -248,6 +257,7 @@ class Symbol(Node):
   def __init__(self, name):
     self.name = name
     self.decl = None
+    self.ref_offset = 0
 
   def build(self, parent):
     super().build(parent)
@@ -255,6 +265,14 @@ class Symbol(Node):
       self.decl = self.find_declaration(self.name)
       if self.decl is None:
         self.warn("use of undeclared identifier %s" % self.name)
+      else:
+        self.compute_ref_offset()
+
+  def compute_ref_offset(self):
+    typ = self.decl.typ.sym
+    while type(typ) is Reference:
+      self.ref_offset += 1
+      typ = typ.typ.sym
 
 class String(Node):
   def __init__(self, string):
@@ -267,6 +285,14 @@ class Number(Node):
 class NullValue(Node):
   pass
 
+class ReferencedValue(Node):
+  def __init__(self, val):
+    self.val = val
+
+  def build(self, parent):
+    super().build(parent)
+    self.val.build(self)
+    self.val.ref_offset -= 1
 
 class AST(Node):
   def __init__(self):

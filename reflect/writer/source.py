@@ -63,6 +63,10 @@ class SourceWriter:
   def writeBuiltinType(self, typ):
     self.file.write(self.types[typ.name])
 
+  def writeReference(self, ref):
+    self.write(ref.typ)
+    self.file.write('*')
+
   def writeType(self, typ):
     self.write(typ.sym)
 
@@ -179,6 +183,14 @@ class SourceWriter:
     self.file.write(op.op)
 
   def writeSymbol(self, sym):
+    if sym.ref_offset == -1:
+      self.file.write('&')
+    else:
+      i = sym.ref_offset
+      while i > 0:
+        self.file.write('*')
+        i -= 1
+
     if sym.decl is not None:
       self.file.write(sym.decl.name)
     else:
@@ -194,3 +206,6 @@ class SourceWriter:
 
   def writeNullValue(self, stmt):
     self.file.write('NULL')
+
+  def writeReferencedValue(self, ref):
+    self.write(ref.val)

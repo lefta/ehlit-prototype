@@ -1,0 +1,28 @@
+import stdio
+
+void set_int(ref int i)
+{
+	i = 42
+}
+
+void set_int_to(ref int i, ref int j)
+{
+	i = j
+}
+
+void set_int_ref(ref int i, ref int j)
+{
+	ref i = ref j
+}
+
+int main()
+{
+	int i
+	int j = 21
+
+	set_int(ref i)
+	set_int_to(ref i, ref j)
+	set_int_ref(ref i, ref j)
+
+	return 0
+}

@@ -56,8 +56,14 @@ class NullValue(Grammar):
   def parse(self):
     return ast.NullValue()
 
+class ReferencedValue(Grammar):
+  grammar = ('ref', Whitespace, REF('Value'))
+
+  def parse(self):
+    return ast.ReferencedValue(self[2].parse())
+
 class Value(Grammar):
-  grammar = (OR(NullValue, Symbol, String, Number))
+  grammar = (OR(NullValue, ReferencedValue, Symbol, String, Number))
   grammar_collapse = True
 
 class FunctionCall(Grammar):
@@ -102,8 +108,17 @@ class BuiltinType(Grammar):
   def parse(self):
     return ast.BuiltinType(str(self[0]))
 
+class Reference(Grammar):
+  grammar = ('ref', OptionalWhitespace, OPTIONAL('[]'), Whitespace, REF('Type'))
+
+  def parse(self):
+    ref = ast.Reference(self[4].parse())
+    if self[2] is not None:
+      return ast.Array(ref)
+    return ref
+
 class Type(Grammar):
-  grammar = (OR(BuiltinType, Symbol), OptionalWhitespace, OPTIONAL("[]"))
+  grammar = (OR(Reference, BuiltinType, Symbol), OptionalWhitespace, OPTIONAL("[]"))
   grammar_error_override = True
   grammar_desc = 'type'
 
@@ -135,7 +150,7 @@ class VariableDeclaration(Grammar):
     return ast.VariableDeclaration(self[0].parse(), assign)
 
 class VariableAssignment(Grammar):
-  grammar = (Symbol, OptionalWhitespace, Assignment)
+  grammar = (OR(ReferencedValue, Symbol), OptionalWhitespace, Assignment)
 
   def parse(self):
     return ast.VariableAssignment(self[0].parse(), self[2].parse())

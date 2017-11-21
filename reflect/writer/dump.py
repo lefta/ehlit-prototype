@@ -153,6 +153,11 @@ class DumpWriter:
     self.print_node(ret.expr, False)
 
   @indent
+  def dumpReference(self, ref):
+    self.dump('Reference')
+    self.print_node(ref.typ, False)
+
+  @indent
   def dumpOperator(self, op):
     self.dump('Operator: ' + op.op)
 
@@ -185,3 +190,8 @@ class DumpWriter:
   @indent
   def dumpNullValue(self, stmt):
     self.dump('NullValue')
+
+  @indent
+  def dumpReferencedValue(self, ref):
+    self.dump('ReferencedValue')
+    self.print_node(ref.val, False)
