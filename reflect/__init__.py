@@ -21,11 +21,13 @@
 
 import logging
 
-from reflect.parser import parse
-from reflect.writer import WriteSource, WriteDump
-from reflect.options import check_arguments
-
 def build(args):
+  # Avoid importing submodules in global scope, otherwise they may use the logger before it is
+  # initialized
+  from reflect.parser import parse
+  from reflect.writer import WriteSource, WriteDump
+  from reflect.options import check_arguments
+
   check_arguments(args)
   logging.debug('building %s to %s\n', args.source, args.output_file)
 
