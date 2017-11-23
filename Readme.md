@@ -29,8 +29,9 @@ Note that the language is still a work in progress, this example will likely cha
 
 ## Requirements
 
-* Python 3
+* Python 3.5+
 * modgrammar Python module
+* clang with Python 3.5+ bindings (should be 5.0+)
 
 ## Basic usage
 
