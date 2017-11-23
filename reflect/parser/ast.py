@@ -20,6 +20,7 @@
 # SOFTWARE.
 
 import logging
+from reflect.parser import c_compat
 from reflect.parser.error import ParseError
 
 class Node:
@@ -48,6 +49,23 @@ class Node:
 class Import(Node):
   def __init__(self, lib):
     self.lib = lib
+
+  def build(self, parent):
+    super().build(parent)
+    try:
+      self.syms = c_compat.parse_header(self.lib.name)
+    except ParseError as err:
+      self.error(err)
+      self.syms = []
+
+    for s in self.syms:
+      s.build(self)
+
+  def get_declaration(self, sym):
+    for s in self.syms:
+      decl = s.get_declaration(sym)
+      if decl is not None:
+        return decl
 
 class BuiltinType(Node):
   def __init__(self, name):
