@@ -288,10 +288,12 @@ class Symbol(Node):
         self.compute_ref_offset()
 
   def compute_ref_offset(self):
-    typ = self.decl.typ.sym
-    while type(typ) is Reference:
+    typ = self.decl.typ
+    sym = typ if type(typ) == BuiltinType else typ.sym
+    while type(sym) is Reference:
       self.ref_offset += 1
-      typ = typ.typ.sym
+      typ = sym.typ
+      sym = typ if type(typ) == BuiltinType else typ.sym
 
 class String(Node):
   def __init__(self, string):
