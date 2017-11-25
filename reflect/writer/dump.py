@@ -32,6 +32,7 @@ def indent(fn):
 class DumpWriter:
   def __init__(self, ast):
     self.prefix = ''
+    logging.debug('')
     logging.debug('--- AST ---')
     i = 0
     count = len(ast)
