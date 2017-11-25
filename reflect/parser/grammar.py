@@ -108,25 +108,27 @@ class BuiltinType(Grammar):
   def parse(self):
     return ast.BuiltinType(str(self[0]))
 
+class Array(Grammar):
+  grammar = OptionalWhitespace, LIST_OF('[]', sep=OptionalWhitespace)
+
+  def parse(self, underlying_type):
+    if self is None:
+      return underlying_type
+    return ast.Array(underlying_type)
+
 class Reference(Grammar):
-  grammar = ('ref', OptionalWhitespace, OPTIONAL('[]'), Whitespace, REF('Type'))
+  grammar = ('ref', OPTIONAL(Array), Whitespace, REF('Type'))
 
   def parse(self):
-    ref = ast.Reference(self[4].parse())
-    if self[2] is not None:
-      return ast.Array(ref)
-    return ref
+    return Array.parse(self[1], ast.Reference(self[3].parse()))
 
 class Type(Grammar):
-  grammar = (OR(Reference, BuiltinType, Symbol), OptionalWhitespace, OPTIONAL("[]"))
+  grammar = (OR(Reference, BuiltinType, Symbol), OPTIONAL(Array))
   grammar_error_override = True
   grammar_desc = 'type'
 
   def parse(self):
-    typ = ast.Type(self[0].parse())
-    if self[2] is not None:
-      return ast.Array(typ)
-    return typ
+    return Array.parse(self[1], ast.Type(self[0].parse()))
 
 
 class Import(Grammar):
