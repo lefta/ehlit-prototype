@@ -32,7 +32,7 @@ def build(args):
   logging.debug('building %s to %s\n', args.source, args.output_file)
 
   ast = parse(args.source)
+  ast.build()
   if args.verbose:
     WriteDump(ast)
-  ast.build()
   WriteSource(ast, args.output_file)
