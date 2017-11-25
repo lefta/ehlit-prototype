@@ -23,7 +23,7 @@ import os
 import logging
 import subprocess
 from argparse import ArgumentParser
-from clang.cindex import Index, TranslationUnitLoadError
+from clang.cindex import Index, TranslationUnitLoadError, CursorKind, TypeKind
 from reflect.parser.error import ParseError
 from reflect.parser import ast
 
@@ -89,6 +89,13 @@ def cursor_to_reflect(cursor):
       logging.debug('c_compat: unimplemented: %s' % c.kind.name)
   return ast
 
+def type_to_reflect(typ):
+  try:
+    return globals()['type_' + typ.kind.name](typ)
+  except KeyError:
+    logging.debug('c_compat: unimplemented: %s' % typ.kind.name)
+  return ast.Type(ast.BuiltinType('any'))
+
 def find_file_in_path(filename):
   for d in include_dirs:
     path = os.path.join(d, filename)
@@ -110,8 +117,25 @@ def parse_header(filename):
 
 
 def parse_FUNCTION_DECL(cursor):
-  typ = ast.Type(ast.BuiltinType('any'))
-  sym = ast.Symbol(cursor.spelling)
   args = []
-  logging.debug('c_compat: declaring: %s with type any and no argument' % sym.name)
-  return ast.FunctionDeclaration(typ, sym, args)
+  for c in cursor.get_children():
+    if c.kind == CursorKind.PARM_DECL:
+      args.append(ast.Declaration(type_to_reflect(c.type), ast.Symbol(c.spelling)))
+
+  return ast.FunctionDeclaration(
+    type_to_reflect(cursor.type.get_result()),
+    ast.Symbol(cursor.spelling),
+    args)
+
+
+def type_VOID(typ): return ast.BuiltinType('void')
+def type_INT(typ): return ast.BuiltinType('int')
+def type_POINTER(typ):
+  subtype = typ.get_pointee()
+  builtin_type = {
+    TypeKind.CHAR_S: ast.BuiltinType('str'),
+    TypeKind.VOID: ast.BuiltinType('any')
+  }.get(subtype.kind)
+  if builtin_type is not None:
+    return builtin_type
+  return ast.Reference(type_to_reflect(subtype))
