@@ -74,6 +74,9 @@ class BuiltinType(Node):
   @property
   def sym(self): return self
 
+  @property
+  def is_reference(self): return self.name == 'str' or self.name == 'any'
+
 class Array(Node):
   def __init__(self, typ):
     self.typ = typ
@@ -89,6 +92,9 @@ class Reference(Node):
   def build(self, parent):
     super().build(parent)
     self.typ.build(self)
+
+  @property
+  def is_reference(self): return True
 
 class Type(Node):
   def __init__(self, sym):
@@ -291,8 +297,8 @@ class Symbol(Node):
         self.compute_ref_offset()
 
   def compute_ref_offset(self):
-    while type(sym) is Reference:
     sym = self.decl.typ.sym
+    while sym.is_reference:
       self.ref_offset += 1
       sym = sym.typ.sym
 
