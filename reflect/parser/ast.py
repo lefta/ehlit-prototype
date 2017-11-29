@@ -77,6 +77,9 @@ class BuiltinType(Node):
   @property
   def is_reference(self): return self.name == 'str' or self.name == 'any'
 
+  @property
+  def ref_offset(self): return 1 if self.is_reference else 0
+
 class Array(Node):
   def __init__(self, typ):
     self.typ = typ
@@ -95,6 +98,9 @@ class Reference(Node):
 
   @property
   def is_reference(self): return True
+
+  @property
+  def ref_offset(self): return self.typ.sym.ref_offset + 1
 
 class Type(Node):
   def __init__(self, sym):
@@ -294,13 +300,7 @@ class Symbol(Node):
       if self.decl is None:
         self.warn("use of undeclared identifier %s" % self.name)
       else:
-        self.compute_ref_offset()
-
-  def compute_ref_offset(self):
-    sym = self.decl.typ.sym
-    while sym.is_reference:
-      self.ref_offset += 1
-      sym = sym.typ.sym
+        self.ref_offset = self.decl.typ.sym.ref_offset
 
 class String(Node):
   def __init__(self, string):
