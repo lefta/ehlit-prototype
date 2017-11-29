@@ -71,6 +71,9 @@ class BuiltinType(Node):
   def __init__(self, name):
     self.name = name
 
+  @property
+  def sym(self): return self
+
 class Array(Node):
   def __init__(self, typ):
     self.typ = typ
@@ -288,12 +291,10 @@ class Symbol(Node):
         self.compute_ref_offset()
 
   def compute_ref_offset(self):
-    typ = self.decl.typ
-    sym = typ if type(typ) == BuiltinType else typ.sym
     while type(sym) is Reference:
+    sym = self.decl.typ.sym
       self.ref_offset += 1
-      typ = sym.typ
-      sym = typ if type(typ) == BuiltinType else typ.sym
+      sym = sym.typ.sym
 
 class String(Node):
   def __init__(self, string):
