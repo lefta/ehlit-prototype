@@ -117,26 +117,26 @@ class Modifier(Grammar):
     return ast.MOD_CONST
 
 class Array(Grammar):
-  grammar = OptionalWhitespace, LIST_OF('[]', sep=OptionalWhitespace)
+  grammar = OPTIONAL(OptionalWhitespace, LIST_OF('[]', sep=OptionalWhitespace))
 
   def parse(self, underlying_type):
-    if self is None:
+    if self[0] is None:
       return underlying_type
     return ast.Array(underlying_type)
 
 class Reference(Grammar):
-  grammar = ('ref', OPTIONAL(Array), Whitespace, REF('Type'))
+  grammar = ('ref', Array, Whitespace, REF('Type'))
 
   def parse(self):
-    return Array.parse(self[1], ast.Reference(self[3].parse()))
+    return self[1].parse(ast.Reference(self[3].parse()))
 
 class Type(Grammar):
-  grammar = (Modifier, OR(Reference, BuiltinType, Symbol), OPTIONAL(Array))
+  grammar = (Modifier, OR(Reference, BuiltinType, Symbol), Array)
   grammar_error_override = True
   grammar_desc = 'type'
 
   def parse(self):
-    return Array.parse(self[2], ast.Type(self[1].parse(), self[0].parse()))
+    return self[2].parse(ast.Type(self[1].parse(), self[0].parse()))
 
 
 class Import(Grammar):
