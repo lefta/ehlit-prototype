@@ -108,6 +108,14 @@ class BuiltinType(Grammar):
   def parse(self):
     return ast.BuiltinType(str(self[0]))
 
+class Modifier(Grammar):
+  grammar = (OPTIONAL('const', Whitespace))
+
+  def parse(self):
+    if self[0] is None:
+      return ast.MOD_NONE
+    return ast.MOD_CONST
+
 class Array(Grammar):
   grammar = OptionalWhitespace, LIST_OF('[]', sep=OptionalWhitespace)
 
@@ -123,12 +131,12 @@ class Reference(Grammar):
     return Array.parse(self[1], ast.Reference(self[3].parse()))
 
 class Type(Grammar):
-  grammar = (OR(Reference, BuiltinType, Symbol), OPTIONAL(Array))
+  grammar = (Modifier, OR(Reference, BuiltinType, Symbol), OPTIONAL(Array))
   grammar_error_override = True
   grammar_desc = 'type'
 
   def parse(self):
-    return Array.parse(self[1], ast.Type(self[0].parse()))
+    return Array.parse(self[2], ast.Type(self[1].parse(), self[0].parse()))
 
 
 class Import(Grammar):

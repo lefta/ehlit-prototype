@@ -69,6 +69,8 @@ class SourceWriter:
 
   def writeType(self, typ):
     self.write(typ.sym)
+    if typ.is_const:
+      self.file.write(' const')
 
   def writeArray(self, arr):
     self.write(arr.typ)

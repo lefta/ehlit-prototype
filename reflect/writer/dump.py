@@ -166,6 +166,8 @@ class DumpWriter:
   @indent
   def dumpType(self, typ):
     self.dump('Type')
+    if typ.is_const:
+      self.dump('Modifiers: const')
     self.print_node(typ.sym, False)
 
   @indent

@@ -23,6 +23,9 @@ import logging
 from reflect.parser import c_compat
 from reflect.parser.error import ParseError
 
+MOD_NONE = 0
+MOD_CONST = 1
+
 class Node:
   def build(self, parent):
     self.parent = parent
@@ -103,12 +106,16 @@ class Reference(Node):
   def ref_offset(self): return self.typ.sym.ref_offset + 1
 
 class Type(Node):
-  def __init__(self, sym):
+  def __init__(self, sym, mods):
     self.sym = sym
+    self._mods = mods
 
   def is_builtin(self):
     typ = type(self.sym)
     return typ == BuiltinType or typ == Reference
+
+  @property
+  def is_const(self): return self._mods & MOD_CONST
 
   def build(self, parent):
     super().build(parent)
