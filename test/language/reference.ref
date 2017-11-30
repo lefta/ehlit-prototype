@@ -1,28 +1,31 @@
 import stdio
 
-void set_int(ref int i)
+int set_int(ref int i)
 {
 	i = 42
+	return i
 }
 
-void set_int_to(ref int i, ref int j)
+ref int set_int_to(ref int i, ref int j)
 {
 	i = j
+	return ref i
 }
 
-void set_int_ref(ref int i, ref int j)
+ref int set_int_ref(ref int i, ref int j)
 {
 	ref i = ref j
+	return ref i
 }
 
 int main()
 {
 	int i
-	int j = 21
+	ref int j = 21
 
-	set_int(ref i)
-	set_int_to(ref i, ref j)
-	set_int_ref(ref i, ref j)
+	i = set_int(ref i)
+	ref j = ref set_int_to(ref i, ref j)
+	j = set_int_ref(ref i, ref j)
 
 	return 0
 }

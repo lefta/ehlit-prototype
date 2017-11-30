@@ -62,16 +62,16 @@ class ReferencedValue(Grammar):
   def parse(self):
     return ast.ReferencedValue(self[2].parse())
 
-class Value(Grammar):
-  grammar = (OR(NullValue, ReferencedValue, Symbol, String, Number))
-  grammar_collapse = True
-
 class FunctionCall(Grammar):
   grammar = (Symbol, OptionalWhitespace, "(", OptionalWhitespace,
-    LIST_OF(Value, sep=ArgumentSeparator), OptionalWhitespace, ")")
+    LIST_OF(REF('Value'), sep=ArgumentSeparator), OptionalWhitespace, ")")
 
   def parse(self):
     return ast.FunctionCall(self[0].parse(), parse_list(self[4]))
+
+class Value(Grammar):
+  grammar = (OR(NullValue, ReferencedValue, FunctionCall, Symbol, String, Number))
+  grammar_collapse = True
 
 class Operator(Grammar):
   grammar = (OptionalWhitespace, OR("==", "!=", ">", "<", ">=", "<=", "+", "-", "*", "/", "%"),

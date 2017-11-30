@@ -256,6 +256,12 @@ class FunctionCall(Node):
     for a in self.args:
       a.build(self)
 
+  @property
+  def ref_offset(self): return self.sym.ref_offset
+
+  @ref_offset.setter
+  def ref_offset(self, val): self.sym.ref_offset = val
+
 class ControlStructure(Node):
   def __init__(self, name, cond, body):
     self.name = name
