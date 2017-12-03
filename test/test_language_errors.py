@@ -33,4 +33,4 @@ class TestLanguageErrors(ReflectTestCase):
 		for c in self.cases:
 			with self.subTest(case=c):
 				f = os.path.join(self.test_dir, c)
-				self.assert_error(f, "0:0: Expected 'import' or function declaration: Found 'main()'")
+				self.assert_error(f, "1:5: expected '[]' or symbol")

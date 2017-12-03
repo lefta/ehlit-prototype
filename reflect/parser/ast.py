@@ -241,11 +241,8 @@ class Statement(Node):
     return self.expr.get_declaration(sym)
 
 class Expression(Node):
-  def __init__(self):
-    self.contents = []
-
-  def append(self, c):
-    self.contents.append(c)
+  def __init__(self, contents):
+    self.contents = contents
 
   def build(self, parent):
     super().build(parent)
@@ -336,13 +333,10 @@ class ReferencedValue(Node):
     self.val.ref_offset -= 1
 
 class AST(Node):
-  def __init__(self):
-    self.nodes = []
+  def __init__(self, nodes):
+    self.nodes = nodes
     self.errors = 0
     self.warnings = 0
-
-  def append(self, n):
-    self.nodes.append(n)
 
   def __iter__(self):
     return self.nodes.__iter__()

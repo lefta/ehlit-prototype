@@ -19,7 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from modgrammar import *
+from arpeggio import RegExMatch, Optional, ZeroOrMore, OneOrMore, And, Not, EOF
 from reflect.parser import ast
 
 def parse_list(lst):
@@ -28,237 +28,48 @@ def parse_list(lst):
     res.append(node.parse())
   return res
 
-class Whitespace(Grammar): grammar = REPEAT(WHITESPACE)
-class OptionalWhitespace(Grammar): grammar = OPTIONAL(Whitespace)
-class ArgumentSeparator(Grammar): grammar = (OptionalWhitespace, ",", OptionalWhitespace)
-
-class Symbol(Grammar):
-  grammar = (WORD("A-Za-z_", "A-Za-z0-9_"))
-
-  def parse(self):
-    return ast.Symbol(str(self[0]))
-
-class String(Grammar):
-  grammar = ('"', WORD('^"'), '"')
-
-  def parse(self):
-    return ast.String(str(self[1]))
-
-class Number(Grammar):
-  grammar = (WORD("0-9"))
-
-  def parse(self):
-    return ast.Number(str(self[0]))
-
-class NullValue(Grammar):
-  grammar = ('null')
-
-  def parse(self):
-    return ast.NullValue()
-
-class ReferencedValue(Grammar):
-  grammar = ('ref', Whitespace, REF('Value'))
-
-  def parse(self):
-    return ast.ReferencedValue(self[2].parse())
-
-class FunctionCall(Grammar):
-  grammar = (Symbol, OptionalWhitespace, "(", OptionalWhitespace,
-    LIST_OF(REF('Value'), sep=ArgumentSeparator), OptionalWhitespace, ")")
-
-  def parse(self):
-    return ast.FunctionCall(self[0].parse(), parse_list(self[4]))
-
-class Value(Grammar):
-  grammar = (OR(NullValue, ReferencedValue, FunctionCall, Symbol, String, Number))
-  grammar_collapse = True
-
-class Operator(Grammar):
-  grammar = (OptionalWhitespace, OR("==", "!=", ">", "<", ">=", "<=", "+", "-", "*", "/", "%"),
-    OptionalWhitespace)
-
-  def parse(self):
-    return ast.Operator(str(self[1]))
-
-class Expression(Grammar):
-  grammar = (LIST_OF(OR(FunctionCall, Value), sep=Operator))
-
-  def parse(self):
-    expr = ast.Expression()
-    for node in self[0].elements:
-      expr.append(node.parse())
-    return expr
-
-class Return(Grammar):
-  grammar = ("return", Whitespace, Expression)
-
-  def parse(self):
-    return ast.Return(self[2].parse())
-
-class Assignment(Grammar):
-  grammar = ('=', OptionalWhitespace, Expression)
-
-  def parse(self):
-    return ast.Assignment(self[2].parse())
-
-
-class BuiltinType(Grammar):
-  grammar = (OR("int", "str", "any", "void", "size"))
-
-  def parse(self):
-    return ast.BuiltinType(str(self[0]))
-
-class Modifier(Grammar):
-  grammar = (OPTIONAL('const', Whitespace))
-
-  def parse(self):
-    if self[0] is None:
-      return ast.MOD_NONE
-    return ast.MOD_CONST
-
-class Array(Grammar):
-  grammar = OPTIONAL(OptionalWhitespace, LIST_OF('[]', sep=OptionalWhitespace))
-
-  def parse(self, underlying_type):
-    if self[0] is None:
-      return underlying_type
-    return ast.Array(underlying_type)
-
-class Reference(Grammar):
-  grammar = ('ref', Array, Whitespace, REF('Type'))
-
-  def parse(self):
-    return self[1].parse(ast.Reference(self[3].parse()))
-
-class Type(Grammar):
-  grammar = (Modifier, OR(Reference, BuiltinType, Symbol), Array)
-  grammar_error_override = True
-  grammar_desc = 'type'
-
-  def parse(self):
-    return self[2].parse(ast.Type(self[1].parse(), self[0].parse()))
-
-
-class Import(Grammar):
-  grammar = ("import", Whitespace, Symbol)
-
-  def parse(self):
-    return ast.Import(self[2].parse())
-
-
-class Declaration(Grammar):
-  grammar = (Type, Whitespace, Symbol)
-
-  def parse(self):
-    return ast.Declaration(self[0].parse(), self[2].parse())
-
-class VariableDeclaration(Grammar):
-  grammar = (Declaration, OptionalWhitespace, OPTIONAL(Assignment))
-
-  def parse(self):
-    assign = self[2].parse() if self[2] is not None else None
-    return ast.VariableDeclaration(self[0].parse(), assign)
-
-class VariableAssignment(Grammar):
-  grammar = (OR(ReferencedValue, Symbol), OptionalWhitespace, Assignment)
-
-  def parse(self):
-    return ast.VariableAssignment(self[0].parse(), self[2].parse())
-
-class Statement(Grammar):
-  grammar = (OR(Return, VariableAssignment, VariableDeclaration, Expression))
-
-  def parse(self):
-    return ast.Statement(self[0].parse())
-
-class Instruction(Grammar):
-  grammar = (OR(REF('Condition'), REF('WhileLoop'), Statement))
-  grammar_collapse = True
-
-class StructureBody(Grammar):
-  grammar = ("{", OptionalWhitespace, LIST_OF(Instruction, sep=Whitespace), OptionalWhitespace,
-    "}")
-
-  def parse(self):
-    return parse_list(self[2])
-
-
-class ControlStructure(Grammar):
-  grammar = (Expression, Whitespace, OR(Instruction, StructureBody))
-
-  def parse(self, name):
-    return ast.ControlStructure(name, self[0].parse(),
-      self[2].parse() if type(self[2]) is StructureBody else [self[2].parse()])
-
-class IfCondition(Grammar):
-  grammar = ("if", Whitespace, ControlStructure)
-
-  def parse(self):
-    return self[2].parse("if")
-
-class ElseIfCondition(Grammar):
-  grammar = ("elif", Whitespace, ControlStructure)
-
-  def parse(self):
-    return self[2].parse("elif")
-
-class ElseCondition(Grammar):
-  grammar = ("else", Whitespace, OR(Instruction, StructureBody))
-
-  def parse(self):
-    return ast.ControlStructure("else", None,
-      self[2].parse() if type(self[2]) is StructureBody else [self[2].parse()])
-
-class Condition(Grammar):
-  grammar = (IfCondition, OptionalWhitespace,
-    OPTIONAL(LIST_OF(ElseIfCondition, sep=OptionalWhitespace)), OptionalWhitespace,
-    OPTIONAL(ElseCondition))
-
-  def parse(self):
-    branches = [self[0].parse()]
-    if self[2] is not None:
-      branches += parse_list(self[2])
-    if self[4] is not None:
-      branches.append(self[4].parse())
-    return ast.Condition(branches)
-
-class WhileLoop(Grammar):
-  grammar = ("while", Whitespace, ControlStructure)
-
-  def parse(self):
-    return self[2].parse("while")
-
-class ArgumentDefinitionList(Grammar):
-  grammar = (LIST_OF(Declaration, sep=ArgumentSeparator))
-
-  def parse(self):
-    return parse_list(self[0])
-
-class FunctionDeclaration(Grammar):
-  grammar = (Type, Whitespace, Symbol, OptionalWhitespace, "(", OptionalWhitespace,
-    OPTIONAL(ArgumentDefinitionList), OptionalWhitespace, ")")
-
-  def parse(self):
-    args = self[6].parse() if self[6] else []
-    return ast.FunctionDeclaration(self[0].parse(), self[2].parse(), args)
-
-class FunctionDefinition(Grammar):
-  grammar = (FunctionDeclaration, OptionalWhitespace, StructureBody)
-
-  def parse(self):
-    return ast.FunctionDefinition(self[0].parse(), self[2].parse())
-
-class Function(Grammar):
-  grammar = OR(FunctionDefinition, FunctionDeclaration)
-  grammar_error_override = True
-  grammar_desc = 'function declaration'
-
-  def parse(self):
-    return self[0].parse()
-
-
-class ReflectGrammar(Grammar):
-  grammar = (OR(Import, Function, Whitespace))
-
-  def parse(self):
-    return self[0].parse() if type(self[0]) is not Whitespace else None
+def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', builtin_type]
+def symbol(): return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='symbol')
+def string(): return '"', RegExMatch(r'[^"]*'), '"'
+def number(): return RegExMatch(r'[0-9]+', str_repr='number')
+def null_value(): return 'null'
+def referenced_value(): return 'ref', value
+def function_call(): return symbol, '(', ZeroOrMore(value, sep=','), ')'
+def value(): return [null_value, referenced_value, function_call, symbol, string, number]
+
+def mathematical_operator(): return ['+', '-', '*', '/', '%']
+def binary_operator(): return ['==', '!=', '>=', '<=', '>', '<']
+def operator(): return [mathematical_operator, binary_operator]
+def expression(): return OneOrMore([function_call, value], sep=operator)
+def assignment(): return '=', expression
+def operation_assignment(): return Optional(mathematical_operator), assignment
+
+def builtin_type(): return ['int', 'str', 'any', 'void', 'size']
+def modifier(): return Optional('const')
+def array(): return ZeroOrMore('[]')
+def reference(): return 'ref', array, full_type
+def full_type(): return modifier, [reference, builtin_type, symbol], array
+
+def declaration(): return full_type, symbol
+def variable_declaration(): return declaration, Optional(assignment)
+def variable_assignment(): return [referenced_value, symbol], operation_assignment
+def return_instruction(): return 'return', expression
+def statement(): return [return_instruction, variable_assignment, variable_declaration, expression]
+def instruction(): return [condition, while_loop, statement]
+
+def control_structure_body(): return '{', ZeroOrMore(instruction), '}'
+def control_structure(): return expression, [instruction, control_structure_body]
+def if_condition(): return 'if', control_structure
+def elif_condition(): return 'elif', control_structure
+def else_condition(): return 'else', [instruction, control_structure_body]
+def condition(): return if_condition, ZeroOrMore(elif_condition), Optional(else_condition)
+def while_loop(): return 'while', control_structure
+
+def function_prototype(): return full_type, symbol, '(', ZeroOrMore(declaration, sep=','), ')'
+def function_declaration(): return function_prototype, Not('{')
+def function_definition(): return function_prototype, control_structure_body
+def function(): return [function_definition, function_declaration]
+
+def import_instruction(): return 'import', symbol
+
+def grammar(): return ZeroOrMore([import_instruction, function]), EOF

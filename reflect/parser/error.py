@@ -20,11 +20,5 @@
 # SOFTWARE.
 
 class ParseError(Exception):
-  def __init__(self, error):
-    if type(error) == str:
-      self.msg = error
-    else:
-      self.msg = "%d:%d: %s" % (error.line, error.col, error.message)
-
-  def __str__(self):
-    return self.msg
+  def __init__(self, error): self.msg = error
+  def __str__(self): return self.msg
