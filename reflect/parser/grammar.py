@@ -40,7 +40,7 @@ def value(): return [null_value, referenced_value, function_call, symbol, string
 def mathematical_operator(): return ['+', '-', '*', '/', '%']
 def binary_operator(): return ['==', '!=', '>=', '<=', '>', '<']
 def operator(): return [mathematical_operator, binary_operator]
-def expression(): return OneOrMore([function_call, value], sep=operator)
+def expression(): return value, ZeroOrMore(operator, value)
 def assignment(): return '=', expression
 def operation_assignment(): return Optional(mathematical_operator), assignment
 
