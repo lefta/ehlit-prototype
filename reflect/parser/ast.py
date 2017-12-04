@@ -138,6 +138,7 @@ class VariableAssignment(Node):
 class Assignment(Node):
   def __init__(self, expr):
     self.expr = expr
+    self.operator = None
 
   def build(self, parent):
     super().build(parent)

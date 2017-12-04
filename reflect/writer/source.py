@@ -134,7 +134,10 @@ class SourceWriter:
         self.file.write(' ')
 
   def writeAssignment(self, assign):
-    self.file.write(' = ')
+    self.file.write(' ')
+    if assign.operator is not None:
+      self.write(assign.operator)
+    self.file.write('= ')
     self.write(assign.expr)
 
   def writeVariableAssignment(self, assign):

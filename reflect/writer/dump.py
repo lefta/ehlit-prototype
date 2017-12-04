@@ -137,6 +137,8 @@ class DumpWriter:
   @indent
   def dumpAssignment(self, assign):
     self.dump('Assignment')
+    if assign.operator is not None:
+      self.print_node(assign.operator)
     self.print_node(assign.expr, False)
 
   @indent
