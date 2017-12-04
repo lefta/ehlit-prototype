@@ -214,3 +214,11 @@ class SourceWriter:
 
   def writeReferencedValue(self, ref):
     self.write(ref.val)
+
+  def writePrefixOperatorValue(self, val):
+    self.file.write(val.op)
+    self.write(val.val)
+
+  def writeSuffixOperatorValue(self, val):
+    self.write(val.val)
+    self.file.write(val.op)
