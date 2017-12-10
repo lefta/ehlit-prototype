@@ -94,6 +94,12 @@ class Array(Node):
     super().build(parent)
     self.typ.build(self)
 
+  @property
+  def sym(self): return self
+
+  @property
+  def ref_offset(self): return 0
+
 class Reference(Node):
   def __init__(self, typ):
     self.typ = typ
