@@ -22,11 +22,9 @@
 from arpeggio import RegExMatch, Optional, ZeroOrMore, OneOrMore, And, Not, EOF
 from reflect.parser import ast
 
-def parse_list(lst):
-  res = []
-  for node in lst.elements[::2]:
-    res.append(node.parse())
-  return res
+def block_comment(): return ('/*', RegExMatch(r'[^*/]*'), '*/')
+def line_comment(): return ('//', RegExMatch(r'.*$'))
+def comment(): return [line_comment, block_comment]
 
 def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', builtin_type]
 def symbol(): return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='symbol')
@@ -60,7 +58,7 @@ def variable_declaration(): return declaration, Optional(assignment)
 def variable_assignment(): return [referenced_value, symbol], operation_assignment
 def return_instruction(): return 'return', expression
 def statement(): return [return_instruction, variable_assignment, variable_declaration, expression]
-def instruction(): return [condition, while_loop, statement]
+def instruction(): return [comment, condition, while_loop, statement]
 
 def control_structure_body(): return '{', ZeroOrMore(instruction), '}'
 def control_structure(): return expression, [instruction, control_structure_body]
@@ -77,4 +75,4 @@ def function(): return [function_definition, function_declaration]
 
 def import_instruction(): return 'import', symbol
 
-def grammar(): return ZeroOrMore([import_instruction, function]), EOF
+def grammar(): return ZeroOrMore([comment, import_instruction, function]), EOF
