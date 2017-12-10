@@ -34,7 +34,7 @@ def string(): return '"', RegExMatch(r'[^"]*'), '"'
 def number(): return RegExMatch(r'[0-9]+', str_repr='number')
 def null_value(): return 'null'
 def referenced_value(): return 'ref', value
-def function_call(): return symbol, '(', ZeroOrMore(value, sep=','), ')'
+def function_call(): return [builtin_type, symbol], '(', ZeroOrMore(value, sep=','), ')'
 def writable_value(): return [referenced_value, symbol]
 def prefix_operator_value(): return (['++', '--', '!'], writable_value)
 def suffix_operator_value(): return (writable_value, ['++', '--'])

@@ -83,6 +83,9 @@ class BuiltinType(Node):
   @property
   def ref_offset(self): return 1 if self.is_reference else 0
 
+  @property
+  def is_type(self): return True
+
 class Array(Node):
   def __init__(self, typ):
     self.typ = typ
@@ -203,8 +206,10 @@ class FunctionDeclaration(Node):
         return decl
     return None
 
-  def is_declaration(self):
-    return True
+  def is_declaration(self): return True
+
+  @property
+  def is_type(self): return False
 
 class FunctionDefinition(Node):
   def __init__(self, proto, body):
@@ -267,6 +272,9 @@ class FunctionCall(Node):
   @ref_offset.setter
   def ref_offset(self, val): self.sym.ref_offset = val
 
+  @property
+  def is_cast(self): return self.sym.is_type
+
 class ControlStructure(Node):
   def __init__(self, name, cond, body):
     self.name = name
@@ -312,6 +320,9 @@ class Symbol(Node):
         self.warn("use of undeclared identifier %s" % self.name)
       else:
         self.ref_offset = self.decl.typ.sym.ref_offset
+
+  @property
+  def is_type(self): return false if self.decl is None else self.decl.is_type
 
 class String(Node):
   def __init__(self, string):

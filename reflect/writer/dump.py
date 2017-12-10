@@ -128,9 +128,14 @@ class DumpWriter:
 
   @indent
   def dumpFunctionCall(self, call):
-    self.dump('FunctionCall')
-    self.print_node(call.sym)
-    self.print_node_list('Arguments', call.args, False)
+    if call.is_cast:
+      self.dump('Cast')
+      self.print_node(call.sym)
+      self.print_node(call.args[0], False)
+    else:
+      self.dump('FunctionCall')
+      self.print_node(call.sym)
+      self.print_node_list('Arguments', call.args, False)
 
   @indent
   def dumpVariableAssignment(self, assign):

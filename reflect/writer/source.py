@@ -145,16 +145,23 @@ class SourceWriter:
     self.write(assign.assign)
 
   def writeFunctionCall(self, call):
-    self.write(call.sym)
-    self.file.write('(')
-    i = 0
-    count = len(call.args)
-    while i < count:
-      self.write(call.args[i])
-      i += 1
-      if i < count:
-        self.file.write(', ')
-    self.file.write(')')
+    if call.is_cast:
+      self.file.write('((')
+      self.write(call.sym)
+      self.file.write(')')
+      self.write(call.args[0])
+      self.file.write(')')
+    else:
+      self.write(call.sym)
+      self.file.write('(')
+      i = 0
+      count = len(call.args)
+      while i < count:
+        self.write(call.args[i])
+        i += 1
+        if i < count:
+          self.file.write(', ')
+      self.file.write(')')
 
   def writeControlStructure(self, struct):
     self.write_indent()

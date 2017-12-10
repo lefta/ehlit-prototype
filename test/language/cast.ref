@@ -1,0 +1,8 @@
+import stdio
+
+int main(int ac, str[] av)
+{
+	printf("%d\n", int(ref av))
+	str test = str(ac)
+	return 0
+}
