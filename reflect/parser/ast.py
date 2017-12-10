@@ -33,20 +33,35 @@ class Node:
   def is_declaration(self):
     return False
 
+  """
+  Find a declaration when coming from downsides. Scoping structures would want to search symbols
+  in this function rather than in get_declaration.
+
+  The default is to try get_declaration on self, then to try with parent.
+  """
   def find_declaration(self, sym):
     decl = self.get_declaration(sym)
     if decl is None:
       return self.parent.find_declaration(sym)
     return decl
 
-  def get_declaration(self, sym):
-    return None
+  """
+  Find a declaration when coming from upsides. Structures exposing symbols to their parent (
+  like Import) would want to search symbols in this function rather than in find_declaration.
+  """
+  def get_declaration(self, sym): return None
 
-  def error(self, msg):
-    self.parent.error(msg)
+  """
+  Report an error to the parent, up to the root where it will be handled. There is no reason to
+  override it, except intercepting it for whatever reason.
+  """
+  def error(self, msg): self.parent.error(msg)
 
-  def warn(self, msg):
-    self.parent.warn(msg)
+  """
+  Report a warning to the parent, up to the root where it will be handled. There is no reason to
+  override it, except intercepting it for whatever reason.
+  """
+  def warn(self, msg): self.parent.warn(msg)
 
 
 class Import(Node):
