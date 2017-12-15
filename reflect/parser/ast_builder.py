@@ -42,6 +42,21 @@ class ASTBuilder(PTNodeVisitor):
     return PrefixOperatorValue(str(children[0]), children[1])
   def visit_suffix_operator_value(self, node, children):
     return SuffixOperatorValue(str(children[1]), children[0])
+  def visit_array_access(self, node, children):
+    res = None
+    for v in children:
+      res = ArrayAccess(res, v)
+    return res
+  def visit_value(self, node, children):
+    if len(children) == 1:
+      return children[0]
+
+    arr = res = children[1]
+    while arr.child is not None:
+      arr = arr.child
+    arr.child = children[0]
+    return res
+
 
   def visit_mathematical_operator(self, node, children): return Operator(str(node))
   def visit_binary_operator(self, node, children): return Operator(str(node))

@@ -296,6 +296,22 @@ class FunctionCall(Node):
   @property
   def is_cast(self): return self.sym.is_type
 
+class ArrayAccess(Node):
+  def __init__(self, child, idx):
+    self.child = child
+    self.idx = idx
+
+  def build(self, parent):
+    super().build(parent)
+    self.child.build(self)
+    self.idx.build(self)
+
+  @property
+  def ref_offset(self): return self.child.ref_offset
+
+  @ref_offset.setter
+  def ref_offset(self, val): self.child.ref_offset = val
+
 class ControlStructure(Node):
   def __init__(self, name, cond, body):
     self.name = name

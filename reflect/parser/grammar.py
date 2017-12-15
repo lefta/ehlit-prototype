@@ -36,9 +36,10 @@ def function_call(): return [builtin_type, symbol], '(', ZeroOrMore(value, sep='
 def writable_value(): return [referenced_value, symbol]
 def prefix_operator_value(): return (['++', '--', '!'], writable_value)
 def suffix_operator_value(): return (writable_value, ['++', '--'])
+def array_access(): return ZeroOrMore('[', value, ']')
 def value():
   return [null_value, function_call, prefix_operator_value, suffix_operator_value, writable_value,
-    string, number]
+    string, number], array_access
 
 def mathematical_operator(): return ['+', '-', '*', '/', '%']
 def binary_operator(): return ['==', '!=', '>=', '<=', '>', '<']

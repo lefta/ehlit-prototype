@@ -163,6 +163,18 @@ class SourceWriter:
           self.file.write(', ')
       self.file.write(')')
 
+  def writeArrayAccess(self, arr):
+    sym = arr.child
+    while type(sym).__name__ == 'ArrayAccess':
+      sym = sym.child
+    self.write(sym)
+
+    while type(arr).__name__ == 'ArrayAccess':
+      self.file.write('[')
+      self.write(arr.idx)
+      self.file.write(']')
+      arr = arr.child
+
   def writeControlStructure(self, struct):
     self.write_indent()
     self.file.write(self.control_structures[struct.name])

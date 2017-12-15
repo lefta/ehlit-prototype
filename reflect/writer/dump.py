@@ -138,6 +138,12 @@ class DumpWriter:
       self.print_node_list('Arguments', call.args, False)
 
   @indent
+  def dumpArrayAccess(self, arr):
+    self.dump('ArrayAccess')
+    self.print_node(arr.idx)
+    self.print_node(arr.child, False)
+
+  @indent
   def dumpVariableAssignment(self, assign):
     self.dump('VariableAssignment')
     self.print_node(assign.var)
