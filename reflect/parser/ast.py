@@ -381,7 +381,7 @@ class ReferencedValue(Node):
     self.val.build(self)
     self.val.ref_offset -= 1
 
-class PrefixOperatorValue(Node):
+class UnaryOperatorValue(Node):
   def __init__(self, op, val):
     self.op = op
     self.val = val
@@ -390,14 +390,9 @@ class PrefixOperatorValue(Node):
     super().build(parent)
     self.val.build(self)
 
-class SuffixOperatorValue(Node):
-  def __init__(self, op, val):
-    self.op = op
-    self.val = val
 
-  def build(self, parent):
-    super().build(parent)
-    self.val.build(self)
+class PrefixOperatorValue(UnaryOperatorValue): pass
+class SuffixOperatorValue(UnaryOperatorValue): pass
 
 class AST(Node):
   def __init__(self, nodes):
