@@ -354,7 +354,7 @@ class Symbol(Node):
     if not parent.is_declaration():
       self.decl = self.find_declaration(self.name)
       if self.decl is None:
-        self.warn("use of undeclared identifier %s" % self.name)
+        self.error("use of undeclared identifier %s" % self.name)
       else:
         self.ref_offset = self.decl.typ.sym.ref_offset
 
