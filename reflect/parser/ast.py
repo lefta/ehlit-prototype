@@ -101,6 +101,11 @@ class BuiltinType(Node):
   @property
   def is_type(self): return True
 
+  def __eq__(self, rhs):
+    if type(rhs) != BuiltinType:
+      return False
+    return self.name == rhs.name
+
 class Array(Node):
   def __init__(self, typ):
     self.typ = typ
@@ -144,6 +149,11 @@ class Type(Node):
   def build(self, parent):
     super().build(parent)
     self.sym.build(self)
+
+  def __eq__(self, rhs):
+    if type(rhs) == Type:
+      return self.sym == rhs.sym
+    return self.sym == rhs
 
 class Operator(Node):
   def __init__(self, op):
