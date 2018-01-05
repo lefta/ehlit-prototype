@@ -306,6 +306,9 @@ class FunctionCall(Node):
   @property
   def is_cast(self): return self.sym.is_type
 
+  @property
+  def typ(self): return self.sym if self.is_cast else self.sym.typ
+
 class ArrayAccess(Node):
   def __init__(self, child, idx):
     self.child = child
@@ -371,16 +374,26 @@ class Symbol(Node):
   @property
   def is_type(self): return false if self.decl is None else self.decl.is_type
 
+  @property
+  def typ(self): return self.decl.typ
+
 class String(Node):
   def __init__(self, string):
     self.string = string
+
+  @property
+  def typ(self): return BuiltinType('str')
 
 class Number(Node):
   def __init__(self, num):
     self.num = num
 
+  @property
+  def typ(self): return BuiltinType('int')
+
 class NullValue(Node):
-  pass
+  @property
+  def typ(self): return BuiltinType('any')
 
 class ReferencedValue(Node):
   def __init__(self, val):
@@ -391,6 +404,9 @@ class ReferencedValue(Node):
     self.val.build(self)
     self.val.ref_offset -= 1
 
+  @property
+  def typ(self): return self
+
 class UnaryOperatorValue(Node):
   def __init__(self, op, val):
     self.op = op
@@ -400,6 +416,8 @@ class UnaryOperatorValue(Node):
     super().build(parent)
     self.val.build(self)
 
+  @property
+  def typ(self): return self.val.typ
 
 class PrefixOperatorValue(UnaryOperatorValue): pass
 class SuffixOperatorValue(UnaryOperatorValue): pass
