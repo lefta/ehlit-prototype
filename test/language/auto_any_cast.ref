@@ -1,0 +1,13 @@
+any returning_any(any data)
+{
+	return ref data
+}
+
+int main()
+{
+	int number = 42
+	number = returning_any(ref number)
+	int number2 = returning_any(ref number)
+
+	return 0
+}

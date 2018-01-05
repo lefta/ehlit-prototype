@@ -162,6 +162,8 @@ class Operator(Node):
   def __init__(self, op):
     self.op = op
 
+  def auto_cast(self, target_type): pass
+
 class VariableAssignment(Node):
   def __init__(self, var, assign):
     self.var = var
@@ -171,6 +173,7 @@ class VariableAssignment(Node):
     super().build(parent)
     self.var.build(self)
     self.assign.build(self)
+    self.assign.expr.auto_cast(self.var.typ)
 
 class Assignment(Node):
   def __init__(self, expr):
@@ -210,6 +213,7 @@ class VariableDeclaration(Node):
     self.decl.build(self)
     if self.assign is not None:
       self.assign.build(self)
+      self.assign.expr.auto_cast(self.decl.typ)
 
   def get_declaration(self, sym):
     return self.decl.get_declaration(sym)
@@ -289,6 +293,10 @@ class Expression(Node):
     for e in self.contents:
       e.build(self)
 
+  def auto_cast(self, target_type):
+    for e in self.contents:
+      e.auto_cast(target_type)
+
 class FunctionCall(Node):
   def __init__(self, sym, args):
     self.sym = sym
@@ -311,6 +319,10 @@ class FunctionCall(Node):
 
   @property
   def typ(self): return self.sym if self.is_cast else self.sym.typ
+
+  def auto_cast(self, target_type):
+    if not self.is_cast:
+      self.sym.auto_cast(target_type)
 
 class ArrayAccess(Node):
   def __init__(self, child, idx):
@@ -364,6 +376,7 @@ class Symbol(Node):
     self.name = name
     self.decl = None
     self.ref_offset = 0
+    self.cast = None
 
   def build(self, parent):
     super().build(parent)
@@ -373,6 +386,13 @@ class Symbol(Node):
         self.error("use of undeclared identifier %s" % self.name)
       else:
         self.ref_offset = self.decl.typ.sym.ref_offset
+
+  def auto_cast(self, target_type):
+    if self.typ == BuiltinType('any'):
+      if target_type.is_reference:
+        self.cast = target_type
+      else:
+        self.cast = Reference(target_type)
 
   @property
   def is_type(self): return false if self.decl is None else self.decl.is_type
@@ -387,6 +407,8 @@ class String(Node):
   @property
   def typ(self): return BuiltinType('str')
 
+  def auto_cast(self, target_type): pass
+
 class Number(Node):
   def __init__(self, num):
     self.num = num
@@ -394,9 +416,13 @@ class Number(Node):
   @property
   def typ(self): return BuiltinType('int')
 
+  def auto_cast(self, target_type): pass
+
 class NullValue(Node):
   @property
   def typ(self): return BuiltinType('any')
+
+  def auto_cast(self, target_type): pass
 
 class ReferencedValue(Node):
   def __init__(self, val):
@@ -412,6 +438,9 @@ class ReferencedValue(Node):
 
   @property
   def is_reference(self): return True
+
+  def auto_cast(self, target_type):
+    self.val.auto_cast(target_type)
 
 class UnaryOperatorValue(Node):
   def __init__(self, op, val):

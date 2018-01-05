@@ -215,6 +215,11 @@ class SourceWriter:
         self.file.write('*')
         i -= 1
 
+    if sym.cast is not None:
+      self.file.write('(')
+      self.write(sym.cast)
+      self.file.write(')')
+
     if sym.decl is not None:
       self.file.write(sym.decl.name)
     else:

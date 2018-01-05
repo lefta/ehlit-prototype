@@ -135,6 +135,11 @@ class DumpWriter:
     else:
       self.dump('FunctionCall')
       self.print_node(call.sym)
+      if call.sym.cast:
+        self.increment_prefix(True)
+        self.dump('Automatic cast')
+        self.print_node(call.sym.cast, False)
+        self.decrement_prefix()
       self.print_node_list('Arguments', call.args, False)
 
   @indent
