@@ -144,6 +144,9 @@ class Type(Node):
     return typ == BuiltinType or typ == Reference
 
   @property
+  def is_reference(self): return self.sym.is_reference
+
+  @property
   def is_const(self): return self._mods & MOD_CONST
 
   def build(self, parent):
@@ -406,6 +409,9 @@ class ReferencedValue(Node):
 
   @property
   def typ(self): return self
+
+  @property
+  def is_reference(self): return True
 
 class UnaryOperatorValue(Node):
   def __init__(self, op, val):
