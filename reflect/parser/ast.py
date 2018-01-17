@@ -309,8 +309,12 @@ class FunctionCall(Node):
   def build(self, parent):
     super().build(parent)
     self.sym.build(self)
-    for a in self.args:
-      a.build(self)
+    i = 0
+    while i < len(self.args):
+      self.args[i].build(self)
+      if not self.is_cast and i < len(self.sym.decl.args):
+        self.args[i].auto_cast(self.sym.decl.args[i])
+      i += 1
 
   @property
   def ref_offset(self): return self.sym.ref_offset
@@ -375,6 +379,11 @@ class Return(Node):
   def build(self, parent):
     super().build(parent)
     self.expr.build(self)
+
+    decl = self.parent
+    while type(decl) is not FunctionDefinition:
+      decl = decl.parent
+    self.expr.auto_cast(decl)
 
 
 class Symbol(Node):
