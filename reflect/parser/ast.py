@@ -437,6 +437,9 @@ class ReferencedValue(Node):
   def typ(self): return self
 
   @property
+  def ref_offset(self): return self.val.ref_offset
+
+  @property
   def is_reference(self): return True
 
   def auto_cast(self, target_type):
