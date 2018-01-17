@@ -144,6 +144,9 @@ class Type(Node):
     return typ == BuiltinType or typ == Reference
 
   @property
+  def ref_offset(self): return self.sym.ref_offset
+
+  @property
   def is_reference(self): return self.sym.is_reference
 
   @property
