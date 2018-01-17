@@ -344,6 +344,8 @@ class ArrayAccess(Node):
   @ref_offset.setter
   def ref_offset(self, val): self.child.ref_offset = val
 
+  def auto_cast(self, target): pass
+
 class ControlStructure(Node):
   def __init__(self, name, cond, body):
     self.name = name
