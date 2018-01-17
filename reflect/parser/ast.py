@@ -176,7 +176,7 @@ class VariableAssignment(Node):
     super().build(parent)
     self.var.build(self)
     self.assign.build(self)
-    self.assign.expr.auto_cast(self.var.typ)
+    self.assign.expr.auto_cast(self.var)
 
 class Assignment(Node):
   def __init__(self, expr):
@@ -216,7 +216,7 @@ class VariableDeclaration(Node):
     self.decl.build(self)
     if self.assign is not None:
       self.assign.build(self)
-      self.assign.expr.auto_cast(self.decl.typ)
+      self.assign.expr.auto_cast(self.decl)
 
   def get_declaration(self, sym):
     return self.decl.get_declaration(sym)
@@ -391,12 +391,23 @@ class Symbol(Node):
       else:
         self.ref_offset = self.decl.typ.sym.ref_offset
 
-  def auto_cast(self, target_type):
-    if self.typ == BuiltinType('any') and target_type != BuiltinType('any'):
-      if target_type.is_reference:
-        self.cast = target_type
+  def auto_cast(self, target):
+    if self.typ == BuiltinType('any') and target.typ != BuiltinType('any'):
+      if target.typ.is_reference:
+        self.cast = target.typ
       else:
-        self.cast = Reference(target_type)
+        self.cast = Reference(target.typ)
+
+    if self.decl:
+      while type(target) is ReferencedValue:
+        target = target.val
+
+      if target.is_declaration():
+        target_ref_level = target.typ.ref_offset
+      else:
+        target_ref_level = target.typ.ref_offset - target.ref_offset
+
+      self.ref_offset = self.decl.typ.sym.ref_offset - target_ref_level
 
   @property
   def is_type(self): return False if self.decl is None else self.decl.is_type
