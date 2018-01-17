@@ -275,6 +275,7 @@ class FunctionDefinition(Node):
       if decl is not None:
         return decl
 
+  def is_declaration(self): return True
 
 class Statement(Node):
   def __init__(self, expr):
