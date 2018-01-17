@@ -388,7 +388,7 @@ class Symbol(Node):
         self.ref_offset = self.decl.typ.sym.ref_offset
 
   def auto_cast(self, target_type):
-    if self.typ == BuiltinType('any'):
+    if self.typ == BuiltinType('any') and target_type != BuiltinType('any'):
       if target_type.is_reference:
         self.cast = target_type
       else:
