@@ -395,7 +395,7 @@ class Symbol(Node):
         self.cast = Reference(target_type)
 
   @property
-  def is_type(self): return false if self.decl is None else self.decl.is_type
+  def is_type(self): return False if self.decl is None else self.decl.is_type
 
   @property
   def typ(self): return self.decl.typ
