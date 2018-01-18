@@ -74,6 +74,6 @@ def function_declaration(): return function_prototype, Not('{')
 def function_definition(): return function_prototype, control_structure_body
 def function(): return [function_definition, function_declaration]
 
-def import_instruction(): return 'import', symbol
+def include_instruction(): return 'include', symbol
 
-def grammar(): return ZeroOrMore([comment, import_instruction, function]), EOF
+def grammar(): return ZeroOrMore([comment, include_instruction, function]), EOF

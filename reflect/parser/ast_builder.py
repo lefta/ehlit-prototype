@@ -139,6 +139,6 @@ class ASTBuilder(PTNodeVisitor):
     return FunctionDefinition(children[0], children[1])
   def visit_function(self, node, children): return children[0]
 
-  def visit_import_instruction(self, node, children): return Import(children[1])
+  def visit_include_instruction(self, node, children): return Include(children[1])
 
   def visit_grammar(self, node, children): return AST(children)

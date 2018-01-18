@@ -43,7 +43,7 @@ class ImportWriter:
       self.file.write('    ')
       i += 1
 
-  def writeImport(self, node): pass
+  def writeInclude(self, node): pass
 
   def writeFunctionDefinition(self, node): self.write(node.proto)
 

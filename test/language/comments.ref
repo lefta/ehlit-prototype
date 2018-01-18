@@ -1,5 +1,5 @@
-// Importing standard input / output library
-import stdio
+// Including standard input / output library
+include stdio
 
 /* Here starts the program */
 int main(int ac, str[] av)

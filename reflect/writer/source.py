@@ -57,10 +57,10 @@ class SourceWriter:
       self.file.write('    ')
       i += 1
 
-  def writeImport(self, imp):
+  def writeInclude(self, inc):
     self.write_indent()
     self.file.write('#include <')
-    self.write(imp.lib)
+    self.write(inc.lib)
     self.file.write('.h>\n')
 
   def writeBuiltinType(self, typ):

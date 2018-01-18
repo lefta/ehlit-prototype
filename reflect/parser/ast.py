@@ -64,7 +64,7 @@ class Node:
   def warn(self, msg): self.parent.warn(msg)
 
 
-class Import(Node):
+class Include(Node):
   def __init__(self, lib):
     self.lib = lib
 
