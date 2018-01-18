@@ -1,5 +1,7 @@
 __pycache__
 test/**/*.c
 !test/**/*.ref.c
+/out/
+/test/out/
 .coverage
 htmlcov

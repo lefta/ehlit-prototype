@@ -20,7 +20,7 @@
 # SOFTWARE.
 
 from argparse import ArgumentParser
-from os import path
+from os import path, makedirs
 
 class ArgError(Exception):
   def __init__(self, msg):
@@ -34,7 +34,9 @@ def check_arguments(args):
     raise ArgError("%s: no such file or directory" % args.source)
 
   if args.output_file is None:
-    args.output_file = src + ".c"
+    args.output_file = 'out/src/' + src + ".c"
+  if args.output_file != '-':
+    makedirs(path.dirname(args.output_file), exist_ok=True)
 
 
 def parse_arguments():
