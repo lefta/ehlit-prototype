@@ -25,7 +25,7 @@ def build(args):
   # Avoid importing submodules in global scope, otherwise they may use the logger before it is
   # initialized
   from reflect.parser import parse
-  from reflect.writer import WriteSource, WriteDump
+  from reflect.writer import WriteSource, WriteDump, WriteImport
   from reflect.options import check_arguments
 
   check_arguments(args)
@@ -36,3 +36,4 @@ def build(args):
   if args.verbose:
     WriteDump(ast)
   WriteSource(ast, args.output_file)
+  WriteImport(ast, args.output_import_file)

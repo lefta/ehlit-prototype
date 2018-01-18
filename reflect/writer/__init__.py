@@ -19,6 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from reflect.writer.import_file import ImportWriter
 from reflect.writer.source import SourceWriter
 from reflect.writer.dump import DumpWriter
 
@@ -26,4 +27,7 @@ class WriteDump(DumpWriter):
   pass
 
 class WriteSource(SourceWriter):
+  pass
+
+class WriteImport(ImportWriter):
   pass

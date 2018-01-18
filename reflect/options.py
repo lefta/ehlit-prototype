@@ -38,6 +38,11 @@ def check_arguments(args):
   if args.output_file != '-':
     makedirs(path.dirname(args.output_file), exist_ok=True)
 
+  if args.output_import_file is None:
+    args.output_import_file = 'out/include/' + src + ".ref"
+  if args.output_import_file != '-':
+    makedirs(path.dirname(args.output_import_file), exist_ok=True)
+
 
 def parse_arguments():
   parser = ArgumentParser(description="Compile reflect source files")
@@ -48,6 +53,8 @@ def parse_arguments():
   gen_args = parser.add_argument_group('Generation arguments')
   gen_args.add_argument("-o", "--gen-output", dest="output_file",
     help="File where to write the output. You may use '-' for stdout")
+  gen_args.add_argument("--gen-import-output", dest="output_import_file",
+    help="File where to write the import file. You may use '-' for stdout")
 
   gen_args.add_argument("-v", "--gen-verbose", dest="verbose", action="store_true",
     help="Print debug messages")

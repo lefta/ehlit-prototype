@@ -104,6 +104,7 @@ class ReflectTestCase(TestCase):
 	def compile(self, src):
 		class opts:
 			output_file = '-'
+			output_import_file = None
 			source = src
 			verbose = False
 		return self.run_compiler(opts)
