@@ -44,6 +44,9 @@ class SourceWriter:
     for node in ast:
       self.write(node)
 
+    if f != '-':
+      self.file.close()
+
   def write(self, node):
     func = getattr(self, 'write' + type(node).__name__)
     func(node)
