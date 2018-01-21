@@ -19,5 +19,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from reflect.parser.parse import parse
+from arpeggio import ParserPython, visit_parse_tree, NoMatch, StrMatch
+
+from reflect.parser.grammar import grammar
+from reflect.parser.ast_builder import ASTBuilder
 from reflect.parser.error import ParseError
+
+def parse(source):
+  parser = ParserPython(grammar, autokwd=True)
+
+  try:
+    parsed = parser.parse_file(source)
+    ast = visit_parse_tree(parsed, ASTBuilder())
+  except NoMatch as err:
+    exp = []
+    for r in err.rules:
+      if type(r) is StrMatch:
+        r = "'%s'" % str(r)
+      else:
+        r = str(r)
+      if not r in exp:
+        exp.append(r)
+    raise ParseError('%d:%d: expected %s' % (err.line, err.col, ' or '.join(exp)))
+  return ast
