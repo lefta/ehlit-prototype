@@ -108,13 +108,18 @@ class SourceWriter:
     self.write(proto.sym)
     self.file.write('(')
     self.writeArgumentDefinitionList(proto.args)
-    self.file.write(")\n")
+    self.file.write(")")
+
+  def writeFunctionDeclaration(self, fun):
+    self.write_indent()
+    self.writeFunctionPrototype(fun)
+    self.file.write(';\n')
 
   def writeFunctionDefinition(self, fun):
     self.write_indent()
     self.file.write("\n")
     self.writeFunctionPrototype(fun.proto)
-    self.file.write("{\n")
+    self.file.write("\n{\n")
 
     self.indent += 1
     for instruction in fun.body:
