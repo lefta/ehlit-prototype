@@ -48,7 +48,7 @@ def expression(): return value, ZeroOrMore(operator, value)
 def assignment(): return '=', expression
 def operation_assignment(): return Optional(mathematical_operator), assignment
 
-def builtin_type(): return ['int', 'str', 'any', 'void', 'size']
+def builtin_type(): return ['char', 'int', 'str', 'any', 'void', 'size']
 def modifier(): return Optional('const')
 def array(): return ZeroOrMore('[]')
 def reference(): return 'ref', array, full_type

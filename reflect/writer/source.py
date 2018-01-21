@@ -30,6 +30,7 @@ class SourceWriter:
       'str': 'char*',
       'any': 'void*',
       'void': 'void',
+      'char': 'char',
       'int': 'int',
       'size': 'size_t',
     }
