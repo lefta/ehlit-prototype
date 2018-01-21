@@ -424,7 +424,7 @@ class Symbol(Node):
   def is_type(self): return False if self.decl is None else self.decl.is_type
 
   @property
-  def typ(self): return self.decl.typ
+  def typ(self): return self.decl.typ if self.decl is not None else BuiltinType('any')
 
 class String(Node):
   def __init__(self, string):
