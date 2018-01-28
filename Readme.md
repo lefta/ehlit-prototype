@@ -19,7 +19,7 @@ for details.
 
 Note that the language is still a work in progress, this example will likely change in the future.
 
-    import stdio
+    include stdio
 
     int main(int ac, str[] av)
     {
@@ -31,7 +31,7 @@ Note that the language is still a work in progress, this example will likely cha
 
 * Python 3.5+
 * arpeggio Python module
-* clang with Python 3.5+ bindings (should be 5.0+)
+* clang with Python 3.5+ bindings (shipped with clang 5.0+)
 
 ## Basic usage
 
@@ -45,7 +45,7 @@ extension with `.c`. Next, you may build your C file(s) as you would with other 
 This duplicates build work, but all (good?) compilation system allows you to automate this, so you
 do not even have to think about this. For instance, with Makefiles, you could use a rule like:
 
-    %.c: %.ref
+    out/src/%.c: %.ref
         python -m reflect $<
 
 This way, you may build your program the exact same way you would build it if it was written in pure
@@ -57,5 +57,5 @@ C. C source files will be generated dynamically as needed.
 * TODO: Standard library definition
 * WIP: Compiler
 * TODO: Language specification
-* TODO: Syntax files for major text editors
+* WIP: Syntax files for major text editors
 * TODO: Autocompletion module for Atom
