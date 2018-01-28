@@ -44,6 +44,7 @@ class ImportWriter:
       i += 1
 
   def writeInclude(self, node): pass
+  def writeImport(self, node): pass
 
   def writeFunctionDefinition(self, node): self.write(node.proto)
 

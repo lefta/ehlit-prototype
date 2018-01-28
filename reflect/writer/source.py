@@ -64,6 +64,10 @@ class SourceWriter:
     self.write(inc.lib)
     self.file.write('.h>\n')
 
+  def writeImport(self, node):
+    for sym in node.syms:
+      self.write(sym)
+
   def writeBuiltinType(self, typ):
     self.file.write(self.types[typ.name])
 

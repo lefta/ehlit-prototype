@@ -20,7 +20,8 @@
 # SOFTWARE.
 
 import logging
-from reflect.parser import c_compat
+from os import path, getcwd
+from reflect.parser import c_compat, parse
 from reflect.parser.error import ParseError
 
 MOD_NONE = 0
@@ -63,15 +64,18 @@ class Node:
   """
   def warn(self, msg): self.parent.warn(msg)
 
+  @property
+  def import_paths(self): return self.parent.import_paths
 
-class Include(Node):
+
+class GenericExternInclusion(Node):
   def __init__(self, lib):
     self.lib = lib
 
   def build(self, parent):
     super().build(parent)
     try:
-      self.syms = c_compat.parse_header(self.lib.name)
+      self.syms = self.parse()
     except ParseError as err:
       self.error(err)
       self.syms = []
@@ -84,6 +88,16 @@ class Include(Node):
       decl = s.get_declaration(sym)
       if decl is not None:
         return decl
+
+class Import(GenericExternInclusion):
+  def parse(self):
+    for p in self.import_paths:
+      try: return parse.parse(path.join(p, self.lib.name + '.ref')).nodes
+      except FileNotFoundError: pass
+    raise ParseError(self.lib.name + ': no such file or directory')
+
+class Include(GenericExternInclusion):
+  def parse(self): return c_compat.parse_header(self.lib.name)
 
 class BuiltinType(Node):
   def __init__(self, name):
@@ -501,7 +515,12 @@ class AST(Node):
   def __len__(self):
     return len(self.nodes)
 
-  def build(self):
+  def build(self, args):
+    self._import_paths = [
+      path.dirname(args.source),
+      getcwd(),
+      path.dirname(args.output_import_file)]
+
     self.parent = None
     for n in self.nodes:
       n.build(self)
@@ -523,3 +542,6 @@ class AST(Node):
       res = n.get_declaration(sym)
       if res is not None:
         return res
+
+  @property
+  def import_paths(self): return self._import_paths

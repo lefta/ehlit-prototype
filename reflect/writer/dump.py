@@ -91,6 +91,12 @@ class DumpWriter:
     self.print_node_list('Symbols found', inc.syms, False)
 
   @indent
+  def dumpImport(self, node):
+    self.dump('Import')
+    self.print_node(node.lib)
+    self.print_node_list('Symbols found', node.syms, False)
+
+  @indent
   def dumpDeclaration(self, decl):
     self.dump('Declaration')
     self.print_node(decl.typ)
