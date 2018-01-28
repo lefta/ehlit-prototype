@@ -312,7 +312,7 @@ class FunctionCall(Node):
     i = 0
     while i < len(self.args):
       self.args[i].build(self)
-      if not self.is_cast and i < len(self.sym.decl.args):
+      if not self.is_cast and self.sym.decl is not None and i < len(self.sym.decl.args):
         self.args[i].auto_cast(self.sym.decl.args[i])
       i += 1
 
