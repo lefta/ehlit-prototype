@@ -417,8 +417,13 @@ class Symbol(Node):
         self.ref_offset = self.decl.typ.sym.ref_offset
 
   def auto_cast(self, target):
-    while type(target) is ReferencedValue:
-      target = target.val
+    target_type = type(target)
+    while target_type is ReferencedValue or target_type is ArrayAccess:
+      if target_type is ReferencedValue:
+        target = target.val
+      else:
+        target = target.child
+      target_type = type(target)
 
     if target.is_declaration():
       target_ref_level = target.typ.ref_offset
