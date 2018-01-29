@@ -9,5 +9,9 @@ int main()
 	number = returning_any(ref number)
 	int number2 = returning_any(ref number)
 
+	str string = "Hello, World!"
+  ref string = ref returning_any(ref string)
+  str string2 = ref returning_any(ref string)
+
 	return 0
 }

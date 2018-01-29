@@ -417,21 +417,18 @@ class Symbol(Node):
         self.ref_offset = self.decl.typ.sym.ref_offset
 
   def auto_cast(self, target):
+    while type(target) is ReferencedValue:
+      target = target.val
+
+    if target.is_declaration():
+      target_ref_level = target.typ.ref_offset
+    else:
+      target_ref_level = target.typ.ref_offset - target.ref_offset
+
     if self.typ == BuiltinType('any') and target.typ != BuiltinType('any'):
-      if target.typ.is_reference:
-        self.cast = target.typ
-      else:
-        self.cast = Reference(target.typ)
+      self.cast = target.typ if target_ref_level > 0 else Reference(target.typ)
 
     if self.decl:
-      while type(target) is ReferencedValue:
-        target = target.val
-
-      if target.is_declaration():
-        target_ref_level = target.typ.ref_offset
-      else:
-        target_ref_level = target.typ.ref_offset - target.ref_offset
-
       self.ref_offset = self.decl.typ.sym.ref_offset - target_ref_level
 
   @property
