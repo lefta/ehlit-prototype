@@ -103,7 +103,15 @@ class ASTBuilder(PTNodeVisitor):
   def visit_variable_declaration(self, node, children):
     return VariableDeclaration(children[0], children[1] if len(children) == 2 else None)
   def visit_variable_assignment(self, node, children):
-    return VariableAssignment(children[0], children[1])
+    if len(children) == 2:
+      return VariableAssignment(children[0], children[1])
+
+    arr = res = children[1]
+    while arr.child is not None:
+      arr = arr.child
+    arr.child = children[0]
+    return VariableAssignment(res, children[2])
+
   def visit_return_instruction(self, node, children): return Return(children[1])
   def visit_statement(self, node, children): return Statement(children[0])
 

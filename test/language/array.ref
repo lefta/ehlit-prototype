@@ -2,9 +2,11 @@ include stdio
 
 int main(int ac, str[] av)
 {
+	str[] av2 = av
 	while ac
 	{
 		ac--
+		av2[ac] = av[ac]
 		puts(av[ac])
 	}
 	return 0

@@ -56,7 +56,8 @@ def full_type(): return modifier, [reference, builtin_type, symbol], array
 
 def declaration(): return full_type, symbol
 def variable_declaration(): return declaration, Optional(assignment)
-def variable_assignment(): return [referenced_value, symbol], operation_assignment
+def variable_assignment():
+  return [referenced_value, symbol], Optional(array_access), operation_assignment
 def return_instruction(): return 'return', expression
 def statement(): return [return_instruction, variable_assignment, variable_declaration, expression]
 def instruction(): return [comment, condition, while_loop, statement]
