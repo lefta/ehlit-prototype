@@ -3,6 +3,7 @@ include stdio
 int main(int ac, str[] av)
 {
 	printf("%d\n", int(ref av))
-	str test = str(ac)
+	any test = str(ac)
+	str(ref test) = av[0]
 	return 0
 }
