@@ -42,7 +42,7 @@ def value():
     string, number], array_access
 
 def mathematical_operator(): return ['+', '-', '*', '/', '%']
-def binary_operator(): return ['==', '!=', '>=', '<=', '>', '<']
+def binary_operator(): return ['==', '!=', '>=', '<=', '>', '<', '||', '&&']
 def operator(): return [mathematical_operator, binary_operator]
 def expression(): return value, ZeroOrMore(operator, value)
 def assignment(): return '=', expression
