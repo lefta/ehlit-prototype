@@ -42,6 +42,8 @@ class SourceWriter:
       'while': 'while',
     }
 
+    self.file.write('#include <stddef.h>\n')
+
     for node in ast:
       self.write(node)
 

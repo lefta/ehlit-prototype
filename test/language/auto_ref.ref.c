@@ -1,3 +1,4 @@
+#include <stddef.h>
 
 int fun(int i, int* j)
 {
