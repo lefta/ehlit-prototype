@@ -1,8 +1,9 @@
 #include <stddef.h>
+#include <stdint.h>
 
-int main(void)
+int32_t main(void)
 {
-    int i = 0;
+    int32_t i = 0;
     i = i + 5;
     i = i - 3;
     i = i * 4;

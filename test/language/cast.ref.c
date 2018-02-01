@@ -1,12 +1,13 @@
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 
-int main(int ac, char** av)
+int32_t main(int32_t ac, char** av)
 {
-    printf("%d\n", ((int)&av));
+    printf("%d\n", ((int32_t)&av));
     void* test = ((char*)ac);
     ((char*)test) = av[0];
-    char n = 0;
+    int8_t n = 0;
     ((char*)test)[0] = n;
     return (0);
 }

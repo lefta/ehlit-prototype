@@ -1,9 +1,10 @@
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 
-int main(void)
+int32_t main(void)
 {
-    int i = 3;
+    int32_t i = 3;
     while (i)
     {
         printf("looping\n");

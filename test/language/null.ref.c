@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 
 void* function(void)
@@ -6,7 +7,7 @@ void* function(void)
     return (NULL);
 }
 
-int main(void)
+int32_t main(void)
 {
     char* s = NULL;
     printf("%s\n", NULL);

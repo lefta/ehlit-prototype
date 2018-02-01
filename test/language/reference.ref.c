@@ -1,28 +1,29 @@
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 
-int set_int(int* i)
+int32_t set_int(int32_t* i)
 {
     *i = 42;
     return (*i);
 }
 
-int* set_int_to(int* i, int* j)
+int32_t* set_int_to(int32_t* i, int32_t* j)
 {
     *i = *j;
     return (i);
 }
 
-int* set_int_ref(int* i, int* j)
+int32_t* set_int_ref(int32_t* i, int32_t* j)
 {
     i = j;
     return (i);
 }
 
-int main(void)
+int32_t main(void)
 {
-    int i;
-    int* j = 21;
+    int32_t i;
+    int32_t* j = 21;
     i = set_int(&i);
     j = set_int_to(&i, j);
     *j = *set_int_ref(&i, j);

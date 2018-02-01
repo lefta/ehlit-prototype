@@ -30,8 +30,16 @@ class SourceWriter:
       'str': 'char*',
       'any': 'void*',
       'void': 'void',
-      'char': 'char',
-      'int': 'int',
+      'char': 'int8_t',
+      'int': 'int32_t',
+      'int8': 'int8_t',
+      'int16': 'int16_t',
+      'int32': 'int32_t',
+      'int64': 'int64_t',
+      'uint8': 'uint8_t',
+      'uint16': 'uint16_t',
+      'uint32': 'uint32_t',
+      'uint64': 'uint64_t',
       'size': 'size_t',
     }
 
@@ -42,7 +50,7 @@ class SourceWriter:
       'while': 'while',
     }
 
-    self.file.write('#include <stddef.h>\n')
+    self.file.write('#include <stddef.h>\n#include <stdint.h>\n')
 
     for node in ast:
       self.write(node)

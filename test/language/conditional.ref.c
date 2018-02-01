@@ -1,8 +1,9 @@
 #include <stddef.h>
+#include <stdint.h>
 
-int main(void)
+int32_t main(void)
 {
-    int i = 2;
+    int32_t i = 2;
     if (i == 2)
     {
         i = 3;
