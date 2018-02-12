@@ -93,7 +93,7 @@ class ReflectTestCase(TestCase):
 	def run_compiler(self, opts):
 		with Pipe() as output:
 			reflect.build(opts)
-		return output
+			return output
 
 	"""
 		Compile C code from a Reflect source file
