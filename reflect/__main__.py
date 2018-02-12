@@ -40,8 +40,15 @@ try:
   build(opts)
 
 except ParseError as err:
-  logging.error(err)
-  exit(-1)
+  for f in err.failures:
+    if f.severity < ParseError.Severity.Error:
+      logging.warning(str(f))
+    else:
+      logging.error(str(f))
+
+  logging.info(err.summary)
+  if err.max_level > ParseError.Severity.Warning:
+    exit(-1)
 
 except options.ArgError as err:
   logging.error(err)

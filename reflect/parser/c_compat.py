@@ -24,7 +24,7 @@ import logging
 import subprocess
 from argparse import ArgumentParser
 from clang.cindex import Index, TranslationUnitLoadError, CursorKind, TypeKind
-from reflect.parser.error import ParseError
+from reflect.parser.error import ParseError, Failure
 from reflect.parser import ast
 
 include_dirs = []
@@ -101,7 +101,8 @@ def find_file_in_path(filename):
     path = os.path.join(d, filename)
     if os.path.isfile(path):
       return path
-  raise ParseError('%s: no such file or directory' % filename)
+  raise ParseError([Failure(ParseError.Severity.Error, 0,
+    '%s: no such file or directory' % filename)])
 
 def parse_header(filename):
   path = find_file_in_path(filename + '.h')
@@ -109,7 +110,7 @@ def parse_header(filename):
   try:
     tu = index.parse(path)
   except TranslationUnitLoadError as err:
-    raise ParseError('%s: parsing failed' % filename)
+    raise ParseError([Failure(ParseError.Severity.Error, 0, '%s: parsing failed' % filename)])
   ast = cursor_to_reflect(tu.cursor)
   del tu
   del index
@@ -120,11 +121,11 @@ def parse_FUNCTION_DECL(cursor):
   args = []
   for c in cursor.get_children():
     if c.kind == CursorKind.PARM_DECL:
-      args.append(ast.Declaration(type_to_reflect(c.type), ast.Symbol(c.spelling)))
+      args.append(ast.Declaration(type_to_reflect(c.type), ast.Symbol(0, c.spelling)))
 
   return ast.FunctionDeclaration(
     type_to_reflect(cursor.type.get_result()),
-    ast.Symbol(cursor.spelling),
+    ast.Symbol(0, cursor.spelling),
     args)
 
 

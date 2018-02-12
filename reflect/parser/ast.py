@@ -22,12 +22,15 @@
 import logging
 from os import path, getcwd
 from reflect.parser import c_compat, parse
-from reflect.parser.error import ParseError
+from reflect.parser.error import ParseError, Failure
 
 MOD_NONE = 0
 MOD_CONST = 1
 
 class Node:
+  def __init__(self, pos):
+    self.pos = pos
+
   def build(self, parent):
     self.parent = parent
 
@@ -53,23 +56,28 @@ class Node:
   def get_declaration(self, sym): return None
 
   """
-  Report an error to the parent, up to the root where it will be handled. There is no reason to
+  Report a failure to the parent, up to the root where it will be handled. There is no reason to
   override it, except intercepting it for whatever reason.
   """
-  def error(self, msg): self.parent.error(msg)
+  def fail(self, severity, pos, msg): self.parent.fail(severity, pos, msg)
 
   """
-  Report a warning to the parent, up to the root where it will be handled. There is no reason to
-  override it, except intercepting it for whatever reason.
+  Shorthand for fail with severity Error.
   """
-  def warn(self, msg): self.parent.warn(msg)
+  def error(self, pos, msg): self.parent.fail(ParseError.Severity.Error, pos, msg)
+
+  """
+  Shorthand for fail with severity Warning.
+  """
+  def warn(self, pos, msg): self.parent.fail(ParseError.Severity.Warning, pos, msg)
 
   @property
   def import_paths(self): return self.parent.import_paths
 
 
 class GenericExternInclusion(Node):
-  def __init__(self, lib):
+  def __init__(self, pos, lib):
+    super().__init__(pos)
     self.lib = lib
 
   def build(self, parent):
@@ -77,8 +85,9 @@ class GenericExternInclusion(Node):
     try:
       self.syms = self.parse()
     except ParseError as err:
-      self.error(err)
-      self.syms = []
+      for e in err.failures:
+        self.fail(e.severity, self.pos, e.message)
+        self.syms = []
 
     for s in self.syms:
       s.build(self)
@@ -94,7 +103,7 @@ class Import(GenericExternInclusion):
     for p in self.import_paths:
       try: return parse.parse(path.join(p, self.lib.name + '.ref')).nodes
       except FileNotFoundError: pass
-    raise ParseError(self.lib.name + ': no such file or directory')
+    self.error(self.pos, '%s: no such file or directory' % self.lib.name)
 
 class Include(GenericExternInclusion):
   def parse(self): return c_compat.parse_header(self.lib.name)
@@ -401,7 +410,8 @@ class Return(Node):
 
 
 class Symbol(Node):
-  def __init__(self, name):
+  def __init__(self, pos, name):
+    super().__init__(pos)
     self.name = name
     self.decl = None
     self.ref_offset = 0
@@ -412,7 +422,7 @@ class Symbol(Node):
     if not parent.is_declaration():
       self.decl = self.find_declaration(self.name)
       if self.decl is None:
-        self.error("use of undeclared identifier %s" % self.name)
+        self.error(self.pos, "use of undeclared identifier %s" % self.name)
       else:
         self.ref_offset = self.decl.typ.sym.ref_offset
 
@@ -461,6 +471,8 @@ class Number(Node):
   def auto_cast(self, target_type): pass
 
 class NullValue(Node):
+  def __init__(self): pass
+
   @property
   def typ(self): return BuiltinType('any')
 
@@ -505,8 +517,7 @@ class SuffixOperatorValue(UnaryOperatorValue): pass
 class AST(Node):
   def __init__(self, nodes):
     self.nodes = nodes
-    self.errors = 0
-    self.warnings = 0
+    self.failures = []
 
   def __iter__(self):
     return self.nodes.__iter__()
@@ -526,18 +537,11 @@ class AST(Node):
     self.parent = None
     for n in self.nodes:
       n.build(self)
-    if self.errors != 0:
-      raise ParseError("build failed with %d errors and %d warnings" % (self.errors, self.warnings))
-    elif self.warnings != 0:
-      logging.info("build finished with %d warnings" % self.warnings)
+    if len(self.failures) != 0:
+      raise ParseError(self.failures, self.parser)
 
-  def error(self, msg):
-    logging.error(msg)
-    self.errors += 1
-
-  def warn(self, msg):
-    logging.warning(msg)
-    self.warnings += 1
+  def fail(self, severity, pos, msg):
+    self.failures.append(Failure(severity, pos, msg))
 
   def find_declaration(self, sym):
     for n in self.nodes:

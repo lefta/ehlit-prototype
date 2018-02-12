@@ -26,7 +26,7 @@ from reflect.parser.ast import *
 class ASTBuilder(PTNodeVisitor):
   def visit_comment(self, node, children): return None
 
-  def visit_symbol(self, node, children): return Symbol(str(node))
+  def visit_symbol(self, node, children): return Symbol(node.position, str(node))
   def visit_string(self, node, children): return String(str(children[0]))
   def visit_number(self, node, children): return Number(str(node))
   def visit_null_value(self, node, children): return NullValue()
@@ -147,7 +147,7 @@ class ASTBuilder(PTNodeVisitor):
     return FunctionDefinition(children[0], children[1])
   def visit_function(self, node, children): return children[0]
 
-  def visit_include_instruction(self, node, children): return Include(children[1])
-  def visit_import_instruction(self, node, children): return Import(children[1])
+  def visit_include_instruction(self, node, children): return Include(node.position, children[1])
+  def visit_import_instruction(self, node, children): return Import(node.position, children[1])
 
   def visit_grammar(self, node, children): return AST(children)

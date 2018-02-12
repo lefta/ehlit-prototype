@@ -23,7 +23,7 @@ from arpeggio import ParserPython, visit_parse_tree, NoMatch, StrMatch
 
 from reflect.parser.grammar import grammar
 from reflect.parser.ast_builder import ASTBuilder
-from reflect.parser.error import ParseError
+from reflect.parser.error import ParseError, Failure
 
 def parse(source):
   parser = ParserPython(grammar, autokwd=True)
@@ -31,6 +31,7 @@ def parse(source):
   try:
     parsed = parser.parse_file(source)
     ast = visit_parse_tree(parsed, ASTBuilder())
+    ast.parser = parser
   except NoMatch as err:
     exp = []
     for r in err.rules:
@@ -38,7 +39,8 @@ def parse(source):
         r = "'%s'" % str(r)
       else:
         r = str(r)
-      if not r in exp:
+      if r not in exp:
         exp.append(r)
-    raise ParseError('%d:%d: expected %s' % (err.line, err.col, ' or '.join(exp)))
+    raise ParseError([Failure(ParseError.Severity.Fatal, err.position,
+      'expected %s' % (' or '.join(exp)))], parser)
   return ast
