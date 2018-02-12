@@ -113,6 +113,7 @@ class ReflectTestCase(TestCase):
 		Check that the compiler raises an error when building src
 
 		@param src The file to compile
+		@param error The error that must be triggered
 	"""
 	def assert_error(self, src, error):
 		msg = ''
