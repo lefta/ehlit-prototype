@@ -124,6 +124,16 @@ class ReflectTestCase(TestCase):
 		self.assertEqual(msg, error)
 
 	"""
+		Check that the compiler raises an error containing the same contents than src.err
+
+		@param src The file to compile
+		@param error_file The file to check the error against
+	"""
+	def assert_error_file(self, src, error_file):
+		with open(error_file, 'r') as f:
+			return self.assert_error(src, f.read())
+
+	"""
 		Check the compiler output for file src against the contents of src.c
 
 		@param src The file to compile
