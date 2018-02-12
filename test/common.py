@@ -135,7 +135,7 @@ class ReflectTestCase(TestCase):
 		except Exception as err:
 			msg = str(err)
 		if result is None:
-			raise AssertionError(str(msg))
+			raise AssertionError(str('No output have been generated'))
 		self.assertEqual(result.stderr, "")
 		self.assert_equal_to_file(result.stdout, "%s.c" % src)
 
