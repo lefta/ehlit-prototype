@@ -143,6 +143,9 @@ class Array(Node):
   @property
   def ref_offset(self): return 0
 
+  @property
+  def is_type(self): return True
+
 class Reference(Node):
   def __init__(self, typ):
     self.typ = typ
@@ -155,7 +158,15 @@ class Reference(Node):
   def is_reference(self): return True
 
   @property
+  def is_type(self): return self.typ.is_type
+
+  @property
+  def decl(self): return self.typ.decl
+
+  @property
   def ref_offset(self): return self.typ.sym.ref_offset + 1
+
+  def auto_cast(self, target): return self.typ.auto_cast(target)
 
 class Type(Node):
   def __init__(self, sym, mods):
@@ -170,6 +181,12 @@ class Type(Node):
   def ref_offset(self): return self.sym.ref_offset
 
   @property
+  def is_type(self): return self.sym.is_type
+
+  @property
+  def decl(self): return self.sym.decl
+
+  @property
   def is_reference(self): return self.sym.is_reference
 
   @property
@@ -178,6 +195,8 @@ class Type(Node):
   def build(self, parent):
     super().build(parent)
     self.sym.build(self)
+
+  def auto_cast(self, target): return self.sym.auto_cast(target)
 
   def __eq__(self, rhs):
     if type(rhs) == Type:

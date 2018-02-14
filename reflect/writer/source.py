@@ -83,7 +83,8 @@ class SourceWriter:
 
   def writeReference(self, ref):
     self.write(ref.typ)
-    self.file.write('*')
+    if ref.is_type:
+      self.file.write('*')
 
   def writeType(self, typ):
     self.write(typ.sym)

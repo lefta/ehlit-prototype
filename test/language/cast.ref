@@ -7,5 +7,6 @@ int main(int ac, str[] av)
 	str(ref test) = av[0]
 	char n = 0
 	str(ref test)[0] = n
+	size i = size[](av)[0]
 	return 0
 }
