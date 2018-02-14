@@ -386,6 +386,13 @@ class ControlStructure(Node):
     for s in self.body:
       s.build(self)
 
+  def find_declaration(self, name):
+    for s in self.body:
+      decl = s.get_declaration(name)
+      if decl is not None:
+        return decl
+    return super().find_declaration(name)
+
 class Condition(Node):
   def __init__(self, branches):
     self.branches = branches
