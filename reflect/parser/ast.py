@@ -461,6 +461,15 @@ class String(Node):
 
   def auto_cast(self, target_type): pass
 
+class Char(Node):
+  def __init__(self, char):
+    self.char = char
+
+  @property
+  def typ(self): return BuiltinType('char')
+
+  def auto_cast(self, target_type): pass
+
 class Number(Node):
   def __init__(self, num):
     self.num = num

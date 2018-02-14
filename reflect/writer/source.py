@@ -248,6 +248,11 @@ class SourceWriter:
     else:
       self.file.write(sym.name)
 
+  def writeChar(self, c):
+    self.file.write('\'')
+    self.file.write(c.char)
+    self.file.write('\'')
+
   def writeString(self, s):
     self.file.write('"')
     self.file.write(s.string)

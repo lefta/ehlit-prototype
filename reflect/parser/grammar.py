@@ -28,6 +28,7 @@ def comment(): return [line_comment, block_comment]
 
 def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', builtin_type]
 def symbol(): return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='symbol')
+def char(): return '\'', RegExMatch(r'\\[abefnrtv\\]|[^\']'), '\''
 def string(): return '"', RegExMatch(r'[^"]*'), '"'
 def number(): return RegExMatch(r'[0-9]+', str_repr='number')
 def null_value(): return 'null'
@@ -39,7 +40,7 @@ def suffix_operator_value(): return (writable_value, ['++', '--'])
 def array_access(): return ZeroOrMore('[', value, ']')
 def value():
   return [null_value, function_call, prefix_operator_value, suffix_operator_value, writable_value,
-    string, number], array_access
+    string, char, number], array_access
 
 def mathematical_operator(): return ['+', '-', '*', '/', '%']
 def binary_operator(): return ['==', '!=', '>=', '<=', '>', '<', '||', '&&']

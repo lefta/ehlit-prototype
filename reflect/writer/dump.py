@@ -216,6 +216,10 @@ class DumpWriter:
     self.dump('Number: ' + num.num)
 
   @indent
+  def dumpChar(self, char):
+    self.dump('Character: ' + char.char)
+
+  @indent
   def dumpString(self, string):
     self.dump('String: ' + string.string)
 
