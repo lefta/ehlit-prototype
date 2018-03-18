@@ -48,7 +48,7 @@ class ParseError(Exception):
   @property
   def summary(self):
     if self.warnings is 0: return 'build finished with %d errors' % self.errors
-    elif self.errors is 0: return 'build finished with %d warnings' % self.errors
+    elif self.errors is 0: return 'build finished with %d warnings' % self.warnings
     else: return 'build finished with %d errors and %d warnings' % (self.errors, self.warnings)
 
   def __str__(self):
