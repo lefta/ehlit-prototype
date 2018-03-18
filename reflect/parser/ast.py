@@ -270,11 +270,12 @@ class VariableDeclaration(Node):
     return True
 
 class FunctionDeclaration(Node):
-  def __init__(self, typ, sym, args):
+  def __init__(self, typ, sym, args, variadic=False):
     self.typ = typ
     self.sym = sym
     self.args = args
     self.name = sym.name
+    self.variadic = variadic
 
   def build(self, parent):
     super().build(parent)
@@ -296,6 +297,9 @@ class FunctionDeclaration(Node):
 
   @property
   def is_type(self): return False
+
+  @property
+  def is_variadic(self): return self.variadic
 
 class FunctionDefinition(Node):
   def __init__(self, proto, body):
@@ -366,7 +370,7 @@ class FunctionCall(Node):
       err = None
       if diff < 0:
         err = 'not enough'
-      elif diff > 0:
+      elif diff > 0 and not self.sym.decl.is_variadic:
         err = 'too many'
       if err is not None:
         self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(err,

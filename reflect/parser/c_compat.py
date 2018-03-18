@@ -126,7 +126,8 @@ def parse_FUNCTION_DECL(cursor):
   return ast.FunctionDeclaration(
     type_to_reflect(cursor.type.get_result()),
     ast.Symbol(0, cursor.spelling),
-    args)
+    args,
+    cursor.type.is_function_variadic())
 
 
 def type_VOID(typ): return ast.BuiltinType('void')
