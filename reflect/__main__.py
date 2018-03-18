@@ -25,7 +25,7 @@ from reflect import options
 opts = options.parse_arguments()
 
 logging.addLevelName(logging.ERROR, '\033[1;31mError\033[m: ')
-logging.addLevelName(logging.WARNING, '\033[1;33mWarning\033[m: ')
+logging.addLevelName(logging.WARNING, '\033[1;35mWarning\033[m: ')
 logging.addLevelName(logging.INFO, '\033[1;37mNote\033[m: ')
 logging.addLevelName(logging.DEBUG, '> ')
 logging.basicConfig(format='%(levelname)s%(message)s',
