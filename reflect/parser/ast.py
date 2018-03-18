@@ -337,8 +337,9 @@ class Statement(Node):
     return self.expr.get_declaration(sym)
 
 class Expression(Node):
-  def __init__(self, contents):
+  def __init__(self, contents, parenthesised):
     self.contents = contents
+    self.parenthesised = parenthesised
 
   def build(self, parent):
     super().build(parent)
@@ -348,6 +349,9 @@ class Expression(Node):
   def auto_cast(self, target_type):
     for e in self.contents:
       e.auto_cast(target_type)
+
+  @property
+  def is_parenthesised(self): return self.parenthesised
 
 class FunctionCall(Node):
   def __init__(self, pos, sym, args):

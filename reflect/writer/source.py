@@ -149,6 +149,8 @@ class SourceWriter:
     self.file.write(';\n')
 
   def writeExpression(self, expr):
+    if expr.is_parenthesised:
+      self.file.write('(')
     i = 0
     count = len(expr.contents)
     while i < count:
@@ -156,6 +158,8 @@ class SourceWriter:
       i += 1
       if i < count:
         self.file.write(' ')
+    if expr.is_parenthesised:
+      self.file.write(')')
 
   def writeAssignment(self, assign):
     self.file.write(' ')

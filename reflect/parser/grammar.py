@@ -44,7 +44,8 @@ def value():
 def mathematical_operator(): return ['+', '-', '*', '/', '%']
 def binary_operator(): return ['==', '!=', '>=', '<=', '>', '<', '||', '&&']
 def operator(): return [mathematical_operator, binary_operator]
-def expression(): return value, ZeroOrMore(operator, value)
+def parenthesised_expression(): return '(', expression, ')'
+def expression(): return [value, parenthesised_expression], Optional(operator, expression)
 def assignment(): return '=', expression
 def operation_assignment(): return Optional(mathematical_operator), assignment
 

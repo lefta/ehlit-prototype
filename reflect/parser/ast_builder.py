@@ -61,7 +61,8 @@ class ASTBuilder(PTNodeVisitor):
 
   def visit_mathematical_operator(self, node, children): return Operator(str(node))
   def visit_binary_operator(self, node, children): return Operator(str(node))
-  def visit_expression(self, node, children): return Expression(children)
+  def visit_parenthesised_expression(self, node, children): return Expression(children, True)
+  def visit_expression(self, node, children): return Expression(children, False)
   def visit_assignment(self, node, children): return Assignment(children[0])
   def visit_operation_assignment(self, node, children):
     if len(children) is 1:
