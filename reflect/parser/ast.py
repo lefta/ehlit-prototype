@@ -19,7 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import logging
 from os import path, getcwd
 from reflect.parser import c_compat, parse
 from reflect.parser.error import ParseError, Failure

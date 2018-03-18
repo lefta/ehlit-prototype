@@ -19,8 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from arpeggio import RegExMatch, Optional, ZeroOrMore, OneOrMore, And, Not, EOF
-from reflect.parser import ast
+from arpeggio import RegExMatch, Optional, ZeroOrMore, Not, EOF
 
 def block_comment(): return ('/*', RegExMatch(r'[^*/]*'), '*/')
 def line_comment(): return ('//', RegExMatch(r'.*$'))
