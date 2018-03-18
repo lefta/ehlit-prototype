@@ -1,0 +1,9 @@
+7:3: too many arguments for call to fun0: expected 0, got 1
+8:3: too many arguments for call to fun0: expected 0, got 2
+10:3: not enough arguments for call to fun1: expected 1, got 0
+12:3: too many arguments for call to fun1: expected 1, got 2
+13:3: too many arguments for call to fun1: expected 1, got 3
+15:3: not enough arguments for call to fun2: expected 2, got 0
+16:3: not enough arguments for call to fun2: expected 2, got 1
+18:3: too many arguments for call to fun2: expected 2, got 3
+19:3: too many arguments for call to fun2: expected 2, got 4

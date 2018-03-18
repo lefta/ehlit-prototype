@@ -38,7 +38,7 @@ class ASTBuilder(PTNodeVisitor):
     while i < len(children):
       args.append(children[i])
       i += 2
-    return FunctionCall(children[0], args)
+    return FunctionCall(node.position, children[0], args)
   def visit_prefix_operator_value(self, node, children):
     return PrefixOperatorValue(str(children[0]), children[1])
   def visit_suffix_operator_value(self, node, children):

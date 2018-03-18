@@ -187,6 +187,9 @@ class Type(Node):
   def decl(self): return self.sym.decl
 
   @property
+  def name(self): return self.sym.name
+
+  @property
   def is_reference(self): return self.sym.is_reference
 
   @property
@@ -344,13 +347,31 @@ class Expression(Node):
       e.auto_cast(target_type)
 
 class FunctionCall(Node):
-  def __init__(self, sym, args):
+  def __init__(self, pos, sym, args):
+    self.pos = pos
     self.sym = sym
     self.args = args
 
   def build(self, parent):
     super().build(parent)
     self.sym.build(self)
+
+    if self.is_cast:
+      if len(self.args) < 1:
+        self.error(self.pos, 'cast requires a value')
+      elif len(self.args) > 1:
+        self.error(self.pos, 'too many values for cast expression')
+    elif self.sym.decl is not None:
+      diff = len(self.args) - len(self.sym.decl.args)
+      err = None
+      if diff < 0:
+        err = 'not enough'
+      elif diff > 0:
+        err = 'too many'
+      if err is not None:
+        self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(err,
+          self.sym.name, len(self.sym.decl.args), len(self.args)))
+
     i = 0
     while i < len(self.args):
       self.args[i].build(self)
