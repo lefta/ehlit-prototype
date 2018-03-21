@@ -162,6 +162,8 @@ class Reference(Node):
   def build(self, parent):
     super().build(parent)
     self.typ.build(self)
+    if not self.typ.is_type:
+      self.typ.ref_offset -= 1
 
   @property
   def is_reference(self): return True
@@ -224,6 +226,9 @@ class Declaration(Node):
 
   def is_declaration(self):
     return True
+
+  @property
+  def is_type(self): return False
 
 class VariableDeclaration(Node):
   def __init__(self, decl, assign):
@@ -463,9 +468,9 @@ class Symbol(Node):
 
   def auto_cast(self, target):
     target_type = type(target)
-    while target_type is ReferencedValue or target_type is ArrayAccess:
-      if target_type is ReferencedValue:
-        target = target.val
+    while target_type is Reference or target_type is ArrayAccess:
+      if target_type is Reference:
+        target = target.typ
       else:
         target = target.child
       target_type = type(target)
@@ -521,27 +526,6 @@ class NullValue(Node):
   def typ(self): return BuiltinType('any')
 
   def auto_cast(self, target_type): pass
-
-class ReferencedValue(Node):
-  def __init__(self, val):
-    self.val = val
-
-  def build(self, parent):
-    super().build(parent)
-    self.val.build(self)
-    self.val.ref_offset -= 1
-
-  @property
-  def typ(self): return self
-
-  @property
-  def ref_offset(self): return self.val.ref_offset
-
-  @property
-  def is_reference(self): return True
-
-  def auto_cast(self, target_type):
-    self.val.auto_cast(target_type)
 
 class UnaryOperatorValue(Node):
   def __init__(self, op, val):

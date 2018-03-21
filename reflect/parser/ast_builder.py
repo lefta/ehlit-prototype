@@ -31,7 +31,7 @@ class ASTBuilder(PTNodeVisitor):
   def visit_string(self, node, children): return String(str(children[0]))
   def visit_number(self, node, children): return Number(str(node))
   def visit_null_value(self, node, children): return NullValue()
-  def visit_referenced_value(self, node, children): return ReferencedValue(children[1])
+  def visit_referenced_value(self, node, children): return Reference(children[1])
   def visit_function_call(self, node, children):
     args = []
     i = 1

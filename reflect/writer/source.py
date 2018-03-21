@@ -271,9 +271,6 @@ class SourceWriter:
   def writeNullValue(self, stmt):
     self.file.write('NULL')
 
-  def writeReferencedValue(self, ref):
-    self.write(ref.val)
-
   def writePrefixOperatorValue(self, val):
     self.file.write(val.op)
     self.write(val.val)

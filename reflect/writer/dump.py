@@ -227,11 +227,6 @@ class DumpWriter:
     self.dump('NullValue')
 
   @indent
-  def dumpReferencedValue(self, ref):
-    self.dump('ReferencedValue')
-    self.print_node(ref.val, False)
-
-  @indent
   def dumpPrefixOperatorValue(self, val):
     self.dump('PrefixOperatorValue')
     self.print_str('Operator: %s' % val.op)
