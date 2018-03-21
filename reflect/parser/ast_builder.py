@@ -92,7 +92,8 @@ class ASTBuilder(PTNodeVisitor):
       mods = children[0]
       i = 1
 
-    res = Type(children[i], mods)
+    res = children[i]
+    children[i].set_modifiers(mods)
 
     if len(children) == i + 2:
       arr = res = children[i + 1]

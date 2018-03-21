@@ -185,6 +185,8 @@ class DumpWriter:
   @indent
   def dumpReference(self, ref):
     self.dump('Reference')
+    if ref.is_const:
+      self.print_str('Modifiers: const')
     self.print_node(ref.typ, False)
 
   @indent
@@ -192,15 +194,10 @@ class DumpWriter:
     self.dump('Operator: ' + op.op)
 
   @indent
-  def dumpType(self, typ):
-    self.dump('Type')
-    if typ.is_const:
-      self.print_str('Modifiers: const')
-    self.print_node(typ.sym, False)
-
-  @indent
   def dumpBuiltinType(self, typ):
     self.dump('BuiltinType: ' + typ.name)
+    if typ.is_const:
+      self.print_str('Modifiers: const')
 
   @indent
   def dumpArray(self, arr):
@@ -210,6 +207,8 @@ class DumpWriter:
   @indent
   def dumpSymbol(self, sym):
     self.dump('Symbol: ' + sym.name)
+    if sym.is_const:
+      self.print_str('Modifiers: const')
 
   @indent
   def dumpNumber(self, num):

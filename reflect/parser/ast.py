@@ -110,6 +110,10 @@ class Include(GenericExternInclusion):
 class BuiltinType(Node):
   def __init__(self, name):
     self.name = name
+    self.mods = MOD_NONE
+
+  def set_modifiers(self, mods):
+    self.mods = mods
 
   @property
   def sym(self): return self
@@ -122,6 +126,9 @@ class BuiltinType(Node):
 
   @property
   def is_type(self): return True
+
+  @property
+  def is_const(self): return self.mods & MOD_CONST
 
   def __eq__(self, rhs):
     if type(rhs) != BuiltinType:
@@ -148,6 +155,9 @@ class Array(Node):
 class Reference(Node):
   def __init__(self, typ):
     self.typ = typ
+    self.mods = MOD_NONE
+
+  def set_modifiers(self, mods): self.mods = mods
 
   def build(self, parent):
     super().build(parent)
@@ -160,50 +170,15 @@ class Reference(Node):
   def is_type(self): return self.typ.is_type
 
   @property
+  def is_const(self): return self.mods & MOD_CONST
+
+  @property
   def decl(self): return self.typ.decl
 
   @property
   def ref_offset(self): return self.typ.sym.ref_offset + 1
 
   def auto_cast(self, target): return self.typ.auto_cast(target)
-
-class Type(Node):
-  def __init__(self, sym, mods):
-    self.sym = sym
-    self._mods = mods
-
-  def is_builtin(self):
-    typ = type(self.sym)
-    return typ == BuiltinType or typ == Reference
-
-  @property
-  def ref_offset(self): return self.sym.ref_offset
-
-  @property
-  def is_type(self): return self.sym.is_type
-
-  @property
-  def decl(self): return self.sym.decl
-
-  @property
-  def name(self): return self.sym.name
-
-  @property
-  def is_reference(self): return self.sym.is_reference
-
-  @property
-  def is_const(self): return self._mods & MOD_CONST
-
-  def build(self, parent):
-    super().build(parent)
-    self.sym.build(self)
-
-  def auto_cast(self, target): return self.sym.auto_cast(target)
-
-  def __eq__(self, rhs):
-    if type(rhs) == Type:
-      return self.sym == rhs.sym
-    return self.sym == rhs
 
 class Operator(Node):
   def __init__(self, op):
@@ -470,6 +445,12 @@ class Symbol(Node):
     self.decl = None
     self.ref_offset = 0
     self.cast = None
+    self.mods = MOD_NONE
+
+  def set_modifiers(self, mods): self.mods = mods
+
+  @property
+  def is_const(self): return self.mods & MOD_CONST
 
   def build(self, parent):
     super().build(parent)
@@ -478,7 +459,7 @@ class Symbol(Node):
       if self.decl is None:
         self.error(self.pos, "use of undeclared identifier %s" % self.name)
       else:
-        self.ref_offset = self.decl.typ.sym.ref_offset
+        self.ref_offset = self.decl.typ.ref_offset
 
   def auto_cast(self, target):
     target_type = type(target)
@@ -498,7 +479,7 @@ class Symbol(Node):
       self.cast = target.typ if target_ref_level > 0 else Reference(target.typ)
 
     if self.decl:
-      self.ref_offset = self.decl.typ.sym.ref_offset - target_ref_level
+      self.ref_offset = self.decl.typ.ref_offset - target_ref_level
 
   @property
   def is_type(self): return False if self.decl is None else self.decl.is_type

@@ -80,16 +80,15 @@ class SourceWriter:
 
   def writeBuiltinType(self, typ):
     self.file.write(self.types[typ.name])
+    if typ.is_const:
+      self.file.write(' const')
 
   def writeReference(self, ref):
     self.write(ref.typ)
     if ref.is_type:
       self.file.write('*')
-
-  def writeType(self, typ):
-    self.write(typ.sym)
-    if typ.is_const:
-      self.file.write(' const')
+      if ref.is_const:
+        self.file.write(' const')
 
   def writeArray(self, arr):
     self.write(arr.typ)
@@ -252,6 +251,9 @@ class SourceWriter:
       self.file.write(sym.decl.name)
     else:
       self.file.write(sym.name)
+
+    if sym.is_const:
+      self.file.write(' const')
 
   def writeChar(self, c):
     self.file.write('\'')

@@ -54,15 +54,22 @@ class ImportWriter:
     if len(node) != 0:
       SourceWriter.writeArgumentDefinitionList(self, node)
 
-  def writeType(self, node):
-    if node.is_const:
-      self.file.write('const ')
-    self.write(node.sym)
   def writeArray(self, node):
     self.write(node.typ)
     self.file.write('[]')
-  def writeBuiltinType(self, node): self.file.write(node.name)
+
+  def writeBuiltinType(self, node):
+    if node.is_const:
+      self.file.write('const ')
+    self.file.write(node.name)
+
   def writeReference(self, node):
+    if node.is_const:
+      self.file.write('const ')
     self.file.write('ref ')
     self.write(node.typ)
-  def writeSymbol(self, node): self.file.write(node.name)
+
+  def writeSymbol(self, node):
+    if node.is_const:
+      self.file.write('const ')
+    self.file.write(node.name)

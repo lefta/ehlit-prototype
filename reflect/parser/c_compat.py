@@ -94,7 +94,7 @@ def type_to_reflect(typ):
     return globals()['type_' + typ.kind.name](typ)
   except KeyError:
     logging.debug('c_compat: unimplemented: %s' % typ.kind.name)
-  return ast.Type(ast.BuiltinType('any'), ast.MOD_NONE)
+  return ast.BuiltinType('any')
 
 def find_file_in_path(filename):
   for d in include_dirs:
