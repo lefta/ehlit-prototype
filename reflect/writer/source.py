@@ -26,6 +26,7 @@ class SourceWriter:
     self.file = sys.stdout if f == '-' else open(f, 'w')
 
     self.indent = 0
+    self.in_import = False
     self.types = {
       'str': 'char*',
       'any': 'void*',
@@ -89,8 +90,10 @@ class SourceWriter:
     self.file.write('.h>\n')
 
   def writeImport(self, node):
+    self.in_import = True
     for sym in node.syms:
       self.write(sym)
+    self.in_import = False
 
   def writeBuiltinType(self, typ):
     self.file.write(self.types[typ.name])
@@ -144,6 +147,10 @@ class SourceWriter:
     self.file.write(';\n')
 
   def writeFunctionDefinition(self, fun):
+    if self.in_import:
+      self.writeFunctionDeclaration(fun.proto)
+      return
+
     self.write_indent()
     self.file.write("\n")
     self.writeFunctionPrototype(fun.proto)
