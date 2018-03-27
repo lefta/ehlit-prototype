@@ -107,6 +107,32 @@ class Import(GenericExternInclusion):
 class Include(GenericExternInclusion):
   def parse(self): return c_compat.parse_header(self.lib.name)
 
+class Value(Node):
+  def __init__(self, pos=0):
+    super().__init__(pos)
+    self.ref_offset = 0
+    self.cast = None
+
+  def auto_cast(self, target):
+    invert_ref_level = False
+    if self.typ != target.typ:
+      if self.typ == BuiltinType('any'):
+        self.cast = target.typ.from_any()
+        target = self.cast
+      elif target.typ == BuiltinType('any'):
+        target = self.typ.from_any()
+        invert_ref_level = True
+
+    if self.typ:
+      if target.is_declaration():
+        target_ref_level = target.typ.ref_offset
+      else:
+        target_ref_level = target.typ.ref_offset - target.ref_offset
+
+      if invert_ref_level:
+        target_ref_level *= -1
+      self.ref_offset = self.typ.ref_offset - target_ref_level
+
 class BuiltinType(Node):
   def __init__(self, name):
     self.name = name
@@ -398,8 +424,9 @@ class FunctionCall(Node):
     if not self.is_cast:
       self.sym.auto_cast(target_type)
 
-class ArrayAccess(Node):
+class ArrayAccess(Value):
   def __init__(self, child, idx):
+    super().__init__()
     self.child = child
     self.idx = idx
 
@@ -409,15 +436,8 @@ class ArrayAccess(Node):
     self.idx.build(self)
 
   @property
-  def ref_offset(self): return self.child.ref_offset
-
-  @ref_offset.setter
-  def ref_offset(self, val): self.child.ref_offset = val
-
-  @property
   def typ(self): return self.child.typ.subtype
 
-  def auto_cast(self, target): pass
   def from_any(self): return self.child.typ.subtype.from_any()
 
 class ControlStructure(Node):
@@ -463,13 +483,11 @@ class Return(Node):
     self.expr.auto_cast(decl)
 
 
-class Symbol(Node):
+class Symbol(Value):
   def __init__(self, pos, name):
     super().__init__(pos)
     self.name = name
     self.decl = None
-    self.ref_offset = 0
-    self.cast = None
     self.mods = MOD_NONE
 
   def set_modifiers(self, mods): self.mods = mods
@@ -486,34 +504,15 @@ class Symbol(Node):
       else:
         self.ref_offset = self.decl.typ.ref_offset
 
-  def auto_cast(self, target):
-    invert_ref_level = False
-    if self.typ != target.typ:
-      if self.typ == BuiltinType('any'):
-        self.cast = target.typ.from_any()
-        target = self.cast
-      elif target.typ == BuiltinType('any') and self.decl is not None:
-        target = self.decl.typ.from_any()
-        invert_ref_level = True
-
-    if self.decl:
-      if target.is_declaration():
-        target_ref_level = target.typ.ref_offset
-      else:
-        target_ref_level = target.typ.ref_offset - target.ref_offset
-
-      if invert_ref_level:
-        target_ref_level *= -1
-      self.ref_offset = self.decl.typ.ref_offset - target_ref_level
-
   @property
   def is_type(self): return False if self.decl is None else self.decl.is_type
 
   @property
   def typ(self): return self.decl.typ if self.decl is not None else BuiltinType('any')
 
-class String(Node):
+class String(Value):
   def __init__(self, string):
+    super().__init__()
     self.string = string
 
   @property
@@ -521,8 +520,9 @@ class String(Node):
 
   def auto_cast(self, target_type): pass
 
-class Char(Node):
+class Char(Value):
   def __init__(self, char):
+    super().__init__()
     self.char = char
 
   @property
@@ -530,8 +530,9 @@ class Char(Node):
 
   def auto_cast(self, target_type): pass
 
-class Number(Node):
+class Number(Value):
   def __init__(self, num):
+    super().__init__()
     self.num = num
 
   @property
@@ -539,8 +540,9 @@ class Number(Node):
 
   def auto_cast(self, target_type): pass
 
-class NullValue(Node):
-  def __init__(self): pass
+class NullValue(Value):
+  def __init__(self):
+    super().__init__()
 
   @property
   def typ(self): return BuiltinType('any')

@@ -68,6 +68,20 @@ class SourceWriter:
       self.file.write('    ')
       i += 1
 
+  def write_value(self, val):
+    if val.ref_offset == -1:
+      self.file.write('&')
+    else:
+      i = val.ref_offset
+      while i > 0:
+        self.file.write('*')
+        i -= 1
+
+    if val.cast is not None:
+      self.file.write('(')
+      self.write(val.cast)
+      self.file.write(')')
+
   def writeInclude(self, inc):
     self.write_indent()
     self.file.write('#include <')
@@ -191,6 +205,8 @@ class SourceWriter:
       self.file.write(')')
 
   def writeArrayAccess(self, arr):
+    self.write_value(arr)
+
     sym = arr.child
     while type(sym).__name__ == 'ArrayAccess':
       sym = sym.child
@@ -234,18 +250,7 @@ class SourceWriter:
     self.file.write(op.op)
 
   def writeSymbol(self, sym):
-    if sym.ref_offset == -1:
-      self.file.write('&')
-    else:
-      i = sym.ref_offset
-      while i > 0:
-        self.file.write('*')
-        i -= 1
-
-    if sym.cast is not None:
-      self.file.write('(')
-      self.write(sym.cast)
-      self.file.write(')')
+    self.write_value(sym)
 
     if sym.decl is not None:
       self.file.write(sym.decl.name)

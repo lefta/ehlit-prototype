@@ -13,5 +13,11 @@ int main()
   string = returning_any(string)
   str string2 = returning_any(string)
 
+	int[] array
+  array = returning_any(array)
+  int[] array2 = returning_any(array)
+  array[0] = returning_any(array[0])
+  int array0 = returning_any(array[0])
+
 	return 0
 }
