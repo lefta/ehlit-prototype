@@ -119,6 +119,9 @@ class BuiltinType(Node):
   def sym(self): return self
 
   @property
+  def subtype(self): return BuiltinType('char') if self.name == 'str' else None
+
+  @property
   def is_reference(self): return False
 
   @property
@@ -141,12 +144,15 @@ class BuiltinType(Node):
     return self.name == rhs.name
 
 class Array(Node):
-  def __init__(self, typ):
-    self.typ = typ
+  def __init__(self, subtype):
+    self.subtype = subtype
 
   def build(self, parent):
     super().build(parent)
-    self.typ.build(self)
+    self.subtype.build(self)
+
+  @property
+  def typ(self): return self
 
   @property
   def sym(self): return self

@@ -202,7 +202,7 @@ class DumpWriter:
   @indent
   def dumpArray(self, arr):
     self.dump('Array')
-    self.print_node(arr.typ, False)
+    self.print_node(arr.subtype, False)
 
   @indent
   def dumpSymbol(self, sym):

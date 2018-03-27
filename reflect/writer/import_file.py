@@ -55,7 +55,7 @@ class ImportWriter:
       SourceWriter.writeArgumentDefinitionList(self, node)
 
   def writeArray(self, node):
-    self.write(node.typ)
+    self.write(node.subtype)
     self.file.write('[]')
 
   def writeBuiltinType(self, node):

@@ -91,7 +91,7 @@ class SourceWriter:
         self.file.write(' const')
 
   def writeArray(self, arr):
-    self.write(arr.typ)
+    self.write(arr.subtype)
     self.file.write('*')
 
   def writeDeclaration(self, decl):

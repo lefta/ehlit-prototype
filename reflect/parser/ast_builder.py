@@ -82,8 +82,8 @@ class ASTBuilder(PTNodeVisitor):
       return Reference(children[1])
     arr = children[1]
     while arr.typ is not None:
-      arr = arr.typ
-    arr.typ = Reference(children[2])
+      arr = arr.subtype
+    arr.subtype = Reference(children[2])
     return children[1]
   def visit_full_type(self, node, children):
     mods = 0
@@ -97,9 +97,9 @@ class ASTBuilder(PTNodeVisitor):
 
     if len(children) == i + 2:
       arr = res = children[i + 1]
-      while arr.typ is not None:
-        arr = arr.typ
-      arr.typ = children[i]
+      while arr.subtype is not None:
+        arr = arr.subtype
+      arr.subtype = children[i]
     return res
 
   def visit_declaration(self, node, children): return Declaration(children[0], children[1])
