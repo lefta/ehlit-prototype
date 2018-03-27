@@ -415,10 +415,10 @@ class ArrayAccess(Node):
   def ref_offset(self, val): self.child.ref_offset = val
 
   @property
-  def typ(self): return self.child.typ
+  def typ(self): return self.child.typ.subtype
 
   def auto_cast(self, target): pass
-  def from_any(self): return self.child.typ.from_any()
+  def from_any(self): return self.child.typ.subtype.from_any()
 
 class ControlStructure(Node):
   def __init__(self, name, cond, body):
