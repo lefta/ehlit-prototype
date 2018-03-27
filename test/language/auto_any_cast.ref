@@ -10,8 +10,8 @@ int main()
 	int number2 = returning_any(ref number)
 
 	str string = "Hello, World!"
-  ref string = ref returning_any(ref string)
-  str string2 = ref returning_any(ref string)
+  string = returning_any(string)
+  str string2 = returning_any(string)
 
 	return 0
 }

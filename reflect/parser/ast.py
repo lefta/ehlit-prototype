@@ -119,7 +119,7 @@ class BuiltinType(Node):
   def sym(self): return self
 
   @property
-  def is_reference(self): return self.name == 'str' or self.name == 'any'
+  def is_reference(self): return False
 
   @property
   def ref_offset(self): return 1 if self.is_reference else 0
@@ -128,7 +128,12 @@ class BuiltinType(Node):
   def is_type(self): return True
 
   @property
+  def typ(self): return self
+
+  @property
   def is_const(self): return self.mods & MOD_CONST
+
+  def from_any(self): return self if self.name == 'str' else Reference(self)
 
   def __eq__(self, rhs):
     if type(rhs) != BuiltinType:
@@ -151,6 +156,8 @@ class Array(Node):
 
   @property
   def is_type(self): return True
+
+  def from_any(self): return self
 
 class Reference(Node):
   def __init__(self, typ):
@@ -178,7 +185,10 @@ class Reference(Node):
   def decl(self): return self.typ.decl
 
   @property
-  def ref_offset(self): return self.typ.sym.ref_offset + 1
+  def ref_offset(self):
+    if self.typ.is_type:
+      return self.typ.sym.ref_offset + 1
+    return self.typ.ref_offset - 1
 
   def auto_cast(self, target): return self.typ.auto_cast(target)
 
@@ -398,7 +408,11 @@ class ArrayAccess(Node):
   @ref_offset.setter
   def ref_offset(self, val): self.child.ref_offset = val
 
+  @property
+  def typ(self): return self.child.typ
+
   def auto_cast(self, target): pass
+  def from_any(self): return self.child.typ.from_any()
 
 class ControlStructure(Node):
   def __init__(self, name, cond, body):
@@ -467,23 +481,23 @@ class Symbol(Node):
         self.ref_offset = self.decl.typ.ref_offset
 
   def auto_cast(self, target):
-    target_type = type(target)
-    while target_type is Reference or target_type is ArrayAccess:
-      if target_type is Reference:
-        target = target.typ
-      else:
-        target = target.child
-      target_type = type(target)
-
-    if target.is_declaration():
-      target_ref_level = target.typ.ref_offset
-    else:
-      target_ref_level = target.typ.ref_offset - target.ref_offset
-
-    if self.typ == BuiltinType('any') and target.typ != BuiltinType('any'):
-      self.cast = target.typ if target_ref_level > 0 else Reference(target.typ)
+    invert_ref_level = False
+    if self.typ != target.typ:
+      if self.typ == BuiltinType('any'):
+        self.cast = target.typ.from_any()
+        target = self.cast
+      elif target.typ == BuiltinType('any') and self.decl is not None:
+        target = self.decl.typ.from_any()
+        invert_ref_level = True
 
     if self.decl:
+      if target.is_declaration():
+        target_ref_level = target.typ.ref_offset
+      else:
+        target_ref_level = target.typ.ref_offset - target.ref_offset
+
+      if invert_ref_level:
+        target_ref_level *= -1
       self.ref_offset = self.decl.typ.ref_offset - target_ref_level
 
   @property
