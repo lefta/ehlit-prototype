@@ -564,6 +564,15 @@ class UnaryOperatorValue(Node):
 class PrefixOperatorValue(UnaryOperatorValue): pass
 class SuffixOperatorValue(UnaryOperatorValue): pass
 
+class Sizeof(Value):
+  def __init__(self, sz_typ):
+    super().__init__()
+    self.sz_typ = sz_typ
+
+  def build(self, parent):
+    super().build(parent)
+    self.sz_typ.build(self)
+
 class AST(Node):
   def __init__(self, nodes):
     self.nodes = nodes

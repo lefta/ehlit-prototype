@@ -237,3 +237,8 @@ class DumpWriter:
     self.dump('SuffixOperatorValue')
     self.print_str('Operator: %s' % val.op)
     self.print_node(val.val, False)
+
+  @indent
+  def dumpSizeof(self, node):
+    self.dump('Sizeof')
+    self.print_node(node.sz_typ, False)

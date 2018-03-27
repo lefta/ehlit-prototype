@@ -283,3 +283,8 @@ class SourceWriter:
   def writeSuffixOperatorValue(self, val):
     self.write(val.val)
     self.file.write(val.op)
+
+  def writeSizeof(self, node):
+    self.file.write('sizeof(')
+    self.write(node.sz_typ)
+    self.file.write(')')
