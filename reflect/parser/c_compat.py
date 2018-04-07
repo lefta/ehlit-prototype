@@ -86,14 +86,14 @@ def cursor_to_reflect(cursor):
     try:
       ast.append(globals()['parse_' + c.kind.name](c))
     except KeyError:
-      logging.debug('c_compat: unimplemented: %s' % c.kind.name)
+      logging.debug('c_compat: unimplemented: parse_%s' % c.kind.name)
   return ast
 
 def type_to_reflect(typ):
   try:
     return globals()['type_' + typ.kind.name](typ)
   except KeyError:
-    logging.debug('c_compat: unimplemented: %s' % typ.kind.name)
+    logging.debug('c_compat: unimplemented: type_%s' % typ.kind.name)
   return ast.BuiltinType('any')
 
 def find_file_in_path(filename):
