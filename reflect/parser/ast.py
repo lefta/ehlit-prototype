@@ -78,6 +78,7 @@ class GenericExternInclusion(Node):
   def __init__(self, pos, lib):
     super().__init__(pos)
     self.lib = lib
+    self.syms = []
 
   def build(self, parent):
     super().build(parent)
@@ -86,7 +87,6 @@ class GenericExternInclusion(Node):
     except ParseError as err:
       for e in err.failures:
         self.fail(e.severity, self.pos, e.message)
-        self.syms = []
 
     for s in self.syms:
       s.build(self)
