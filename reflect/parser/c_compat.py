@@ -149,6 +149,9 @@ def parse_FUNCTION_DECL(cursor):
     args,
     cursor.type.is_function_variadic())
 
+def parse_TYPEDEF_DECL(cursor):
+  return ast.Alias(type_to_reflect(cursor.underlying_typedef_type), ast.Symbol(0, cursor.spelling))
+
 
 def type_VOID(typ): return ast.BuiltinType('void')
 def type_POINTER(typ):
@@ -160,3 +163,6 @@ def type_POINTER(typ):
   if builtin_type is not None:
     return builtin_type
   return ast.Reference(type_to_reflect(subtype))
+
+def type_TYPEDEF(typ):
+  return ast.Alias(type_to_reflect(typ.get_canonical()), ast.Symbol(0, typ.spelling))
