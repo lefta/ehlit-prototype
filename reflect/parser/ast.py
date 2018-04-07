@@ -103,6 +103,7 @@ class Import(GenericExternInclusion):
       try: return parse.parse(path.join(p, self.lib.name + '.ref')).nodes
       except FileNotFoundError: pass
     self.error(self.pos, '%s: no such file or directory' % self.lib.name)
+    return []
 
 class Include(GenericExternInclusion):
   def parse(self): return c_compat.parse_header(self.lib.name)
