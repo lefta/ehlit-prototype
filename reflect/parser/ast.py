@@ -224,6 +224,9 @@ class Reference(Node):
     return self.typ.ref_offset - 1
 
   @property
+  def subtype(self): return self.typ.subtype
+
+  @property
   def name(self): return self.typ.name
 
   def auto_cast(self, target): return self.typ.auto_cast(target)
@@ -442,6 +445,9 @@ class ArrayAccess(Value):
   @property
   def typ(self): return self.child.typ.subtype
 
+  @property
+  def is_type(self): return False
+
   def from_any(self): return self.child.typ.subtype.from_any()
 
 class ControlStructure(Node):
@@ -566,6 +572,8 @@ class UnaryOperatorValue(Node):
 
   @property
   def typ(self): return self.val.typ
+
+  def auto_cast(self, tgt): return self.val.auto_cast(tgt)
 
 class PrefixOperatorValue(UnaryOperatorValue): pass
 class SuffixOperatorValue(UnaryOperatorValue): pass
