@@ -242,3 +242,15 @@ class DumpWriter:
   def dumpSizeof(self, node):
     self.dump('Sizeof')
     self.print_node(node.sz_typ, False)
+
+  @indent
+  def dumpAlias(self, node):
+    self.dump('Alias')
+    self.print_str('From:')
+    self.increment_prefix(True)
+    self.print_node(node.src, False)
+    self.decrement_prefix()
+    self.print_str('To:', False)
+    self.increment_prefix(False)
+    self.print_node(node.dst, False)
+    self.decrement_prefix()

@@ -295,3 +295,11 @@ class SourceWriter:
     self.file.write('sizeof(')
     self.write(node.sz_typ)
     self.file.write(')')
+
+  def writeAlias(self, node):
+    if node.src.is_type:
+      self.file.write('typedef ')
+      self.write(node.src)
+      self.file.write(' ')
+      self.write(node.dst)
+      self.file.write(';\n')

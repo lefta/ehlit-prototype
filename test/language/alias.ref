@@ -1,0 +1,10 @@
+include stdio
+
+alias int nb
+
+nb main() {
+  alias printf p
+  nb i = 42
+  p("%d\n", i)
+  return i
+}

@@ -63,8 +63,9 @@ def variable_declaration(): return declaration, Optional(assignment)
 def variable_assignment():
   return [function_call, referenced_value, symbol], Optional(array_access), operation_assignment
 def return_instruction(): return 'return', expression
-def statement(): return [return_instruction, variable_assignment, variable_declaration, expression]
-def instruction(): return [comment, condition, while_loop, statement]
+def statement(): return [return_instruction, variable_assignment, variable_declaration,
+  expression]
+def instruction(): return [comment, condition, while_loop, alias, statement]
 
 def control_structure_body(): return '{', ZeroOrMore(instruction), '}'
 def control_structure(): return expression, [instruction, control_structure_body]
@@ -82,4 +83,7 @@ def function(): return [function_definition, function_declaration]
 def include_instruction(): return 'include', symbol
 def import_instruction(): return 'import', symbol
 
-def grammar(): return ZeroOrMore([comment, import_instruction, include_instruction, function]), EOF
+def alias(): return 'alias', full_type, symbol
+
+def grammar(): return ZeroOrMore([comment, import_instruction, include_instruction, alias,
+  function]), EOF

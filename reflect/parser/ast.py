@@ -222,6 +222,9 @@ class Reference(Node):
       return self.typ.sym.ref_offset + 1
     return self.typ.ref_offset - 1
 
+  @property
+  def name(self): return self.typ.name
+
   def auto_cast(self, target): return self.typ.auto_cast(target)
 
 class Operator(Node):
@@ -510,6 +513,8 @@ class Symbol(Value):
   @property
   def typ(self): return self.decl.typ if self.decl is not None else BuiltinType('any')
 
+  def from_any(self): return self.decl.from_any() if self.decl is not None else self
+
 class String(Value):
   def __init__(self, string):
     super().__init__()
@@ -572,6 +577,32 @@ class Sizeof(Value):
   def build(self, parent):
     super().build(parent)
     self.sz_typ.build(self)
+
+class Alias(Node):
+  def __init__(self, src, dst):
+    self.src = src
+    self.dst = dst
+
+  def build(self, parent):
+    super().build(parent)
+    self.src.build(self)
+    self.src_decl = self.find_declaration(self.src.name)
+
+  def get_declaration(self, sym):
+    if self.dst.name == sym and self.src_decl is not None:
+      return self.src_decl
+
+  @property
+  def name(self): return self.dst.name
+
+  @property
+  def is_type(self): return self.dst.is_type
+
+  @property
+  def ref_offset(self): return self.dst.ref_offset
+
+  @ref_offset.setter
+  def ref_offset(self, offset): self.dst.ref_offset = offset
 
 class AST(Node):
   def __init__(self, nodes):

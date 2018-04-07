@@ -73,3 +73,10 @@ class ImportWriter:
     if node.is_const:
       self.file.write('const ')
     self.file.write(node.name)
+
+  def writeAlias(self, node):
+    self.file.write('alias ')
+    self.write(node.src)
+    self.file.write(' ')
+    self.write(node.dst)
+    self.file.write('\n')

@@ -154,4 +154,6 @@ class ASTBuilder(PTNodeVisitor):
   def visit_include_instruction(self, node, children): return Include(node.position, children[1])
   def visit_import_instruction(self, node, children): return Import(node.position, children[1])
 
+  def visit_alias(self, node, children): return Alias(children[1], children[2])
+
   def visit_grammar(self, node, children): return AST(children)
