@@ -89,7 +89,27 @@ def cursor_to_reflect(cursor):
       logging.debug('c_compat: unimplemented: parse_%s' % c.kind.name)
   return ast
 
+
+uint_types = {
+  'UCHAR',
+  'USHORT',
+  'UINT',
+  'ULONG',
+}
+
+int_types = {
+  'CHAR',
+  'SHORT',
+  'INT',
+  'LONG',
+}
+
 def type_to_reflect(typ):
+  if typ.kind.name in uint_types:
+    return ast.BuiltinType('uint' + str(typ.get_size() * 8))
+  if typ.kind.name in int_types:
+    return ast.BuiltinType('int' + str(typ.get_size() * 8))
+
   try:
     return globals()['type_' + typ.kind.name](typ)
   except KeyError:
@@ -131,7 +151,6 @@ def parse_FUNCTION_DECL(cursor):
 
 
 def type_VOID(typ): return ast.BuiltinType('void')
-def type_INT(typ): return ast.BuiltinType('int')
 def type_POINTER(typ):
   subtype = typ.get_pointee()
   builtin_type = {
