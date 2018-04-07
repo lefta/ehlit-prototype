@@ -1,0 +1,8 @@
+include stdio
+
+int main(int ac, str[] av)
+{
+	puts("Hello, world!\n")
+	printf("With some mathematics: 4 * 8 = %d", 4 * 8)
+	return 0
+}

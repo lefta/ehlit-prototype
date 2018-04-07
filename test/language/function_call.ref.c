@@ -4,6 +4,7 @@
 
 int32_t main(int32_t ac, char** av)
 {
-    printf("Hello, world!\n");
+    puts("Hello, world!\n");
+    printf("With some mathematics: 4 * 8 = %d", 4 * 8);
     return (0);
 }
