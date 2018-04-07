@@ -578,6 +578,9 @@ class Sizeof(Value):
     super().build(parent)
     self.sz_typ.build(self)
 
+  @property
+  def typ(self): return BuiltinType('size')
+
 class Alias(Node):
   def __init__(self, src, dst):
     self.src = src
