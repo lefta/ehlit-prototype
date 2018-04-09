@@ -230,6 +230,7 @@ class Reference(Node):
   def name(self): return self.typ.name
 
   def auto_cast(self, target): return self.typ.auto_cast(target)
+  def from_any(self): return BuiltinType('any')
 
 class Operator(Node):
   def __init__(self, op):
