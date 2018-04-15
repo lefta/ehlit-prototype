@@ -86,7 +86,7 @@ class GenericExternInclusion(Node):
       self.syms = self.parse()
     except ParseError as err:
       for e in err.failures:
-        self.fail(e.severity, self.pos, e.message)
+        self.fail(e.severity, self.pos, e.msg)
 
     for s in self.syms:
       s.build(self)
