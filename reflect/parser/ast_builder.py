@@ -46,8 +46,10 @@ class ASTBuilder(PTNodeVisitor):
   def visit_sizeof(self, node, children): return Sizeof(children[1])
   def visit_array_access(self, node, children):
     res = None
-    for v in children:
-      res = ArrayAccess(res, v)
+    i = len(children) - 1
+    while i >= 0:
+      res = ArrayAccess(res, children[i])
+      i -= 1
     return res
   def visit_value(self, node, children):
     if len(children) == 1:
