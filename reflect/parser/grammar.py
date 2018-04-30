@@ -19,7 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from arpeggio import RegExMatch, Optional, ZeroOrMore, Not, EOF
+from arpeggio import RegExMatch, Optional, ZeroOrMore, Not, EOF, Sequence
 
 def block_comment(): return ('/*', RegExMatch(r'[^*/]*'), '*/')
 def line_comment(): return ('//', RegExMatch(r'.*$'))
@@ -27,7 +27,9 @@ def comment(): return [line_comment, block_comment]
 
 def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', builtin_type]
 def symbol(): return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='symbol')
-def char(): return '\'', RegExMatch(r'\\[abefnrtv0\\]|[^\']', str_repr='character'), '\''
+def char():
+  return ('\'', Sequence(RegExMatch(r'\\[abefnrtv0\\]|[^\']', str_repr='character'), skipws=False),
+    '\'')
 def string(): return '"', RegExMatch(r'[^"]*'), '"'
 def number(): return RegExMatch(r'-?[0-9]+', str_repr='number')
 def null_value(): return 'null'

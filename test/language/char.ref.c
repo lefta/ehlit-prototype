@@ -17,5 +17,6 @@ int32_t main(void)
     take_char('\t');
     take_char('\v');
     take_char('\\');
+    int8_t space = ' ';
     return (0);
 }

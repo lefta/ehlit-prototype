@@ -11,6 +11,7 @@ int main() {
   take_char('\t')
   take_char('\v')
   take_char('\\')
+  char space = ' '
 
   return 0
 }
