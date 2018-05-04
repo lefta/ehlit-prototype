@@ -41,7 +41,7 @@ def disambiguated_prefix_operator_value(): return ("",
 def prefix_operator_value(): return [disambiguated_prefix_operator_value, '!'], writable_value
 def suffix_operator_value(): return writable_value, Sequence(['++', '--'], skipws=False)
 def sizeof(): return 'sizeof', '(', full_type, ')'
-def array_access(): return ZeroOrMore('[', value, ']')
+def array_access(): return ZeroOrMore('[', expression, ']')
 def value():
   return [null_value, sizeof, function_call, prefix_operator_value, suffix_operator_value,
     writable_value, string, char, number], array_access

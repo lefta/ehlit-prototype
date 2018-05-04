@@ -3,10 +3,11 @@ include stdio
 int main(int ac, str[] av)
 {
 	str[] av2 = av
+	ac--
 	while ac
 	{
 		ac--
-		av2[ac] = av[ac]
+		av2[ac] = av[ac + 1]
 		puts(av[ac])
 	}
 	return 0
