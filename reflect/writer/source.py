@@ -109,12 +109,22 @@ class SourceWriter:
 
   def writeArray(self, arr):
     self.write(arr.subtype)
-    self.file.write('*')
+    if arr.length is None:
+      self.file.write('*')
+
+  def write_array_post(self, arr):
+    if type(arr).__name__ == 'Array':
+      if arr.length is not None:
+        self.file.write('[')
+        self.write(arr.length)
+        self.file.write(']')
+      self.write_array_post(arr.subtype)
 
   def writeDeclaration(self, decl):
     self.write(decl.typ)
     self.file.write(' ')
     self.write(decl.sym)
+    self.write_array_post(decl.typ)
 
   def writeVariableDeclaration(self, decl):
     self.write(decl.decl)

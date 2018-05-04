@@ -56,7 +56,12 @@ class ImportWriter:
 
   def writeArray(self, node):
     self.write(node.subtype)
-    self.file.write('[]')
+    self.file.write('[')
+    if node.length is not None:
+      self.write(node.length)
+    self.file.write(']')
+
+  def write_array_post(self, arr): pass
 
   def writeBuiltinType(self, node):
     if node.is_const:

@@ -202,7 +202,16 @@ class DumpWriter:
   @indent
   def dumpArray(self, arr):
     self.dump('Array')
+    if arr.length is not None:
+      self.print_str('Sub-type:')
+      self.increment_prefix(True)
     self.print_node(arr.subtype, False)
+    if arr.length is not None:
+      self.decrement_prefix()
+      self.print_str('Length:', False)
+      self.increment_prefix(False)
+      self.print_node(arr.length, False)
+      self.decrement_prefix()
 
   @indent
   def dumpSymbol(self, sym):

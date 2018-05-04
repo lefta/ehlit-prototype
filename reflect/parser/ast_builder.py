@@ -75,10 +75,17 @@ class ASTBuilder(PTNodeVisitor):
 
   def visit_builtin_type(self, node, children): return BuiltinType(str(node))
   def visit_modifier(self, node, children): return MOD_CONST
+  def visit_array_element(self, node, children):
+    if len(children) is 0:
+      return Array(None, None)
+    return Array(None, children[0])
   def visit_array(self, node, children):
     res = None
-    for v in children:
-      res = Array(res)
+    i = len(children) - 1
+    while i >= 0:
+      children[i].subtype = res
+      res = children[i]
+      i -= 1
     return res
   def visit_reference(self, node, children):
     if len(children) == 2:

@@ -58,7 +58,8 @@ def builtin_type():
   return ['char', 'int', 'int8', 'int16', 'int32', 'int64', 'uint8', 'uint16', 'uint32', 'uint64',
     'size', 'str', 'any', 'void']
 def modifier(): return Optional('const')
-def array(): return ZeroOrMore('[]')
+def array_element(): return '[', Optional(expression), ']'
+def array(): return ZeroOrMore(array_element)
 def reference(): return 'ref', array, full_type
 def full_type(): return modifier, [reference, builtin_type, symbol], array
 

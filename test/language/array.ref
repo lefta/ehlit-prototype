@@ -2,7 +2,7 @@ include stdio
 
 int main(int ac, str[] av)
 {
-	str[] av2 = av
+	str[ ] av2 = av
 	ac--
 	while ac
 	{
@@ -10,5 +10,8 @@ int main(int ac, str[] av)
 		av2[ac] = av[ac + 1]
 		puts(av[ac])
 	}
+
+	int[][] arr1
+	int[42][5] arr42
 	return 0
 }

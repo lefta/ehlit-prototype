@@ -171,8 +171,9 @@ class BuiltinType(Node):
     return self.name == rhs.name
 
 class Array(Node):
-  def __init__(self, subtype):
+  def __init__(self, subtype, length):
     self.subtype = subtype
+    self.length = length
 
   def build(self, parent):
     super().build(parent)
