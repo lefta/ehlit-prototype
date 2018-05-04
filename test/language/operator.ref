@@ -33,6 +33,8 @@ int main()
 		return 6
 	if !i
 		return 7
+	if i
+		++i
 
 	return 0
 }

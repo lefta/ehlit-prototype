@@ -19,7 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from arpeggio import RegExMatch, Optional, ZeroOrMore, Not, EOF, Sequence
+from arpeggio import RegExMatch, Optional, Sequence, ZeroOrMore, Not, And, EOF
 
 def block_comment(): return ('/*', RegExMatch(r'[^*/]*'), '*/')
 def line_comment(): return ('//', RegExMatch(r'.*$'))
@@ -36,8 +36,10 @@ def null_value(): return 'null'
 def referenced_value(): return 'ref', value
 def function_call(): return [full_type, symbol], '(', ZeroOrMore(expression, sep=','), ')'
 def writable_value(): return [referenced_value, symbol]
-def prefix_operator_value(): return (['++', '--', '!'], writable_value)
-def suffix_operator_value(): return (writable_value, ['++', '--'])
+def disambiguated_prefix_operator_value(): return ("",
+  Sequence(['++', '--'], And(['ref', symbol]), skipws=False))
+def prefix_operator_value(): return [disambiguated_prefix_operator_value, '!'], writable_value
+def suffix_operator_value(): return writable_value, Sequence(['++', '--'], skipws=False)
 def sizeof(): return 'sizeof', '(', full_type, ')'
 def array_access(): return ZeroOrMore('[', value, ']')
 def value():
