@@ -174,6 +174,10 @@ class Array(Node):
   def __init__(self, subtype, length):
     self.subtype = subtype
     self.length = length
+    self.mods = MOD_NONE
+
+  def set_modifiers(self, mods):
+    self.mods = mods
 
   def build(self, parent):
     super().build(parent)
