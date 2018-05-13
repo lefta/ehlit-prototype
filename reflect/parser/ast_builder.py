@@ -91,7 +91,7 @@ class ASTBuilder(PTNodeVisitor):
     if len(children) == 2:
       return Reference(children[1])
     arr = children[1]
-    while arr.typ is not None:
+    while arr.subtype is not None:
       arr = arr.subtype
     arr.subtype = Reference(children[2])
     return children[1]
