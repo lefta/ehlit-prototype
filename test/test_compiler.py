@@ -19,12 +19,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from common import ReflectTestCase
+from common import ReflexTestCase
 
-""" Test reflect executable generation """
-class TestCompiler(ReflectTestCase):
-	def test_file_not_reflect_source(self):
-		self.assert_error("notrefsrc.ext", "notrefsrc.ext: not a reflect source file")
+""" Test reflex executable behavior """
+class TestCompiler(ReflexTestCase):
+	def test_file_not_reflex_source(self):
+		self.assert_error("notrefsrc.ext", "notrefsrc.ext: not a reflex source file")
 
 	def test_file_no_ent(self):
 		self.assert_error("doesnotexist.ref", "doesnotexist.ref: no such file or directory")

@@ -19,28 +19,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from arpeggio import ParserPython, visit_parse_tree, NoMatch, StrMatch
+from reflex.writer.import_file import ImportWriter
+from reflex.writer.source import SourceWriter
+from reflex.writer.dump import DumpWriter
 
-from reflect.parser.grammar import grammar
-from reflect.parser.ast_builder import ASTBuilder
-from reflect.parser.error import ParseError, Failure
+class WriteDump(DumpWriter):
+  pass
 
-def parse(source):
-  parser = ParserPython(grammar, autokwd=True)
+class WriteSource(SourceWriter):
+  pass
 
-  try:
-    parsed = parser.parse_file(source)
-    ast = visit_parse_tree(parsed, ASTBuilder())
-    ast.parser = parser
-  except NoMatch as err:
-    exp = []
-    for r in err.rules:
-      if type(r) is StrMatch:
-        r = "'%s'" % str(r)
-      else:
-        r = str(r)
-      if r not in exp:
-        exp.append(r)
-    raise ParseError([Failure(ParseError.Severity.Fatal, err.position,
-      'expected %s' % (' or '.join(exp)))], parser)
-  return ast
+class WriteImport(ImportWriter):
+  pass

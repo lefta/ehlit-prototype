@@ -19,15 +19,36 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from reflect.writer.import_file import ImportWriter
-from reflect.writer.source import SourceWriter
-from reflect.writer.dump import DumpWriter
+import logging
+from reflex import options
 
-class WriteDump(DumpWriter):
-  pass
+opts = options.parse_arguments()
 
-class WriteSource(SourceWriter):
-  pass
+logging.addLevelName(logging.ERROR, '\033[1;31mError\033[m: ')
+logging.addLevelName(logging.WARNING, '\033[1;35mWarning\033[m: ')
+logging.addLevelName(logging.INFO, '\033[1;37mNote\033[m: ')
+logging.addLevelName(logging.DEBUG, '> ')
+logging.basicConfig(format='%(levelname)s%(message)s',
+  level=logging.DEBUG if opts.verbose else logging.INFO)
 
-class WriteImport(ImportWriter):
-  pass
+# Do not import submodules before the logger is initialized, as they may use it
+from reflex.parser import ParseError
+from reflex import build
+
+try:
+  build(opts)
+
+except ParseError as err:
+  for f in err.failures:
+    if f.severity < ParseError.Severity.Error:
+      logging.warning(str(f))
+    else:
+      logging.error(str(f))
+
+  logging.info(err.summary)
+  if err.max_level > ParseError.Severity.Warning:
+    exit(-1)
+
+except options.ArgError as err:
+  logging.error(err)
+  exit(-1)

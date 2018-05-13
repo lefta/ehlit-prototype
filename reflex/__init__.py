@@ -20,36 +20,29 @@
 # SOFTWARE.
 
 import logging
-from reflect import options
 
-opts = options.parse_arguments()
+def build(args):
+  # Avoid importing submodules in global scope, otherwise they may use the logger before it is
+  # initialized
+  from reflex.parser import parse, ParseError
+  from reflex.writer import WriteSource, WriteDump, WriteImport
+  from reflex.options import check_arguments
 
-logging.addLevelName(logging.ERROR, '\033[1;31mError\033[m: ')
-logging.addLevelName(logging.WARNING, '\033[1;35mWarning\033[m: ')
-logging.addLevelName(logging.INFO, '\033[1;37mNote\033[m: ')
-logging.addLevelName(logging.DEBUG, '> ')
-logging.basicConfig(format='%(levelname)s%(message)s',
-  level=logging.DEBUG if opts.verbose else logging.INFO)
+  check_arguments(args)
+  logging.debug('building %s to %s\n', args.source, args.output_file)
 
-# Avoid importing submodules in global scope, otherwise they may use the logger before it is
-# initialized
-from reflect.parser import ParseError
-from reflect import build
+  failure = None
+  try:
+    ast = parse(args.source)
+    ast.build(args)
+  except ParseError as err:
+    if err.max_level < ParseError.Severity.Error: failure = err
+    else: raise
 
-try:
-  build(opts)
+  if args.verbose:
+    WriteDump(ast)
+  WriteSource(ast, args.output_file)
+  WriteImport(ast, args.output_import_file)
 
-except ParseError as err:
-  for f in err.failures:
-    if f.severity < ParseError.Severity.Error:
-      logging.warning(str(f))
-    else:
-      logging.error(str(f))
-
-  logging.info(err.summary)
-  if err.max_level > ParseError.Severity.Warning:
-    exit(-1)
-
-except options.ArgError as err:
-  logging.error(err)
-  exit(-1)
+  if failure is not None:
+    raise failure

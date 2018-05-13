@@ -20,8 +20,8 @@
 # SOFTWARE.
 
 from os import path, getcwd
-from reflect.parser import c_compat, parse
-from reflect.parser.error import ParseError, Failure
+from reflex.parser import c_compat, parse
+from reflex.parser.error import ParseError, Failure
 
 MOD_NONE = 0
 MOD_CONST = 1

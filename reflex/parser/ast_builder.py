@@ -21,7 +21,7 @@
 
 from arpeggio import PTNodeVisitor
 
-from reflect.parser.ast import *
+from reflex.parser.ast import *
 
 class ASTBuilder(PTNodeVisitor):
   def visit_comment(self, node, children): return None

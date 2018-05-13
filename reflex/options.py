@@ -29,7 +29,7 @@ class ArgError(Exception):
 def check_arguments(args):
   src, ext = path.splitext(args.source)
   if ext != ".ref":
-    raise ArgError("%s: not a reflect source file" % args.source)
+    raise ArgError("%s: not a reflex source file" % args.source)
   elif not path.isfile(args.source):
     raise ArgError("%s: no such file or directory" % args.source)
 
@@ -45,7 +45,7 @@ def check_arguments(args):
 
 
 def parse_arguments():
-  parser = ArgumentParser(description="Compile reflect source files")
+  parser = ArgumentParser(description="Compile reflex source files")
 
   parser.add_argument('source', help="Source files to build")
 

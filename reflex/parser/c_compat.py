@@ -24,8 +24,8 @@ import logging
 import subprocess
 from argparse import ArgumentParser
 from clang.cindex import Index, TranslationUnitLoadError, CursorKind, TypeKind
-from reflect.parser.error import ParseError, Failure
-from reflect.parser import ast
+from reflex.parser.error import ParseError, Failure
+from reflex.parser import ast
 
 include_dirs = []
 
@@ -50,7 +50,7 @@ try:
   # - It is ways easier and more reliable than supporting each and every system / (cross) compiler
   #   combo out there
   # - They should be quite the same than the ones actually used
-  # - Only differences should be minor / internal enough to not have consequences on reflect code
+  # - Only differences should be minor / internal enough to not have consequences on reflex code
   proc = subprocess.run(['clang', '-E', '-v', '-'], stdin=subprocess.PIPE,
     stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf-8')
 
@@ -80,7 +80,7 @@ except Exception:
 include_dirs.append('.')
 
 
-def cursor_to_reflect(cursor):
+def cursor_to_reflex(cursor):
   ast = []
   for c in cursor.get_children():
     try:
@@ -104,7 +104,7 @@ int_types = {
   'LONG',
 }
 
-def type_to_reflect(typ):
+def type_to_reflex(typ):
   if typ.kind.name in uint_types:
     return ast.BuiltinType('uint' + str(typ.get_size() * 8))
   if typ.kind.name in int_types:
@@ -131,7 +131,7 @@ def parse_header(filename):
     tu = index.parse(path)
   except TranslationUnitLoadError as err:
     raise ParseError([Failure(ParseError.Severity.Error, 0, '%s: parsing failed' % filename)])
-  ast = cursor_to_reflect(tu.cursor)
+  ast = cursor_to_reflex(tu.cursor)
   del tu
   del index
   return ast
@@ -141,16 +141,16 @@ def parse_FUNCTION_DECL(cursor):
   args = []
   for c in cursor.get_children():
     if c.kind == CursorKind.PARM_DECL:
-      args.append(ast.Declaration(type_to_reflect(c.type), ast.Symbol(0, c.spelling)))
+      args.append(ast.Declaration(type_to_reflex(c.type), ast.Symbol(0, c.spelling)))
 
   return ast.FunctionDeclaration(
-    type_to_reflect(cursor.type.get_result()),
+    type_to_reflex(cursor.type.get_result()),
     ast.Symbol(0, cursor.spelling),
     args,
     cursor.type.is_function_variadic())
 
 def parse_TYPEDEF_DECL(cursor):
-  return ast.Alias(type_to_reflect(cursor.underlying_typedef_type), ast.Symbol(0, cursor.spelling))
+  return ast.Alias(type_to_reflex(cursor.underlying_typedef_type), ast.Symbol(0, cursor.spelling))
 
 
 def type_VOID(typ): return ast.BuiltinType('void')
@@ -162,7 +162,7 @@ def type_POINTER(typ):
   }.get(subtype.kind)
   if builtin_type is not None:
     return builtin_type
-  return ast.Reference(type_to_reflect(subtype))
+  return ast.Reference(type_to_reflex(subtype))
 
 def type_TYPEDEF(typ):
-  return ast.Alias(type_to_reflect(typ.get_canonical()), ast.Symbol(0, typ.spelling))
+  return ast.Alias(type_to_reflex(typ.get_canonical()), ast.Symbol(0, typ.spelling))

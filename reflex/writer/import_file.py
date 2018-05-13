@@ -20,7 +20,7 @@
 # SOFTWARE.
 
 import sys
-from reflect.writer.source import SourceWriter
+from reflex.writer.source import SourceWriter
 
 class ImportWriter:
   def __init__(self, ast, f):

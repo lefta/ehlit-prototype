@@ -19,30 +19,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import logging
-
-def build(args):
-  # Avoid importing submodules in global scope, otherwise they may use the logger before it is
-  # initialized
-  from reflect.parser import parse, ParseError
-  from reflect.writer import WriteSource, WriteDump, WriteImport
-  from reflect.options import check_arguments
-
-  check_arguments(args)
-  logging.debug('building %s to %s\n', args.source, args.output_file)
-
-  failure = None
-  try:
-    ast = parse(args.source)
-    ast.build(args)
-  except ParseError as err:
-    if err.max_level < ParseError.Severity.Error: failure = err
-    else: raise
-
-  if args.verbose:
-    WriteDump(ast)
-  WriteSource(ast, args.output_file)
-  WriteImport(ast, args.output_import_file)
-
-  if failure is not None:
-    raise failure
+from reflex.parser.parse import parse
+from reflex.parser.error import ParseError

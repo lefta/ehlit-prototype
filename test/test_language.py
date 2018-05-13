@@ -20,10 +20,10 @@
 # SOFTWARE.
 
 import os.path
-from common import ReflectTestCase
+from common import ReflexTestCase
 
 """ Test valid language features """
-class TestLanguage(ReflectTestCase):
+class TestLanguage(ReflexTestCase):
 	def __init__(self, arg):
 		super().__init__(arg)
 		self.test_dir = 'language'
