@@ -11,7 +11,28 @@ int main(int ac, str[] av)
 		puts(av[ac])
 	}
 
-	int[][] arr1
-	int[42][5] arr42
+	int[][] sarr1
+	int[42][5] sarr2
+
+	int[20][] arr1
+	int[][20] arr2
+	int[12][][20] arr3
+	int[][12][] arr4
+	int[][12][][20] arr5
+	int[20][][12][] arr6
+	int[20][12][][] arr7
+	int[][][12][20] arr8
+	int[][20][12][] arr9
+
+	ref[20] int rarr1
+	ref int[20] rarr2
+	ref[12] int[20] rarr3
+	ref ref[12] int rarr4
+	ref ref[12] int[20] rarr5
+	ref[20] ref[12] int rarr6
+	ref[20][12] ref int rarr7
+	ref ref int[12][20] rarr8
+	ref ref[20][12] int rarr9
+
 	return 0
 }

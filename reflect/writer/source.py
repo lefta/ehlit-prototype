@@ -111,14 +111,35 @@ class SourceWriter:
     self.write(arr.subtype)
     if arr.length is None:
       self.file.write('*')
+    if self.array_needs_parens(arr):
+      self.file.write('(')
 
-  def write_array_post(self, arr):
-    if type(arr).__name__ == 'Array':
-      if arr.length is not None:
+  def is_dynamic_array(self, node):
+    typ = type(node).__name__
+    return (typ == 'Array' and node.length is None) or typ == 'Reference'
+
+  def array_needs_parens(self, node):
+    if self.is_dynamic_array(node):
+      return False
+    typ = type(node.parent).__name__
+    if typ != 'Array' and typ != 'Reference':
+      return False
+    return self.is_dynamic_array(node.parent)
+
+  def write_array_post(self, node):
+    typ = type(node).__name__
+    if typ != 'Array' and typ != 'Reference':
+      return
+    if self.array_needs_parens(node):
+      self.file.write(')')
+    if typ == 'Array':
+      if node.length is not None:
         self.file.write('[')
-        self.write(arr.length)
+        self.write(node.length)
         self.file.write(']')
-      self.write_array_post(arr.subtype)
+      self.write_array_post(node.subtype)
+    else:
+      self.write_array_post(node.typ)
 
   def writeDeclaration(self, decl):
     self.write(decl.typ)
