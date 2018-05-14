@@ -20,6 +20,7 @@
 # SOFTWARE.
 
 import sys
+from reflex.parser.ast import Reference, Array, ArrayAccess
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -115,24 +116,24 @@ class SourceWriter:
       self.file.write('(')
 
   def is_dynamic_array(self, node):
-    typ = type(node).__name__
-    return (typ == 'Array' and node.length is None) or typ == 'Reference'
+    typ = type(node)
+    return (typ is Array and node.length is None) or typ is Reference
 
   def array_needs_parens(self, node):
     if self.is_dynamic_array(node):
       return False
-    typ = type(node.parent).__name__
-    if typ != 'Array' and typ != 'Reference':
+    typ = type(node.parent)
+    if typ is not Array and typ is not Reference:
       return False
     return self.is_dynamic_array(node.parent)
 
   def write_array_post(self, node):
-    typ = type(node).__name__
-    if typ != 'Array' and typ != 'Reference':
+    typ = type(node)
+    if typ is not Array and typ is not Reference:
       return
     if self.array_needs_parens(node):
       self.file.write(')')
-    if typ == 'Array':
+    if typ is Array:
       if node.length is not None:
         self.file.write('[')
         self.write(node.length)
@@ -246,11 +247,11 @@ class SourceWriter:
     self.write_value(arr)
 
     sym = arr.child
-    while type(sym).__name__ == 'ArrayAccess':
+    while type(sym) is ArrayAccess:
       sym = sym.child
     self.write(sym)
 
-    while type(arr).__name__ == 'ArrayAccess':
+    while type(arr) is ArrayAccess:
       self.file.write('[')
       self.write(arr.idx)
       self.file.write(']')
