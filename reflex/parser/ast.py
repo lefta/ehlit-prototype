@@ -427,6 +427,9 @@ class FunctionCall(Node):
   @property
   def typ(self): return self.sym if self.is_cast else self.sym.typ
 
+  @property
+  def decl(self): return self.sym if self.is_cast else self.sym.decl
+
   def auto_cast(self, target_type):
     if not self.is_cast:
       self.sym.auto_cast(target_type)
@@ -569,6 +572,9 @@ class UnaryOperatorValue(Node):
 
   @property
   def typ(self): return self.val.typ
+
+  @property
+  def decl(self): return self.val.decl
 
   def auto_cast(self, tgt): return self.val.auto_cast(tgt)
 
