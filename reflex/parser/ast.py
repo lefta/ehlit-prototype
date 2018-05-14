@@ -134,13 +134,24 @@ class Value(Node):
         target_ref_level *= -1
       self.ref_offset = self.typ.ref_offset - target_ref_level
 
-class BuiltinType(Node):
-  def __init__(self, name):
-    self.name = name
+class Type(Node):
+  def __init__(self, pos=0):
+    super().__init__(pos)
     self.mods = MOD_NONE
 
   def set_modifiers(self, mods):
     self.mods = mods
+
+  @property
+  def is_const(self): return self.mods & MOD_CONST
+
+  @property
+  def is_type(self): return True
+
+class BuiltinType(Type):
+  def __init__(self, name):
+    super().__init__()
+    self.name = name
 
   @property
   def sym(self): return self
@@ -155,13 +166,7 @@ class BuiltinType(Node):
   def ref_offset(self): return 1 if self.is_reference else 0
 
   @property
-  def is_type(self): return True
-
-  @property
   def typ(self): return self
-
-  @property
-  def is_const(self): return self.mods & MOD_CONST
 
   def from_any(self): return self if self.name == 'str' else Reference(self)
 
@@ -170,14 +175,11 @@ class BuiltinType(Node):
       return False
     return self.name == rhs.name
 
-class Array(Node):
+class Array(Type):
   def __init__(self, child, length):
+    super().__init__()
     self.child = child
     self.length = length
-    self.mods = MOD_NONE
-
-  def set_modifiers(self, mods):
-    self.mods = mods
 
   def build(self, parent):
     super().build(parent)
@@ -189,18 +191,12 @@ class Array(Node):
   @property
   def ref_offset(self): return 0
 
-  @property
-  def is_type(self): return True
-
   def from_any(self): return self
 
-class Reference(Value):
+class Reference(Value, Type):
   def __init__(self, child):
     super().__init__()
     self.child = child
-    self.mods = MOD_NONE
-
-  def set_modifiers(self, mods): self.mods = mods
 
   def build(self, parent):
     super().build(parent)
@@ -213,9 +209,6 @@ class Reference(Value):
 
   @property
   def is_type(self): return self.child.is_type
-
-  @property
-  def is_const(self): return self.mods & MOD_CONST
 
   @property
   def decl(self): return self.child.decl
@@ -503,17 +496,11 @@ class Return(Node):
     self.expr.auto_cast(decl)
 
 
-class Symbol(Value):
+class Symbol(Value, Type):
   def __init__(self, pos, name):
     super().__init__(pos)
     self.name = name
     self.decl = None
-    self.mods = MOD_NONE
-
-  def set_modifiers(self, mods): self.mods = mods
-
-  @property
-  def is_const(self): return self.mods & MOD_CONST
 
   def build(self, parent):
     super().build(parent)
