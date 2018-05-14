@@ -102,14 +102,14 @@ class SourceWriter:
       self.file.write(' const')
 
   def writeReference(self, ref):
-    self.write(ref.typ)
+    self.write(ref.child)
     if ref.is_type:
       self.file.write('*')
       if ref.is_const:
         self.file.write(' const')
 
   def writeArray(self, arr):
-    self.write(arr.subtype)
+    self.write(arr.child)
     if arr.length is None:
       self.file.write('*')
     if self.array_needs_parens(arr):
@@ -133,14 +133,11 @@ class SourceWriter:
       return
     if self.array_needs_parens(node):
       self.file.write(')')
-    if typ is Array:
-      if node.length is not None:
-        self.file.write('[')
-        self.write(node.length)
-        self.file.write(']')
-      self.write_array_post(node.subtype)
-    else:
-      self.write_array_post(node.typ)
+    if typ is Array and node.length is not None:
+      self.file.write('[')
+      self.write(node.length)
+      self.file.write(']')
+    self.write_array_post(node.child)
 
   def writeDeclaration(self, decl):
     self.write(decl.typ)

@@ -55,7 +55,7 @@ class ImportWriter:
       SourceWriter.writeArgumentDefinitionList(self, node)
 
   def writeArray(self, node):
-    self.write(node.subtype)
+    self.write(node.child)
     self.file.write('[')
     if node.length is not None:
       self.write(node.length)
@@ -72,7 +72,7 @@ class ImportWriter:
     if node.is_const:
       self.file.write('const ')
     self.file.write('ref ')
-    self.write(node.typ)
+    self.write(node.child)
 
   def writeSymbol(self, node):
     if node.is_const:

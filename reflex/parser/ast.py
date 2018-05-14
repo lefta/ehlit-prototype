@@ -146,7 +146,7 @@ class BuiltinType(Node):
   def sym(self): return self
 
   @property
-  def subtype(self): return BuiltinType('char') if self.name == 'str' else None
+  def child(self): return BuiltinType('char') if self.name == 'str' else None
 
   @property
   def is_reference(self): return False
@@ -171,8 +171,8 @@ class BuiltinType(Node):
     return self.name == rhs.name
 
 class Array(Node):
-  def __init__(self, subtype, length):
-    self.subtype = subtype
+  def __init__(self, child, length):
+    self.child = child
     self.length = length
     self.mods = MOD_NONE
 
@@ -181,13 +181,10 @@ class Array(Node):
 
   def build(self, parent):
     super().build(parent)
-    self.subtype.build(self)
+    self.child.build(self)
 
   @property
   def typ(self): return self
-
-  @property
-  def sym(self): return self
 
   @property
   def ref_offset(self): return 0
@@ -197,44 +194,48 @@ class Array(Node):
 
   def from_any(self): return self
 
-class Reference(Node):
-  def __init__(self, typ):
-    self.typ = typ
+class Reference(Value):
+  def __init__(self, child):
+    super().__init__()
+    self.child = child
     self.mods = MOD_NONE
 
   def set_modifiers(self, mods): self.mods = mods
 
   def build(self, parent):
     super().build(parent)
-    self.typ.build(self)
-    if not self.typ.is_type:
-      self.typ.ref_offset -= 1
+    self.child.build(self)
+    if not self.child.is_type:
+      self.child.ref_offset -= 1
 
   @property
   def is_reference(self): return True
 
   @property
-  def is_type(self): return self.typ.is_type
+  def is_type(self): return self.child.is_type
 
   @property
   def is_const(self): return self.mods & MOD_CONST
 
   @property
-  def decl(self): return self.typ.decl
+  def decl(self): return self.child.decl
 
   @property
   def ref_offset(self):
-    if self.typ.is_type:
-      return self.typ.sym.ref_offset + 1
-    return self.typ.ref_offset - 1
+    if self.child.is_type:
+      return self.child.ref_offset + 1
+    return self.child.ref_offset
+
+  @ref_offset.setter
+  def ref_offset(self, val): pass
 
   @property
-  def subtype(self): return self.typ.subtype
+  def typ(self): return self.child if self.is_type else self.decl.typ
 
   @property
-  def name(self): return self.typ.name
+  def name(self): return self.child.name
 
-  def auto_cast(self, target): return self.typ.auto_cast(target)
+  def auto_cast(self, target): return self.child.auto_cast(target)
   def from_any(self): return BuiltinType('any')
 
 class Operator(Node):
@@ -449,12 +450,15 @@ class ArrayAccess(Value):
     self.idx.build(self)
 
   @property
-  def typ(self): return self.child.typ.subtype
+  def typ(self): return self.child.typ.child
 
   @property
   def is_type(self): return False
 
-  def from_any(self): return self.child.typ.subtype.from_any()
+  @property
+  def decl(self): return self.child.decl
+
+  def from_any(self): return self.child.typ.from_any()
 
 class ControlStructure(Node):
   def __init__(self, name, cond, body):

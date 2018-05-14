@@ -187,7 +187,7 @@ class DumpWriter:
     self.dump('Reference')
     if ref.is_const:
       self.print_str('Modifiers: const')
-    self.print_node(ref.typ, False)
+    self.print_node(ref.child, False)
 
   @indent
   def dumpOperator(self, op):
@@ -205,7 +205,7 @@ class DumpWriter:
     if arr.length is not None:
       self.print_str('Sub-type:')
       self.increment_prefix(True)
-    self.print_node(arr.subtype, False)
+    self.print_node(arr.child, False)
     if arr.length is not None:
       self.decrement_prefix()
       self.print_str('Length:', False)
