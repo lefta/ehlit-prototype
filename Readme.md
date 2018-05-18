@@ -1,5 +1,14 @@
 # Reflex Lang
 
+This project is in a very early stage and is not safe for production use. The compiler and the
+language itself *will* change. You have been warned !
+
+I (lefta) am developping this project on my free time. Neither the language, this project nor myself
+are backed by anyone. This means that you may not expect any ETA for any feature. If you are
+interrested in the Reflex language, please be patient (really patient). If you are **very**
+interrested, I am open to any help you are able to provide. See the `how can I help ?` section
+below.
+
 ## Introduction
 
 Reflex is a compiled programmation language designed for performance, simplicity, readability and
@@ -50,11 +59,29 @@ do not even have to think about this. For instance, with Makefiles, you could us
 This way, you may build your program the exact same way you would build it if it was written in pure
 C. C source files will be generated dynamically as needed.
 
+## How can I help ?
+
+There is a very long road ahead, if you want to speed up things, you may:
+
+* Test the language : write some toy programs to help identify problems in the language or the
+compiler. Even better if you improve the test suite by the way, and there is a lot to do !
+* Write documentation : the language and its features are not yet documented. This would make it
+easier to start with.
+* Suggest features : I would love to know what you expect from Reflex (please avoid things like
+"fast", this is obvious and planned).
+* Implement features : If the development of feature you are waiting for takes too long, you are
+welcome to implement it. But if you do, please make sure to discuss it with me before.
+* Anything I did not think of but that may be usefull.
+
 ## Roadmap
 
-* WIP: Language definition
+* WIP: Language definition LV1: The C features (with some bonuses)
+* TODO: Language definition LV2: The cool, high level features
 * TODO: Standard library definition
-* WIP: Compiler
+* TODO: Standard library implementation
+* WIP: Compiler prototype (just working)
+* TODO: Real compiler (fast, robust and developper friendly)
 * TODO: Language specification
+* TODO: Standard library documentation
 * WIP: Syntax files for major text editors
 * TODO: Autocompletion module for Atom
