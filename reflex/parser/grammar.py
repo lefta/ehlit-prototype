@@ -25,7 +25,8 @@ def block_comment(): return ('/*', RegExMatch(r'[^*/]*'), '*/')
 def line_comment(): return ('//', RegExMatch(r'.*$'))
 def comment(): return [line_comment, block_comment]
 
-def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', builtin_type]
+def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', builtin_type,
+  bool_value]
 def symbol(): return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='symbol')
 def char():
   return ('\'', Sequence(RegExMatch(r'\\[abefnrtv0\\]|[^\']', str_repr='character'), skipws=False),
@@ -33,6 +34,7 @@ def char():
 def string(): return '"', RegExMatch(r'[^"]*'), '"'
 def number(): return RegExMatch(r'-?[0-9]+', str_repr='number')
 def null_value(): return 'null'
+def bool_value(): return ['true', 'false']
 def referenced_value(): return 'ref', value
 def function_call(): return [full_type, symbol], '(', ZeroOrMore(expression, sep=','), ')'
 def writable_value(): return [referenced_value, symbol]
@@ -43,8 +45,8 @@ def suffix_operator_value(): return writable_value, Sequence(['++', '--'], skipw
 def sizeof(): return 'sizeof', '(', full_type, ')'
 def array_access(): return ZeroOrMore('[', expression, ']')
 def value():
-  return [null_value, sizeof, function_call, prefix_operator_value, suffix_operator_value,
-    writable_value, string, char, number], array_access
+  return [null_value, bool_value, sizeof, function_call, prefix_operator_value,
+    suffix_operator_value, writable_value, string, char, number], array_access
 
 def mathematical_operator(): return ['+', '-', '*', '/', '%']
 def binary_operator(): return ['==', '!=', '>=', '<=', '>', '<', '||', '&&']
@@ -56,7 +58,7 @@ def operation_assignment(): return Optional(mathematical_operator), assignment
 
 def builtin_type():
   return ['char', 'int', 'int8', 'int16', 'int32', 'int64', 'uint8', 'uint16', 'uint32', 'uint64',
-    'size', 'str', 'any', 'void']
+    'size', 'str', 'any', 'void', 'bool']
 def modifier(): return Optional('const')
 def array_element(): return '[', Optional(expression), ']'
 def array(): return ZeroOrMore(array_element)

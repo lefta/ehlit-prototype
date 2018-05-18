@@ -43,6 +43,7 @@ class SourceWriter:
       'uint32': 'uint32_t',
       'uint64': 'uint64_t',
       'size': 'size_t',
+      'bool': 'uint8_t',
     }
 
     self.control_structures = {
@@ -333,6 +334,9 @@ class SourceWriter:
 
   def writeNullValue(self, stmt):
     self.file.write('NULL')
+
+  def writeBoolValue(self, node):
+    self.file.write('0' if node.val is False else '!0')
 
   def writePrefixOperatorValue(self, val):
     self.file.write(val.op)

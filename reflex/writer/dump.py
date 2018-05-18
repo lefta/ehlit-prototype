@@ -236,6 +236,10 @@ class DumpWriter:
     self.dump('NullValue')
 
   @indent
+  def dumpBoolValue(self, node):
+    self.dump('BoolValue: ' + 'true' if node.val is True else 'false')
+
+  @indent
   def dumpPrefixOperatorValue(self, val):
     self.dump('PrefixOperatorValue')
     self.print_str('Operator: %s' % val.op)

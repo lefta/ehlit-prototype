@@ -566,6 +566,16 @@ class NullValue(Value):
 
   def auto_cast(self, target_type): pass
 
+class BoolValue(Value):
+  def __init__(self, val):
+    super().__init__()
+    self.val = val
+
+  @property
+  def typ(self): return BuiltinType('bool')
+
+  def auto_cast(self, target_type): pass
+
 class UnaryOperatorValue(Node):
   def __init__(self, op, val):
     self.op = op
