@@ -157,7 +157,12 @@ class BuiltinType(Type):
   def sym(self): return self
 
   @property
-  def child(self): return BuiltinType('char') if self.name == 'str' else None
+  def child(self):
+    if self.name == 'str':
+      ch = BuiltinType('char')
+      ch.parent = self
+      return ch
+    return None
 
   @property
   def is_reference(self): return False
