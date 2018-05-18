@@ -20,7 +20,7 @@
 # SOFTWARE.
 
 import sys
-from reflex.parser.ast import Reference, Array, ArrayAccess
+from reflex.parser.ast import Reference, Array, ArrayAccess, BuiltinType
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -242,17 +242,39 @@ class SourceWriter:
 
   def writeArrayAccess(self, arr):
     self.write_value(arr)
-
-    sym = arr.child
-    while type(sym) is ArrayAccess:
-      sym = sym.child
+    decl = arr.decl.typ
+    sym = arr
+    while type(decl) is Array or type(decl) is Reference or BuiltinType('str') == decl:
+      if type(sym) is ArrayAccess:
+        sym = sym.child
+      decl = decl.child
+    cur = sym.parent
+    decl = decl.parent
+    while type(decl) is Array or type(decl) is Reference or BuiltinType('str') == decl:
+      if type(decl) is Reference:
+        rdecl = decl
+        while type(rdecl) is Reference:
+          rdecl = rdecl.parent
+        if type(rdecl) is Array:
+          self.file.write('*')
+      elif type(cur) is ArrayAccess:
+        if type(decl.parent) is Reference:
+          self.file.write('(')
+        cur = cur.parent
+      decl = decl.parent
     self.write(sym)
-
-    while type(arr) is ArrayAccess:
-      self.file.write('[')
-      self.write(arr.idx)
-      self.file.write(']')
-      arr = arr.child
+    decl = arr.decl.typ
+    while type(decl) is Reference:
+      decl = decl.child
+    while type(arr) is ArrayAccess or type(decl) is Reference:
+      if type(decl) is not Reference and type(arr) is ArrayAccess:
+        if type(decl.parent) is Reference:
+          self.file.write(')')
+        self.file.write('[')
+        self.write(arr.idx)
+        self.file.write(']')
+        arr = arr.child
+      decl = decl.child
 
   def writeControlStructure(self, struct):
     self.write_indent()
