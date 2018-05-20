@@ -214,6 +214,13 @@ class DumpWriter:
       self.decrement_prefix()
 
   @indent
+  def dumpFunctionType(self, node):
+    self.dump('FunctionType')
+    self.print_node(node.ret, len(node.args) is not 0)
+    if len(node.args) is not 0:
+      self.print_node_list('Arguments:', node.args, False)
+
+  @indent
   def dumpSymbol(self, sym):
     self.dump('Symbol: ' + sym.name)
     if sym.is_const:

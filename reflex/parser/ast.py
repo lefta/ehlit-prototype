@@ -236,6 +236,15 @@ class Reference(Value, Type):
   def auto_cast(self, target): return self.child.auto_cast(target)
   def from_any(self): return BuiltinType('any')
 
+class FunctionType(Type):
+  def __init__(self, ret, args):
+    super().__init__()
+    self.ret = ret
+    self.args = args
+
+  @property
+  def ref_offset(self): return 0
+
 class Operator(Node):
   def __init__(self, op):
     self.op = op
@@ -283,6 +292,9 @@ class Declaration(Node):
 
   @property
   def is_type(self): return False
+
+  @property
+  def args(self): return self.typ.args if type(self.typ) is FunctionType else None
 
 class VariableDeclaration(Node):
   def __init__(self, decl, assign):

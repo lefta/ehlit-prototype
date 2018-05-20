@@ -1,0 +1,16 @@
+void fun1() {}
+int fun2(int i) {}
+int fun3(int i, int j) {}
+ref int[] fun4(ref int[] arr) {}
+
+int main() {
+  func<void()> pfn1 = fun1
+  func<int(int)> pfn2 = fun2
+  func<int(int, int)> pfn3 = fun3
+  func<ref int[](ref int[])> pfn4 = fun4
+  pfn1()
+  pfn2(0)
+  pfn3(0, 0)
+  pfn4(null)
+  return 0
+}

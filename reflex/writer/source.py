@@ -20,7 +20,8 @@
 # SOFTWARE.
 
 import sys
-from reflex.parser.ast import Reference, Array, ArrayAccess, BuiltinType
+from reflex.parser.ast import (Reference, Array, ArrayAccess, BuiltinType, FunctionType,
+  FunctionDeclaration, FunctionCall)
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -128,23 +129,35 @@ class SourceWriter:
       return False
     return self.is_dynamic_array(node.parent)
 
-  def write_array_post(self, node):
+  def write_declaration_post(self, node):
     typ = type(node)
-    if typ is not Array and typ is not Reference:
-      return
-    if self.array_needs_parens(node):
+    if typ is FunctionType:
+      self.file.write(')(')
+      i = 0
+      while i < len(node.args):
+        if i is not 0:
+          self.file.write(', ')
+        self.write(node.args[i])
+        i += 1
       self.file.write(')')
-    if typ is Array and node.length is not None:
-      self.file.write('[')
-      self.write(node.length)
-      self.file.write(']')
-    self.write_array_post(node.child)
+    elif typ is Array or typ is Reference:
+      if self.array_needs_parens(node):
+        self.file.write(')')
+      if typ is Array and node.length is not None:
+        self.file.write('[')
+        self.write(node.length)
+        self.file.write(']')
+      self.write_declaration_post(node.child)
+
+  def writeFunctionType(self, node):
+    self.write(node.ret)
+    self.file.write('(*')
 
   def writeDeclaration(self, decl):
     self.write(decl.typ)
     self.file.write(' ')
     self.write(decl.sym)
-    self.write_array_post(decl.typ)
+    self.write_declaration_post(decl.typ)
 
   def writeVariableDeclaration(self, decl):
     self.write(decl.decl)
@@ -309,13 +322,18 @@ class SourceWriter:
     self.file.write(op.op)
 
   def writeSymbol(self, sym):
+    if type(sym.decl) is FunctionDeclaration:
+      parent = sym.parent
+      while type(parent) is Reference:
+        parent = parent.parent
+      if type(parent) is not FunctionCall:
+        self.file.write('&' + sym.decl.name)
+        return
     self.write_value(sym)
-
     if sym.decl is not None:
       self.file.write(sym.decl.name)
     else:
       self.file.write(sym.name)
-
     if sym.is_const:
       self.file.write(' const')
 

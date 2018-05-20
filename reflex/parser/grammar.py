@@ -25,8 +25,8 @@ def block_comment(): return ('/*', RegExMatch(r'[^*/]*'), '*/')
 def line_comment(): return ('//', RegExMatch(r'.*$'))
 def comment(): return [line_comment, block_comment]
 
-def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', builtin_type,
-  bool_value]
+def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', 'func',
+  builtin_type, bool_value]
 def symbol(): return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='symbol')
 def char():
   return ('\'', Sequence(RegExMatch(r'\\[abefnrtv0\\]|[^\']', str_repr='character'), skipws=False),
@@ -63,7 +63,9 @@ def modifier(): return Optional('const')
 def array_element(): return '[', Optional(expression), ']'
 def array(): return ZeroOrMore(array_element)
 def reference(): return 'ref', array, full_type
-def full_type(): return modifier, [reference, builtin_type, symbol], array
+def function_type_args(): return Optional(full_type), ZeroOrMore(',', full_type)
+def function_type(): return 'func', '<', full_type, '(', function_type_args, ')', '>'
+def full_type(): return [function_type, (modifier, [reference, builtin_type, symbol], array)]
 
 def declaration(): return full_type, symbol
 def variable_declaration(): return declaration, Optional(assignment)

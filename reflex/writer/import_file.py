@@ -65,8 +65,6 @@ class ImportWriter:
       self.write(node.length)
     self.file.write(']')
 
-  def write_array_post(self, arr): pass
-
   def writeBuiltinType(self, node):
     if node.is_const:
       self.file.write('const ')
@@ -77,6 +75,18 @@ class ImportWriter:
       self.file.write('const ')
     self.file.write('ref ')
     self.write(node.child)
+
+  def writeFunctionType(self, node):
+    self.file.write('func<')
+    self.write(node.ret)
+    self.file.write('(')
+    i = 0
+    while i < len(node.args):
+      if i is not 0:
+        self.file.write(', ')
+      self.write(node.args[i])
+      i += 1
+    self.file.write(')>')
 
   def writeSymbol(self, node):
     if node.is_const:
