@@ -3,6 +3,11 @@
 This project is in a very early stage and is not safe for production use. The compiler and the
 language itself *will* change. You have been warned !
 
+At the moment, focus is put on making the language working. While there is some error and unsafe
+behavior checking, this is not the main goal at the moment. Invalid Reflex code will either result
+in invalid C code or, in the worst cases, make the compiler crash (it is known to be the case when
+accessing an array index on a non-array type, for example).
+
 I (lefta) am developping this project on my free time. Neither the language, this project nor myself
 are backed by anyone. This means that you may not expect any ETA for any feature. If you are
 interrested in the Reflex language, please be patient (really patient). If you are **very**
@@ -20,7 +25,7 @@ It is compatible out of the box with any existing C library, and using a Reflex 
 program is very easy.
 
 It is distributed under the MIT license. In short, do whatever you want, but keep the original
-license text in any distribution and dont point at me if you get problems. See the `Copying` file
+license text in any distribution and don't point at me if you get problems. See the `Copying` file
 for details.
 
 ## Hello world example
