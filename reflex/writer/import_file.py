@@ -100,3 +100,21 @@ class ImportWriter:
     self.file.write(' ')
     self.write(node.dst)
     self.file.write('\n')
+
+  def writeVariableDeclaration(self, node):
+    self.write(node.decl)
+    if node.assign is not None:
+      self.file.write(' = ')
+      self.write(node.assign)
+
+  def writeStruct(self, node):
+    self.file.write('\nstruct ')
+    self.write(node.sym)
+    self.file.write(' {\n')
+    self.indent += 1
+    for f in node.fields:
+      self.write_indent()
+      self.write(f)
+      self.file.write('\n')
+    self.indent -= 1
+    self.file.write('}\n')

@@ -1,0 +1,5 @@
+struct test_struct {
+  int field1
+  str field2
+  ref int[] field3
+}

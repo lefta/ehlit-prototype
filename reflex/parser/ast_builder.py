@@ -174,4 +174,7 @@ class ASTBuilder(PTNodeVisitor):
 
   def visit_alias(self, node, children): return ast.Alias(children[1], children[2])
 
+  def visit_struct(self, node, children):
+    return ast.Struct(node.position, children[1], children[2:])
+
   def visit_grammar(self, node, children): return ast.AST(children)

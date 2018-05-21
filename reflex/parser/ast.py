@@ -646,6 +646,22 @@ class Alias(Node):
   @ref_offset.setter
   def ref_offset(self, offset): self.dst.ref_offset = offset
 
+class Struct(Node):
+  def __init__(self, pos, sym, fields):
+    super().__init__(pos)
+    self.sym = sym
+    self.fields = fields
+
+  def build(self, parent):
+    super().build(parent)
+    self.sym.build(self)
+    for f in self.fields:
+      f.build(self)
+      if f.assign is not None:
+        self.error(self.pos, "struct fields may not have a value yet")
+
+  def is_declaration(self): return True
+
 class AST(Node):
   def __init__(self, nodes):
     self.nodes = nodes

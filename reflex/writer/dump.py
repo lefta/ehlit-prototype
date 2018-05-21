@@ -275,3 +275,9 @@ class DumpWriter:
     self.increment_prefix(False)
     self.print_node(node.dst, False)
     self.decrement_prefix()
+
+  @indent
+  def dumpStruct(self, node):
+    self.dump('Struct')
+    self.print_node(node.sym)
+    self.print_node_list('Fields', node.fields, False)

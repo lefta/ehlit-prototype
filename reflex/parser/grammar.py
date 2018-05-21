@@ -94,5 +94,7 @@ def import_instruction(): return 'import', symbol
 
 def alias(): return 'alias', full_type, symbol
 
-def grammar(): return ZeroOrMore([comment, import_instruction, include_instruction, alias,
+def struct(): return 'struct', symbol, '{', ZeroOrMore(variable_declaration), '}'
+
+def grammar(): return ZeroOrMore([comment, import_instruction, include_instruction, struct, alias,
   function]), EOF
