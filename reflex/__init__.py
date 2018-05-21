@@ -36,11 +36,14 @@ def build(args):
     ast = parse(args.source)
     ast.build(args)
   except ParseError as err:
-    if err.max_level < ParseError.Severity.Error: failure = err
-    else: raise
+    failure = err
 
   if args.verbose:
     WriteDump(ast)
+
+  if failure is not None and failure.max_level > ParseError.Severity.Warning:
+    raise failure
+
   WriteSource(ast, args.output_file)
   WriteImport(ast, args.output_import_file)
 
