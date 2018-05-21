@@ -99,8 +99,9 @@ class DumpWriter:
   @indent
   def dumpDeclaration(self, decl):
     self.dump('Declaration')
-    self.print_node(decl.typ)
-    self.print_node(decl.sym, False)
+    self.print_node(decl.typ, decl.sym is not None)
+    if decl.sym is not None:
+      self.print_node(decl.sym, False)
 
   @indent
   def dumpVariableDeclaration(self, decl):

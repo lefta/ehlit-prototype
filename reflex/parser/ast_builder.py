@@ -94,7 +94,11 @@ class ASTBuilder(PTNodeVisitor):
       arr = arr.child
     arr.child = ast.Reference(children[2])
     return children[1]
-  def visit_function_type_args(self, node, children): return children
+  def visit_function_type_args(self, node, children):
+    res = []
+    for c in children:
+      res.append(ast.Declaration(c, None))
+    return res
   def visit_function_type(self, node, children):
     if len(children) is 2:  # No arguments
       return ast.FunctionType(children[1], [])

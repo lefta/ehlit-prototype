@@ -51,8 +51,9 @@ class ImportWriter:
   def writeFunctionDeclaration(self, node): SourceWriter.writeFunctionPrototype(self, node)
   def writeDeclaration(self, node):
     self.write(node.typ)
-    self.file.write(' ')
-    self.write(node.sym)
+    if node.sym is not None:
+      self.file.write(' ')
+      self.write(node.sym)
 
   def writeArgumentDefinitionList(self, node):
     if len(node) != 0:

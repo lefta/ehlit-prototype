@@ -274,7 +274,7 @@ class Assignment(Node):
 class Declaration(Node):
   def __init__(self, typ, sym):
     self.typ = typ
-    self.name = sym.name
+    self.name = sym.name if sym is not None else None
     self.sym = sym
 
   def build(self, parent):

@@ -2,15 +2,19 @@ void fun1() {}
 int fun2(int i) {}
 int fun3(int i, int j) {}
 ref int[] fun4(ref int[] arr) {}
+void fun5(ref char c) {}
 
 int main() {
   func<void()> pfn1 = fun1
   func<int(int)> pfn2 = fun2
   func<int(int, int)> pfn3 = fun3
   func<ref int[](ref int[])> pfn4 = fun4
+  func<void(ref char)> pfn5 = fun5
   pfn1()
   pfn2(0)
   pfn3(0, 0)
   pfn4(null)
+  str s = "123456"
+  pfn5(s[0])
   return 0
 }

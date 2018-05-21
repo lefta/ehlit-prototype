@@ -155,8 +155,9 @@ class SourceWriter:
 
   def writeDeclaration(self, decl):
     self.write(decl.typ)
-    self.file.write(' ')
-    self.write(decl.sym)
+    if decl.sym is not None:
+      self.file.write(' ')
+      self.write(decl.sym)
     self.write_declaration_post(decl.typ)
 
   def writeVariableDeclaration(self, decl):
