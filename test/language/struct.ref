@@ -3,3 +3,9 @@ struct test_struct {
   str field2
   ref int[] field3
 }
+
+int main() {
+  test_struct t
+  ref test_struct rt = t
+  return 0
+}

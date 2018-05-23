@@ -21,7 +21,7 @@
 
 import sys
 from reflex.parser.ast import (Reference, Array, ArrayAccess, BuiltinType, FunctionType,
-  FunctionDeclaration, FunctionCall)
+  FunctionDeclaration, FunctionCall, Struct)
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -153,7 +153,19 @@ class SourceWriter:
     self.write(node.ret)
     self.file.write('(*')
 
+  def write_type_prefix(self, typ):
+    while type(typ) is Reference:
+      typ = typ.child
+    if type(typ) is Symbol:
+      typ = typ.decl
+    prefix = {
+      Struct: 'struct',
+    }.get(type(typ))
+    if prefix is not None:
+      self.file.write(prefix + ' ')
+
   def writeDeclaration(self, decl):
+    self.write_type_prefix(decl.typ)
     self.write(decl.typ)
     if decl.sym is not None:
       self.file.write(' ')

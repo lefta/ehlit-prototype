@@ -677,6 +677,23 @@ class Struct(Node):
 
   def is_declaration(self): return True
 
+  def get_declaration(self, sym):
+    if self.sym.name == sym[0]:
+      return self.declaration_match(sym)
+    return None
+
+  @property
+  def typ(self): return self
+
+  @property
+  def ref_offset(self): return 0
+
+  @property
+  def is_type(self): return True
+
+  @property
+  def name(self): return self.sym.name
+
 class AST(Node):
   def __init__(self, nodes):
     self.nodes = nodes
