@@ -55,6 +55,15 @@ class Node:
   def get_declaration(self, sym): return None
 
   """
+  Scoping nodes should call this function when they get a match in their respective
+  `get_declaration` to automatically handle scope access (`foo.bar`).
+  """
+  def declaration_match(self, sym):
+    if len(sym) is 1:
+      return self
+    return self.get_declaration(sym[1:])
+
+  """
   Report a failure to the parent, up to the root where it will be handled. There is no reason to
   override it, except intercepting it for whatever reason.
   """
@@ -283,8 +292,8 @@ class Declaration(Node):
     self.sym.build(self)
 
   def get_declaration(self, sym):
-    if self.name == sym:
-      return self
+    if self.name == sym[0]:
+      return self.declaration_match(sym)
     return None
 
   def is_declaration(self):
@@ -330,8 +339,8 @@ class FunctionDeclaration(Node):
       a.build(self)
 
   def get_declaration(self, sym):
-    if self.sym.name == sym:
-      return self
+    if self.sym.name == sym[0]:
+      return self.declaration_match(sym)
     for a in self.args:
       decl = a.get_declaration(sym)
       if decl is not None:
@@ -525,7 +534,7 @@ class Symbol(Value, Type):
   def build(self, parent):
     super().build(parent)
     if not parent.is_declaration():
-      self.decl = self.find_declaration(self.name)
+      self.decl = self.find_declaration([self.name])
       if self.decl is None:
         self.error(self.pos, "use of undeclared identifier %s" % self.name)
       else:
@@ -628,11 +637,17 @@ class Alias(Node):
   def build(self, parent):
     super().build(parent)
     self.src.build(self)
-    self.src_decl = self.find_declaration(self.src.name)
 
   def get_declaration(self, sym):
-    if self.dst.name == sym and self.src_decl is not None:
-      return self.src_decl
+    if self.dst.name == sym[0]:
+      if type(self.src) is BuiltinType:
+        return self.declaration_match(sym)
+      if self.src.decl is not None:
+        return self.src.decl.declaration_match(sym)
+    return None
+
+  @property
+  def typ(self): return self.src.typ
 
   @property
   def name(self): return self.dst.name
@@ -696,6 +711,7 @@ class AST(Node):
       res = n.get_declaration(sym)
       if res is not None:
         return res
+    return None
 
   @property
   def import_paths(self): return self._import_paths
