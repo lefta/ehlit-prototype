@@ -8,9 +8,21 @@ struct test_struct
     int32_t** field3;
 };
 
+void fun(int32_t* i)
+{
+}
+
 int32_t main(void)
 {
     struct test_struct t;
+    t.field1 = 0;
+    t.field2 = "123456";
+    t.field3 = NULL;
+    fun(&t.field1);
     struct test_struct* rt = &t;
+    rt->field1 = 0;
+    rt->field2 = "123456";
+    rt->field3 = NULL;
+    fun(&rt->field1);
     return (0);
 }

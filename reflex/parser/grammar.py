@@ -27,7 +27,10 @@ def comment(): return [line_comment, block_comment]
 
 def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', 'func',
   'alias', builtin_type, bool_value]
-def symbol(): return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='symbol')
+def identifier():
+  return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='identifier')
+def symbol():
+  return identifier, ZeroOrMore('.', identifier)
 def char():
   return ('\'', Sequence(RegExMatch(r'\\[abefnrtv0\\]|[^\']', str_repr='character'), skipws=False),
     '\'')
@@ -67,7 +70,7 @@ def function_type_args(): return Optional(full_type), ZeroOrMore(',', full_type)
 def function_type(): return 'func', '<', full_type, '(', function_type_args, ')', '>'
 def full_type(): return [function_type, (modifier, [reference, builtin_type, symbol], array)]
 
-def declaration(): return full_type, symbol
+def declaration(): return full_type, identifier
 def variable_declaration(): return declaration, Optional(assignment)
 def variable_assignment():
   return [function_call, referenced_value, symbol], Optional(array_access), operation_assignment
@@ -84,17 +87,17 @@ def else_condition(): return 'else', [instruction, control_structure_body]
 def condition(): return if_condition, ZeroOrMore(elif_condition), Optional(else_condition)
 def while_loop(): return 'while', control_structure
 
-def function_prototype(): return full_type, symbol, '(', ZeroOrMore(declaration, sep=','), ')'
+def function_prototype(): return full_type, identifier, '(', ZeroOrMore(declaration, sep=','), ')'
 def function_declaration(): return function_prototype, Not('{')
 def function_definition(): return function_prototype, control_structure_body
 def function(): return [function_definition, function_declaration]
 
-def include_instruction(): return 'include', symbol
-def import_instruction(): return 'import', symbol
+def include_instruction(): return 'include', identifier
+def import_instruction(): return 'import', identifier
 
 def alias(): return 'alias', full_type, symbol
 
-def struct(): return 'struct', symbol, '{', ZeroOrMore(variable_declaration), '}'
+def struct(): return 'struct', identifier, '{', ZeroOrMore(variable_declaration), '}'
 
 def grammar(): return ZeroOrMore([comment, import_instruction, include_instruction, struct, alias,
   function]), EOF

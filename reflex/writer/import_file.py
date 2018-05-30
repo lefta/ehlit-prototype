@@ -90,6 +90,14 @@ class ImportWriter:
     self.file.write(')>')
 
   def writeSymbol(self, node):
+    fst = True
+    for e in node.elems:
+      if not fst:
+        self.file.write('.')
+      self.write(e)
+      fst = False
+
+  def writeIdentifier(self, node):
     if node.is_const:
       self.file.write('const ')
     self.file.write(node.name)

@@ -141,16 +141,18 @@ def parse_FUNCTION_DECL(cursor):
   args = []
   for c in cursor.get_children():
     if c.kind == CursorKind.PARM_DECL:
-      args.append(ast.Declaration(type_to_reflex(c.type), ast.Symbol(0, c.spelling)))
+      args.append(ast.Declaration(type_to_reflex(c.type), ast.Identifier(0, c.spelling)))
 
   return ast.FunctionDeclaration(
     type_to_reflex(cursor.type.get_result()),
-    ast.Symbol(0, cursor.spelling),
+    ast.Identifier(0, cursor.spelling),
     args,
     cursor.type.is_function_variadic())
 
 def parse_TYPEDEF_DECL(cursor):
-  return ast.Alias(type_to_reflex(cursor.underlying_typedef_type), ast.Symbol(0, cursor.spelling))
+  return ast.Alias(
+    type_to_reflex(cursor.underlying_typedef_type),
+    ast.Identifier(0, cursor.spelling))
 
 
 def type_VOID(typ): return ast.BuiltinType('void')
@@ -165,4 +167,4 @@ def type_POINTER(typ):
   return ast.Reference(type_to_reflex(subtype))
 
 def type_TYPEDEF(typ):
-  return ast.Alias(type_to_reflex(typ.get_canonical()), ast.Symbol(0, typ.spelling))
+  return ast.Alias(type_to_reflex(typ.get_canonical()), ast.Identifier(0, typ.spelling))

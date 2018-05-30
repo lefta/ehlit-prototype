@@ -221,10 +221,13 @@ class DumpWriter:
     if len(node.args) is not 0:
       self.print_node_list('Arguments:', node.args, False)
 
+  def dumpSymbol(self, node, is_next):
+    self.print_node_list('Symbol', node.elems, is_next)
+
   @indent
-  def dumpSymbol(self, sym):
-    self.dump('Symbol: ' + sym.name)
-    if sym.is_const:
+  def dumpIdentifier(self, node):
+    self.dump('Identifier: ' + node.name)
+    if node.is_const:
       self.print_str('Modifiers: const')
 
   @indent

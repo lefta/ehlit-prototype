@@ -37,8 +37,8 @@ class Node:
     return False
 
   """
-  Find a declaration when coming from downsides. Scoping structures would want to search symbols
-  in this function rather than in get_declaration.
+  Find a declaration when coming from downsides. Scoping structures (like functions) would want to
+  search symbols in this function.
 
   The default is to try get_declaration on self, then to try with parent.
   """
@@ -49,10 +49,16 @@ class Node:
     return decl
 
   """
-  Find a declaration when coming from upsides. Structures exposing symbols to their parent (
-  like Import) would want to search symbols in this function rather than in find_declaration.
+  Find a declaration when coming from upsides. Structures exposing symbols to their parent (like
+  Import) would want to search symbols in this function.
   """
   def get_declaration(self, sym): return None
+
+  """
+  Find a declaration strictly in children. Container types (like structs) would want to search
+  symbols in this function.
+  """
+  def get_inner_declaration(self, sym): return None
 
   """
   Scoping nodes should call this function when they get a match in their respective
@@ -61,7 +67,7 @@ class Node:
   def declaration_match(self, sym):
     if len(sym) is 1:
       return self
-    return self.get_declaration(sym[1:])
+    return self.get_inner_declaration(sym[1:])
 
   """
   Report a failure to the parent, up to the root where it will be handled. There is no reason to
@@ -296,6 +302,9 @@ class Declaration(Node):
       return self.declaration_match(sym)
     return None
 
+  def get_inner_declaration(self, sym):
+    return None if self.typ.decl is None else self.typ.decl.get_inner_declaration(sym)
+
   def is_declaration(self):
     return True
 
@@ -525,7 +534,7 @@ class Return(Node):
     self.expr.auto_cast(decl)
 
 
-class Symbol(Value, Type):
+class Identifier(Value, Type):
   def __init__(self, pos, name):
     super().__init__(pos)
     self.name = name
@@ -534,7 +543,8 @@ class Symbol(Value, Type):
   def build(self, parent):
     super().build(parent)
     if not parent.is_declaration():
-      self.decl = self.find_declaration([self.name])
+      # Only declarations use an identifier directly, all other node types shall use Symbol
+      self.decl = parent.find_declaration(self)
       if self.decl is None:
         self.error(self.pos, "use of undeclared identifier %s" % self.name)
       else:
@@ -547,6 +557,51 @@ class Symbol(Value, Type):
   def typ(self): return self.decl.typ if self.decl is not None else BuiltinType('any')
 
   def from_any(self): return self.decl.from_any() if self.decl is not None else self
+
+class Symbol(Value, Type):
+  def __init__(self, elems):
+    self.elems = elems
+    super().__init__()
+
+  def build(self, parent):
+    super().build(parent)
+    for e in self.elems:
+      e.build(self)
+
+  @property
+  def ref_offset(self): return self.elems[-1].ref_offset
+
+  @ref_offset.setter
+  def ref_offset(self, v): self.elems[-1].ref_offset = v
+
+  @property
+  def typ(self): return self.elems[-1].typ
+
+  @property
+  def is_type(self): return self.elems[-1].is_type
+
+  @property
+  def decl(self): return self.elems[-1].decl
+
+  @property
+  def name(self): return self.elems[-1].name
+
+  @property
+  def cast(self): return self.elems[-1].cast
+
+  @cast.setter
+  def cast(self, value): self.elems[-1].cast = value
+
+  def auto_cast(self, tgt): return self.elems[-1].auto_cast(tgt)
+  def from_any(self): return self.elems[-1].from_any()
+
+  def find_declaration(self, identifier):
+    i = 0
+    while i < len(self.elems):
+      if identifier is self.elems[i]:
+        return self.parent.find_declaration([x.name for x in self.elems[:i+1]])
+      i += 1
+    return None
 
 class String(Value):
   def __init__(self, string):
@@ -693,6 +748,13 @@ class Struct(Node):
 
   @property
   def name(self): return self.sym.name
+
+  def get_inner_declaration(self, sym):
+    for f in self.fields:
+      decl = f.get_declaration(sym)
+      if decl is not None:
+        return decl.declaration_match(sym)
+    return None
 
 class AST(Node):
   def __init__(self, nodes):

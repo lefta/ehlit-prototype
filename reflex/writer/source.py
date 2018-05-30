@@ -21,7 +21,7 @@
 
 import sys
 from reflex.parser.ast import (Reference, Array, ArrayAccess, BuiltinType, FunctionType,
-  FunctionDeclaration, FunctionCall, Struct)
+  FunctionDeclaration, FunctionCall, Symbol, Struct)
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -72,19 +72,27 @@ class SourceWriter:
       self.file.write('    ')
       i += 1
 
-  def write_value(self, val):
-    if val.ref_offset == -1:
+  def write_value(self, node):
+    if type(node.decl) is FunctionDeclaration:
+      parent = node.parent
+      while type(parent) is Reference or type(parent) is Symbol:
+        parent = parent.parent
+      if type(parent) is not FunctionCall:
+        self.file.write('&')
+        return
+    if node.ref_offset == -1:
       self.file.write('&')
     else:
-      i = val.ref_offset
+      i = node.ref_offset
       while i > 0:
         self.file.write('*')
         i -= 1
-
-    if val.cast is not None:
+    if node.cast is not None:
       self.file.write('(')
-      self.write(val.cast)
+      self.write(node.cast)
       self.file.write(')')
+    if node.is_type and node.is_const:
+      self.file.write(' const')
 
   def writeInclude(self, inc):
     self.write_indent()
@@ -334,21 +342,34 @@ class SourceWriter:
   def writeOperator(self, op):
     self.file.write(op.op)
 
-  def writeSymbol(self, sym):
-    if type(sym.decl) is FunctionDeclaration:
-      parent = sym.parent
-      while type(parent) is Reference:
-        parent = parent.parent
-      if type(parent) is not FunctionCall:
-        self.file.write('&' + sym.decl.name)
-        return
-    self.write_value(sym)
-    if sym.decl is not None:
-      self.file.write(sym.decl.name)
+  def writeSymbol(self, node):
+    self.write_value(node)
+    i = 0
+    while i < len(node.elems):
+      if i < len(node.elems) - 1:
+        ref_offset = node.elems[i].ref_offset
+        if ref_offset is 0:
+          self.write(node.elems[i])
+          self.file.write('.')
+        elif ref_offset is 1:
+          self.write(node.elems[i])
+          self.file.write('->')
+        else:
+          self.file.write('(')
+          while ref_offset > 1:
+            self.file.write('*')
+            ref_offset -= 1
+          self.write(node.elems[i])
+          self.file.write(')->')
+      else:
+        self.write(node.elems[i])
+      i += 1
+
+  def writeIdentifier(self, node):
+    if node.decl is not None:
+      self.file.write(node.decl.name)
     else:
-      self.file.write(sym.name)
-    if sym.is_const:
-      self.file.write(' const')
+      self.file.write(node.name)
 
   def writeChar(self, c):
     self.file.write('\'')

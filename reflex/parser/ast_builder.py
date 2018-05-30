@@ -26,7 +26,8 @@ from reflex.parser import ast
 class ASTBuilder(PTNodeVisitor):
   def visit_comment(self, node, children): return None
 
-  def visit_symbol(self, node, children): return ast.Symbol(node.position, str(node))
+  def visit_identifier(self, node, children): return ast.Identifier(node.position, str(node))
+  def visit_symbol(self, node, children): return ast.Symbol(children)
   def visit_char(self, node, children): return ast.Char(str(children[0]))
   def visit_string(self, node, children): return ast.String(str(children[0]))
   def visit_number(self, node, children): return ast.Number(str(node))

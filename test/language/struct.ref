@@ -4,8 +4,19 @@ struct test_struct {
   ref int[] field3
 }
 
+void fun(ref int i) {}
+
 int main() {
   test_struct t
+  t.field1 = 0
+  t.field2 = "123456"
+  ref t.field3 = null
+  fun(t.field1)
+
   ref test_struct rt = t
+  rt.field1 = 0
+  rt.field2 = "123456"
+  ref rt.field3 = null
+  fun(rt.field1)
   return 0
 }
