@@ -257,6 +257,14 @@ class FunctionType(Type):
     self.ret = ret
     self.args = args
 
+  def build(self, parent):
+    super().build(parent)
+    self.ret.build(self)
+    i = 0
+    while i < len(self.args):
+      self.args[i].build(self)
+      i += 1
+
   @property
   def ref_offset(self): return 0
 
@@ -295,7 +303,8 @@ class Declaration(Node):
   def build(self, parent):
     super().build(parent)
     self.typ.build(self)
-    self.sym.build(self)
+    if self.sym is not None:
+      self.sym.build(self)
 
   def get_declaration(self, sym):
     if self.name == sym[0]:
