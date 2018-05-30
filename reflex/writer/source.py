@@ -158,6 +158,7 @@ class SourceWriter:
       self.write_declaration_post(node.child)
 
   def writeFunctionType(self, node):
+    self.write_type_prefix(node.ret)
     self.write(node.ret)
     self.file.write('(*')
 

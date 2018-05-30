@@ -32,5 +32,6 @@ int32_t main(void)
     rt = struct_fun(&t);
     size_t ss = sizeof(struct test_struct);
     ss = sizeof(struct test_struct*);
+    struct test_struct*(* psf)(struct test_struct*) = &struct_fun;
     return (0);
 }

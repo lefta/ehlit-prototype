@@ -25,6 +25,7 @@ int main() {
   ref rt = struct_fun(t)
   size ss = sizeof(test_struct)
   ss = sizeof(ref test_struct)
+  func<ref test_struct(ref test_struct)> psf = struct_fun
 
   return 0
 }
