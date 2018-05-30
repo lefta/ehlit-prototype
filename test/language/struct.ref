@@ -23,5 +23,8 @@ int main() {
   fun(rt.field1)
 
   ref rt = struct_fun(t)
+  size ss = sizeof(test_struct)
+  ss = sizeof(ref test_struct)
+
   return 0
 }

@@ -401,6 +401,7 @@ class SourceWriter:
 
   def writeSizeof(self, node):
     self.file.write('sizeof(')
+    self.write_type_prefix(node.sz_typ)
     self.write(node.sz_typ)
     self.file.write(')')
 

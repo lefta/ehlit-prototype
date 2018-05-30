@@ -30,5 +30,7 @@ int32_t main(void)
     rt->field3 = NULL;
     fun(&rt->field1);
     rt = struct_fun(&t);
+    size_t ss = sizeof(struct test_struct);
+    ss = sizeof(struct test_struct*);
     return (0);
 }
