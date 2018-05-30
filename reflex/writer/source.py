@@ -198,6 +198,7 @@ class SourceWriter:
           self.file.write(', ')
 
   def writeFunctionPrototype(self, proto):
+    self.write_type_prefix(proto.typ)
     self.write(proto.typ)
     self.file.write(' ')
     self.write(proto.sym)

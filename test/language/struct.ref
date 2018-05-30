@@ -5,6 +5,9 @@ struct test_struct {
 }
 
 void fun(ref int i) {}
+ref test_struct struct_fun(ref test_struct s) {
+  return s
+}
 
 int main() {
   test_struct t
@@ -18,5 +21,7 @@ int main() {
   rt.field2 = "123456"
   ref rt.field3 = null
   fun(rt.field1)
+
+  ref rt = struct_fun(t)
   return 0
 }

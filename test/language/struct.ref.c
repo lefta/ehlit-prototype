@@ -12,6 +12,11 @@ void fun(int32_t* i)
 {
 }
 
+struct test_struct* struct_fun(struct test_struct* s)
+{
+    return (s);
+}
+
 int32_t main(void)
 {
     struct test_struct t;
@@ -24,5 +29,6 @@ int32_t main(void)
     rt->field2 = "123456";
     rt->field3 = NULL;
     fun(&rt->field1);
+    rt = struct_fun(&t);
     return (0);
 }
