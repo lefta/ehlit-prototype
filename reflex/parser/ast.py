@@ -249,7 +249,7 @@ class Reference(Value, Type):
   def name(self): return self.child.name
 
   def auto_cast(self, target): return self.child.auto_cast(target)
-  def from_any(self): return BuiltinType('any')
+  def from_any(self): return self
 
 class FunctionType(Type):
   def __init__(self, ret, args):
