@@ -1,8 +1,13 @@
 include stdio
 
+ref int ref_call() {
+	return null
+}
+
 int main(int ac, str[] av)
 {
 	puts("Hello, world!\n")
 	printf("With some mathematics: 4 * 8 = %d", 4 * 8)
+	ref_call()
 	return 0
 }

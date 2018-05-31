@@ -439,6 +439,8 @@ class FunctionCall(Node):
   def build(self, parent):
     super().build(parent)
     self.sym.build(self)
+    if not self.is_cast:
+      self.ref_offset = 0
 
     if self.is_cast:
       if len(self.args) < 1:
