@@ -8,6 +8,9 @@ void fun(ref int i) {}
 ref test_struct struct_fun(ref test_struct s) {
   return s
 }
+any any_fun(any p) {
+  return p
+}
 
 int main() {
   test_struct t
@@ -26,6 +29,8 @@ int main() {
   size ss = sizeof(test_struct)
   ss = sizeof(ref test_struct)
   func<ref test_struct(ref test_struct)> psf = struct_fun
+  ref rt = any_fun(rt)
+  t = any_fun(t)
 
   return 0
 }

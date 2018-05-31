@@ -17,6 +17,11 @@ struct test_struct* struct_fun(struct test_struct* s)
     return (s);
 }
 
+void* any_fun(void* p)
+{
+    return (p);
+}
+
 int32_t main(void)
 {
     struct test_struct t;
@@ -33,5 +38,7 @@ int32_t main(void)
     size_t ss = sizeof(struct test_struct);
     ss = sizeof(struct test_struct*);
     struct test_struct*(* psf)(struct test_struct*) = &struct_fun;
+    rt = (struct test_struct*)any_fun(rt);
+    t = *(struct test_struct*)any_fun(&t);
     return (0);
 }

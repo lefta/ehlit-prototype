@@ -89,6 +89,7 @@ class SourceWriter:
         i -= 1
     if node.cast is not None:
       self.file.write('(')
+      self.write_type_prefix(node.cast)
       self.write(node.cast)
       self.file.write(')')
     if node.is_type and node.is_const:
