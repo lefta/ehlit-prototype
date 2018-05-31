@@ -12,8 +12,12 @@ int main() {
   func<void(ref char)> pfn5 = fun5
   pfn1()
   pfn2(0)
+  int i = pfn2(0)
   pfn3(0, 0)
+  i = pfn3(0, 0)
   pfn4(null)
+  ref int[] rai = pfn4(null)
+  int[] ai = pfn4(null)
   str s = "123456"
   pfn5(s[0])
   return 0

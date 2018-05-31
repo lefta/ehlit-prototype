@@ -270,7 +270,7 @@ class FunctionType(Type):
       i += 1
 
   @property
-  def ref_offset(self): return 0
+  def ref_offset(self): return self.ret.ref_offset
 
 class Operator(Node):
   def __init__(self, op):
