@@ -40,5 +40,6 @@ int32_t main(void)
     struct test_struct*(* psf)(struct test_struct*) = &struct_fun;
     rt = (struct test_struct*)any_fun(rt);
     t = *(struct test_struct*)any_fun(&t);
+    rt = ((struct test_struct*)0);
     return (0);
 }

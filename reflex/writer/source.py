@@ -262,6 +262,7 @@ class SourceWriter:
   def writeFunctionCall(self, call):
     if call.is_cast:
       self.file.write('((')
+      self.write_type_prefix(call.sym)
       self.write(call.sym)
       self.file.write(')')
       self.write(call.args[0])
