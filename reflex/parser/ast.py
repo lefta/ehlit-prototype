@@ -131,23 +131,19 @@ class Value(Node):
 
   def auto_cast(self, target):
     src = self.typ
-    target_any = False
     if self.typ != target.typ:
       if self.typ == BuiltinType('any'):
         self.cast = target.typ.from_any()
         src = self.cast
       elif target.typ == BuiltinType('any'):
         target = self.typ.from_any()
-        target_any = True
 
     if src:
-      if target.is_declaration():
+      if target.is_declaration() or target.is_type:
         target_ref_level = target.typ.ref_offset
       else:
         target_ref_level = target.typ.ref_offset - target.ref_offset
 
-      if target_any:
-        target_ref_level *= -1
       self.ref_offset = src.ref_offset - target_ref_level
 
 class Type(Node):
@@ -244,7 +240,7 @@ class Reference(Value, Type):
   def ref_offset(self, val): pass
 
   @property
-  def typ(self): return self.child if self.is_type else self.decl.typ
+  def typ(self): return self if self.is_type else self.decl.typ
 
   @property
   def name(self): return self.child.name
@@ -474,6 +470,9 @@ class FunctionCall(Node):
 
   @property
   def decl(self): return self.sym if self.is_cast else self.sym.decl
+
+  @property
+  def is_type(self): return False
 
   def auto_cast(self, target_type):
     if not self.is_cast:
