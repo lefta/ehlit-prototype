@@ -1,6 +1,6 @@
 any returning_any(any data)
 {
-	return ref data
+	return data
 }
 
 int main()
@@ -19,5 +19,6 @@ int main()
   array[0] = returning_any(array[0])
   int array0 = returning_any(array[0])
 
+	ref int rnb = returning_any(ref number)
 	return 0
 }
