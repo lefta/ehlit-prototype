@@ -219,8 +219,8 @@ class Array(Type):
 
 class Reference(Value, Type):
   def __init__(self, child):
-    super().__init__()
     self.child = child
+    super().__init__()
 
   def build(self, parent):
     super().build(parent)
@@ -244,7 +244,9 @@ class Reference(Value, Type):
     return self.child.ref_offset
 
   @ref_offset.setter
-  def ref_offset(self, val): pass
+  def ref_offset(self, val):
+    if not self.is_type:
+      self.child.ref_offset = val
 
   @property
   def typ(self): return self if self.is_type else self.decl.typ
