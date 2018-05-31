@@ -7,7 +7,7 @@ int main()
 {
 	int number = 42
 	number = returning_any(ref number)
-	int number2 = returning_any(ref number)
+	int number2 = returning_any(number)
 
 	str string = "Hello, World!"
   string = returning_any(string)
@@ -20,5 +20,8 @@ int main()
   int array0 = returning_any(array[0])
 
 	ref int rnb = returning_any(ref number)
+	ref int rnb = returning_any(rnb)
+	ref ref int rrnb = returning_any(ref ref rnb)
+
 	return 0
 }

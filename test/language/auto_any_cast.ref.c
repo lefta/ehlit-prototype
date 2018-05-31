@@ -20,5 +20,7 @@ int32_t main(void)
     array[0] = *(int32_t*)returning_any(&array[0]);
     int32_t array0 = *(int32_t*)returning_any(&array[0]);
     int32_t* rnb = (int32_t*)returning_any(&number);
+    int32_t* rnb = (int32_t*)returning_any(rnb);
+    int32_t** rrnb = (int32_t**)returning_any(&rnb);
     return (0);
 }

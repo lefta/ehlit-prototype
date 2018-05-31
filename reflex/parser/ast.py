@@ -131,19 +131,26 @@ class Value(Node):
 
   def auto_cast(self, target):
     src = self.typ
+    target_ref_level = 0
     if self.typ != target.typ:
       if self.typ == BuiltinType('any'):
         self.cast = target.typ.from_any()
         src = self.cast
       elif target.typ == BuiltinType('any'):
         target = self.typ.from_any()
-
+        parent = self.parent
+        if type(parent) is Symbol:
+          parent = parent.parent
+        if type(parent) is Reference:
+          target_ref_level = -1
+        while type(parent) is Reference:
+          target_ref_level += 1
+          parent = parent.parent
     if src:
       if target.is_declaration() or target.is_type:
-        target_ref_level = target.typ.ref_offset
+        target_ref_level += target.typ.ref_offset
       else:
-        target_ref_level = target.typ.ref_offset - target.ref_offset
-
+        target_ref_level += target.typ.ref_offset - target.ref_offset
       self.ref_offset = src.ref_offset - target_ref_level
 
 class Type(Node):
