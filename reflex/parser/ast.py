@@ -772,6 +772,11 @@ class Struct(Node):
         return decl.declaration_match(sym)
     return None
 
+  def from_any(self):
+    res = Reference(Symbol([Identifier(0, self.sym.name)]))
+    res.build(self)  # Needs to be built to get the declaration
+    return res
+
 class AST(Node):
   def __init__(self, nodes):
     self.nodes = nodes
