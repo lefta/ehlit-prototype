@@ -187,7 +187,7 @@ class BuiltinType(Type):
   def is_reference(self): return False
 
   @property
-  def ref_offset(self): return 1 if self.is_reference else 0
+  def ref_offset(self): return 0
 
   @property
   def typ(self): return self
