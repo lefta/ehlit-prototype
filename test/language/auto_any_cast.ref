@@ -20,8 +20,9 @@ int main()
   int array0 = returning_any(array[0])
 
 	ref int rnb = returning_any(ref number)
-	ref int rnb = returning_any(rnb)
+	ref rnb = returning_any(rnb)
 	ref ref int rrnb = returning_any(ref ref rnb)
+	ref ref rrnb = returning_any(ref ref rrnb)
 
 	return 0
 }

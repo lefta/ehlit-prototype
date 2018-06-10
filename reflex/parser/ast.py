@@ -141,11 +141,11 @@ class Value(Node):
         parent = self.parent
         if type(parent) is Symbol:
           parent = parent.parent
-        if type(parent) is Reference:
-          target_ref_level = -1
         while type(parent) is Reference:
           target_ref_level += 1
           parent = parent.parent
+        if target_ref_level is not 0:
+          target_ref_level -= target.typ.ref_offset
     if src:
       if target.is_declaration() or target.is_type:
         target_ref_level += target.typ.ref_offset
