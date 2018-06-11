@@ -32,5 +32,8 @@ int main()
 	ref rnb = same_with_ref_any(rnb)
 	ref ref rrnb = same_with_ref_any(rrnb)
 
+	ref str rstring = same_with_ref_any(string)
+	string = same_with_ref_any(rstring)
+
 	return 0
 }

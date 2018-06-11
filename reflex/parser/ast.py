@@ -133,7 +133,7 @@ class Value(Node):
     target_ref_count = source.ref_offset
     res = target.typ.from_any()
     if target_ref_count is not 0:
-      target_ref_count -= res.ref_offset - 1
+      target_ref_count -= res.ref_offset - res.any_memory_offset
       while target_ref_count > 0:
         res = Reference(res)
         target_ref_count -= 1
@@ -142,18 +142,12 @@ class Value(Node):
   def auto_cast(self, target):
     src = self.typ
     target_ref_level = 0
-    self_typ = self.typ
-    while type(self_typ) is Reference:
-      self_typ = self_typ.child
-    target_typ = target.typ
-    while type(target_typ) is Reference:
-      target_typ = target_typ.child
+    self_typ = self.typ.inner_child
+    target_typ = target.typ.inner_child
     if self_typ != target_typ:
       if self_typ == BuiltinType('any'):
         src = self.from_any_aligned(target, self.typ)
         self.cast = src
-        if self.typ.ref_offset is not 0:
-          target_ref_level += self.typ.ref_offset + 1 - src.ref_offset
       elif target_typ == BuiltinType('any'):
         target = self.from_any_aligned(self, target.typ)
         parent = self.parent
@@ -185,6 +179,12 @@ class Type(Node):
   @property
   def is_type(self): return True
 
+  @property
+  def any_memory_offset(self): return 1
+
+  @property
+  def inner_child(self): return self
+
 class BuiltinType(Type):
   def __init__(self, name):
     super().__init__()
@@ -209,6 +209,9 @@ class BuiltinType(Type):
 
   def from_any(self): return self if self.name == 'str' else Reference(self)
 
+  @property
+  def any_memory_offset(self): return 0 if self.name == 'str' else 1
+
   def __eq__(self, rhs):
     if type(rhs) != BuiltinType:
       return False
@@ -231,6 +234,9 @@ class Array(Type):
   def ref_offset(self): return 0
 
   def from_any(self): return self
+
+  @property
+  def any_memory_offset(self): return 0
 
 class Reference(Value, Type):
   def __init__(self, child):
@@ -264,10 +270,16 @@ class Reference(Value, Type):
   def typ(self): return self if self.is_type else self.decl.typ
 
   @property
+  def inner_child(self): return self.child.inner_child
+
+  @property
   def name(self): return self.child.name
 
   def auto_cast(self, target): return self.child.auto_cast(target)
   def from_any(self): return self
+
+  @property
+  def any_memory_offset(self): return self.child.any_memory_offset
 
 class FunctionType(Type):
   def __init__(self, ret, args):
