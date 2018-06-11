@@ -184,9 +184,6 @@ class BuiltinType(Type):
     return None
 
   @property
-  def is_reference(self): return False
-
-  @property
   def ref_offset(self): return 0
 
   @property
@@ -227,9 +224,6 @@ class Reference(Value, Type):
     self.child.build(self)
     if not self.child.is_type:
       self.child.ref_offset -= 1
-
-  @property
-  def is_reference(self): return True
 
   @property
   def is_type(self): return self.child.is_type
