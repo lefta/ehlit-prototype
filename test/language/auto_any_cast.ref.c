@@ -6,6 +6,12 @@ void* returning_any(void* data)
     return (data);
 }
 
+void** same_with_ref_any(void** data)
+{
+    void* dummy = returning_any(*data);
+    return (data);
+}
+
 int32_t main(void)
 {
     int32_t number = 42;
@@ -23,5 +29,7 @@ int32_t main(void)
     rnb = (int32_t*)returning_any(rnb);
     int32_t** rrnb = (int32_t**)returning_any(&rnb);
     rrnb = (int32_t**)returning_any(rrnb);
+    rnb = *(int32_t**)same_with_ref_any(&rnb);
+    rrnb = (int32_t**)same_with_ref_any(rrnb);
     return (0);
 }

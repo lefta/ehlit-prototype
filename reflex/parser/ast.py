@@ -129,15 +129,33 @@ class Value(Node):
     self.ref_offset = 0
     self.cast = None
 
+  def from_any_aligned(self, target, source):
+    target_ref_count = source.ref_offset
+    res = target.typ.from_any()
+    if target_ref_count is not 0:
+      target_ref_count -= res.ref_offset - 1
+      while target_ref_count > 0:
+        res = Reference(res)
+        target_ref_count -= 1
+    return res
+
   def auto_cast(self, target):
     src = self.typ
     target_ref_level = 0
-    if self.typ != target.typ:
-      if self.typ == BuiltinType('any'):
-        self.cast = target.typ.from_any()
-        src = self.cast
-      elif target.typ == BuiltinType('any'):
-        target = self.typ.from_any()
+    self_typ = self.typ
+    while type(self_typ) is Reference:
+      self_typ = self_typ.child
+    target_typ = target.typ
+    while type(target_typ) is Reference:
+      target_typ = target_typ.child
+    if self_typ != target_typ:
+      if self_typ == BuiltinType('any'):
+        src = self.from_any_aligned(target, self.typ)
+        self.cast = src
+        if self.typ.ref_offset is not 0:
+          target_ref_level += self.typ.ref_offset + 1 - src.ref_offset
+      elif target_typ == BuiltinType('any'):
+        target = self.from_any_aligned(self, target.typ)
         parent = self.parent
         if type(parent) is Symbol:
           parent = parent.parent

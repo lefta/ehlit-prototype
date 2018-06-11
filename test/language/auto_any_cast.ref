@@ -3,6 +3,11 @@ any returning_any(any data)
 	return data
 }
 
+ref any same_with_ref_any(ref any data) {
+	any dummy = returning_any(data)
+	return data
+}
+
 int main()
 {
 	int number = 42
@@ -23,6 +28,9 @@ int main()
 	ref rnb = returning_any(rnb)
 	ref ref int rrnb = returning_any(ref ref rnb)
 	ref ref rrnb = returning_any(ref ref rrnb)
+
+	ref rnb = same_with_ref_any(rnb)
+	ref ref rrnb = same_with_ref_any(rrnb)
 
 	return 0
 }
