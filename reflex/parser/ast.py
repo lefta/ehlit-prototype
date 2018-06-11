@@ -760,6 +760,9 @@ class Alias(Node):
   @ref_offset.setter
   def ref_offset(self, offset): self.dst.ref_offset = offset
 
+  @property
+  def inner_child(self): return self.dst
+
 class Struct(Node):
   def __init__(self, pos, sym, fields):
     super().__init__(pos)
