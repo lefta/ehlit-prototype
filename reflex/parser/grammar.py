@@ -73,7 +73,7 @@ def full_type(): return [function_type, (modifier, [reference, builtin_type, sym
 def declaration(): return full_type, identifier
 def variable_declaration(): return declaration, Optional(assignment)
 def variable_assignment():
-  return [function_call, referenced_value, symbol], Optional(array_access), operation_assignment
+  return [referenced_value, symbol], Optional(array_access), operation_assignment
 def return_instruction(): return 'return', expression
 def statement(): return [return_instruction, variable_assignment, variable_declaration,
   expression]

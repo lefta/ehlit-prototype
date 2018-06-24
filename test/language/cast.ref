@@ -4,9 +4,6 @@ int main(int ac, str[] av)
 {
 	printf("%d\n", int(ref av))
 	any test = str(ac)
-	str(test) = av[0]
-	char n = 0
-	str(test)[0] = n
 	size i = size[](av)[0]
 	return 0
 }
