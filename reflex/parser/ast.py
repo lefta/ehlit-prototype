@@ -19,12 +19,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from os import path, getcwd
+from os import path, getcwd, listdir
 from reflex.parser import c_compat, parse
 from reflex.parser.error import ParseError, Failure
 
 MOD_NONE = 0
 MOD_CONST = 1
+
+imported = []
 
 class Node:
   def __init__(self, pos):
@@ -113,10 +115,33 @@ class GenericExternInclusion(Node):
         return decl
 
 class Import(GenericExternInclusion):
+  def import_dir(self, dir):
+    res = []
+    for sub in listdir(dir):
+      full_path = path.join(dir, sub)
+      if full_path in imported:
+        continue
+      imported.append(full_path)
+      if path.isdir(full_path):
+        res += self.import_dir(full_path)
+      elif path.isfile(full_path):
+        res += parse.parse(full_path).nodes
+    return res
+
   def parse(self):
     for p in self.import_paths:
-      try: return parse.parse(path.join(p, self.lib.name + '.ref')).nodes
-      except FileNotFoundError: pass
+      full_path = path.abspath(path.join(p, self.lib.name))
+      if path.isdir(full_path):
+        if full_path in imported:
+          return []
+        imported.append(full_path)
+        return self.import_dir(full_path)
+      full_path += '.ref'
+      if path.isfile(full_path):
+        if full_path in imported:
+          return []
+        imported.append(full_path)
+        return parse.parse(full_path).nodes
     self.error(self.pos, '%s: no such file or directory' % self.lib.name)
     return []
 
