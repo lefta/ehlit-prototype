@@ -129,10 +129,25 @@ class Value(Node):
     self.ref_offset = 0
     self.cast = None
 
-  def from_any_aligned(self, target, source):
+  def from_any_aligned(self, target, source, is_casting):
     target_ref_count = source.ref_offset
     res = target.typ.from_any()
+    if is_casting:
+      # We align the result to match the ref offset of the target
+      if not target.is_declaration() and not target.is_type:
+        target_ref_offset = target.ref_offset
+        while target_ref_offset > 0:
+          res = res.child
+          target_ref_offset -= 1
+    else:
+      # We reduce the result to the minimal Referencing needed for the conversion.
+      if type(res) is Reference:
+        while type(res.child) is Reference:
+          res = res.child
+        if res.any_memory_offset is 0:
+          res = res.child
     if target_ref_count is not 0:
+      # The developper asked for some referencing
       target_ref_count -= res.ref_offset - res.any_memory_offset
       while target_ref_count > 0:
         res = Reference(res)
@@ -146,10 +161,10 @@ class Value(Node):
     target_typ = target.typ.inner_child
     if self_typ != target_typ:
       if self_typ == BuiltinType('any'):
-        src = self.from_any_aligned(target, self.typ)
+        src = self.from_any_aligned(target, self.typ, True)
         self.cast = src
       elif target_typ == BuiltinType('any'):
-        target = self.from_any_aligned(self, target.typ)
+        target = self.from_any_aligned(self, target.typ, False)
         parent = self.parent
         if type(parent) is Symbol:
           parent = parent.parent

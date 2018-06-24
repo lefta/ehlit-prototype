@@ -27,6 +27,7 @@ int main()
 	ref int rnb = returning_any(ref number)
 	ref rnb = returning_any(rnb)
 	ref ref int rrnb = returning_any(ref ref rnb)
+	ref rrnb = returning_any(rrnb)
 	ref ref rrnb = returning_any(ref ref rrnb)
 
 	ref rnb = same_with_ref_any(rnb)

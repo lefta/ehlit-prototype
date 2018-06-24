@@ -28,6 +28,7 @@ int32_t main(void)
     int32_t* rnb = (int32_t*)returning_any(&number);
     rnb = (int32_t*)returning_any(rnb);
     int32_t** rrnb = (int32_t**)returning_any(&rnb);
+    *rrnb = (int32_t*)returning_any(*rrnb);
     rrnb = (int32_t**)returning_any(rrnb);
     rnb = *(int32_t**)same_with_ref_any(&rnb);
     rrnb = (int32_t**)same_with_ref_any(rrnb);
