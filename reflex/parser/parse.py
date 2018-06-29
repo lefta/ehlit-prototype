@@ -38,7 +38,7 @@ def handle_parse_error(err, parser):
     'expected %s' % (' or '.join(exp)))], parser)
 
 def parse(source):
-  parser = ParserPython(grammar, autokwd=True)
+  parser = ParserPython(grammar, autokwd=True, memoization=True)
   try:
     parsed = parser.parse_file(source)
     ast = visit_parse_tree(parsed, ASTBuilder())
@@ -48,7 +48,7 @@ def parse(source):
   return ast
 
 def parse_function(source):
-  parser = ParserPython(function_body_grammar, autokwd=True)
+  parser = ParserPython(function_body_grammar, autokwd=True, memoization=True)
   try:
     parsed = parser.parse(source)
     body = visit_parse_tree(parsed, ASTBuilder())
