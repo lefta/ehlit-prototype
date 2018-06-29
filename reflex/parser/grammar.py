@@ -87,9 +87,15 @@ def else_condition(): return 'else', [instruction, control_structure_body]
 def condition(): return if_condition, ZeroOrMore(elif_condition), Optional(else_condition)
 def while_loop(): return 'while', control_structure
 
+def control_structure_body_stub_parens():
+  return RegExMatch('{[^{}]*'), control_structure_body_stub_inner, RegExMatch('[^{}]*}')
+def control_structure_body_stub_inner():
+  return Optional([RegExMatch('{[^{}]*}'), control_structure_body_stub_parens])
+def control_structure_body_stub(): return control_structure_body_stub_inner
+
 def function_prototype(): return full_type, identifier, '(', ZeroOrMore(declaration, sep=','), ')'
 def function_declaration(): return function_prototype, Not('{')
-def function_definition(): return function_prototype, control_structure_body
+def function_definition(): return function_prototype, control_structure_body_stub
 def function(): return [function_definition, function_declaration]
 
 def include_instruction(): return 'include', identifier
@@ -99,5 +105,6 @@ def alias(): return 'alias', full_type, symbol
 
 def struct(): return 'struct', identifier, '{', ZeroOrMore(variable_declaration), '}'
 
+def function_body_grammar(): return '{', ZeroOrMore(instruction), '}', EOF
 def grammar(): return ZeroOrMore([comment, import_instruction, include_instruction, struct, alias,
   function]), EOF

@@ -444,17 +444,24 @@ class FunctionDeclaration(Node):
   def is_variadic(self): return self.variadic
 
 class FunctionDefinition(Node):
-  def __init__(self, proto, body):
+  def __init__(self, proto, body_str):
     self.proto = proto
     self.name = proto.sym.name
     self.typ = proto.typ
-    self.body = body
+    self.body = []
+    self.body_str = body_str
 
   def build(self, parent):
+    from reflex.parser.parse import parse_function
     super().build(parent)
     self.proto.build(self)
-    for s in self.body:
-      s.build(self)
+    try:
+      self.body = parse_function(self.body_str.contents)
+      for s in self.body:
+        s.build(self)
+    except ParseError as err:
+      for f in err.failures:
+        self.fail(f.severity, f.pos + self.body_str.pos, f.msg)
 
   def get_declaration(self, sym):
     decl = self.proto.get_declaration(sym)
@@ -467,6 +474,8 @@ class FunctionDefinition(Node):
         return decl
 
   def is_declaration(self): return True
+
+  def fail(self, severity, pos, msg): super().fail(severity, pos + self.body_str.pos, msg)
 
 class Statement(Node):
   def __init__(self, expr):

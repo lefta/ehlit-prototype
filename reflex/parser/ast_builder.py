@@ -23,6 +23,11 @@ from arpeggio import PTNodeVisitor
 
 from reflex.parser import ast
 
+class UnparsedContents:
+  def __init__(self, contents, pos):
+    self.contents = contents
+    self.pos = pos
+
 class ASTBuilder(PTNodeVisitor):
   def visit_comment(self, node, children): return None
 
@@ -157,6 +162,12 @@ class ASTBuilder(PTNodeVisitor):
   def visit_while_loop(self, node, children):
     return ast.ControlStructure('while', children[1][0], children[1][1])
 
+  def visit_control_structure_body_stub_parens(self, node, children):
+    return str(children[0]) + children[1] + str(children[2])
+  def visit_control_structure_body_stub_inner(self, node, children): return str(children[0])
+  def visit_control_structure_body_stub(self, node, children):
+    return UnparsedContents(children[0], node.position)
+
   def visit_function_prototype(self, node, children):
     args = []
     i = 2
@@ -178,4 +189,5 @@ class ASTBuilder(PTNodeVisitor):
   def visit_struct(self, node, children):
     return ast.Struct(node.position, children[1], children[2:])
 
+  def visit_function_body_grammar(self, node, children): return children
   def visit_grammar(self, node, children): return ast.AST(children)

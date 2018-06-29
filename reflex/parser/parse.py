@@ -21,26 +21,37 @@
 
 from arpeggio import ParserPython, visit_parse_tree, NoMatch, StrMatch
 
-from reflex.parser.grammar import grammar
+from reflex.parser.grammar import grammar, function_body_grammar
 from reflex.parser.ast_builder import ASTBuilder
 from reflex.parser.error import ParseError, Failure
 
+def handle_parse_error(err, parser):
+  exp = []
+  for r in err.rules:
+    if type(r) is StrMatch:
+      r = "'%s'" % str(r)
+    else:
+      r = str(r)
+    if r not in exp:
+      exp.append(r)
+  raise ParseError([Failure(ParseError.Severity.Fatal, err.position,
+    'expected %s' % (' or '.join(exp)))], parser)
+
 def parse(source):
   parser = ParserPython(grammar, autokwd=True)
-
   try:
     parsed = parser.parse_file(source)
     ast = visit_parse_tree(parsed, ASTBuilder())
     ast.parser = parser
   except NoMatch as err:
-    exp = []
-    for r in err.rules:
-      if type(r) is StrMatch:
-        r = "'%s'" % str(r)
-      else:
-        r = str(r)
-      if r not in exp:
-        exp.append(r)
-    raise ParseError([Failure(ParseError.Severity.Fatal, err.position,
-      'expected %s' % (' or '.join(exp)))], parser)
+    handle_parse_error(err, parser)
   return ast
+
+def parse_function(source):
+  parser = ParserPython(function_body_grammar, autokwd=True)
+  try:
+    parsed = parser.parse(source)
+    body = visit_parse_tree(parsed, ASTBuilder())
+  except NoMatch as err:
+    handle_parse_error(err, parser)
+  return body
