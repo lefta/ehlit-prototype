@@ -1,2 +1,2 @@
-4:3: use of undeclared identifier k
-5:10: use of undeclared identifier i
+language_error/undeclared_identifier.ref:4:3: use of undeclared identifier k
+language_error/undeclared_identifier.ref:5:10: use of undeclared identifier i

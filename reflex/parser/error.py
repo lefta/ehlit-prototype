@@ -20,12 +20,14 @@
 # SOFTWARE.
 
 class Failure(Exception):
-  def __init__(self, severity, pos, msg):
+  def __init__(self, severity, pos, msg, file):
     self.severity = severity
     self.pos = pos
     self.msg = msg
+    self.file = file
 
-  def __str__(self): return str(self.linecol[0]) + ':' + str(self.linecol[1]) + ': ' + self.msg
+  def __str__(self):
+    return self.file + ':' + str(self.linecol[0]) + ':' + str(self.linecol[1]) + ': ' + self.msg
 
 class ParseError(Exception):
   class Severity:

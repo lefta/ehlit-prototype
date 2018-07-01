@@ -35,7 +35,7 @@ def handle_parse_error(err, parser):
     if r not in exp:
       exp.append(r)
   raise ParseError([Failure(ParseError.Severity.Fatal, err.position,
-    'expected %s' % (' or '.join(exp)))], parser)
+    'expected %s' % (' or '.join(exp)), parser.file_name)], parser)
 
 def parse(source):
   parser = ParserPython(grammar, autokwd=True, memoization=True)

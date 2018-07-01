@@ -889,7 +889,7 @@ class AST(Node):
       raise ParseError(self.failures, self.parser)
 
   def fail(self, severity, pos, msg):
-    self.failures.append(Failure(severity, pos, msg))
+    self.failures.append(Failure(severity, pos, msg, self.parser.file_name))
 
   def find_declaration(self, sym):
     for n in self.nodes:

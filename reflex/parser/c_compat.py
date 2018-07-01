@@ -122,7 +122,7 @@ def find_file_in_path(filename):
     if os.path.isfile(path):
       return path
   raise ParseError([Failure(ParseError.Severity.Error, 0,
-    '%s: no such file or directory' % filename)])
+    '%s: no such file or directory' % filename, None)])
 
 def parse_header(filename):
   path = find_file_in_path(filename + '.h')
@@ -130,7 +130,7 @@ def parse_header(filename):
   try:
     tu = index.parse(path)
   except TranslationUnitLoadError as err:
-    raise ParseError([Failure(ParseError.Severity.Error, 0, '%s: parsing failed' % filename)])
+    raise ParseError([Failure(ParseError.Severity.Error, 0, '%s: parsing failed' % filename, None)])
   ast = cursor_to_reflex(tu.cursor)
   del tu
   del index
