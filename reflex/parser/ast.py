@@ -94,7 +94,7 @@ class Node:
 class GenericExternInclusion(Node):
   def __init__(self, pos, lib):
     super().__init__(pos)
-    self.lib = lib
+    self.lib = Identifier(lib.pos, path.join(*[ x.name for x in lib.elems]))
     self.syms = []
 
   def build(self, parent):

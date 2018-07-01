@@ -107,8 +107,8 @@ def function_declaration(): return function_prototype, Not('{')
 def function_definition(): return function_prototype, control_structure_body_stub
 def function(): return [function_definition, function_declaration]
 
-def include_instruction(): return 'include', identifier
-def import_instruction(): return 'import', identifier
+def include_instruction(): return 'include', symbol
+def import_instruction(): return 'import', symbol
 
 def alias(): return 'alias', full_type, symbol
 
