@@ -139,7 +139,10 @@ class ASTBuilder(PTNodeVisitor):
     arr.child = children[0]
     return ast.VariableAssignment(res, children[2])
 
-  def visit_return_instruction(self, node, children): return ast.Return(children[1])
+  def visit_return_instruction(self, node, children):
+    if len(children) is 0:
+      return ast.Return()
+    return ast.Return(children[1])
   def visit_statement(self, node, children): return ast.Statement(children[0])
 
   def visit_control_structure_body(self, node, children): return children

@@ -4,6 +4,12 @@ ref int ref_call() {
 	return null
 }
 
+void inc(ref int nb) {
+	if !ref nb
+		return
+	nb += 1
+}
+
 int main(int ac, str[] av)
 {
 	puts("Hello, world!\n")

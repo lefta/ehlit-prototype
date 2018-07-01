@@ -21,7 +21,7 @@
 
 from arpeggio import ParserPython, visit_parse_tree, NoMatch, StrMatch
 
-from reflex.parser.grammar import grammar, function_body_grammar
+from reflex.parser.grammar import grammar, function_body_grammar, Context
 from reflex.parser.ast_builder import ASTBuilder
 from reflex.parser.error import ParseError, Failure
 
@@ -47,7 +47,8 @@ def parse(source):
     handle_parse_error(err, parser)
   return ast
 
-def parse_function(source):
+def parse_function(source, have_return_value):
+  Context.return_value = have_return_value
   parser = ParserPython(function_body_grammar, autokwd=True, memoization=True)
   try:
     parsed = parser.parse(source)

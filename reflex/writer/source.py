@@ -339,9 +339,11 @@ class SourceWriter:
       self.write(branch)
 
   def writeReturn(self, ret):
-    self.file.write('return (')
-    self.write(ret.expr)
-    self.file.write(')')
+    self.file.write('return')
+    if ret.expr is not None:
+      self.file.write(' (')
+      self.write(ret.expr)
+      self.file.write(')')
 
   def writeOperator(self, op):
     self.file.write(op.op)

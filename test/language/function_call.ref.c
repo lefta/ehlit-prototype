@@ -7,6 +7,15 @@ int32_t* ref_call(void)
     return (NULL);
 }
 
+void inc(int32_t* nb)
+{
+    if (!nb)
+    {
+        return;
+    }
+    *nb += 1;
+}
+
 int32_t main(int32_t ac, char** av)
 {
     puts("Hello, world!\n");

@@ -21,6 +21,9 @@
 
 from arpeggio import RegExMatch, Optional, Sequence, ZeroOrMore, Not, And, EOF
 
+class Context:
+  return_value = True
+
 def block_comment(): return ('/*', RegExMatch(r'[^*/]*'), '*/')
 def line_comment(): return ('//', RegExMatch(r'.*$'))
 def comment(): return [line_comment, block_comment]
@@ -74,7 +77,10 @@ def declaration(): return full_type, identifier
 def variable_declaration(): return declaration, Optional(assignment)
 def variable_assignment():
   return [referenced_value, symbol], Optional(array_access), operation_assignment
-def return_instruction(): return 'return', expression
+def return_instruction():
+  if Context.return_value:
+    return 'return', expression
+  return 'return'
 def statement(): return [return_instruction, variable_assignment, variable_declaration,
   expression]
 def instruction(): return [comment, condition, while_loop, alias, statement]

@@ -181,7 +181,8 @@ class DumpWriter:
   @indent
   def dumpReturn(self, ret):
     self.dump('Return')
-    self.print_node(ret.expr, False)
+    if ret.expr is not None:
+      self.print_node(ret.expr, False)
 
   @indent
   def dumpReference(self, ref):

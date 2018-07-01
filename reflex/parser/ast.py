@@ -456,7 +456,12 @@ class FunctionDefinition(Node):
     super().build(parent)
     self.proto.build(self)
     try:
-      self.body = parse_function(self.body_str.contents)
+      typ = self.typ
+      if (type(typ) is Symbol):
+        typ = typ.decl
+      have_return_value = not ((type(typ) is Alias and typ.src == BuiltinType('void')) or
+        typ == BuiltinType('void'))
+      self.body = parse_function(self.body_str.contents, have_return_value)
       for s in self.body:
         s.build(self)
     except ParseError as err:
@@ -614,17 +619,17 @@ class Condition(Node):
       b.build(self)
 
 class Return(Node):
-  def __init__(self, expr):
+  def __init__(self, expr=None):
     self.expr = expr
 
   def build(self, parent):
     super().build(parent)
-    self.expr.build(self)
-
-    decl = self.parent
-    while type(decl) is not FunctionDefinition:
-      decl = decl.parent
-    self.expr.auto_cast(decl)
+    if self.expr is not None:
+      self.expr.build(self)
+      decl = self.parent
+      while type(decl) is not FunctionDefinition:
+        decl = decl.parent
+      self.expr.auto_cast(decl)
 
 
 class Identifier(Value, Type):
