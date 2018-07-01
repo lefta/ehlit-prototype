@@ -10,6 +10,21 @@ void inc(ref int nb) {
 	nb += 1
 }
 
+void inner_parens(int i) {
+	if true {
+		i = 1
+		if true {
+			i = 2
+		}
+		i = 3
+	}
+	i = 4
+
+	if false {
+		i = 5
+	}
+}
+
 int main(int ac, str[] av)
 {
 	puts("Hello, world!\n")
