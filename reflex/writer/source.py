@@ -401,7 +401,11 @@ class SourceWriter:
     self.write(val.val)
 
   def writeSuffixOperatorValue(self, val):
+    if val.val.ref_offset is not 0:
+      self.file.write('(')
     self.write(val.val)
+    if val.val.ref_offset is not 0:
+      self.file.write(')')
     self.file.write(val.op)
 
   def writeSizeof(self, node):

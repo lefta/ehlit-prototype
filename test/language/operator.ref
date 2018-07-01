@@ -36,5 +36,9 @@ int main()
 	if i
 		++i
 
+	ref int ri = 0
+	ri++
+	ri--
+
 	return 0
 }

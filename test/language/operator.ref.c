@@ -50,5 +50,8 @@ int32_t main(void)
     {
         ++i;
     }
+    int32_t* ri = 0;
+    (*ri)++;
+    (*ri)--;
     return (0);
 }
