@@ -55,10 +55,25 @@ class ImportWriter:
     if node.sym is not None:
       self.file.write(' ')
       self.write(node.sym)
+    if node.assign is not None:
+      self.write(node.assign)
 
   def writeArgumentDefinitionList(self, node):
     if len(node) != 0:
       SourceWriter.writeArgumentDefinitionList(self, node)
+
+  def writeExpression(self, node):
+    if node.is_parenthesised:
+      self.file.write('(')
+    i = 0
+    count = len(node.contents)
+    while i < count:
+      self.write(node.contents[i])
+      i += 1
+      if i < count:
+        self.file.write(' ')
+    if node.is_parenthesised:
+      self.file.write(')')
 
   def writeArray(self, node):
     self.write(node.child)
@@ -90,6 +105,13 @@ class ImportWriter:
       i += 1
     self.file.write(')>')
 
+  def writeAssignment(self, node):
+    self.file.write(' ')
+    if node.operator is not None:
+      self.write(node.operator)
+    self.file.write('= ')
+    self.write(node.expr)
+
   def writeSymbol(self, node):
     fst = True
     for e in node.elems:
@@ -102,6 +124,9 @@ class ImportWriter:
     if node.is_const:
       self.file.write('const ')
     self.file.write(node.name)
+
+  def writeNumber(self, node):
+    self.file.write(node.num)
 
   def writeAlias(self, node):
     self.file.write('alias ')
