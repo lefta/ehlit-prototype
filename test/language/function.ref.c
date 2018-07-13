@@ -38,6 +38,10 @@ void func_with_default_params(int32_t par1, int32_t par2)
 {
 }
 
+void func_with_trailing_comma(int32_t arg)
+{
+}
+
 int32_t main(int32_t ac, char** av)
 {
     puts("Hello, world!\n");
@@ -45,5 +49,6 @@ int32_t main(int32_t ac, char** av)
     ref_call();
     func_with_default_params(1, 2);
     func_with_default_params(3, 0);
+    func_with_trailing_comma(4);
     return (0);
 }

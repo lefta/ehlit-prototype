@@ -30,6 +30,7 @@ class UnparsedContents:
 
 class ASTBuilder(PTNodeVisitor):
   def visit_comment(self, node, children): return None
+  def visit_trailing_comma(self, node, children): return None
 
   def visit_identifier(self, node, children): return ast.Identifier(node.position, str(node))
   def visit_symbol(self, node, children): return ast.Symbol(children)

@@ -24,6 +24,8 @@ from arpeggio import RegExMatch, Optional, Sequence, ZeroOrMore, OneOrMore, Not,
 class Context:
   return_value = True
 
+def trailing_comma(): return Optional(',')
+
 def block_comment(): return ('/*', RegExMatch(r'[^*/]*'), '*/')
 def line_comment(): return ('//', RegExMatch(r'.*$'))
 def comment(): return [line_comment, block_comment]
@@ -42,7 +44,8 @@ def number(): return RegExMatch(r'-?[0-9]+', str_repr='number')
 def null_value(): return 'null'
 def bool_value(): return ['true', 'false']
 def referenced_value(): return 'ref', value
-def function_call(): return [full_type, symbol], '(', ZeroOrMore(expression, sep=','), ')'
+def function_call():
+  return [full_type, symbol], '(', ZeroOrMore(expression, sep=','), trailing_comma, ')'
 def writable_value(): return [referenced_value, symbol]
 def disambiguated_prefix_operator_value(): return ("",
   Sequence(['++', '--'], And(['ref', symbol]), skipws=False))
@@ -69,7 +72,7 @@ def modifier(): return Optional('const')
 def array_element(): return '[', Optional(expression), ']'
 def array(): return ZeroOrMore(array_element)
 def reference(): return 'ref', array, full_type
-def function_type_args(): return Optional(full_type), ZeroOrMore(',', full_type)
+def function_type_args(): return Optional(full_type), ZeroOrMore(',', full_type), trailing_comma
 def function_type(): return 'func', '<', full_type, '(', function_type_args, ')', '>'
 def full_type(): return [function_type, (modifier, [reference, builtin_type, symbol], array)]
 
@@ -103,7 +106,7 @@ def control_structure_body_stub_inner():
 def control_structure_body_stub(): return control_structure_body_stub_inner
 
 def function_prototype():
-  return full_type, identifier, '(', ZeroOrMore(variable_declaration, sep=','), ')'
+  return full_type, identifier, '(', ZeroOrMore(variable_declaration, sep=','), trailing_comma, ')'
 def function_declaration(): return function_prototype, Not('{')
 def function_definition(): return function_prototype, control_structure_body_stub
 def function(): return [function_definition, function_declaration]

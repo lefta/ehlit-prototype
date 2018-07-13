@@ -26,6 +26,7 @@ void inner_parens(int i) {
 }
 
 void func_with_default_params(int par1, int par2 = 0) {}
+void func_with_trailing_comma(int arg,) {}
 
 int main(int ac, str[] av)
 {
@@ -34,5 +35,6 @@ int main(int ac, str[] av)
 	ref_call()
 	func_with_default_params(1, 2)
 	func_with_default_params(3)
+	func_with_trailing_comma(4,)
 	return 0
 }

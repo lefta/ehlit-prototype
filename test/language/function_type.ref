@@ -2,7 +2,7 @@ void fun1() {}
 int fun2(int i) {}
 int fun3(int i, int j) {}
 ref int[] fun4(ref int[] arr) {}
-void fun5(ref char c) {}
+void fun5(ref char c,) {}
 
 int main() {
   func<void()> pfn1 = fun1
@@ -19,6 +19,6 @@ int main() {
   ref int[] rai = pfn4(null)
   int[] ai = pfn4(null)
   str s = "123456"
-  pfn5(s[0])
+  pfn5(s[0],)
   return 0
 }
