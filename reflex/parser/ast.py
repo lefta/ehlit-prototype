@@ -369,6 +369,7 @@ class Declaration(Node):
     self.typ = typ
     self.name = sym.name if sym is not None else None
     self.sym = sym
+    self.assign = None
 
   def build(self, parent):
     super().build(parent)
@@ -410,6 +411,12 @@ class VariableDeclaration(Node):
 
   def is_declaration(self):
     return True
+
+  @property
+  def typ(self): return self.decl.typ
+
+  @property
+  def sym(self): return self.decl.sym
 
 class FunctionDeclaration(Node):
   def __init__(self, typ, sym, args, variadic=False):
@@ -529,14 +536,19 @@ class FunctionCall(Node):
         self.error(self.pos, 'too many values for cast expression')
     elif self.sym.decl is not None:
       diff = len(self.args) - len(self.sym.decl.args)
-      err = None
-      if diff < 0:
-        err = 'not enough'
-      elif diff > 0 and not self.sym.decl.is_variadic:
-        err = 'too many'
-      if err is not None:
-        self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(err,
-          self.sym.name, len(self.sym.decl.args), len(self.args)))
+      i = 0
+      while i < len(self.sym.decl.args):
+        if i >= len(self.args):
+          if self.sym.decl.args[i].assign is not None:
+            self.args.append(self.sym.decl.args[i].assign.expr)
+            diff += 1
+          else:
+            break
+        i += 1
+      if diff < 0 or (diff > 0 and not self.sym.decl.is_variadic):
+        self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(
+          'not enough' if diff < 0 else 'too many', self.sym.name, len(self.sym.decl.args),
+          len(self.args)))
 
     i = 0
     while i < len(self.args):

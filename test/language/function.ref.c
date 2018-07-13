@@ -34,10 +34,16 @@ void inner_parens(int32_t i)
     }
 }
 
+void func_with_default_params(int32_t par1, int32_t par2)
+{
+}
+
 int32_t main(int32_t ac, char** av)
 {
     puts("Hello, world!\n");
     printf("With some mathematics: 4 * 8 = %d", 4 * 8);
     ref_call();
+    func_with_default_params(1, 2);
+    func_with_default_params(3, 0);
     return (0);
 }

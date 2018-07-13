@@ -25,10 +25,14 @@ void inner_parens(int i) {
 	}
 }
 
+void func_with_default_params(int par1, int par2 = 0) {}
+
 int main(int ac, str[] av)
 {
 	puts("Hello, world!\n")
 	printf("With some mathematics: 4 * 8 = %d", 4 * 8)
 	ref_call()
+	func_with_default_params(1, 2)
+	func_with_default_params(3)
 	return 0
 }

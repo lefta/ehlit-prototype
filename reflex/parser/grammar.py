@@ -102,7 +102,8 @@ def control_structure_body_stub_inner():
   return Optional([RegExMatch('{[^{}]*}'), control_structure_body_stub_parens])
 def control_structure_body_stub(): return control_structure_body_stub_inner
 
-def function_prototype(): return full_type, identifier, '(', ZeroOrMore(declaration, sep=','), ')'
+def function_prototype():
+  return full_type, identifier, '(', ZeroOrMore(variable_declaration, sep=','), ')'
 def function_declaration(): return function_prototype, Not('{')
 def function_definition(): return function_prototype, control_structure_body_stub
 def function(): return [function_definition, function_declaration]
