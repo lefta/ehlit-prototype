@@ -68,10 +68,34 @@ class ASTBuilder(PTNodeVisitor):
     arr.child = children[0]
     return res
 
+  def visit_equality_sequence(self, node, children):
+    res = [children[0], ast.Operator('=='), children[1]]
+    i = 2
+    while i < len(children):
+      res += [ast.Operator('&&'), children[0], ast.Operator('=='), children[i]]
+      i += 1
+    return res
+  def visit_inequality_sequence(self, node, children):
+    res = [children[0], ast.Operator('!='), children[1]]
+    i = 2
+    while i < len(children):
+      res += [ast.Operator('&&'), children[0], ast.Operator('!='), children[i]]
+      i += 1
+    return res
+  def visit_lesser_than_sequence(self, node, children):
+    return [children[0], ast.Operator(str(children[1])), children[2], ast.Operator('&&'),
+      children[2], ast.Operator(str(children[3])), children[4]]
+  def visit_greater_than_sequence(self, node, children):
+    return [children[0], ast.Operator(str(children[1])), children[2], ast.Operator('&&'),
+      children[2], ast.Operator(str(children[3])), children[4]]
+  def visit_operator_sequence(self, node, children): return children[0]
   def visit_mathematical_operator(self, node, children): return ast.Operator(str(node))
-  def visit_binary_operator(self, node, children): return ast.Operator(str(node))
+  def visit_boolean_operator(self, node, children): return ast.Operator(str(node))
   def visit_parenthesised_expression(self, node, children): return ast.Expression(children, True)
-  def visit_expression(self, node, children): return ast.Expression(children, False)
+  def visit_expression(self, node, children):
+    if type(children[0]) is list:
+      return ast.Expression(children[0], False)
+    return ast.Expression(children, False)
   def visit_assignment(self, node, children): return ast.Assignment(children[0])
   def visit_operation_assignment(self, node, children):
     if len(children) is 1:

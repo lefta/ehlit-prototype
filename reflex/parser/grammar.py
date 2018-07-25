@@ -57,11 +57,19 @@ def value():
   return [null_value, bool_value, sizeof, function_call, prefix_operator_value,
     suffix_operator_value, writable_value, string, char, number], array_access
 
+def equality_sequence(): return value, '==', value, OneOrMore('==', value)
+def inequality_sequence(): return value, '!=', value, OneOrMore('!=', value)
+def lesser_than_sequence(): return value, ['<=', '<'], value, ['<=', '<'], value
+def greater_than_sequence(): return value, ['>=', '>'], value, ['>=', '>'], value
+def operator_sequence():
+  return [equality_sequence, inequality_sequence, lesser_than_sequence, greater_than_sequence]
 def mathematical_operator(): return ['+', '-', '*', '/', '%']
-def binary_operator(): return ['==', '!=', '>=', '<=', '>', '<', '||', '&&']
-def operator(): return [mathematical_operator, binary_operator]
+def boolean_operator():
+  return ['==', '!=', '>=', '<=', '>', '<', '||', '&&']
+def operator(): return [mathematical_operator, boolean_operator]
 def parenthesised_expression(): return '(', expression, ')'
-def expression(): return [value, parenthesised_expression], Optional(operator, expression)
+def expression():
+  return [operator_sequence, value, parenthesised_expression], Optional(operator, expression)
 def assignment(): return '=', expression
 def operation_assignment(): return Optional(mathematical_operator), assignment
 

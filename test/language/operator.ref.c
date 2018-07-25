@@ -53,5 +53,53 @@ int32_t main(void)
     int32_t* ri = 0;
     (*ri)++;
     (*ri)--;
+    if (i == 1 && i == 2)
+    {
+        return (8);
+    }
+    if (i == 1 && i == 2 && i == 3 && i == 4)
+    {
+        return (9);
+    }
+    if (i != 1 && i != 2)
+    {
+        return (10);
+    }
+    if (i != 1 && i != 2 && i != 3 && i != 4)
+    {
+        return (11);
+    }
+    if (1 < i && i < 10)
+    {
+        return (12);
+    }
+    if (1 > i && i > 10)
+    {
+        return (13);
+    }
+    if (1 <= i && i <= 10)
+    {
+        return (14);
+    }
+    if (1 >= i && i >= 10)
+    {
+        return (15);
+    }
+    if (1 < i && i <= 10)
+    {
+        return (16);
+    }
+    if (1 > i && i >= 10)
+    {
+        return (17);
+    }
+    if (1 <= i && i < 10)
+    {
+        return (18);
+    }
+    if (1 >= i && i > 10)
+    {
+        return (19);
+    }
     return (0);
 }
