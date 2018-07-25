@@ -31,9 +31,11 @@ imported = []
 class Node:
   def __init__(self, pos):
     self.pos = pos
+    self.built = False
 
   def build(self, parent):
     self.parent = parent
+    self.built = True
 
   def is_declaration(self):
     return False
@@ -86,6 +88,8 @@ class Node:
   Shorthand for fail with severity Warning.
   """
   def warn(self, pos, msg): self.parent.fail(ParseError.Severity.Warning, pos, msg)
+
+  def predeclare(self, decl): self.parent.predeclare(decl)
 
   @property
   def import_paths(self): return self.parent.import_paths
@@ -420,6 +424,7 @@ class VariableDeclaration(Node):
 
 class FunctionDeclaration(Node):
   def __init__(self, typ, sym, args, variadic=False):
+    super().__init__(-1)
     self.typ = typ
     self.sym = sym
     self.args = args
@@ -457,6 +462,7 @@ class FunctionDefinition(Node):
     self.typ = proto.typ
     self.body = []
     self.body_str = body_str
+    self.predeclarations = []
 
   def build(self, parent):
     from reflex.parser.parse import parse_function
@@ -488,6 +494,8 @@ class FunctionDefinition(Node):
   def is_declaration(self): return True
 
   def fail(self, severity, pos, msg): super().fail(severity, pos + self.body_str.pos, msg)
+
+  def predeclare(self, decl): self.predeclarations.append(decl)
 
 class Statement(Node):
   def __init__(self, expr):
@@ -658,6 +666,8 @@ class Identifier(Value, Type):
       if self.decl is None:
         self.error(self.pos, "use of undeclared identifier %s" % self.name)
       else:
+        if not self.decl.built:
+          self.parent.predeclare(self.decl)
         self.ref_offset = self.decl.typ.ref_offset
 
   @property

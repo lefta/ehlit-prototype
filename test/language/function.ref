@@ -36,5 +36,8 @@ int main(int ac, str[] av)
 	func_with_default_params(1, 2)
 	func_with_default_params(3)
 	func_with_trailing_comma(4,)
+	declared_later()
 	return 0
 }
+
+void declared_later() {}

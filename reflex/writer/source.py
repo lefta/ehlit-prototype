@@ -218,6 +218,11 @@ class SourceWriter:
       self.writeFunctionDeclaration(fun.proto)
       return
 
+    if len(fun.predeclarations) is not 0:
+      self.file.write('\n')
+    for decl in fun.predeclarations:
+      self.write(decl)
+
     self.write_indent()
     self.file.write("\n")
     self.writeFunctionPrototype(fun.proto)

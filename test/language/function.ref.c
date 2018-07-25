@@ -42,6 +42,8 @@ void func_with_trailing_comma(int32_t arg)
 {
 }
 
+void declared_later(void);
+
 int32_t main(int32_t ac, char** av)
 {
     puts("Hello, world!\n");
@@ -50,5 +52,10 @@ int32_t main(int32_t ac, char** av)
     func_with_default_params(1, 2);
     func_with_default_params(3, 0);
     func_with_trailing_comma(4);
+    declared_later();
     return (0);
+}
+
+void declared_later(void)
+{
 }
