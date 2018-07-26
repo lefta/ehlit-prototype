@@ -104,14 +104,19 @@ def else_condition(): return 'else', [instruction, control_structure_body]
 def condition(): return if_condition, ZeroOrMore(elif_condition), Optional(else_condition)
 def while_loop(): return 'while', control_structure
 
-def control_structure_body_stub_parens_inner():
-  return OneOrMore(RegExMatch('{[^{}]*'), control_structure_body_stub_inner,
-    RegExMatch('[^{}]*}[^{}]*'))
-def control_structure_body_stub_parens():
-  return RegExMatch('{[^{}]*'), control_structure_body_stub_parens_inner, RegExMatch('[^{}]*}')
+def open_brace(): return RegExMatch(r'\s*{')
+def close_brace(): return RegExMatch(r'[^{}]*}')
+def control_structure_potential_closing_brace():
+  return [And(RegExMatch('[^{}]*}')), RegExMatch('[^{}]*')]
+def control_structure_body_stub_braces():
+  return ZeroOrMore(RegExMatch('[^{}]*{[^{}]*'),
+    ZeroOrMore(control_structure_body_stub_inner, Optional(RegExMatch('[^{}]*'))),
+    close_brace, control_structure_potential_closing_brace)
 def control_structure_body_stub_inner():
-  return Optional([RegExMatch('{[^{}]*}'), control_structure_body_stub_parens])
-def control_structure_body_stub(): return control_structure_body_stub_inner
+  return (open_brace, [control_structure_body_stub_braces,
+    control_structure_potential_closing_brace], close_brace)
+def control_structure_body_stub():
+  return Sequence(control_structure_body_stub_inner, skipws=False)
 
 def function_prototype():
   return full_type, identifier, '(', ZeroOrMore(variable_declaration, sep=','), trailing_comma, ')'

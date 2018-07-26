@@ -16,6 +16,9 @@ void inner_parens(int i) {
 		if true {
 			i = 2
 		}
+		if false {
+			i = 2
+		}
 		i = 3
 	}
 	i = 4

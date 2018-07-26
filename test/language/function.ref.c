@@ -25,6 +25,10 @@ void inner_parens(int32_t i)
         {
             i = 2;
         }
+        if (0)
+        {
+            i = 2;
+        }
         i = 3;
     }
     i = 4;

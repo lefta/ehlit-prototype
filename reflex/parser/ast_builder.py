@@ -190,14 +190,16 @@ class ASTBuilder(PTNodeVisitor):
   def visit_while_loop(self, node, children):
     return ast.ControlStructure('while', children[1][0], children[1][1])
 
-  def visit_control_structure_body_stub_parens_inner(self, node, children):
+  def visit_control_structure_body_stub_braces(self, node, children):
     res = ''
     for s in children:
       res += str(s)
     return res
-  def visit_control_structure_body_stub_parens(self, node, children):
-    return str(children[0]) + children[1] + str(children[2])
-  def visit_control_structure_body_stub_inner(self, node, children): return str(children[0])
+  def visit_control_structure_body_stub_inner(self, node, children):
+    res = ''
+    for s in children:
+      res += str(s)
+    return res
   def visit_control_structure_body_stub(self, node, children):
     return UnparsedContents(children[0], node.position)
 
