@@ -1,0 +1,58 @@
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: int
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 2
+      ├─ ConditionBranches
+      │  ├─ ControlStructure: if
+      │  │  ├─ Expression
+      │  │  │  ├─ Symbol
+      │  │  │  │  └─ Identifier: i
+      │  │  │  ├─ Operator: ==
+      │  │  │  └─ Expression
+      │  │  │     └─ Number: 2
+      │  │  └─ ControlStructureBody
+      │  │     └─ Statement
+      │  │        └─ VariableAssignment
+      │  │           ├─ Symbol
+      │  │           │  └─ Identifier: i
+      │  │           └─ Assignment
+      │  │              └─ Expression
+      │  │                 └─ Number: 3
+      │  ├─ ControlStructure: elif
+      │  │  ├─ Expression
+      │  │  │  ├─ Symbol
+      │  │  │  │  └─ Identifier: i
+      │  │  │  ├─ Operator: ==
+      │  │  │  └─ Expression
+      │  │  │     └─ Number: 3
+      │  │  └─ ControlStructureBody
+      │  │     └─ Statement
+      │  │        └─ VariableAssignment
+      │  │           ├─ Symbol
+      │  │           │  └─ Identifier: i
+      │  │           └─ Assignment
+      │  │              └─ Expression
+      │  │                 └─ Number: 4
+      │  └─ ControlStructure: else
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ VariableAssignment
+      │              ├─ Symbol
+      │              │  └─ Identifier: i
+      │              └─ Assignment
+      │                 └─ Expression
+      │                    └─ Number: 5
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

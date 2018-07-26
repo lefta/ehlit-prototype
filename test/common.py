@@ -26,6 +26,7 @@
 """
 
 import io
+import re
 from inspect import getsourcefile
 import os.path, sys, logging
 from unittest import TestCase
@@ -69,7 +70,19 @@ class EhlitTestCase(TestCase):
 		super().__init__(arg)
 		self.maxDiff = None
 		os.chdir(file_dir)
-		logging.basicConfig(format='%(message)s', level=logging.INFO)
+
+	def setUp(self):
+		logging.basicConfig(format='%(message)s', level=logging.DEBUG)
+		self.logStream = io.StringIO()
+		self.logHandler = logging.StreamHandler(self.logStream)
+		self.log = logging.getLogger()
+		for h in self.log.handlers:
+			self.log.removeHandler(h)
+		self.log.addHandler(self.logHandler)
+
+	def tearDown(self):
+		self.log.removeHandler(self.logHandler)
+		self.logHandler.close()
 
 	"""
 		Discover all tests
@@ -108,6 +121,27 @@ class EhlitTestCase(TestCase):
 			source = src
 			verbose = False
 		return self.run_compiler(opts)
+
+	# TODO This is only temporary waiting for C compatibility to be fully implemented
+	dump_repl = re.compile(r'(c_compat: unimplemented: [a-zA-Z_]+\n)', flags=re.MULTILINE)
+	"""
+		Dump the AST resulting from parsing a file
+
+		@param src The file to parse
+		@return str Dump of the AST
+	"""
+	def dump(self, src):
+		self.setUp()
+		with Pipe():
+			class args:
+				source = ''
+				output_import_file = '-'
+			ast = ehlit.parser.parse(src)
+			ast.build(args)
+			ehlit.writer.WriteDump(ast)
+			self.logHandler.flush()
+			self.tearDown()
+			return re.sub(self.dump_repl, '', self.logStream.getvalue().replace('\n--- AST ---\n', ''))
 
 	"""
 		Check that the compiler raises an error when building src
@@ -159,3 +193,14 @@ class EhlitTestCase(TestCase):
 		with open(filename, 'r') as f:
 			expected = f.read()
 		self.assertEqual(string, expected)
+
+	"""
+		Check that an AST dump of the file contents matches the contents of src.dump
+
+		@param src The source file to test
+	"""
+	def assert_dumps_to(self, src):
+		dump = self.dump(src)
+		self.assertNotEqual(dump, '', 'No dump have been generated.')
+		with open('{}.dump'.format(src), 'r') as f:
+			self.assertEqual(dump, f.read())

@@ -1,0 +1,242 @@
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ BuiltinType: void
+│  │  ├─ Identifier: fun1
+│  │  └─ Arguments
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ BuiltinType: int
+│  │  ├─ Identifier: fun2
+│  │  └─ Arguments
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ BuiltinType: int
+│  │           └─ Identifier: i
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ BuiltinType: int
+│  │  ├─ Identifier: fun3
+│  │  └─ Arguments
+│  │     ├─ VariableDeclaration
+│  │     │  └─ Declaration
+│  │     │     ├─ BuiltinType: int
+│  │     │     └─ Identifier: i
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ BuiltinType: int
+│  │           └─ Identifier: j
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Reference
+│  │  │  └─ Array
+│  │  │     └─ BuiltinType: int
+│  │  ├─ Identifier: fun4
+│  │  └─ Arguments
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ Reference
+│  │           │  └─ Array
+│  │           │     └─ BuiltinType: int
+│  │           └─ Identifier: arr
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ BuiltinType: void
+│  │  ├─ Identifier: fun5
+│  │  └─ Arguments
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ Reference
+│  │           │  └─ BuiltinType: char
+│  │           └─ Identifier: c
+│  └─ FunctionBody
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ FunctionType
+      │     │  │  └─ BuiltinType: void
+      │     │  └─ Identifier: pfn1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Symbol
+      │              └─ Identifier: fun1
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ FunctionType
+      │     │  │  ├─ BuiltinType: int
+      │     │  │  └─ Arguments:
+      │     │  │     └─ Declaration
+      │     │  │        └─ BuiltinType: int
+      │     │  └─ Identifier: pfn2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Symbol
+      │              └─ Identifier: fun2
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ FunctionType
+      │     │  │  ├─ BuiltinType: int
+      │     │  │  └─ Arguments:
+      │     │  │     ├─ Declaration
+      │     │  │     │  └─ BuiltinType: int
+      │     │  │     └─ Declaration
+      │     │  │        └─ BuiltinType: int
+      │     │  └─ Identifier: pfn3
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Symbol
+      │              └─ Identifier: fun3
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ FunctionType
+      │     │  │  ├─ Reference
+      │     │  │  │  └─ Array
+      │     │  │  │     └─ BuiltinType: int
+      │     │  │  └─ Arguments:
+      │     │  │     └─ Declaration
+      │     │  │        └─ Reference
+      │     │  │           └─ Array
+      │     │  │              └─ BuiltinType: int
+      │     │  └─ Identifier: pfn4
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Symbol
+      │              └─ Identifier: fun4
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ FunctionType
+      │     │  │  ├─ BuiltinType: void
+      │     │  │  └─ Arguments:
+      │     │  │     └─ Declaration
+      │     │  │        └─ Reference
+      │     │  │           └─ BuiltinType: char
+      │     │  └─ Identifier: pfn5
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Symbol
+      │              └─ Identifier: fun5
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: pfn1
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: pfn2
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Number: 0
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: int
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: pfn2
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Number: 0
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: pfn3
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 0
+      │           └─ Expression
+      │              └─ Number: 0
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: pfn3
+      │              └─ Arguments
+      │                 ├─ Expression
+      │                 │  └─ Number: 0
+      │                 └─ Expression
+      │                    └─ Number: 0
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: pfn4
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ NullValue
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Reference
+      │     │  │  └─ Array
+      │     │  │     └─ BuiltinType: int
+      │     │  └─ Identifier: rai
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: pfn4
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ NullValue
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Array
+      │     │  │  └─ BuiltinType: int
+      │     │  └─ Identifier: ai
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: pfn4
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ NullValue
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: str
+      │     │  └─ Identifier: s
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ String: 123456
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: pfn5
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ ArrayAccess
+      │                 ├─ Expression
+      │                 │  └─ Number: 0
+      │                 └─ Symbol
+      │                    └─ Identifier: s
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

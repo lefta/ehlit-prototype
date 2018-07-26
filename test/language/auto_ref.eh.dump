@@ -1,0 +1,166 @@
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ BuiltinType: int
+│  │  ├─ Identifier: fun
+│  │  └─ Arguments
+│  │     ├─ VariableDeclaration
+│  │     │  └─ Declaration
+│  │     │     ├─ BuiltinType: int
+│  │     │     └─ Identifier: i
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ Reference
+│  │           │  └─ BuiltinType: int
+│  │           └─ Identifier: j
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ Symbol
+│                 └─ Identifier: j
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Reference
+│  │  │  └─ BuiltinType: int
+│  │  ├─ Identifier: ref_fun
+│  │  └─ Arguments
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ Reference
+│  │           │  └─ BuiltinType: int
+│  │           └─ Identifier: i
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ Symbol
+│                 └─ Identifier: i
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ BuiltinType: int
+      │        └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ Reference
+      │        │  └─ BuiltinType: int
+      │        └─ Identifier: j
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     └─ Identifier: j
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Reference
+      │              └─ Symbol
+      │                 └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: j
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Reference
+      │              └─ Symbol
+      │                 └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: j
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Reference
+      │              │  └─ Symbol
+      │              │     └─ Identifier: fun
+      │              └─ Arguments
+      │                 ├─ Expression
+      │                 │  └─ Symbol
+      │                 │     └─ Identifier: i
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: j
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: j
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: fun
+      │              └─ Arguments
+      │                 ├─ Expression
+      │                 │  └─ Symbol
+      │                 │     └─ Identifier: j
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: i
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: fun
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Reference
+      │           │     └─ Symbol
+      │           │        └─ Identifier: i
+      │           └─ Expression
+      │              └─ Symbol
+      │                 └─ Identifier: j
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: ref_fun
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: j
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: ref_fun
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: j
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     └─ Identifier: j
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: ref_fun
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Reference
+      │                       └─ Symbol
+      │                          └─ Identifier: j
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Reference
+                  └─ Symbol
+                     └─ Identifier: j

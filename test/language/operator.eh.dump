@@ -1,0 +1,484 @@
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: int
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 0
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Symbol
+      │           │  └─ Identifier: i
+      │           ├─ Operator: +
+      │           └─ Expression
+      │              └─ Number: 5
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Symbol
+      │           │  └─ Identifier: i
+      │           ├─ Operator: -
+      │           └─ Expression
+      │              └─ Number: 3
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Symbol
+      │           │  └─ Identifier: i
+      │           ├─ Operator: *
+      │           └─ Expression
+      │              └─ Number: 4
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Symbol
+      │           │  └─ Identifier: i
+      │           ├─ Operator: /
+      │           └─ Expression
+      │              └─ Number: 3
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Symbol
+      │           │  └─ Identifier: i
+      │           ├─ Operator: %
+      │           └─ Expression
+      │              └─ Number: 3
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        ├─ Operator: +
+      │        └─ Expression
+      │           └─ Number: 4
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        ├─ Operator: -
+      │        └─ Expression
+      │           └─ Number: 8
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        ├─ Operator: *
+      │        └─ Expression
+      │           └─ Number: 5
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        ├─ Operator: /
+      │        └─ Expression
+      │           └─ Number: 1
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        ├─ Operator: %
+      │        └─ Expression
+      │           └─ Number: 2
+      ├─ Statement
+      │  └─ Expression
+      │     └─ SuffixOperatorValue
+      │        ├─ Operator: --
+      │        └─ Symbol
+      │           └─ Identifier: i
+      ├─ Statement
+      │  └─ Expression
+      │     └─ SuffixOperatorValue
+      │        ├─ Operator: ++
+      │        └─ Symbol
+      │           └─ Identifier: i
+      ├─ Statement
+      │  └─ Expression
+      │     └─ PrefixOperatorValue
+      │        ├─ Operator: ++
+      │        └─ Symbol
+      │           └─ Identifier: i
+      ├─ Statement
+      │  └─ Expression
+      │     └─ PrefixOperatorValue
+      │        ├─ Operator: --
+      │        └─ Symbol
+      │           └─ Identifier: i
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: ==
+      │     │  └─ Expression
+      │     │     └─ Number: 5
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 1
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: !=
+      │     │  └─ Expression
+      │     │     └─ Number: 5
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 2
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: >
+      │     │  └─ Expression
+      │     │     └─ Number: 5
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 3
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: <
+      │     │  └─ Expression
+      │     │     └─ Number: 5
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 4
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: >=
+      │     │  └─ Expression
+      │     │     └─ Number: 5
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 5
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: <=
+      │     │  └─ Expression
+      │     │     └─ Number: 5
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 6
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  └─ PrefixOperatorValue
+      │     │     ├─ Operator: !
+      │     │     └─ Symbol
+      │     │        └─ Identifier: i
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 7
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  └─ Symbol
+      │     │     └─ Identifier: i
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Expression
+      │              └─ PrefixOperatorValue
+      │                 ├─ Operator: ++
+      │                 └─ Symbol
+      │                    └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Reference
+      │     │  │  └─ BuiltinType: int
+      │     │  └─ Identifier: ri
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 0
+      ├─ Statement
+      │  └─ Expression
+      │     └─ SuffixOperatorValue
+      │        ├─ Operator: ++
+      │        └─ Symbol
+      │           └─ Identifier: ri
+      ├─ Statement
+      │  └─ Expression
+      │     └─ SuffixOperatorValue
+      │        ├─ Operator: --
+      │        └─ Symbol
+      │           └─ Identifier: ri
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: ==
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: ==
+      │     │  └─ Number: 2
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 8
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: ==
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: ==
+      │     │  ├─ Number: 2
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: ==
+      │     │  ├─ Number: 3
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: ==
+      │     │  └─ Number: 4
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 9
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: !=
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: !=
+      │     │  └─ Number: 2
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 10
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: !=
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: !=
+      │     │  ├─ Number: 2
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: !=
+      │     │  ├─ Number: 3
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: !=
+      │     │  └─ Number: 4
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 11
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: <
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: <
+      │     │  └─ Number: 10
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 12
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: >
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: >
+      │     │  └─ Number: 10
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 13
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: <=
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: <=
+      │     │  └─ Number: 10
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 14
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: >=
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: >=
+      │     │  └─ Number: 10
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 15
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: <
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: <=
+      │     │  └─ Number: 10
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 16
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: >
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: >=
+      │     │  └─ Number: 10
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 17
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: <=
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: <
+      │     │  └─ Number: 10
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 18
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ Number: 1
+      │     │  ├─ Operator: >=
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &&
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: >
+      │     │  └─ Number: 10
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 19
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

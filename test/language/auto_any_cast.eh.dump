@@ -1,0 +1,386 @@
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ BuiltinType: any
+│  │  ├─ Identifier: returning_any
+│  │  └─ Arguments
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ BuiltinType: any
+│  │           └─ Identifier: data
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ Symbol
+│                 └─ Identifier: data
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Reference
+│  │  │  └─ BuiltinType: any
+│  │  ├─ Identifier: same_with_ref_any
+│  │  └─ Arguments
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ Reference
+│  │           │  └─ BuiltinType: any
+│  │           └─ Identifier: data
+│  └─ FunctionBody
+│     ├─ Statement
+│     │  └─ VariableDeclaration
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: any
+│     │     │  └─ Identifier: dummy
+│     │     └─ Assignment
+│     │        └─ Expression
+│     │           └─ FunctionCall
+│     │              ├─ Symbol
+│     │              │  └─ Identifier: returning_any
+│     │              └─ Arguments
+│     │                 └─ Expression
+│     │                    └─ Symbol
+│     │                       └─ Identifier: data
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ Symbol
+│                 └─ Identifier: data
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: int
+      │     │  └─ Identifier: number
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 42
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: number
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Reference
+      │                       └─ Symbol
+      │                          └─ Identifier: number
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: int
+      │     │  └─ Identifier: number2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: number
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: str
+      │     │  └─ Identifier: string
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ String: Hello, World!
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: string
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ BuiltinType: str
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: string
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: str
+      │     │  └─ Identifier: string2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ BuiltinType: str
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: string
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ Array
+      │        │  └─ BuiltinType: int
+      │        └─ Identifier: array
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: array
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Array
+      │              │     └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: array
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Array
+      │     │  │  └─ BuiltinType: int
+      │     │  └─ Identifier: array2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Array
+      │              │     └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: array
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ ArrayAccess
+      │     │  ├─ Expression
+      │     │  │  └─ Number: 0
+      │     │  └─ Symbol
+      │     │     └─ Identifier: array
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ ArrayAccess
+      │                       ├─ Expression
+      │                       │  └─ Number: 0
+      │                       └─ Symbol
+      │                          └─ Identifier: array
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: int
+      │     │  └─ Identifier: array0
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ ArrayAccess
+      │                       ├─ Expression
+      │                       │  └─ Number: 0
+      │                       └─ Symbol
+      │                          └─ Identifier: array
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Reference
+      │     │  │  └─ BuiltinType: int
+      │     │  └─ Identifier: rnb
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Reference
+      │                       └─ Symbol
+      │                          └─ Identifier: number
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     └─ Identifier: rnb
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: rnb
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Reference
+      │     │  │  └─ Reference
+      │     │  │     └─ BuiltinType: int
+      │     │  └─ Identifier: rrnb
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ Reference
+      │              │        └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Reference
+      │                       └─ Reference
+      │                          └─ Symbol
+      │                             └─ Identifier: rnb
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     └─ Identifier: rrnb
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: rrnb
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Reference
+      │     │     └─ Symbol
+      │     │        └─ Identifier: rrnb
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ Reference
+      │              │        └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Reference
+      │                       └─ Reference
+      │                          └─ Symbol
+      │                             └─ Identifier: rrnb
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     └─ Identifier: rnb
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: same_with_ref_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ Reference
+      │              │        └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: rnb
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Reference
+      │     │     └─ Symbol
+      │     │        └─ Identifier: rrnb
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: same_with_ref_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ Reference
+      │              │        └─ BuiltinType: int
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: rrnb
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Reference
+      │     │  │  └─ BuiltinType: str
+      │     │  └─ Identifier: rstring
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: same_with_ref_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ BuiltinType: str
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: string
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: string
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: same_with_ref_any
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ BuiltinType: str
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: rstring
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

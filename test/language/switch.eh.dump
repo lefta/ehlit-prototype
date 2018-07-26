@@ -1,0 +1,121 @@
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   │     ├─ VariableDeclaration
+   │     │  └─ Declaration
+   │     │     ├─ BuiltinType: int
+   │     │     └─ Identifier: ac
+   │     └─ VariableDeclaration
+   │        └─ Declaration
+   │           ├─ Array
+   │           │  └─ BuiltinType: str
+   │           └─ Identifier: av
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ BuiltinType: int
+      │        └─ Identifier: res
+      ├─ ControlStructure: switch
+      │  ├─ Symbol
+      │  │  └─ Identifier: ac
+      │  └─ ControlStructureBody
+      │     ├─ Case
+      │     │  ├─ Tests
+      │     │  │  └─ Number: 1
+      │     │  ├─ Block: no
+      │     │  ├─ Falls through: no
+      │     │  └─ Body
+      │     │     └─ Statement
+      │     │        └─ VariableAssignment
+      │     │           ├─ Symbol
+      │     │           │  └─ Identifier: res
+      │     │           └─ Assignment
+      │     │              └─ Expression
+      │     │                 └─ Number: 0
+      │     ├─ Case
+      │     │  ├─ Tests
+      │     │  │  ├─ Number: 2
+      │     │  │  └─ Number: 3
+      │     │  ├─ Block: no
+      │     │  ├─ Falls through: no
+      │     │  └─ Body
+      │     │     └─ Statement
+      │     │        └─ VariableAssignment
+      │     │           ├─ Symbol
+      │     │           │  └─ Identifier: res
+      │     │           └─ Assignment
+      │     │              └─ Expression
+      │     │                 └─ Number: 1
+      │     ├─ Case
+      │     │  ├─ Tests
+      │     │  │  └─ Number: 4
+      │     │  ├─ Block: yes
+      │     │  ├─ Falls through: no
+      │     │  └─ Body
+      │     │     └─ Statement
+      │     │        └─ VariableAssignment
+      │     │           ├─ Symbol
+      │     │           │  └─ Identifier: res
+      │     │           └─ Assignment
+      │     │              └─ Expression
+      │     │                 └─ Number: 2
+      │     ├─ Case
+      │     │  ├─ Tests
+      │     │  │  ├─ Number: 5
+      │     │  │  └─ Number: 6
+      │     │  ├─ Block: yes
+      │     │  ├─ Falls through: no
+      │     │  └─ Body
+      │     │     └─ Statement
+      │     │        └─ VariableAssignment
+      │     │           ├─ Symbol
+      │     │           │  └─ Identifier: res
+      │     │           └─ Assignment
+      │     │              └─ Expression
+      │     │                 └─ Number: 3
+      │     ├─ Case
+      │     │  ├─ Tests
+      │     │  │  └─ Number: 7
+      │     │  ├─ Block: no
+      │     │  ├─ Falls through: yes
+      │     │  └─ Body
+      │     │     └─ Statement
+      │     │        └─ VariableAssignment
+      │     │           ├─ Symbol
+      │     │           │  └─ Identifier: res
+      │     │           └─ Assignment
+      │     │              └─ Expression
+      │     │                 └─ Number: 4
+      │     ├─ Case
+      │     │  ├─ Tests
+      │     │  │  └─ Number: 8
+      │     │  ├─ Block: yes
+      │     │  ├─ Falls through: yes
+      │     │  └─ Body
+      │     │     └─ Statement
+      │     │        └─ VariableAssignment
+      │     │           ├─ Symbol
+      │     │           │  └─ Identifier: res
+      │     │           └─ Assignment
+      │     │              └─ Expression
+      │     │                 └─ Number: 5
+      │     └─ Case
+      │        ├─ Tests
+      │        │  └─ default
+      │        ├─ Block: no
+      │        ├─ Falls through: no
+      │        └─ Body
+      │           └─ Statement
+      │              └─ VariableAssignment
+      │                 ├─ Symbol
+      │                 │  └─ Identifier: res
+      │                 └─ Assignment
+      │                    └─ Expression
+      │                       └─ Number: 2
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

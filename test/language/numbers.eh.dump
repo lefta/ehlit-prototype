@@ -1,0 +1,26 @@
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: int
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 42
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: int
+      │     │  └─ Identifier: j
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: -42
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

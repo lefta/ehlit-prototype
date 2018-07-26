@@ -1,0 +1,75 @@
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: int
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Number: 42
+      │           ├─ Operator: +
+      │           └─ Expression
+      │              └─ Expression
+      │                 └─ Expression
+      │                    ├─ Number: 4
+      │                    ├─ Operator: *
+      │                    └─ Expression
+      │                       └─ Number: 2
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Expression
+      │           │  └─ Expression
+      │           │     ├─ Number: 42
+      │           │     ├─ Operator: +
+      │           │     └─ Expression
+      │           │        └─ Number: 4
+      │           ├─ Operator: *
+      │           └─ Expression
+      │              └─ Number: 2
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Expression
+      │              └─ Expression
+      │                 ├─ Number: 42
+      │                 ├─ Operator: +
+      │                 └─ Expression
+      │                    ├─ Number: 4
+      │                    ├─ Operator: *
+      │                    └─ Expression
+      │                       └─ Number: 2
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Expression
+      │           │  └─ Expression
+      │           │     └─ Number: 42
+      │           ├─ Operator: +
+      │           └─ Expression
+      │              ├─ Expression
+      │              │  └─ Expression
+      │              │     └─ Number: 4
+      │              ├─ Operator: *
+      │              └─ Expression
+      │                 └─ Expression
+      │                    └─ Expression
+      │                       └─ Number: 2
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

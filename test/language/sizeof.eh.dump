@@ -1,0 +1,1794 @@
+├─ Include
+│  ├─ Identifier: stdio
+│  └─ Symbols found
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint8
+│     │  └─ To:
+│     │     └─ Identifier: __u_char
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint16
+│     │  └─ To:
+│     │     └─ Identifier: __u_short
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint32
+│     │  └─ To:
+│     │     └─ Identifier: __u_int
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __u_long
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: __int8_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint8
+│     │  └─ To:
+│     │     └─ Identifier: __uint8_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int16
+│     │  └─ To:
+│     │     └─ Identifier: __int16_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint16
+│     │  └─ To:
+│     │     └─ Identifier: __uint16_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int32
+│     │  └─ To:
+│     │     └─ Identifier: __int32_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint32
+│     │  └─ To:
+│     │     └─ Identifier: __uint32_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __int64_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __uint64_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __quad_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __u_quad_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __intmax_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __uintmax_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __dev_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint32
+│     │  └─ To:
+│     │     └─ Identifier: __uid_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint32
+│     │  └─ To:
+│     │     └─ Identifier: __gid_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __ino_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __ino64_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint32
+│     │  └─ To:
+│     │     └─ Identifier: __mode_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __nlink_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __off_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __off64_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int32
+│     │  └─ To:
+│     │     └─ Identifier: __pid_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: __fsid_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __clock_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __rlim_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __rlim64_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint32
+│     │  └─ To:
+│     │     └─ Identifier: __id_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __time_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint32
+│     │  └─ To:
+│     │     └─ Identifier: __useconds_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __suseconds_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int32
+│     │  └─ To:
+│     │     └─ Identifier: __daddr_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int32
+│     │  └─ To:
+│     │     └─ Identifier: __key_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int32
+│     │  └─ To:
+│     │     └─ Identifier: __clockid_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: __timer_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __blksize_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __blkcnt_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __blkcnt64_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __fsblkcnt_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __fsblkcnt64_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __fsfilcnt_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __fsfilcnt64_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __fsword_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __ssize_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __syscall_slong_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint64
+│     │  └─ To:
+│     │     └─ Identifier: __syscall_ulong_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: int64
+│     │  │     └─ To:
+│     │  │        └─ Identifier: __off64_t
+│     │  └─ To:
+│     │     └─ Identifier: __loff_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: str
+│     │  └─ To:
+│     │     └─ Identifier: __caddr_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int64
+│     │  └─ To:
+│     │     └─ Identifier: __intptr_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: uint32
+│     │  └─ To:
+│     │     └─ Identifier: __socklen_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int32
+│     │  └─ To:
+│     │     └─ Identifier: __sig_atomic_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: __FILE
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: FILE
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: __mbstate_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: _G_fpos_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: _G_fpos64_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: void
+│     │  └─ To:
+│     │     └─ Identifier: _IO_lock_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: _IO_FILE
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: __io_read_fn
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: __io_write_fn
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: __io_seek_fn
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: any
+│     │  └─ To:
+│     │     └─ Identifier: __io_close_fn
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: __underflow
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: __uflow
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: __overflow
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  └─ Identifier: 
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: _IO_getc
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: __fp
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: _IO_putc
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __c
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: __fp
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: _IO_feof
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: __fp
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: _IO_ferror
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: __fp
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: _IO_peekc_locked
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: __fp
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: _IO_flockfile
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: _IO_funlockfile
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: _IO_ftrylockfile
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: _IO_vfscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  └─ Identifier: 
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: 
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __gnuc_va_list
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ BuiltinType: int32
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: _IO_vfprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  └─ Identifier: 
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: 
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __gnuc_va_list
+│     ├─ FunctionDeclaration
+│     │  ├─ Alias
+│     │  │  ├─ From:
+│     │  │  │  └─ BuiltinType: int64
+│     │  │  └─ To:
+│     │  │     └─ Identifier: __ssize_t
+│     │  ├─ Identifier: _IO_padn
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  └─ Identifier: 
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: 
+│     │     └─ Declaration
+│     │        ├─ Alias
+│     │        │  ├─ From:
+│     │        │  │  └─ BuiltinType: int64
+│     │        │  └─ To:
+│     │        │     └─ Identifier: __ssize_t
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: _IO_sgetn
+│     │  └─ Arguments
+│     ├─ FunctionDeclaration
+│     │  ├─ Alias
+│     │  │  ├─ From:
+│     │  │  │  └─ BuiltinType: int64
+│     │  │  └─ To:
+│     │  │     └─ Identifier: __off64_t
+│     │  ├─ Identifier: _IO_seekoff
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  └─ Identifier: 
+│     │     ├─ Declaration
+│     │     │  ├─ Alias
+│     │     │  │  ├─ From:
+│     │     │  │  │  └─ BuiltinType: int64
+│     │     │  │  └─ To:
+│     │     │  │     └─ Identifier: __off64_t
+│     │     │  └─ Identifier: 
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: 
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ Alias
+│     │  │  ├─ From:
+│     │  │  │  └─ BuiltinType: int64
+│     │  │  └─ To:
+│     │  │     └─ Identifier: __off64_t
+│     │  ├─ Identifier: _IO_seekpos
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  └─ Identifier: 
+│     │     ├─ Declaration
+│     │     │  ├─ Alias
+│     │     │  │  ├─ From:
+│     │     │  │  │  └─ BuiltinType: int64
+│     │     │  │  └─ To:
+│     │     │  │     └─ Identifier: __off64_t
+│     │     │  └─ Identifier: 
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: 
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: _IO_free_backup_area
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: _IO_FILE
+│     │        └─ Identifier: 
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ BuiltinType: int32
+│     │  └─ To:
+│     │     └─ Identifier: va_list
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: int64
+│     │  │     └─ To:
+│     │  │        └─ Identifier: __off_t
+│     │  └─ To:
+│     │     └─ Identifier: off_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: int64
+│     │  │     └─ To:
+│     │  │        └─ Identifier: __ssize_t
+│     │  └─ To:
+│     │     └─ Identifier: ssize_t
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: any
+│     │  │     └─ To:
+│     │  │        └─ Identifier: _G_fpos_t
+│     │  └─ To:
+│     │     └─ Identifier: fpos_t
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: remove
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __filename
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: rename
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __old
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __new
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: renameat
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __oldfd
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __old
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __newfd
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __new
+│     ├─ FunctionDeclaration
+│     │  ├─ Reference
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: any
+│     │  │     └─ To:
+│     │  │        └─ Identifier: FILE
+│     │  ├─ Identifier: tmpfile
+│     │  └─ Arguments
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: str
+│     │  ├─ Identifier: tmpnam
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __s
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: str
+│     │  ├─ Identifier: tmpnam_r
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __s
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: str
+│     │  ├─ Identifier: tempnam
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __dir
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __pfx
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fclose
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fflush
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fflush_unlocked
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ Reference
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: any
+│     │  │     └─ To:
+│     │  │        └─ Identifier: FILE
+│     │  ├─ Identifier: fopen
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __filename
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __modes
+│     ├─ FunctionDeclaration
+│     │  ├─ Reference
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: any
+│     │  │     └─ To:
+│     │  │        └─ Identifier: FILE
+│     │  ├─ Identifier: freopen
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __filename
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __modes
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ Reference
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: any
+│     │  │     └─ To:
+│     │  │        └─ Identifier: FILE
+│     │  ├─ Identifier: fdopen
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __fd
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __modes
+│     ├─ FunctionDeclaration
+│     │  ├─ Reference
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: any
+│     │  │     └─ To:
+│     │  │        └─ Identifier: FILE
+│     │  ├─ Identifier: fmemopen
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: any
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __len
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __modes
+│     ├─ FunctionDeclaration
+│     │  ├─ Reference
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: any
+│     │  │     └─ To:
+│     │  │        └─ Identifier: FILE
+│     │  ├─ Identifier: open_memstream
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ BuiltinType: str
+│     │     │  └─ Identifier: __bufloc
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ BuiltinType: int32
+│     │        └─ Identifier: __sizeloc
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: setbuf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __buf
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: setvbuf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __buf
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __modes
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __n
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: setbuffer
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __buf
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __size
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: setlinebuf
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: printf
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: sprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vfprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vsprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: snprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __maxlen
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vsnprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __maxlen
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vdprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __fd
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __fmt
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: dprintf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __fd
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __fmt
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: scanf
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: sscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: scanf
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: sscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __format
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vfscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vsscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vfscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: vsscanf
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __format
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __arg
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fgetc
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: getc
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: getchar
+│     │  └─ Arguments
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: getc_unlocked
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: getchar_unlocked
+│     │  └─ Arguments
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fgetc_unlocked
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fputc
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __c
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: putc
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __c
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: putchar
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __c
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fputc_unlocked
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __c
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: putc_unlocked
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __c
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: putchar_unlocked
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __c
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: getw
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: putw
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __w
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: str
+│     │  ├─ Identifier: fgets
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __n
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ Alias
+│     │  │  ├─ From:
+│     │  │  │  └─ BuiltinType: int64
+│     │  │  └─ To:
+│     │  │     └─ Identifier: __ssize_t
+│     │  ├─ Identifier: __getdelim
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ BuiltinType: str
+│     │     │  └─ Identifier: __lineptr
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ BuiltinType: int32
+│     │     │  └─ Identifier: __n
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __delimiter
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ Alias
+│     │  │  ├─ From:
+│     │  │  │  └─ BuiltinType: int64
+│     │  │  └─ To:
+│     │  │     └─ Identifier: __ssize_t
+│     │  ├─ Identifier: getdelim
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ BuiltinType: str
+│     │     │  └─ Identifier: __lineptr
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ BuiltinType: int32
+│     │     │  └─ Identifier: __n
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __delimiter
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ Alias
+│     │  │  ├─ From:
+│     │  │  │  └─ BuiltinType: int64
+│     │  │  └─ To:
+│     │  │     └─ Identifier: __ssize_t
+│     │  ├─ Identifier: getline
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ BuiltinType: str
+│     │     │  └─ Identifier: __lineptr
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ BuiltinType: int32
+│     │     │  └─ Identifier: __n
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fputs
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __s
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: puts
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __s
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: ungetc
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int32
+│     │     │  └─ Identifier: __c
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fread
+│     │  └─ Arguments
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fwrite
+│     │  └─ Arguments
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fread_unlocked
+│     │  └─ Arguments
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fwrite_unlocked
+│     │  └─ Arguments
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fseek
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: int64
+│     │     │  └─ Identifier: __off
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __whence
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int64
+│     │  ├─ Identifier: ftell
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: rewind
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fseeko
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     ├─ Declaration
+│     │     │  ├─ Alias
+│     │     │  │  ├─ From:
+│     │     │  │  │  └─ BuiltinType: int64
+│     │     │  │  └─ To:
+│     │     │  │     └─ Identifier: __off_t
+│     │     │  └─ Identifier: __off
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: int32
+│     │        └─ Identifier: __whence
+│     ├─ FunctionDeclaration
+│     │  ├─ Alias
+│     │  │  ├─ From:
+│     │  │  │  └─ BuiltinType: int64
+│     │  │  └─ To:
+│     │  │     └─ Identifier: __off_t
+│     │  ├─ Identifier: ftello
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fgetpos
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: fpos_t
+│     │        └─ Identifier: __pos
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fsetpos
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ Reference
+│     │     │  │  └─ Alias
+│     │     │  │     ├─ From:
+│     │     │  │     │  └─ BuiltinType: any
+│     │     │  │     └─ To:
+│     │     │  │        └─ Identifier: FILE
+│     │     │  └─ Identifier: __stream
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: const fpos_t
+│     │        └─ Identifier: __pos
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: clearerr
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: feof
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: ferror
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: clearerr_unlocked
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: feof_unlocked
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: ferror_unlocked
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: perror
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __s
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fileno
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: fileno_unlocked
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ Reference
+│     │  │  └─ Alias
+│     │  │     ├─ From:
+│     │  │     │  └─ BuiltinType: any
+│     │  │     └─ To:
+│     │  │        └─ Identifier: FILE
+│     │  ├─ Identifier: popen
+│     │  └─ Arguments
+│     │     ├─ Declaration
+│     │     │  ├─ BuiltinType: str
+│     │     │  └─ Identifier: __command
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __modes
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: pclose
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: str
+│     │  ├─ Identifier: ctermid
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ BuiltinType: str
+│     │        └─ Identifier: __s
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: void
+│     │  ├─ Identifier: flockfile
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     ├─ FunctionDeclaration
+│     │  ├─ BuiltinType: int32
+│     │  ├─ Identifier: ftrylockfile
+│     │  └─ Arguments
+│     │     └─ Declaration
+│     │        ├─ Reference
+│     │        │  └─ Alias
+│     │        │     ├─ From:
+│     │        │     │  └─ BuiltinType: any
+│     │        │     └─ To:
+│     │        │        └─ Identifier: FILE
+│     │        └─ Identifier: __stream
+│     └─ FunctionDeclaration
+│        ├─ BuiltinType: void
+│        ├─ Identifier: funlockfile
+│        └─ Arguments
+│           └─ Declaration
+│              ├─ Reference
+│              │  └─ Alias
+│              │     ├─ From:
+│              │     │  └─ BuiltinType: any
+│              │     └─ To:
+│              │        └─ Identifier: FILE
+│              └─ Identifier: __stream
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: printf
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ String: %i %i %i
+      │           ├─ Expression
+      │           │  └─ Sizeof
+      │           │     └─ BuiltinType: int
+      │           ├─ Expression
+      │           │  └─ Sizeof
+      │           │     └─ Array
+      │           │        └─ BuiltinType: int
+      │           └─ Expression
+      │              └─ Sizeof
+      │                 └─ Reference
+      │                    └─ BuiltinType: int
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

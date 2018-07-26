@@ -1,0 +1,71 @@
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ BuiltinType: bool
+│  │  ├─ Identifier: not_true
+│  │  └─ Arguments
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ BuiltinType: bool
+│  │           └─ Identifier: v
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ PrefixOperatorValue
+│                 ├─ Operator: !
+│                 └─ Symbol
+│                    └─ Identifier: v
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: bool
+      │     │  └─ Identifier: b1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ BoolValue: true
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: bool
+      │     │  └─ Identifier: b2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ false
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: b1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ false
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: b2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ BoolValue: true
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  └─ FunctionCall
+      │     │     ├─ Symbol
+      │     │     │  └─ Identifier: not_true
+      │     │     └─ Arguments
+      │     │        └─ Expression
+      │     │           └─ BoolValue: true
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 1
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

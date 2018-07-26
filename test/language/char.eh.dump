@@ -1,0 +1,108 @@
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ BuiltinType: void
+│  │  ├─ Identifier: take_char
+│  │  └─ Arguments
+│  │     └─ VariableDeclaration
+│  │        └─ Declaration
+│  │           ├─ BuiltinType: char
+│  │           └─ Identifier: c
+│  └─ FunctionBody
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ BuiltinType: int
+   │  ├─ Identifier: main
+   │  └─ Arguments
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: char
+      │     │  └─ Identifier: c
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Character: c
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: take_char
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Character: \a
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: take_char
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Character: \b
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: take_char
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Character: \e
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: take_char
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Character: \f
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: take_char
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Character: \n
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: take_char
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Character: \r
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: take_char
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Character: \t
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: take_char
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Character: \v
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: take_char
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Character: \\
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: char
+      │     │  └─ Identifier: space
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Character:  
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0
