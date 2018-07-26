@@ -20,10 +20,10 @@
 # SOFTWARE.
 
 import os.path
-from common import ReflexTestCase
+from common import EhlitTestCase
 
 """ Test non valid language usage """
-class TestLanguageErrors(ReflexTestCase):
+class TestLanguageErrors(EhlitTestCase):
 	def __init__(self, arg):
 		super().__init__(arg)
 		self.test_dir = "language_error"

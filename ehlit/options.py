@@ -28,8 +28,8 @@ class ArgError(Exception):
 
 def check_arguments(args):
   src, ext = path.splitext(args.source)
-  if ext != ".ref":
-    raise ArgError("%s: not a reflex source file" % args.source)
+  if ext != ".eh":
+    raise ArgError("%s: not an ehlit source file" % args.source)
   elif not path.isfile(args.source):
     raise ArgError("%s: no such file or directory" % args.source)
 
@@ -39,13 +39,13 @@ def check_arguments(args):
     makedirs(path.dirname(args.output_file), exist_ok=True)
 
   if args.output_import_file is None:
-    args.output_import_file = 'out/include/' + src + ".ref"
+    args.output_import_file = 'out/include/' + src + ".eh"
   if args.output_import_file != '-':
     makedirs(path.dirname(args.output_import_file), exist_ok=True)
 
 
 def parse_arguments():
-  parser = ArgumentParser(description="Compile reflex source files")
+  parser = ArgumentParser(description="Compile Ehlit source files")
 
   parser.add_argument('source', help="Source files to build")
 

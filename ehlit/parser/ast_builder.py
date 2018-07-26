@@ -21,7 +21,7 @@
 
 from arpeggio import PTNodeVisitor
 
-from reflex.parser import ast
+from ehlit.parser import ast
 
 class UnparsedContents:
   def __init__(self, contents, pos):

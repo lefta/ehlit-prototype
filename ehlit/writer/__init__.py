@@ -19,9 +19,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from reflex.writer.import_file import ImportWriter
-from reflex.writer.source import SourceWriter
-from reflex.writer.dump import DumpWriter
+from ehlit.writer.import_file import ImportWriter
+from ehlit.writer.source import SourceWriter
+from ehlit.writer.dump import DumpWriter
 
 class WriteDump(DumpWriter):
   pass

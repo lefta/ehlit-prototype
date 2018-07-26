@@ -1,0 +1,2 @@
+language_error/undeclared_identifier.eh:4:3: use of undeclared identifier k
+language_error/undeclared_identifier.eh:5:10: use of undeclared identifier i

@@ -21,9 +21,9 @@
 
 from arpeggio import ParserPython, visit_parse_tree, NoMatch, StrMatch
 
-from reflex.parser.grammar import grammar, function_body_grammar, Context
-from reflex.parser.ast_builder import ASTBuilder
-from reflex.parser.error import ParseError, Failure
+from ehlit.parser.grammar import grammar, function_body_grammar, Context
+from ehlit.parser.ast_builder import ASTBuilder
+from ehlit.parser.error import ParseError, Failure
 
 def handle_parse_error(err, parser):
   exp = []

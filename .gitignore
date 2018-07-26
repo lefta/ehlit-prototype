@@ -1,6 +1,6 @@
 __pycache__
 test/**/*.c
-!test/**/*.ref.c
+!test/**/*.eh.c
 /out/
 /test/out/
 .coverage

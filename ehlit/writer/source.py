@@ -20,7 +20,7 @@
 # SOFTWARE.
 
 import sys
-from reflex.parser.ast import (Reference, Array, ArrayAccess, BuiltinType, FunctionType,
+from ehlit.parser.ast import (Reference, Array, ArrayAccess, BuiltinType, FunctionType,
   FunctionDeclaration, FunctionCall, Symbol, Struct)
 
 class SourceWriter:

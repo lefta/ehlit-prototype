@@ -20,8 +20,8 @@
 # SOFTWARE.
 
 from os import path, getcwd, listdir
-from reflex.parser import c_compat, parse
-from reflex.parser.error import ParseError, Failure
+from ehlit.parser import c_compat, parse
+from ehlit.parser.error import ParseError, Failure
 
 MOD_NONE = 0
 MOD_CONST = 1
@@ -465,7 +465,7 @@ class FunctionDefinition(Node):
     self.predeclarations = []
 
   def build(self, parent):
-    from reflex.parser.parse import parse_function
+    from ehlit.parser.parse import parse_function
     super().build(parent)
     self.proto.build(self)
     try:

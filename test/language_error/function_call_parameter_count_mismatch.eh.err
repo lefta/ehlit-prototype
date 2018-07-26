@@ -1,0 +1,9 @@
+language_error/function_call_parameter_count_mismatch.eh:7:3: too many arguments for call to fun0: expected 0, got 1
+language_error/function_call_parameter_count_mismatch.eh:8:3: too many arguments for call to fun0: expected 0, got 2
+language_error/function_call_parameter_count_mismatch.eh:10:3: not enough arguments for call to fun1: expected 1, got 0
+language_error/function_call_parameter_count_mismatch.eh:12:3: too many arguments for call to fun1: expected 1, got 2
+language_error/function_call_parameter_count_mismatch.eh:13:3: too many arguments for call to fun1: expected 1, got 3
+language_error/function_call_parameter_count_mismatch.eh:15:3: not enough arguments for call to fun2: expected 2, got 0
+language_error/function_call_parameter_count_mismatch.eh:16:3: not enough arguments for call to fun2: expected 2, got 1
+language_error/function_call_parameter_count_mismatch.eh:18:3: too many arguments for call to fun2: expected 2, got 3
+language_error/function_call_parameter_count_mismatch.eh:19:3: too many arguments for call to fun2: expected 2, got 4

@@ -19,12 +19,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from common import ReflexTestCase
+from common import EhlitTestCase
 
-""" Test reflex executable behavior """
-class TestCompiler(ReflexTestCase):
-	def test_file_not_reflex_source(self):
-		self.assert_error("notrefsrc.ext", "notrefsrc.ext: not a reflex source file")
+""" Test Ehlit executable behavior """
+class TestCompiler(EhlitTestCase):
+	def test_file_not_ehlit_source(self):
+		self.assert_error("notehsrc.ext", "notehsrc.ext: not an ehlit source file")
 
 	def test_file_no_ent(self):
-		self.assert_error("doesnotexist.ref", "doesnotexist.ref: no such file or directory")
+		self.assert_error("doesnotexist.eh", "doesnotexist.eh: no such file or directory")

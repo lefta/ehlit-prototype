@@ -20,9 +20,9 @@
 # SOFTWARE.
 
 """
-	Reflex test case
+	Ehlit test case
 
-	This module contains a class with tools to help Reflex test writing
+	This module contains a class with tools to help Ehlit test writing
 """
 
 import io
@@ -33,7 +33,7 @@ from unittest import TestCase
 file_dir = os.path.dirname(os.path.abspath(getsourcefile(lambda:0)))
 
 sys.path.insert(0, file_dir[:file_dir.rfind(os.path.sep)])
-import reflex
+import ehlit
 sys.path.pop(0)
 
 __unittest = True
@@ -63,8 +63,8 @@ class Pipe():
 		sys.stderr = sys.__stderr__
 
 
-""" Extent to unittest.TestCase to ease writing of tests for the Reflex language """
-class ReflexTestCase(TestCase):
+""" Extent to unittest.TestCase to ease writing of tests for the Ehlit language """
+class EhlitTestCase(TestCase):
 	def __init__(self, arg):
 		super().__init__(arg)
 		self.maxDiff = None
@@ -81,22 +81,22 @@ class ReflexTestCase(TestCase):
 		@return list A list of tests
 	"""
 	def discover_tests(self, directory):
-		return [x for x in os.listdir(directory) if x.endswith('.ref')]
+		return [x for x in os.listdir(directory) if x.endswith('.eh')]
 
 	"""
-		Run the Reflex compiler
+		Run the Ehlit compiler
 
 		@param opts The arguments to provide to the compiler. This must be a dict compatible with
-			Reflex options object
+			Ehlit options object
 		@return dict Results of the compilation (stdout, stderr)
 	"""
 	def run_compiler(self, opts):
 		with Pipe() as output:
-			reflex.build(opts)
+			ehlit.build(opts)
 			return output
 
 	"""
-		Compile C code from a Reflex source file
+		Compile C code from a Ehlit source file
 
 		@param src The file to build
 		@return dict Results of the compilation (stdout, stderr)
