@@ -179,6 +179,23 @@ class DumpWriter:
     self.print_node_list("ConditionBranches", cond.branches, is_next)
 
   @indent
+  def dumpSwitchCase(self, node):
+    self.dump('Case')
+    self.print_node_list('Tests', node.cases)
+    self.print_node(node.body, False)
+
+  def dumpSwitchCaseTest(self, node, is_next):
+    if node.test is not None:
+      self.print_node(node.test, is_next)
+    else:
+      self.print_str('default', is_next)
+
+  def dumpSwitchCaseBody(self, node, _):
+    self.print_str('Block: ' + ('yes' if node.block else 'no'))
+    self.print_str('Falls through: ' + ('yes' if node.fallthrough else 'no'))
+    self.print_node_list('Body', node.contents, False)
+
+  @indent
   def dumpReturn(self, ret):
     self.dump('Return')
     if ret.expr is not None:

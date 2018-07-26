@@ -52,6 +52,7 @@ class SourceWriter:
       'elif': 'else if',
       'else': 'else',
       'while': 'while',
+      'switch': 'switch',
     }
 
     self.file.write('#include <stddef.h>\n#include <stdint.h>\n')
@@ -342,6 +343,37 @@ class SourceWriter:
   def writeCondition(self, cond):
     for branch in cond.branches:
       self.write(branch)
+
+  def writeSwitchCase(self, node):
+    self.indent -= 1
+    for c in node.cases:
+      self.write(c)
+    self.write(node.body)
+    self.indent += 1
+
+  def writeSwitchCaseTest(self, node):
+    self.write_indent()
+    if node.test is None:
+      self.file.write('default:\n')
+    else:
+      self.file.write('case ')
+      self.write(node.test)
+      self.file.write(':\n')
+
+  def writeSwitchCaseBody(self, node):
+    if node.block:
+      self.write_indent()
+      self.file.write('{\n')
+    self.indent += 1
+    for i in node.contents:
+      self.write(i)
+    if not node.fallthrough:
+      self.write_indent()
+      self.file.write('break;\n')
+    self.indent -= 1
+    if node.block:
+      self.write_indent()
+      self.file.write('}\n')
 
   def writeReturn(self, ret):
     self.file.write('return')

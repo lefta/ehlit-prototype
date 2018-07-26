@@ -638,6 +638,31 @@ class Condition(Node):
     for b in self.branches:
       b.build(self)
 
+class SwitchCase(Node):
+  def __init__(self, cases, body):
+    self.cases = cases
+    self.body = body
+
+class SwitchCaseTest(Node):
+  def __init__(self, test):
+    self.test = test
+
+  def build(self, parent):
+    super().build(parent)
+    if self.test is not None:
+      self.test.build(self)
+
+class SwitchCaseBody(Node):
+  def __init__(self, contents, block, fallthrough):
+    self.contents = contents
+    self.block = block
+    self.fallthrough = fallthrough
+
+  def build(self, parent):
+    super().build(parent)
+    for i in self.contents:
+      i.build(self)
+
 class Return(Node):
   def __init__(self, expr=None):
     self.expr = expr

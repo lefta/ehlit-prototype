@@ -31,7 +31,7 @@ def line_comment(): return ('//', RegExMatch(r'.*$'))
 def comment(): return [line_comment, block_comment]
 
 def builtin_keyword(): return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', 'func',
-  'alias', builtin_type, bool_value]
+  'alias', 'switch', 'case', 'fallthrough', 'default', builtin_type, bool_value]
 def identifier():
   return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='identifier')
 def symbol():
@@ -94,7 +94,7 @@ def return_instruction():
   return 'return'
 def statement(): return [return_instruction, variable_assignment, variable_declaration,
   expression]
-def instruction(): return [comment, condition, while_loop, alias, statement]
+def instruction(): return [comment, condition, while_loop, switch, alias, statement]
 
 def control_structure_body(): return '{', ZeroOrMore(instruction), '}'
 def control_structure(): return expression, [instruction, control_structure_body]
@@ -103,6 +103,11 @@ def elif_condition(): return 'elif', control_structure
 def else_condition(): return 'else', [instruction, control_structure_body]
 def condition(): return if_condition, ZeroOrMore(elif_condition), Optional(else_condition)
 def while_loop(): return 'while', control_structure
+def switch_case_test(): return ['default', ('case', value)]
+def switch_case_body(): return OneOrMore(instruction), Optional('fallthrough')
+def switch_case_body_block(): return '{', OneOrMore(instruction), Optional('fallthrough'), '}'
+def switch_cases(): return OneOrMore(switch_case_test), [switch_case_body, switch_case_body_block]
+def switch(): return 'switch', value, '{', ZeroOrMore(switch_cases), '}'
 
 def open_brace(): return RegExMatch(r'\s*{')
 def close_brace(): return RegExMatch(r'[^{}]*}')

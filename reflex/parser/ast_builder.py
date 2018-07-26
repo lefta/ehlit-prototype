@@ -189,6 +189,22 @@ class ASTBuilder(PTNodeVisitor):
     return ast.Condition(children)
   def visit_while_loop(self, node, children):
     return ast.ControlStructure('while', children[1][0], children[1][1])
+  def visit_switch_case_test(self, node, children):
+    if children[0] == 'default':
+      return ast.SwitchCaseTest(None)
+    return ast.SwitchCaseTest(children[1])
+  def visit_switch_case_body(self, node, children):
+    if children[-1] == 'fallthrough':
+      return ast.SwitchCaseBody(children[:-1], False, True)
+    return ast.SwitchCaseBody(children, False, False)
+  def visit_switch_case_body_block(self, node, children):
+    if children[-1] == 'fallthrough':
+      return ast.SwitchCaseBody(children[:-1], True, True)
+    return ast.SwitchCaseBody(children, True, False)
+  def visit_switch_cases(self, node, children):
+    return ast.SwitchCase(children[:-1], children[-1])
+  def visit_switch(self, node, children):
+    return ast.ControlStructure('switch', children[1], children[2:])
 
   def visit_control_structure_body_stub_braces(self, node, children):
     res = ''
