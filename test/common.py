@@ -35,6 +35,8 @@ file_dir = os.path.dirname(os.path.abspath(getsourcefile(lambda:0)))
 
 sys.path.insert(0, file_dir[:file_dir.rfind(os.path.sep)])
 import ehlit
+import ehlit.parser
+import ehlit.writer
 sys.path.pop(0)
 
 __unittest = True
