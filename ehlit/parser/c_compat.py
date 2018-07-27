@@ -116,6 +116,16 @@ def type_to_ehlit(typ):
     logging.debug('c_compat: unimplemented: type_%s' % typ.kind.name)
   return ast.BuiltinType('any')
 
+def value_to_ehlit(val, typ):
+  if typ.kind.name in uint_types or typ.kind.name in int_types:
+    return ast.Number(val)
+
+  try:
+    return globals()['value_' + typ.kind.name](val)
+  except KeyError:
+    logging.debug('c_compat: unimplemented: value_%s' % typ.kind.name)
+  return None
+
 def find_file_in_path(filename):
   for d in include_dirs:
     path = os.path.join(d, filename)
@@ -136,6 +146,27 @@ def parse_header(filename):
   del index
   return ast
 
+
+def parse_VAR_DECL(cursor):
+  assign = cursor.get_definition()
+  value = None
+  if assign is not None:
+    got_eq = False
+    for t in assign.get_tokens():
+      if value is not None:
+        logging.debug(
+          'c_compat: error: unhandled token while getting value: {}'.format(t.spelling)
+        )
+      elif got_eq:
+        value = value_to_ehlit(t.spelling, cursor.type)
+      elif t.spelling == '=':
+        got_eq = True
+    if got_eq is False:
+      logging.debug('c_compat: error: unhandled assignment')
+  return ast.VariableDeclaration(
+    ast.Declaration(type_to_ehlit(cursor.type), ast.Identifier(0, cursor.spelling)),
+    ast.Assignment(value) if value is not None else None
+  )
 
 def parse_FUNCTION_DECL(cursor):
   args = []

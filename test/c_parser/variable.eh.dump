@@ -1,0 +1,13 @@
+└─ Include
+   ├─ Identifier: c_parser/variable
+   └─ Symbols found
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: int32
+      │     └─ Identifier: var
+      └─ VariableDeclaration
+         ├─ Declaration
+         │  ├─ BuiltinType: int32
+         │  └─ Identifier: assigned_var
+         └─ Assignment
+            └─ Number: 2

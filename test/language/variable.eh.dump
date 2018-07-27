@@ -310,6 +310,18 @@
 │     │  │  └─ BuiltinType: any
 │     │  └─ To:
 │     │     └─ Identifier: _IO_FILE
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ BuiltinType: any
+│     │     └─ Identifier: _IO_2_1_stdin_
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ BuiltinType: any
+│     │     └─ Identifier: _IO_2_1_stdout_
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ BuiltinType: any
+│     │     └─ Identifier: _IO_2_1_stderr_
 │     ├─ Alias
 │     │  ├─ From:
 │     │  │  └─ BuiltinType: any
@@ -637,6 +649,21 @@
 │     │  │        └─ Identifier: _G_fpos_t
 │     │  └─ To:
 │     │     └─ Identifier: fpos_t
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ Reference
+│     │     │  └─ BuiltinType: any
+│     │     └─ Identifier: stdin
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ Reference
+│     │     │  └─ BuiltinType: any
+│     │     └─ Identifier: stdout
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ Reference
+│     │     │  └─ BuiltinType: any
+│     │     └─ Identifier: stderr
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
 │     │  ├─ Identifier: remove
@@ -1669,6 +1696,14 @@
 │     │     └─ Declaration
 │     │        ├─ BuiltinType: str
 │     │        └─ Identifier: __s
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ BuiltinType: int32
+│     │     └─ Identifier: sys_nerr
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ BuiltinType: any
+│     │     └─ Identifier: sys_errlist
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
 │     │  ├─ Identifier: fileno
