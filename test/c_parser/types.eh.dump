@@ -1,0 +1,178 @@
+└─ Include
+   ├─ Identifier: c_parser/types
+   └─ Symbols found
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: int8
+      │     └─ Identifier: c
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: uint8
+      │     └─ Identifier: uc
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: int16
+      │     └─ Identifier: s
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: uint16
+      │     └─ Identifier: us
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: int32
+      │     └─ Identifier: i
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: uint32
+      │     └─ Identifier: ui
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: int64
+      │     └─ Identifier: l
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: uint64
+      │     └─ Identifier: ul
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: str
+      │     └─ Identifier: str
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: uint8
+      │     └─ Identifier: ustr
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: int16
+      │     └─ Identifier: ps
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: uint16
+      │     └─ Identifier: ups
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: int32
+      │     └─ Identifier: pi
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: uint32
+      │     └─ Identifier: upi
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: int64
+      │     └─ Identifier: pl
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: uint64
+      │     └─ Identifier: upl
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: int8
+      │     └─ Identifier: ac
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: uint8
+      │     └─ Identifier: uac
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: int16
+      │     └─ Identifier: as
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: uint16
+      │     └─ Identifier: uas
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: int32
+      │     └─ Identifier: ai
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: uint32
+      │     └─ Identifier: uai
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: int64
+      │     └─ Identifier: al
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: uint64
+      │     └─ Identifier: ual
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ BuiltinType: int8
+      │     │  └─ Length:
+      │     │     └─ Number: 42
+      │     └─ Identifier: sac
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ BuiltinType: uint8
+      │     │  └─ Length:
+      │     │     └─ Number: 42
+      │     └─ Identifier: suac
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ BuiltinType: int16
+      │     │  └─ Length:
+      │     │     └─ Number: 42
+      │     └─ Identifier: sas
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ BuiltinType: uint16
+      │     │  └─ Length:
+      │     │     └─ Number: 42
+      │     └─ Identifier: suas
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ BuiltinType: int32
+      │     │  └─ Length:
+      │     │     └─ Number: 42
+      │     └─ Identifier: sai
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ BuiltinType: uint32
+      │     │  └─ Length:
+      │     │     └─ Number: 42
+      │     └─ Identifier: suai
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ BuiltinType: int64
+      │     │  └─ Length:
+      │     │     └─ Number: 42
+      │     └─ Identifier: sal
+      └─ VariableDeclaration
+         └─ Declaration
+            ├─ Array
+            │  ├─ Sub-type:
+            │  │  └─ BuiltinType: uint64
+            │  └─ Length:
+            │     └─ Number: 42
+            └─ Identifier: sual

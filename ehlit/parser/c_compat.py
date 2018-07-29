@@ -199,3 +199,8 @@ def type_POINTER(typ):
 
 def type_TYPEDEF(typ):
   return ast.Alias(type_to_ehlit(typ.get_canonical()), ast.Identifier(0, typ.spelling))
+
+def type_CONSTANTARRAY(typ):
+  if typ.element_count == 1:
+    return ast.Array(type_to_ehlit(typ.element_type), None)
+  return ast.Array(type_to_ehlit(typ.element_type), ast.Number(str(typ.element_count)))
