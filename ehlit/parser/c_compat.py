@@ -99,6 +99,7 @@ uint_types = {
 
 int_types = {
   'CHAR_S',
+  'SCHAR',
   'SHORT',
   'INT',
   'LONG',
@@ -191,6 +192,7 @@ def type_POINTER(typ):
   subtype = typ.get_pointee()
   builtin_type = {
     TypeKind.CHAR_S: ast.BuiltinType('str'),
+    TypeKind.SCHAR: ast.BuiltinType('str'),
     TypeKind.VOID: ast.BuiltinType('any')
   }.get(subtype.kind)
   if builtin_type is not None:

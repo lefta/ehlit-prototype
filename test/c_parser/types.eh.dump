@@ -11,12 +11,20 @@
       │     └─ Identifier: uc
       ├─ VariableDeclaration
       │  └─ Declaration
+      │     ├─ BuiltinType: int8
+      │     └─ Identifier: sc
+      ├─ VariableDeclaration
+      │  └─ Declaration
       │     ├─ BuiltinType: int16
       │     └─ Identifier: s
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ BuiltinType: uint16
       │     └─ Identifier: us
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: int16
+      │     └─ Identifier: ss
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ BuiltinType: int32
@@ -27,12 +35,20 @@
       │     └─ Identifier: ui
       ├─ VariableDeclaration
       │  └─ Declaration
+      │     ├─ BuiltinType: int32
+      │     └─ Identifier: si
+      ├─ VariableDeclaration
+      │  └─ Declaration
       │     ├─ BuiltinType: int64
       │     └─ Identifier: l
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ BuiltinType: uint64
       │     └─ Identifier: ul
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: int64
+      │     └─ Identifier: sl
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ BuiltinType: str
@@ -42,6 +58,10 @@
       │     ├─ Reference
       │     │  └─ BuiltinType: uint8
       │     └─ Identifier: ustr
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: str
+      │     └─ Identifier: sstr
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ Reference
@@ -55,6 +75,11 @@
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ Reference
+      │     │  └─ BuiltinType: int16
+      │     └─ Identifier: sps
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
       │     │  └─ BuiltinType: int32
       │     └─ Identifier: pi
       ├─ VariableDeclaration
@@ -65,6 +90,11 @@
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ Reference
+      │     │  └─ BuiltinType: int32
+      │     └─ Identifier: spi
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
       │     │  └─ BuiltinType: int64
       │     └─ Identifier: pl
       ├─ VariableDeclaration
@@ -72,6 +102,11 @@
       │     ├─ Reference
       │     │  └─ BuiltinType: uint64
       │     └─ Identifier: upl
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: int64
+      │     └─ Identifier: spl
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ Array

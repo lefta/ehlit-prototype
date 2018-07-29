@@ -23,7 +23,7 @@
 │     │     └─ Identifier: __u_long
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ BuiltinType: any
+│     │  │  └─ BuiltinType: int8
 │     │  └─ To:
 │     │     └─ Identifier: __int8_t
 │     ├─ Alias

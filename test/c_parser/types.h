@@ -1,20 +1,28 @@
 char c;
 unsigned char uc;
+signed char sc;
 short s;
 unsigned short us;
+signed short ss;
 int i;
 unsigned int ui;
+signed int si;
 long l;
 unsigned long ul;
+signed long sl;
 
 char* str;
 unsigned char* ustr;
+signed char* sstr;
 short* ps;
 unsigned short* ups;
+signed short* sps;
 int* pi;
 unsigned int* upi;
+signed int* spi;
 long* pl;
 unsigned long* upl;
+signed long* spl;
 
 char ac[];
 unsigned char uac[];
