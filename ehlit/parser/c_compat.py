@@ -98,7 +98,7 @@ uint_types = {
 }
 
 int_types = {
-  'CHAR',
+  'CHAR_S',
   'SHORT',
   'INT',
   'LONG',
