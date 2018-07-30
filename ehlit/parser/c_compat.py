@@ -93,6 +93,7 @@ uint_types = {
   'USHORT',
   'UINT',
   'ULONG',
+  'ULONGLONG',
 }
 
 int_types = {
@@ -101,6 +102,7 @@ int_types = {
   'SHORT',
   'INT',
   'LONG',
+  'LONGLONG',
 }
 
 def type_to_ehlit(typ):

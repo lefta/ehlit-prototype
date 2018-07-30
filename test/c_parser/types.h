@@ -10,6 +10,9 @@ signed int si;
 long l;
 unsigned long ul;
 signed long sl;
+long long ll;
+unsigned long long ull;
+signed long long sll;
 
 char* str;
 unsigned char* ustr;
@@ -23,6 +26,9 @@ signed int* spi;
 long* pl;
 unsigned long* upl;
 signed long* spl;
+long long* pll;
+unsigned long long* pull;
+signed long long* psll;
 
 char ac[];
 unsigned char uac[];
@@ -32,6 +38,8 @@ int ai[];
 unsigned int uai[];
 long al[];
 unsigned long ual[];
+long long all[];
+unsigned long long uall[];
 
 char sac[42];
 unsigned char suac[42];

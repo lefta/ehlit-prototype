@@ -51,6 +51,18 @@
       │     └─ Identifier: sl
       ├─ VariableDeclaration
       │  └─ Declaration
+      │     ├─ BuiltinType: int64
+      │     └─ Identifier: ll
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: uint64
+      │     └─ Identifier: ull
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ BuiltinType: int64
+      │     └─ Identifier: sll
+      ├─ VariableDeclaration
+      │  └─ Declaration
       │     ├─ BuiltinType: str
       │     └─ Identifier: str
       ├─ VariableDeclaration
@@ -109,6 +121,21 @@
       │     └─ Identifier: spl
       ├─ VariableDeclaration
       │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: int64
+      │     └─ Identifier: pll
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: uint64
+      │     └─ Identifier: pull
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ BuiltinType: int64
+      │     └─ Identifier: psll
+      ├─ VariableDeclaration
+      │  └─ Declaration
       │     ├─ Array
       │     │  └─ BuiltinType: int8
       │     └─ Identifier: ac
@@ -147,6 +174,16 @@
       │     ├─ Array
       │     │  └─ BuiltinType: uint64
       │     └─ Identifier: ual
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: int64
+      │     └─ Identifier: all
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Array
+      │     │  └─ BuiltinType: uint64
+      │     └─ Identifier: uall
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ Array
