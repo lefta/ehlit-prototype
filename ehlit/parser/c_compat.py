@@ -144,7 +144,9 @@ def parse_header(filename):
     raise ParseError([Failure(ParseError.Severity.Error, 0, '%s: parsing failed' % filename, None)])
   ast = []
   for c in tu.cursor.get_children():
-    ast.append(cursor_to_ehlit(c))
+    node = cursor_to_ehlit(c)
+    if node is not None:
+      ast.append(cursor_to_ehlit(c))
   del tu
   del index
   return ast
