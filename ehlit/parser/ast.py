@@ -140,7 +140,7 @@ class Import(GenericExternInclusion):
           return []
         imported.append(full_path)
         return self.import_dir(full_path)
-      full_path += '.ref'
+      full_path += '.eh'
       if path.isfile(full_path):
         if full_path in imported:
           return []
