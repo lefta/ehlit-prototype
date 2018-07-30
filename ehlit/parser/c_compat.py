@@ -190,6 +190,15 @@ def parse_TYPEDEF_DECL(cursor):
     type_to_ehlit(cursor.underlying_typedef_type),
     ast.Identifier(0, cursor.spelling))
 
+def parse_STRUCT_DECL(cursor):
+  fields = []
+  for f in cursor.type.get_fields():
+    fields.append(ast.VariableDeclaration(ast.Declaration(
+      type_to_ehlit(f.type),
+      ast.Identifier(0, f.spelling)
+    ), None))
+  return ast.Struct(0, ast.Identifier(0, cursor.spelling), fields)
+
 
 def type_VOID(typ): return ast.BuiltinType('void')
 def type_POINTER(typ):
@@ -210,3 +219,15 @@ def type_CONSTANTARRAY(typ):
   if typ.element_count == 1:
     return ast.Array(type_to_ehlit(typ.element_type), None)
   return ast.Array(type_to_ehlit(typ.element_type), ast.Number(str(typ.element_count)))
+
+def type_ELABORATED(typ):
+  decl = typ.get_canonical().get_declaration()
+  # If the declaration do not have a name, it may not be referenced. In the case, we have to embed
+  # the type definition in its usage. Otherwise, we reference it with its identifier.
+  if decl.spelling == '':
+    res = cursor_to_ehlit(decl)
+    if res is None:
+      # The underlying type is not handled, so make this elaborated type unhandled too
+      raise KeyError
+    return res
+  return ast.Symbol([ast.Identifier(0, decl.spelling)])

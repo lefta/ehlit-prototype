@@ -131,9 +131,30 @@
 │     │  │  └─ BuiltinType: int32
 │     │  └─ To:
 │     │     └─ Identifier: __pid_t
+│     ├─ Struct
+│     │  ├─ Identifier: 
+│     │  └─ Fields
+│     │     └─ VariableDeclaration
+│     │        └─ Declaration
+│     │           ├─ Array
+│     │           │  ├─ Sub-type:
+│     │           │  │  └─ BuiltinType: int32
+│     │           │  └─ Length:
+│     │           │     └─ Number: 2
+│     │           └─ Identifier: __val
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ BuiltinType: any
+│     │  │  └─ Struct
+│     │  │     ├─ Identifier: 
+│     │  │     └─ Fields
+│     │  │        └─ VariableDeclaration
+│     │  │           └─ Declaration
+│     │  │              ├─ Array
+│     │  │              │  ├─ Sub-type:
+│     │  │              │  │  └─ BuiltinType: int32
+│     │  │              │  └─ Length:
+│     │  │              │     └─ Number: 2
+│     │  │              └─ Identifier: __val
 │     │  └─ To:
 │     │     └─ Identifier: __fsid_t
 │     ├─ Alias
@@ -275,52 +296,190 @@
 │     │  │  └─ BuiltinType: int32
 │     │  └─ To:
 │     │     └─ Identifier: __sig_atomic_t
+│     ├─ Struct
+│     │  ├─ Identifier: _IO_FILE
+│     │  └─ Fields
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ BuiltinType: any
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: _IO_FILE
 │     │  └─ To:
 │     │     └─ Identifier: __FILE
+│     ├─ Struct
+│     │  ├─ Identifier: _IO_FILE
+│     │  └─ Fields
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ BuiltinType: any
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: _IO_FILE
 │     │  └─ To:
 │     │     └─ Identifier: FILE
+│     ├─ Struct
+│     │  ├─ Identifier: 
+│     │  └─ Fields
+│     │     ├─ VariableDeclaration
+│     │     │  └─ Declaration
+│     │     │     ├─ BuiltinType: int32
+│     │     │     └─ Identifier: __count
+│     │     └─ VariableDeclaration
+│     │        └─ Declaration
+│     │           ├─ BuiltinType: any
+│     │           └─ Identifier: __value
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ BuiltinType: any
+│     │  │  └─ Struct
+│     │  │     ├─ Identifier: 
+│     │  │     └─ Fields
+│     │  │        ├─ VariableDeclaration
+│     │  │        │  └─ Declaration
+│     │  │        │     ├─ BuiltinType: int32
+│     │  │        │     └─ Identifier: __count
+│     │  │        └─ VariableDeclaration
+│     │  │           └─ Declaration
+│     │  │              ├─ BuiltinType: any
+│     │  │              └─ Identifier: __value
 │     │  └─ To:
 │     │     └─ Identifier: __mbstate_t
+│     ├─ Struct
+│     │  ├─ Identifier: 
+│     │  └─ Fields
+│     │     ├─ VariableDeclaration
+│     │     │  └─ Declaration
+│     │     │     ├─ Alias
+│     │     │     │  ├─ From:
+│     │     │     │  │  └─ BuiltinType: int64
+│     │     │     │  └─ To:
+│     │     │     │     └─ Identifier: __off_t
+│     │     │     └─ Identifier: __pos
+│     │     └─ VariableDeclaration
+│     │        └─ Declaration
+│     │           ├─ Alias
+│     │           │  ├─ From:
+│     │           │  │  └─ BuiltinType: any
+│     │           │  └─ To:
+│     │           │     └─ Identifier: __mbstate_t
+│     │           └─ Identifier: __state
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ BuiltinType: any
+│     │  │  └─ Struct
+│     │  │     ├─ Identifier: 
+│     │  │     └─ Fields
+│     │  │        ├─ VariableDeclaration
+│     │  │        │  └─ Declaration
+│     │  │        │     ├─ Alias
+│     │  │        │     │  ├─ From:
+│     │  │        │     │  │  └─ BuiltinType: int64
+│     │  │        │     │  └─ To:
+│     │  │        │     │     └─ Identifier: __off_t
+│     │  │        │     └─ Identifier: __pos
+│     │  │        └─ VariableDeclaration
+│     │  │           └─ Declaration
+│     │  │              ├─ Alias
+│     │  │              │  ├─ From:
+│     │  │              │  │  └─ BuiltinType: any
+│     │  │              │  └─ To:
+│     │  │              │     └─ Identifier: __mbstate_t
+│     │  │              └─ Identifier: __state
 │     │  └─ To:
 │     │     └─ Identifier: _G_fpos_t
+│     ├─ Struct
+│     │  ├─ Identifier: 
+│     │  └─ Fields
+│     │     ├─ VariableDeclaration
+│     │     │  └─ Declaration
+│     │     │     ├─ Alias
+│     │     │     │  ├─ From:
+│     │     │     │  │  └─ BuiltinType: int64
+│     │     │     │  └─ To:
+│     │     │     │     └─ Identifier: __off64_t
+│     │     │     └─ Identifier: __pos
+│     │     └─ VariableDeclaration
+│     │        └─ Declaration
+│     │           ├─ Alias
+│     │           │  ├─ From:
+│     │           │  │  └─ BuiltinType: any
+│     │           │  └─ To:
+│     │           │     └─ Identifier: __mbstate_t
+│     │           └─ Identifier: __state
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ BuiltinType: any
+│     │  │  └─ Struct
+│     │  │     ├─ Identifier: 
+│     │  │     └─ Fields
+│     │  │        ├─ VariableDeclaration
+│     │  │        │  └─ Declaration
+│     │  │        │     ├─ Alias
+│     │  │        │     │  ├─ From:
+│     │  │        │     │  │  └─ BuiltinType: int64
+│     │  │        │     │  └─ To:
+│     │  │        │     │     └─ Identifier: __off64_t
+│     │  │        │     └─ Identifier: __pos
+│     │  │        └─ VariableDeclaration
+│     │  │           └─ Declaration
+│     │  │              ├─ Alias
+│     │  │              │  ├─ From:
+│     │  │              │  │  └─ BuiltinType: any
+│     │  │              │  └─ To:
+│     │  │              │     └─ Identifier: __mbstate_t
+│     │  │              └─ Identifier: __state
 │     │  └─ To:
 │     │     └─ Identifier: _G_fpos64_t
+│     ├─ Struct
+│     │  ├─ Identifier: _IO_jump_t
+│     │  └─ Fields
+│     ├─ Struct
+│     │  ├─ Identifier: _IO_FILE
+│     │  └─ Fields
 │     ├─ Alias
 │     │  ├─ From:
 │     │  │  └─ BuiltinType: void
 │     │  └─ To:
 │     │     └─ Identifier: _IO_lock_t
+│     ├─ Struct
+│     │  ├─ Identifier: _IO_marker
+│     │  └─ Fields
+│     │     ├─ VariableDeclaration
+│     │     │  └─ Declaration
+│     │     │     ├─ Reference
+│     │     │     │  └─ Symbol
+│     │     │     │     └─ Identifier: _IO_marker
+│     │     │     └─ Identifier: _next
+│     │     ├─ VariableDeclaration
+│     │     │  └─ Declaration
+│     │     │     ├─ Reference
+│     │     │     │  └─ Symbol
+│     │     │     │     └─ Identifier: _IO_FILE
+│     │     │     └─ Identifier: _sbuf
+│     │     └─ VariableDeclaration
+│     │        └─ Declaration
+│     │           ├─ BuiltinType: int32
+│     │           └─ Identifier: _pos
+│     ├─ Struct
+│     │  ├─ Identifier: _IO_FILE
+│     │  └─ Fields
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ BuiltinType: any
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: _IO_FILE
 │     │  └─ To:
 │     │     └─ Identifier: _IO_FILE
+│     ├─ Struct
+│     │  ├─ Identifier: _IO_FILE_plus
+│     │  └─ Fields
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
-│     │     ├─ BuiltinType: any
+│     │     ├─ Symbol
+│     │     │  └─ Identifier: _IO_FILE_plus
 │     │     └─ Identifier: _IO_2_1_stdin_
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
-│     │     ├─ BuiltinType: any
+│     │     ├─ Symbol
+│     │     │  └─ Identifier: _IO_FILE_plus
 │     │     └─ Identifier: _IO_2_1_stdout_
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
-│     │     ├─ BuiltinType: any
+│     │     ├─ Symbol
+│     │     │  └─ Identifier: _IO_FILE_plus
 │     │     └─ Identifier: _IO_2_1_stderr_
 │     ├─ Alias
 │     │  ├─ From:
@@ -652,17 +811,20 @@
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
 │     │     ├─ Reference
-│     │     │  └─ BuiltinType: any
+│     │     │  └─ Symbol
+│     │     │     └─ Identifier: _IO_FILE
 │     │     └─ Identifier: stdin
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
 │     │     ├─ Reference
-│     │     │  └─ BuiltinType: any
+│     │     │  └─ Symbol
+│     │     │     └─ Identifier: _IO_FILE
 │     │     └─ Identifier: stdout
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
 │     │     ├─ Reference
-│     │     │  └─ BuiltinType: any
+│     │     │  └─ Symbol
+│     │     │     └─ Identifier: _IO_FILE
 │     │     └─ Identifier: stderr
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32

@@ -1,0 +1,45 @@
+└─ Include
+   ├─ Identifier: c_parser/struct
+   └─ Symbols found
+      ├─ Struct
+      │  ├─ Identifier: test_struct
+      │  └─ Fields
+      │     ├─ VariableDeclaration
+      │     │  └─ Declaration
+      │     │     ├─ BuiltinType: int32
+      │     │     └─ Identifier: field1
+      │     └─ VariableDeclaration
+      │        └─ Declaration
+      │           ├─ BuiltinType: str
+      │           └─ Identifier: field2
+      ├─ Struct
+      │  ├─ Identifier: 
+      │  └─ Fields
+      │     └─ VariableDeclaration
+      │        └─ Declaration
+      │           ├─ BuiltinType: int32
+      │           └─ Identifier: field1
+      ├─ Alias
+      │  ├─ From:
+      │  │  └─ Struct
+      │  │     ├─ Identifier: 
+      │  │     └─ Fields
+      │  │        └─ VariableDeclaration
+      │  │           └─ Declaration
+      │  │              ├─ BuiltinType: int32
+      │  │              └─ Identifier: field1
+      │  └─ To:
+      │     └─ Identifier: test_struct_t
+      └─ Struct
+         ├─ Identifier: linked_list
+         └─ Fields
+            ├─ VariableDeclaration
+            │  └─ Declaration
+            │     ├─ BuiltinType: any
+            │     └─ Identifier: contents
+            └─ VariableDeclaration
+               └─ Declaration
+                  ├─ Reference
+                  │  └─ Symbol
+                  │     └─ Identifier: linked_list
+                  └─ Identifier: next
