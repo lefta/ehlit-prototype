@@ -89,8 +89,8 @@ class EhlitTestCase(TestCase):
 	"""
 		Discover all tests
 
-		All '.ref' files in the directory passed as parameter are considered as tests. A test must
-		have a '.ref.c' file associated containing the expected output.
+		All '.eh' files in the directory passed as parameter are considered as tests. A test must
+		have a '.eh.c' file associated containing the expected output.
 
 		@param directory The directory where tests are located
 		@return list A list of tests

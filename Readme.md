@@ -57,13 +57,13 @@ package must be installed somewhere in your python path.
 
 This will generate a `out` directory, containing all generated files.
 
-The resulting C file is put in a `src` subdirectory with the same name, just replacing the `.ref`
+The resulting C file is put in a `src` subdirectory with the same name, just replacing the `.eh`
 extension with `.c`. Next, you may build your C file(s) as you would with other programs.
 
 This duplicates build work, but all (good?) compilation system allows you to automate this, so you
 do not even have to think about this. For instance, with Makefiles, you could use a rule like:
 
-    out/src/%.c: %.ref
+    out/src/%.c: %.eh
         python -m ehlit $<
 
 This way, you may build your program the exact same way you would build it if it was written in pure
