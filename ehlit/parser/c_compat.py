@@ -81,13 +81,11 @@ include_dirs.append('.')
 
 
 def cursor_to_ehlit(cursor):
-  ast = []
-  for c in cursor.get_children():
-    try:
-      ast.append(globals()['parse_' + c.kind.name](c))
-    except KeyError:
-      logging.debug('c_compat: unimplemented: parse_%s' % c.kind.name)
-  return ast
+  try:
+    return globals()['parse_' + cursor.kind.name](cursor)
+  except KeyError:
+    logging.debug('c_compat: unimplemented: parse_%s' % cursor.kind.name)
+  return None
 
 
 uint_types = {
@@ -142,7 +140,9 @@ def parse_header(filename):
     tu = index.parse(path)
   except TranslationUnitLoadError as err:
     raise ParseError([Failure(ParseError.Severity.Error, 0, '%s: parsing failed' % filename, None)])
-  ast = cursor_to_ehlit(tu.cursor)
+  ast = []
+  for c in tu.cursor.get_children():
+    ast.append(cursor_to_ehlit(c))
   del tu
   del index
   return ast
