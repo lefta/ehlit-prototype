@@ -192,6 +192,8 @@ def parse_TYPEDEF_DECL(cursor):
     ast.Identifier(0, cursor.spelling))
 
 def parse_STRUCT_DECL(cursor):
+  if not cursor.is_definition():
+    return ast.Struct(0, ast.Identifier(0, cursor.spelling), None)
   fields = []
   for f in cursor.type.get_fields():
     fields.append(ast.VariableDeclaration(ast.Declaration(
