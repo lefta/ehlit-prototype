@@ -223,7 +223,7 @@ def type_CONSTANTARRAY(typ):
 
 def type_ELABORATED(typ):
   decl = typ.get_canonical().get_declaration()
-  # If the declaration do not have a name, it may not be referenced. In the case, we have to embed
+  # If the declaration do not have a name, it may not be referenced. In this case, we have to embed
   # the type definition in its usage. Otherwise, we reference it with its identifier.
   if decl.spelling == '':
     res = cursor_to_ehlit(decl)
