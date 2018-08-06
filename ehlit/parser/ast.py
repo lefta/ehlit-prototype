@@ -305,6 +305,10 @@ class BuiltinType(Type):
   def typ(self):
     return self
 
+  @property
+  def decl(self):
+    return self
+
   def from_any(self):
     return self if self.name == 'str' else Reference(self)
 
@@ -1009,6 +1013,10 @@ class Struct(Node):
 
   def is_declaration(self):
     return True
+
+  @property
+  def decl(self):
+    return self
 
   def get_declaration(self, sym):
     if self.sym.name == sym[0]:
