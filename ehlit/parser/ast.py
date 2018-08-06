@@ -196,7 +196,8 @@ class Import(GenericExternInclusion):
     return []
 
 class Include(GenericExternInclusion):
-  def parse(self): return c_compat.parse_header(self.lib.name)
+  def parse(self):
+    return c_compat.parse_header(self.lib.name)
 
 class Value(Node):
   def __init__(self, pos=0):
@@ -264,16 +265,20 @@ class Type(Node):
     self.mods = mods
 
   @property
-  def is_const(self): return self.mods & MOD_CONST
+  def is_const(self):
+    return self.mods & MOD_CONST
 
   @property
-  def is_type(self): return True
+  def is_type(self):
+    return True
 
   @property
-  def any_memory_offset(self): return 1
+  def any_memory_offset(self):
+    return 1
 
   @property
-  def inner_child(self): return self
+  def inner_child(self):
+    return self
 
 class BuiltinType(Type):
   def __init__(self, name):
@@ -281,7 +286,8 @@ class BuiltinType(Type):
     self.name = name
 
   @property
-  def sym(self): return self
+  def sym(self):
+    return self
 
   @property
   def child(self):
@@ -292,15 +298,19 @@ class BuiltinType(Type):
     return None
 
   @property
-  def ref_offset(self): return 0
+  def ref_offset(self):
+    return 0
 
   @property
-  def typ(self): return self
+  def typ(self):
+    return self
 
-  def from_any(self): return self if self.name == 'str' else Reference(self)
+  def from_any(self):
+    return self if self.name == 'str' else Reference(self)
 
   @property
-  def any_memory_offset(self): return 0 if self.name == 'str' else 1
+  def any_memory_offset(self):
+    return 0 if self.name == 'str' else 1
 
   def __eq__(self, rhs):
     if type(rhs) != BuiltinType:
@@ -318,15 +328,19 @@ class Array(Type):
     self.child.build(self)
 
   @property
-  def typ(self): return self
+  def typ(self):
+    return self
 
   @property
-  def ref_offset(self): return 0
+  def ref_offset(self):
+    return 0
 
-  def from_any(self): return self
+  def from_any(self):
+    return self
 
   @property
-  def any_memory_offset(self): return 0
+  def any_memory_offset(self):
+    return 0
 
 class Reference(Value, Type):
   def __init__(self, child):
@@ -340,10 +354,12 @@ class Reference(Value, Type):
       self.child.ref_offset -= 1
 
   @property
-  def is_type(self): return self.child.is_type
+  def is_type(self):
+    return self.child.is_type
 
   @property
-  def decl(self): return self.child.decl
+  def decl(self):
+    return self.child.decl
 
   @property
   def ref_offset(self):
@@ -357,19 +373,26 @@ class Reference(Value, Type):
       self.child.ref_offset = val
 
   @property
-  def typ(self): return self if self.is_type else self.decl.typ
+  def typ(self):
+    return self if self.is_type else self.decl.typ
 
   @property
-  def inner_child(self): return self.child.inner_child
+  def inner_child(self):
+    return self.child.inner_child
 
   @property
-  def name(self): return self.child.name
+  def name(self):
+    return self.child.name
 
-  def auto_cast(self, target): return self.child.auto_cast(target)
-  def from_any(self): return self
+  def auto_cast(self, target):
+    return self.child.auto_cast(target)
+
+  def from_any(self):
+    return self
 
   @property
-  def any_memory_offset(self): return self.child.any_memory_offset
+  def any_memory_offset(self):
+    return self.child.any_memory_offset
 
 class FunctionType(Type):
   def __init__(self, ret, args):
@@ -386,13 +409,15 @@ class FunctionType(Type):
       i += 1
 
   @property
-  def ref_offset(self): return self.ret.ref_offset
+  def ref_offset(self):
+    return self.ret.ref_offset
 
 class Operator(Node):
   def __init__(self, op):
     self.op = op
 
-  def auto_cast(self, target_type): pass
+  def auto_cast(self, target_type):
+    pass
 
 class VariableAssignment(Node):
   def __init__(self, var, assign):
@@ -439,10 +464,12 @@ class Declaration(Node):
     return True
 
   @property
-  def is_type(self): return False
+  def is_type(self):
+    return False
 
   @property
-  def args(self): return self.typ.args if type(self.typ) is FunctionType else None
+  def args(self):
+    return self.typ.args if type(self.typ) is FunctionType else None
 
 class VariableDeclaration(Node):
   def __init__(self, decl, assign):
@@ -463,10 +490,12 @@ class VariableDeclaration(Node):
     return True
 
   @property
-  def typ(self): return self.decl.typ
+  def typ(self):
+    return self.decl.typ
 
   @property
-  def sym(self): return self.decl.sym
+  def sym(self):
+    return self.decl.sym
 
 class FunctionDeclaration(Node):
   def __init__(self, typ, sym, args, variadic=False):
@@ -493,13 +522,16 @@ class FunctionDeclaration(Node):
         return decl
     return None
 
-  def is_declaration(self): return True
+  def is_declaration(self):
+    return True
 
   @property
-  def is_type(self): return False
+  def is_type(self):
+    return False
 
   @property
-  def is_variadic(self): return self.variadic
+  def is_variadic(self):
+    return self.variadic
 
 class FunctionDefinition(Node):
   def __init__(self, proto, body_str):
@@ -537,11 +569,14 @@ class FunctionDefinition(Node):
       if decl is not None:
         return decl
 
-  def is_declaration(self): return True
+  def is_declaration(self):
+    return True
 
-  def fail(self, severity, pos, msg): super().fail(severity, pos + self.body_str.pos, msg)
+  def fail(self, severity, pos, msg):
+    super().fail(severity, pos + self.body_str.pos, msg)
 
-  def predeclare(self, decl): self.predeclarations.append(decl)
+  def predeclare(self, decl):
+    self.predeclarations.append(decl)
 
 class Statement(Node):
   def __init__(self, expr):
@@ -569,7 +604,8 @@ class Expression(Node):
       e.auto_cast(target_type)
 
   @property
-  def is_parenthesised(self): return self.parenthesised
+  def is_parenthesised(self):
+    return self.parenthesised
 
 class FunctionCall(Node):
   def __init__(self, pos, sym, args):
@@ -612,22 +648,28 @@ class FunctionCall(Node):
       i += 1
 
   @property
-  def ref_offset(self): return self.sym.ref_offset
+  def ref_offset(self):
+    return self.sym.ref_offset
 
   @ref_offset.setter
-  def ref_offset(self, val): self.sym.ref_offset = val
+  def ref_offset(self, val):
+    self.sym.ref_offset = val
 
   @property
-  def is_cast(self): return self.sym.is_type
+  def is_cast(self):
+    return self.sym.is_type
 
   @property
-  def typ(self): return self.sym if self.is_cast else self.sym.typ
+  def typ(self):
+    return self.sym if self.is_cast else self.sym.typ
 
   @property
-  def decl(self): return self.sym if self.is_cast else self.sym.decl
+  def decl(self):
+    return self.sym if self.is_cast else self.sym.decl
 
   @property
-  def is_type(self): return False
+  def is_type(self):
+    return False
 
   def auto_cast(self, target_type):
     if not self.is_cast:
@@ -645,15 +687,19 @@ class ArrayAccess(Value):
     self.idx.build(self)
 
   @property
-  def typ(self): return self.child.typ.child
+  def typ(self):
+    return self.child.typ.child
 
   @property
-  def is_type(self): return False
+  def is_type(self):
+    return False
 
   @property
-  def decl(self): return self.child.decl
+  def decl(self):
+    return self.child.decl
 
-  def from_any(self): return self.child.typ.from_any()
+  def from_any(self):
+    return self.child.typ.from_any()
 
 class ControlStructure(Node):
   def __init__(self, name, cond, body):
@@ -742,12 +788,15 @@ class Identifier(Value, Type):
         self.ref_offset = self.decl.typ.ref_offset
 
   @property
-  def is_type(self): return False if self.decl is None else self.decl.is_type
+  def is_type(self):
+    return False if self.decl is None else self.decl.is_type
 
   @property
-  def typ(self): return self.decl.typ if self.decl is not None else BuiltinType('any')
+  def typ(self):
+    return self.decl.typ if self.decl is not None else BuiltinType('any')
 
-  def from_any(self): return self.decl.from_any() if self.decl is not None else self
+  def from_any(self):
+    return self.decl.from_any() if self.decl is not None else self
 
 class Symbol(Value, Type):
   def __init__(self, elems):
@@ -760,31 +809,42 @@ class Symbol(Value, Type):
       e.build(self)
 
   @property
-  def ref_offset(self): return self.elems[-1].ref_offset
+  def ref_offset(self):
+    return self.elems[-1].ref_offset
 
   @ref_offset.setter
-  def ref_offset(self, v): self.elems[-1].ref_offset = v
+  def ref_offset(self, v):
+    self.elems[-1].ref_offset = v
 
   @property
-  def typ(self): return self.elems[-1].typ
+  def typ(self):
+    return self.elems[-1].typ
 
   @property
-  def is_type(self): return self.elems[-1].is_type
+  def is_type(self):
+    return self.elems[-1].is_type
 
   @property
-  def decl(self): return self.elems[-1].decl
+  def decl(self):
+    return self.elems[-1].decl
 
   @property
-  def name(self): return self.elems[-1].name
+  def name(self):
+    return self.elems[-1].name
 
   @property
-  def cast(self): return self.elems[-1].cast
+  def cast(self):
+    return self.elems[-1].cast
 
   @cast.setter
-  def cast(self, value): self.elems[-1].cast = value
+  def cast(self, value):
+    self.elems[-1].cast = value
 
-  def auto_cast(self, tgt): return self.elems[-1].auto_cast(tgt)
-  def from_any(self): return self.elems[-1].from_any()
+  def auto_cast(self, tgt):
+    return self.elems[-1].auto_cast(tgt)
+
+  def from_any(self):
+    return self.elems[-1].from_any()
 
   def find_declaration(self, identifier):
     i = 0
@@ -800,9 +860,11 @@ class String(Value):
     self.string = string
 
   @property
-  def typ(self): return BuiltinType('str')
+  def typ(self):
+    return BuiltinType('str')
 
-  def auto_cast(self, target_type): pass
+  def auto_cast(self, target_type):
+    pass
 
 class Char(Value):
   def __init__(self, char):
@@ -810,9 +872,11 @@ class Char(Value):
     self.char = char
 
   @property
-  def typ(self): return BuiltinType('char')
+  def typ(self):
+    return BuiltinType('char')
 
-  def auto_cast(self, target_type): pass
+  def auto_cast(self, target_type):
+    pass
 
 class Number(Value):
   def __init__(self, num):
@@ -820,18 +884,22 @@ class Number(Value):
     self.num = num
 
   @property
-  def typ(self): return BuiltinType('int')
+  def typ(self):
+    return BuiltinType('int')
 
-  def auto_cast(self, target_type): pass
+  def auto_cast(self, target_type):
+    pass
 
 class NullValue(Value):
   def __init__(self):
     super().__init__()
 
   @property
-  def typ(self): return BuiltinType('any')
+  def typ(self):
+    return BuiltinType('any')
 
-  def auto_cast(self, target_type): pass
+  def auto_cast(self, target_type):
+    pass
 
 class BoolValue(Value):
   def __init__(self, val):
@@ -839,9 +907,11 @@ class BoolValue(Value):
     self.val = val
 
   @property
-  def typ(self): return BuiltinType('bool')
+  def typ(self):
+    return BuiltinType('bool')
 
-  def auto_cast(self, target_type): pass
+  def auto_cast(self, target_type):
+    pass
 
 class UnaryOperatorValue(Node):
   def __init__(self, op, val):
@@ -853,15 +923,20 @@ class UnaryOperatorValue(Node):
     self.val.build(self)
 
   @property
-  def typ(self): return self.val.typ
+  def typ(self):
+    return self.val.typ
 
   @property
-  def decl(self): return self.val.decl
+  def decl(self):
+    return self.val.decl
 
-  def auto_cast(self, tgt): return self.val.auto_cast(tgt)
+  def auto_cast(self, tgt):
+    return self.val.auto_cast(tgt)
 
-class PrefixOperatorValue(UnaryOperatorValue): pass
-class SuffixOperatorValue(UnaryOperatorValue): pass
+class PrefixOperatorValue(UnaryOperatorValue):
+  pass
+class SuffixOperatorValue(UnaryOperatorValue):
+  pass
 
 class Sizeof(Value):
   def __init__(self, sz_typ):
@@ -873,7 +948,8 @@ class Sizeof(Value):
     self.sz_typ.build(self)
 
   @property
-  def typ(self): return BuiltinType('size')
+  def typ(self):
+    return BuiltinType('size')
 
 class Alias(Node):
   def __init__(self, src, dst):
@@ -893,22 +969,28 @@ class Alias(Node):
     return None
 
   @property
-  def typ(self): return self.src.typ
+  def typ(self):
+    return self.src.typ
 
   @property
-  def name(self): return self.dst.name
+  def name(self):
+    return self.dst.name
 
   @property
-  def is_type(self): return self.dst.is_type
+  def is_type(self):
+    return self.dst.is_type
 
   @property
-  def ref_offset(self): return self.dst.ref_offset
+  def ref_offset(self):
+    return self.dst.ref_offset
 
   @ref_offset.setter
-  def ref_offset(self, offset): self.dst.ref_offset = offset
+  def ref_offset(self, offset):
+    self.dst.ref_offset = offset
 
   @property
-  def inner_child(self): return self.dst
+  def inner_child(self):
+    return self.dst
 
 class Struct(Node):
   def __init__(self, pos, sym, fields):
@@ -925,7 +1007,8 @@ class Struct(Node):
         if f.assign is not None:
           self.error(self.pos, "struct fields may not have a value yet")
 
-  def is_declaration(self): return True
+  def is_declaration(self):
+    return True
 
   def get_declaration(self, sym):
     if self.sym.name == sym[0]:
@@ -933,16 +1016,20 @@ class Struct(Node):
     return None
 
   @property
-  def typ(self): return self
+  def typ(self):
+    return self
 
   @property
-  def ref_offset(self): return 0
+  def ref_offset(self):
+    return 0
 
   @property
-  def is_type(self): return True
+  def is_type(self):
+    return True
 
   @property
-  def name(self): return self.sym.name
+  def name(self):
+    return self.sym.name
 
   def get_inner_declaration(self, sym):
     for f in self.fields:
@@ -993,4 +1080,5 @@ class AST(Node):
     return None
 
   @property
-  def import_paths(self): return self._import_paths
+  def import_paths(self):
+    return self._import_paths
