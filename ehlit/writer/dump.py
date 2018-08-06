@@ -301,4 +301,7 @@ class DumpWriter:
   def dumpStruct(self, node):
     self.dump('Struct')
     self.print_node(node.sym)
-    self.print_node_list('Fields', node.fields, False)
+    if node.fields is None:
+      self.print_str('Forward declaration')
+    else:
+      self.print_node_list('Fields', node.fields, False)

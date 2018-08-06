@@ -15,6 +15,9 @@
 │           │  └─ Array
 │           │     └─ BuiltinType: int
 │           └─ Identifier: field3
+├─ Struct
+│  ├─ Identifier: forward_decl
+│  ├─ Forward declaration
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ BuiltinType: void

@@ -238,6 +238,8 @@ class ASTBuilder(PTNodeVisitor):
   def visit_alias(self, node, children): return ast.Alias(children[1], children[2])
 
   def visit_struct(self, node, children):
+    if len(children) is 2:
+      return ast.Struct(node.position, children[1], None)
     return ast.Struct(node.position, children[1], children[2:])
 
   def visit_function_body_grammar(self, node, children): return children

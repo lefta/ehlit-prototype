@@ -134,7 +134,7 @@ def import_instruction(): return 'import', symbol
 
 def alias(): return 'alias', full_type, symbol
 
-def struct(): return 'struct', identifier, '{', ZeroOrMore(variable_declaration), '}'
+def struct(): return 'struct', identifier, Optional('{', ZeroOrMore(variable_declaration), '}')
 
 def function_body_grammar(): return '{', ZeroOrMore(instruction), '}', EOF
 def grammar(): return ZeroOrMore([comment, import_instruction, include_instruction, struct, alias,

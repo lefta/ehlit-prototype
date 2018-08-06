@@ -4,6 +4,8 @@ struct test_struct {
   ref int[] field3
 }
 
+struct forward_decl
+
 void fun(ref int i) {}
 ref test_struct struct_fun(ref test_struct s) {
   return s

@@ -8,6 +8,8 @@ struct test_struct
     int32_t** field3;
 };
 
+struct forward_decl;
+
 void fun(int32_t* i)
 {
 }

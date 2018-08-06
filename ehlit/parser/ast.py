@@ -919,10 +919,11 @@ class Struct(Node):
   def build(self, parent):
     super().build(parent)
     self.sym.build(self)
-    for f in self.fields:
-      f.build(self)
-      if f.assign is not None:
-        self.error(self.pos, "struct fields may not have a value yet")
+    if self.fields is not None:
+      for f in self.fields:
+        f.build(self)
+        if f.assign is not None:
+          self.error(self.pos, "struct fields may not have a value yet")
 
   def is_declaration(self): return True
 
