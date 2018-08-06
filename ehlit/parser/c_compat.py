@@ -234,3 +234,14 @@ def type_ELABORATED(typ):
       raise KeyError
     return res
   return ast.Symbol([ast.Identifier(0, decl.spelling)])
+
+def type_RECORD(typ):
+  # If the type do not have a name, it may not be referenced. In the case, we have to embed
+  # the type definition in its usage. Otherwise, we reference it with its identifier.
+  if typ.spelling == '':
+    res = cursor_to_ehlit(typ.get_declaration())
+    if res is None:
+      # The underlying type is not handled, so make this elaborated type unhandled too
+      raise KeyError
+    return res
+  return ast.Symbol([ast.Identifier(0, typ.spelling)])
