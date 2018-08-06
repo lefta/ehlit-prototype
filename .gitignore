@@ -1,7 +1,11 @@
 __pycache__
+.mypy_cache
+
 test/**/*.c
 !test/**/*.eh.c
+
 /out/
 /test/out/
 .coverage
 htmlcov
+/doc/html

@@ -20,88 +20,131 @@
 # SOFTWARE.
 
 from os import path, getcwd, listdir
+from typing import List, Union
 from ehlit.parser import c_compat, parse
 from ehlit.parser.error import ParseError, Failure
 
 MOD_NONE = 0
 MOD_CONST = 1
 
-imported = []
+imported: List[str] = []
+
+DeclarationType = Union['Declaration', 'FunctionDeclaration']
+OptionalDeclarationType = Union[DeclarationType, None]
 
 class Node:
-  def __init__(self, pos):
-    self.pos = pos
-    self.built = False
+  '''!
+  Base class for all AST node types. It defines some default behaviors.
+  '''
+  def __init__(self, pos: int) -> None:
+    '''! Constructor
+    @param pos @b int The position of the node in the source file
+    '''
+    ## @b int Position of the node in the source file.
+    self.pos: int = pos
+    ## @b bool Whether this node have already been built or not.
+    self.built: bool = False
 
-  def build(self, parent):
-    self.parent = parent
+  def build(self, parent: 'Node') -> None:
+    '''! Build a node.
+    Depending on the node type, this may mean resolving symbol references, making sanity checks
+    and / or building children.
+    @param parent @b Node The parent node of this node.
+    '''
+    ## @b Node The parent node of this node.
+    self.parent: Node = parent
     self.built = True
 
-  def is_declaration(self):
+  def is_declaration(self) -> bool:
+    '''! Checks whether a node is a symbol declaration or not.
+    By default, this value is False.
+    @return @b bool
+    '''
     return False
 
-  """
-  Find a declaration when coming from downsides. Scoping structures (like functions) would want to
-  search symbols in this function.
-
-  The default is to try get_declaration on self, then to try with parent.
-  """
-  def find_declaration(self, sym):
-    decl = self.get_declaration(sym)
+  def find_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+    '''! Find a declaration when coming from downsides.
+    Scoping structures (like functions) would want to search symbols in this function. The default
+    is to try get_declaration on self, then to try with parent.
+    @param sym @b List[str] The symbol to find.
+    @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
+    '''
+    decl: OptionalDeclarationType = self.get_declaration(sym)
     if decl is None:
       return self.parent.find_declaration(sym)
     return decl
 
-  """
-  Find a declaration when coming from upsides. Structures exposing symbols to their parent (like
-  Import) would want to search symbols in this function.
-  """
-  def get_declaration(self, sym): return None
+  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+    '''! Find a declaration when coming from upsides.
+    Structures exposing symbols to their parent (like Import) would want to search symbols in this
+    function.
+    @param sym @b List[str] The symbol to find
+    @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
+    '''
+    return None
 
-  """
-  Find a declaration strictly in children. Container types (like structs) would want to search
-  symbols in this function.
-  """
-  def get_inner_declaration(self, sym): return None
+  def get_inner_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+    '''! Find a declaration strictly in children.
+    Container types (like structs) would want to search symbols in this function.
+    @param sym @b List[str] The symbol to find.
+    @return @b Declaration|FunctionDeclaration The inner declaration if found, None otherwise.
+    '''
+    return None
 
-  """
-  Scoping nodes should call this function when they get a match in their respective
-  `get_declaration` to automatically handle scope access (`foo.bar`).
-  """
-  def declaration_match(self, sym):
+  def declaration_match(self, sym: List[str]) -> OptionalDeclarationType:
+    '''! Scoping nodes should call this function when they get a match in their respective
+    `get_declaration` to automatically handle scope access (`foo.bar`).
+    @param sym @b List[str] The symbol looked for.
+    @return @b Declaration|FunctionDeclaration The deepest declaration if found, None otherwise.
+    '''
     if len(sym) is 1:
       return self
     return self.get_inner_declaration(sym[1:])
 
-  """
-  Report a failure to the parent, up to the root where it will be handled. There is no reason to
-  override it, except intercepting it for whatever reason.
-  """
-  def fail(self, severity, pos, msg): self.parent.fail(severity, pos, msg)
+  def fail(self, severity: int, pos: int, msg: str) -> None:
+    '''! Report a failure to the parent, up to the AST where it will be handled.
+    There is no reason to override it, except maybe intercepting it for whatever reason.
+    @param severity @b ParseError.Severity Severity of the failure
+    @param pos @b int The position in code where the failure happened
+    @param msg @b str The failure message to display
+    '''
+    self.parent.fail(severity, pos, msg)
 
-  """
-  Shorthand for fail with severity Error.
-  """
-  def error(self, pos, msg): self.parent.fail(ParseError.Severity.Error, pos, msg)
+  def error(self, pos: int, msg: str) -> None:
+    '''! Shorthand for fail with severity Error.
+    @param pos @b int The position in code where the failure happened
+    @param msg @b str The failure message to display
+    '''
+    self.parent.fail(ParseError.Severity.Error, pos, msg)
 
-  """
-  Shorthand for fail with severity Warning.
-  """
-  def warn(self, pos, msg): self.parent.fail(ParseError.Severity.Warning, pos, msg)
+  def warn(self, pos: int, msg: str) -> None:
+    '''! Shorthand for fail with severity Warning.
+    @param pos @b int The position in code where the failure happened
+    @param msg @b str The failure message to display
+    '''
+    self.parent.fail(ParseError.Severity.Warning, pos, msg)
 
-  def predeclare(self, decl): self.parent.predeclare(decl)
+  def predeclare(self, decl: DeclarationType) -> None:
+    '''! Pre-declare a symbol.
+    By default, this is only propagated to the parent. This may be overriden to handle the
+    pre-declaration, for example for declaring a function before the one using it.
+    @param decl @b Declaration|FunctionDeclaration The declaration to be pre-declared.
+    '''
+    self.parent.predeclare(decl)
 
   @property
-  def import_paths(self): return self.parent.import_paths
+  def import_paths(self) -> List[str]:
+    '''! @c property @b List[str] The list of paths to be looked up when importing a module. '''
+    return self.parent.import_paths
 
 
 class GenericExternInclusion(Node):
-  def __init__(self, pos, lib):
+  def __init__(self, pos: int, lib) -> None:
     super().__init__(pos)
-    self.lib = Identifier(lib.pos, path.join(*[ x.name for x in lib.elems]))
-    self.syms = []
+    self.lib = Identifier(lib.pos, path.join(*[x.name for x in lib.elems]))
+    self.syms: List[Node] = []
 
-  def build(self, parent):
+  def build(self, parent: Node):
     super().build(parent)
     try:
       self.syms = self.parse()
