@@ -155,6 +155,9 @@ class GenericExternInclusion(Node):
     for s in self.syms:
       s.build(self)
 
+  def parse(self) -> List[Node]:
+    raise NotImplementedError
+
   def get_declaration(self, sym):
     for s in self.syms:
       decl = s.get_declaration(sym)
