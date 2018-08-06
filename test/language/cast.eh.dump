@@ -269,11 +269,8 @@
 │     │     └─ Identifier: __syscall_ulong_t
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: int64
-│     │  │     └─ To:
-│     │  │        └─ Identifier: __off64_t
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: __off64_t
 │     │  └─ To:
 │     │     └─ Identifier: __loff_t
 │     ├─ Alias
@@ -298,7 +295,7 @@
 │     │     └─ Identifier: __sig_atomic_t
 │     ├─ Struct
 │     │  ├─ Identifier: _IO_FILE
-│     │  └─ Fields
+│     │  ├─ Forward declaration
 │     ├─ Alias
 │     │  ├─ From:
 │     │  │  └─ Symbol
@@ -307,7 +304,7 @@
 │     │     └─ Identifier: __FILE
 │     ├─ Struct
 │     │  ├─ Identifier: _IO_FILE
-│     │  └─ Fields
+│     │  ├─ Forward declaration
 │     ├─ Alias
 │     │  ├─ From:
 │     │  │  └─ Symbol
@@ -345,19 +342,13 @@
 │     │  └─ Fields
 │     │     ├─ VariableDeclaration
 │     │     │  └─ Declaration
-│     │     │     ├─ Alias
-│     │     │     │  ├─ From:
-│     │     │     │  │  └─ BuiltinType: int64
-│     │     │     │  └─ To:
-│     │     │     │     └─ Identifier: __off_t
+│     │     │     ├─ Symbol
+│     │     │     │  └─ Identifier: __off_t
 │     │     │     └─ Identifier: __pos
 │     │     └─ VariableDeclaration
 │     │        └─ Declaration
-│     │           ├─ Alias
-│     │           │  ├─ From:
-│     │           │  │  └─ BuiltinType: any
-│     │           │  └─ To:
-│     │           │     └─ Identifier: __mbstate_t
+│     │           ├─ Symbol
+│     │           │  └─ Identifier: __mbstate_t
 │     │           └─ Identifier: __state
 │     ├─ Alias
 │     │  ├─ From:
@@ -366,19 +357,13 @@
 │     │  │     └─ Fields
 │     │  │        ├─ VariableDeclaration
 │     │  │        │  └─ Declaration
-│     │  │        │     ├─ Alias
-│     │  │        │     │  ├─ From:
-│     │  │        │     │  │  └─ BuiltinType: int64
-│     │  │        │     │  └─ To:
-│     │  │        │     │     └─ Identifier: __off_t
+│     │  │        │     ├─ Symbol
+│     │  │        │     │  └─ Identifier: __off_t
 │     │  │        │     └─ Identifier: __pos
 │     │  │        └─ VariableDeclaration
 │     │  │           └─ Declaration
-│     │  │              ├─ Alias
-│     │  │              │  ├─ From:
-│     │  │              │  │  └─ BuiltinType: any
-│     │  │              │  └─ To:
-│     │  │              │     └─ Identifier: __mbstate_t
+│     │  │              ├─ Symbol
+│     │  │              │  └─ Identifier: __mbstate_t
 │     │  │              └─ Identifier: __state
 │     │  └─ To:
 │     │     └─ Identifier: _G_fpos_t
@@ -387,19 +372,13 @@
 │     │  └─ Fields
 │     │     ├─ VariableDeclaration
 │     │     │  └─ Declaration
-│     │     │     ├─ Alias
-│     │     │     │  ├─ From:
-│     │     │     │  │  └─ BuiltinType: int64
-│     │     │     │  └─ To:
-│     │     │     │     └─ Identifier: __off64_t
+│     │     │     ├─ Symbol
+│     │     │     │  └─ Identifier: __off64_t
 │     │     │     └─ Identifier: __pos
 │     │     └─ VariableDeclaration
 │     │        └─ Declaration
-│     │           ├─ Alias
-│     │           │  ├─ From:
-│     │           │  │  └─ BuiltinType: any
-│     │           │  └─ To:
-│     │           │     └─ Identifier: __mbstate_t
+│     │           ├─ Symbol
+│     │           │  └─ Identifier: __mbstate_t
 │     │           └─ Identifier: __state
 │     ├─ Alias
 │     │  ├─ From:
@@ -408,28 +387,22 @@
 │     │  │     └─ Fields
 │     │  │        ├─ VariableDeclaration
 │     │  │        │  └─ Declaration
-│     │  │        │     ├─ Alias
-│     │  │        │     │  ├─ From:
-│     │  │        │     │  │  └─ BuiltinType: int64
-│     │  │        │     │  └─ To:
-│     │  │        │     │     └─ Identifier: __off64_t
+│     │  │        │     ├─ Symbol
+│     │  │        │     │  └─ Identifier: __off64_t
 │     │  │        │     └─ Identifier: __pos
 │     │  │        └─ VariableDeclaration
 │     │  │           └─ Declaration
-│     │  │              ├─ Alias
-│     │  │              │  ├─ From:
-│     │  │              │  │  └─ BuiltinType: any
-│     │  │              │  └─ To:
-│     │  │              │     └─ Identifier: __mbstate_t
+│     │  │              ├─ Symbol
+│     │  │              │  └─ Identifier: __mbstate_t
 │     │  │              └─ Identifier: __state
 │     │  └─ To:
 │     │     └─ Identifier: _G_fpos64_t
 │     ├─ Struct
 │     │  ├─ Identifier: _IO_jump_t
-│     │  └─ Fields
+│     │  ├─ Forward declaration
 │     ├─ Struct
 │     │  ├─ Identifier: _IO_FILE
-│     │  └─ Fields
+│     │  ├─ Forward declaration
 │     ├─ Alias
 │     │  ├─ From:
 │     │  │  └─ BuiltinType: void
@@ -465,7 +438,7 @@
 │     │     └─ Identifier: _IO_FILE
 │     ├─ Struct
 │     │  ├─ Identifier: _IO_FILE_plus
-│     │  └─ Fields
+│     │  ├─ Forward declaration
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
 │     │     ├─ Symbol
@@ -507,11 +480,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: 
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -519,11 +489,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: 
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -531,11 +498,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: _IO_FILE
 │     │     │  └─ Identifier: 
 │     │     └─ Declaration
 │     │        ├─ BuiltinType: int32
@@ -546,11 +510,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: __fp
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -561,11 +522,8 @@
 │     │     │  └─ Identifier: __c
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: __fp
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -573,11 +531,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: __fp
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -585,11 +540,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: __fp
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -597,11 +549,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: __fp
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: void
@@ -609,11 +558,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: 
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: void
@@ -621,11 +567,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: 
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -633,11 +576,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: 
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -645,11 +585,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: _IO_FILE
 │     │     │  └─ Identifier: 
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: str
@@ -667,11 +604,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: _IO_FILE
 │     │     │  └─ Identifier: 
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: str
@@ -680,57 +614,39 @@
 │     │        ├─ BuiltinType: int32
 │     │        └─ Identifier: __gnuc_va_list
 │     ├─ FunctionDeclaration
-│     │  ├─ Alias
-│     │  │  ├─ From:
-│     │  │  │  └─ BuiltinType: int64
-│     │  │  └─ To:
-│     │  │     └─ Identifier: __ssize_t
+│     │  ├─ Symbol
+│     │  │  └─ Identifier: __ssize_t
 │     │  ├─ Identifier: _IO_padn
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: _IO_FILE
 │     │     │  └─ Identifier: 
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: int32
 │     │     │  └─ Identifier: 
 │     │     └─ Declaration
-│     │        ├─ Alias
-│     │        │  ├─ From:
-│     │        │  │  └─ BuiltinType: int64
-│     │        │  └─ To:
-│     │        │     └─ Identifier: __ssize_t
+│     │        ├─ Symbol
+│     │        │  └─ Identifier: __ssize_t
 │     │        └─ Identifier: 
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
 │     │  ├─ Identifier: _IO_sgetn
 │     │  └─ Arguments
 │     ├─ FunctionDeclaration
-│     │  ├─ Alias
-│     │  │  ├─ From:
-│     │  │  │  └─ BuiltinType: int64
-│     │  │  └─ To:
-│     │  │     └─ Identifier: __off64_t
+│     │  ├─ Symbol
+│     │  │  └─ Identifier: __off64_t
 │     │  ├─ Identifier: _IO_seekoff
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: _IO_FILE
 │     │     │  └─ Identifier: 
 │     │     ├─ Declaration
-│     │     │  ├─ Alias
-│     │     │  │  ├─ From:
-│     │     │  │  │  └─ BuiltinType: int64
-│     │     │  │  └─ To:
-│     │     │  │     └─ Identifier: __off64_t
+│     │     │  ├─ Symbol
+│     │     │  │  └─ Identifier: __off64_t
 │     │     │  └─ Identifier: 
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: int32
@@ -739,27 +655,18 @@
 │     │        ├─ BuiltinType: int32
 │     │        └─ Identifier: 
 │     ├─ FunctionDeclaration
-│     │  ├─ Alias
-│     │  │  ├─ From:
-│     │  │  │  └─ BuiltinType: int64
-│     │  │  └─ To:
-│     │  │     └─ Identifier: __off64_t
+│     │  ├─ Symbol
+│     │  │  └─ Identifier: __off64_t
 │     │  ├─ Identifier: _IO_seekpos
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: _IO_FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: _IO_FILE
 │     │     │  └─ Identifier: 
 │     │     ├─ Declaration
-│     │     │  ├─ Alias
-│     │     │  │  ├─ From:
-│     │     │  │  │  └─ BuiltinType: int64
-│     │     │  │  └─ To:
-│     │     │  │     └─ Identifier: __off64_t
+│     │     │  ├─ Symbol
+│     │     │  │  └─ Identifier: __off64_t
 │     │     │  └─ Identifier: 
 │     │     └─ Declaration
 │     │        ├─ BuiltinType: int32
@@ -770,11 +677,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: _IO_FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: _IO_FILE
 │     │        └─ Identifier: 
 │     ├─ Alias
 │     │  ├─ From:
@@ -783,29 +687,20 @@
 │     │     └─ Identifier: va_list
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: int64
-│     │  │     └─ To:
-│     │  │        └─ Identifier: __off_t
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: __off_t
 │     │  └─ To:
 │     │     └─ Identifier: off_t
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: int64
-│     │  │     └─ To:
-│     │  │        └─ Identifier: __ssize_t
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: __ssize_t
 │     │  └─ To:
 │     │     └─ Identifier: ssize_t
 │     ├─ Alias
 │     │  ├─ From:
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: any
-│     │  │     └─ To:
-│     │  │        └─ Identifier: _G_fpos_t
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: _G_fpos_t
 │     │  └─ To:
 │     │     └─ Identifier: fpos_t
 │     ├─ VariableDeclaration
@@ -861,11 +756,8 @@
 │     │        └─ Identifier: __new
 │     ├─ FunctionDeclaration
 │     │  ├─ Reference
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: any
-│     │  │     └─ To:
-│     │  │        └─ Identifier: FILE
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: FILE
 │     │  ├─ Identifier: tmpfile
 │     │  └─ Arguments
 │     ├─ FunctionDeclaration
@@ -898,11 +790,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -910,11 +799,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -922,19 +808,13 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ Reference
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: any
-│     │  │     └─ To:
-│     │  │        └─ Identifier: FILE
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: FILE
 │     │  ├─ Identifier: fopen
 │     │  └─ Arguments
 │     │     ├─ Declaration
@@ -945,11 +825,8 @@
 │     │        └─ Identifier: __modes
 │     ├─ FunctionDeclaration
 │     │  ├─ Reference
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: any
-│     │  │     └─ To:
-│     │  │        └─ Identifier: FILE
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: FILE
 │     │  ├─ Identifier: freopen
 │     │  └─ Arguments
 │     │     ├─ Declaration
@@ -960,19 +837,13 @@
 │     │     │  └─ Identifier: __modes
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ Reference
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: any
-│     │  │     └─ To:
-│     │  │        └─ Identifier: FILE
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: FILE
 │     │  ├─ Identifier: fdopen
 │     │  └─ Arguments
 │     │     ├─ Declaration
@@ -983,11 +854,8 @@
 │     │        └─ Identifier: __modes
 │     ├─ FunctionDeclaration
 │     │  ├─ Reference
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: any
-│     │  │     └─ To:
-│     │  │        └─ Identifier: FILE
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: FILE
 │     │  ├─ Identifier: fmemopen
 │     │  └─ Arguments
 │     │     ├─ Declaration
@@ -1001,11 +869,8 @@
 │     │        └─ Identifier: __modes
 │     ├─ FunctionDeclaration
 │     │  ├─ Reference
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: any
-│     │  │     └─ To:
-│     │  │        └─ Identifier: FILE
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: FILE
 │     │  ├─ Identifier: open_memstream
 │     │  └─ Arguments
 │     │     ├─ Declaration
@@ -1022,11 +887,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     └─ Declaration
 │     │        ├─ BuiltinType: str
@@ -1037,11 +899,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: str
@@ -1058,11 +917,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: str
@@ -1076,11 +932,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1088,11 +941,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     └─ Declaration
 │     │        ├─ BuiltinType: str
@@ -1120,11 +970,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __s
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: str
@@ -1213,11 +1060,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     └─ Declaration
 │     │        ├─ BuiltinType: str
@@ -1245,11 +1089,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     └─ Declaration
 │     │        ├─ BuiltinType: str
@@ -1277,11 +1118,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __s
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: str
@@ -1318,11 +1156,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __s
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: str
@@ -1359,11 +1194,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1371,11 +1203,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1387,11 +1216,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1403,11 +1229,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1418,11 +1241,8 @@
 │     │     │  └─ Identifier: __c
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1433,11 +1253,8 @@
 │     │     │  └─ Identifier: __c
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1455,11 +1272,8 @@
 │     │     │  └─ Identifier: __c
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1470,11 +1284,8 @@
 │     │     │  └─ Identifier: __c
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1489,11 +1300,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1504,11 +1312,8 @@
 │     │     │  └─ Identifier: __w
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: str
@@ -1522,18 +1327,12 @@
 │     │     │  └─ Identifier: __n
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
-│     │  ├─ Alias
-│     │  │  ├─ From:
-│     │  │  │  └─ BuiltinType: int64
-│     │  │  └─ To:
-│     │  │     └─ Identifier: __ssize_t
+│     │  ├─ Symbol
+│     │  │  └─ Identifier: __ssize_t
 │     │  ├─ Identifier: __getdelim
 │     │  └─ Arguments
 │     │     ├─ Declaration
@@ -1549,18 +1348,12 @@
 │     │     │  └─ Identifier: __delimiter
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
-│     │  ├─ Alias
-│     │  │  ├─ From:
-│     │  │  │  └─ BuiltinType: int64
-│     │  │  └─ To:
-│     │  │     └─ Identifier: __ssize_t
+│     │  ├─ Symbol
+│     │  │  └─ Identifier: __ssize_t
 │     │  ├─ Identifier: getdelim
 │     │  └─ Arguments
 │     │     ├─ Declaration
@@ -1576,18 +1369,12 @@
 │     │     │  └─ Identifier: __delimiter
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
-│     │  ├─ Alias
-│     │  │  ├─ From:
-│     │  │  │  └─ BuiltinType: int64
-│     │  │  └─ To:
-│     │  │     └─ Identifier: __ssize_t
+│     │  ├─ Symbol
+│     │  │  └─ Identifier: __ssize_t
 │     │  ├─ Identifier: getline
 │     │  └─ Arguments
 │     │     ├─ Declaration
@@ -1600,11 +1387,8 @@
 │     │     │  └─ Identifier: __n
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1615,11 +1399,8 @@
 │     │     │  └─ Identifier: __s
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1637,11 +1418,8 @@
 │     │     │  └─ Identifier: __c
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1665,11 +1443,8 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     ├─ Declaration
 │     │     │  ├─ BuiltinType: int64
@@ -1683,11 +1458,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: void
@@ -1695,11 +1467,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1707,37 +1476,25 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     ├─ Declaration
-│     │     │  ├─ Alias
-│     │     │  │  ├─ From:
-│     │     │  │  │  └─ BuiltinType: int64
-│     │     │  │  └─ To:
-│     │     │  │     └─ Identifier: __off_t
+│     │     │  ├─ Symbol
+│     │     │  │  └─ Identifier: __off_t
 │     │     │  └─ Identifier: __off
 │     │     └─ Declaration
 │     │        ├─ BuiltinType: int32
 │     │        └─ Identifier: __whence
 │     ├─ FunctionDeclaration
-│     │  ├─ Alias
-│     │  │  ├─ From:
-│     │  │  │  └─ BuiltinType: int64
-│     │  │  └─ To:
-│     │  │     └─ Identifier: __off_t
+│     │  ├─ Symbol
+│     │  │  └─ Identifier: __off_t
 │     │  ├─ Identifier: ftello
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1745,19 +1502,13 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: fpos_t
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: fpos_t
 │     │        └─ Identifier: __pos
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1765,19 +1516,13 @@
 │     │  └─ Arguments
 │     │     ├─ Declaration
 │     │     │  ├─ Reference
-│     │     │  │  └─ Alias
-│     │     │  │     ├─ From:
-│     │     │  │     │  └─ BuiltinType: any
-│     │     │  │     └─ To:
-│     │     │  │        └─ Identifier: FILE
+│     │     │  │  └─ Symbol
+│     │     │  │     └─ Identifier: FILE
 │     │     │  └─ Identifier: __stream
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: const fpos_t
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: fpos_t
 │     │        └─ Identifier: __pos
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: void
@@ -1785,11 +1530,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1797,11 +1539,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1809,11 +1548,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: void
@@ -1821,11 +1557,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1833,11 +1566,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1845,11 +1575,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: void
@@ -1872,11 +1599,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1884,19 +1608,13 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ Reference
-│     │  │  └─ Alias
-│     │  │     ├─ From:
-│     │  │     │  └─ BuiltinType: any
-│     │  │     └─ To:
-│     │  │        └─ Identifier: FILE
+│     │  │  └─ Symbol
+│     │  │     └─ Identifier: FILE
 │     │  ├─ Identifier: popen
 │     │  └─ Arguments
 │     │     ├─ Declaration
@@ -1911,11 +1629,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: str
@@ -1930,11 +1645,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     ├─ FunctionDeclaration
 │     │  ├─ BuiltinType: int32
@@ -1942,11 +1654,8 @@
 │     │  └─ Arguments
 │     │     └─ Declaration
 │     │        ├─ Reference
-│     │        │  └─ Alias
-│     │        │     ├─ From:
-│     │        │     │  └─ BuiltinType: any
-│     │        │     └─ To:
-│     │        │        └─ Identifier: FILE
+│     │        │  └─ Symbol
+│     │        │     └─ Identifier: FILE
 │     │        └─ Identifier: __stream
 │     └─ FunctionDeclaration
 │        ├─ BuiltinType: void
@@ -1954,11 +1663,8 @@
 │        └─ Arguments
 │           └─ Declaration
 │              ├─ Reference
-│              │  └─ Alias
-│              │     ├─ From:
-│              │     │  └─ BuiltinType: any
-│              │     └─ To:
-│              │        └─ Identifier: FILE
+│              │  └─ Symbol
+│              │     └─ Identifier: FILE
 │              └─ Identifier: __stream
 └─ FunctionDefinition
    ├─ FunctionDeclaration
