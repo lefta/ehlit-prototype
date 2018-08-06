@@ -26,8 +26,9 @@ from argparse import ArgumentParser
 from clang.cindex import Index, TranslationUnitLoadError, CursorKind, TypeKind
 from ehlit.parser.error import ParseError, Failure
 from ehlit.parser import ast
+from typing import List
 
-include_dirs = []
+include_dirs: List[str] = []
 
 # Add CFLAGS environment variable include dirs
 parser = ArgumentParser()
