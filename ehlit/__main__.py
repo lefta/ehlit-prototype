@@ -50,5 +50,5 @@ except ParseError as err:
     exit(-1)
 
 except options.ArgError as err:
-  logging.error(err)
+  logging.error(str(err))
   exit(-1)
