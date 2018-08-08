@@ -1,6 +1,6 @@
-include stdio
-
 int main() {
-  printf("%i %i %i", sizeof(int), sizeof(int[]), sizeof(ref int))
+  int sz = sizeof(int)
+  sz = sizeof(int[])
+  sz = sizeof(ref int)
   return 0
 }

@@ -1,10 +1,8 @@
 #include <stddef.h>
 #include <stdint.h>
-#include <stdio.h>
 
 int32_t const* const print_int(int32_t const* const i)
 {
-    printf("%d\n", *i);
     return (i);
 }
 

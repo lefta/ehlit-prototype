@@ -1,8 +1,5 @@
-include stdio
-
 const ref const int print_int(const ref const int i)
 {
-	printf("%d\n", i)
 	return ref i
 }
 

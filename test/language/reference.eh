@@ -1,5 +1,3 @@
-include stdio
-
 int set_int(ref int i)
 {
 	i = 42

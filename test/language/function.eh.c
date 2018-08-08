@@ -1,6 +1,13 @@
 #include <stddef.h>
 #include <stdint.h>
-#include <stdio.h>
+
+void simple_fn(int32_t i)
+{
+}
+
+void simple_fn_str(char* s)
+{
+}
 
 int32_t* ref_call(void)
 {
@@ -50,8 +57,9 @@ void declared_later(void);
 
 int32_t main(int32_t ac, char** av)
 {
-    puts("Hello, world!\n");
-    printf("With some mathematics: 4 * 8 = %d", 4 * 8);
+    simple_fn(42);
+    simple_fn(4 * 8);
+    simple_fn_str("Hello, world!\n");
     ref_call();
     func_with_default_params(1, 2);
     func_with_default_params(3, 0);

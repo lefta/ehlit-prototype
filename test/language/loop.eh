@@ -1,10 +1,9 @@
-include stdio
-
+void do_something() {}
 int main() {
 	int i = 3
 
 	while i {
-		printf("looping\n")
+		do_something()
 		i = i - 1
 	}
 

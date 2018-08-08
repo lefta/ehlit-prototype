@@ -1,4 +1,5 @@
-include stdio
+void simple_fn(int i) {}
+void simple_fn_str(str s) {}
 
 ref int ref_call() {
 	return null
@@ -33,8 +34,9 @@ void func_with_trailing_comma(int arg,) {}
 
 int main(int ac, str[] av)
 {
-	puts("Hello, world!\n")
-	printf("With some mathematics: 4 * 8 = %d", 4 * 8)
+	simple_fn(42)
+	simple_fn(4 * 8)
+	simple_fn_str("Hello, world!\n")
 	ref_call()
 	func_with_default_params(1, 2)
 	func_with_default_params(3)

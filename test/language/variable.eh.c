@@ -1,6 +1,5 @@
 #include <stddef.h>
 #include <stdint.h>
-#include <stdio.h>
 
 int32_t main(void)
 {
@@ -12,6 +11,5 @@ int32_t main(void)
         int32_t k;
         k = 1;
     }
-    printf("%d%d\n", i, j);
     return (0);
 }

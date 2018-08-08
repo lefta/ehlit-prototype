@@ -1,13 +1,16 @@
 #include <stddef.h>
 #include <stdint.h>
-#include <stdio.h>
+
+void do_something(void)
+{
+}
 
 int32_t main(void)
 {
     int32_t i = 3;
     while (i)
     {
-        printf("looping\n");
+        do_something();
         i = i - 1;
     }
     i = 3;

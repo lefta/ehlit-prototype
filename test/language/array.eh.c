@@ -1,6 +1,9 @@
 #include <stddef.h>
 #include <stdint.h>
-#include <stdio.h>
+
+void puts(char* s)
+{
+}
 
 int32_t main(int32_t ac, char** av)
 {

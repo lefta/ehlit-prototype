@@ -1,5 +1,3 @@
-include stdio
-
 alias int nb
 alias void nothing
 
@@ -9,9 +7,12 @@ nothing inc(ref int number) {
   number += 1
 }
 
+void do_nothing(nb n) {}
+
 nb main() {
-  alias printf p
+  alias do_nothing dn
   nb i = 42
-  p("%d\n", i)
+  inc(i)
+  dn(i)
   return i
 }

@@ -1,5 +1,3 @@
-include stdio
-
 int main()
 {
 	int i = 42
@@ -10,6 +8,5 @@ int main()
 		int k
 		k = 1
 	}
-	printf("%d%d\n", i, j)
 	return 0
 }

@@ -1,4 +1,4 @@
-include stdio
+void puts(str s) {}
 
 int main(int ac, str[] av)
 {

@@ -1,13 +1,13 @@
-include stdio
-
 any function()
 {
 	return null
 }
 
+void get_null(any p) {}
+
 int main()
 {
 	str s = null
-	printf("%s\n", null)
+	get_null(null)
 	return 0
 }
