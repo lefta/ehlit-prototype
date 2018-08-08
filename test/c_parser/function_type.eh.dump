@@ -1,0 +1,21 @@
+└─ Include
+   ├─ Identifier: c_parser/function_type
+   └─ Symbols found
+      ├─ Alias
+      │  ├─ From:
+      │  │  └─ FunctionType
+      │  │     ├─ BuiltinType: str
+      │  │     └─ Arguments:
+      │  │        └─ BuiltinType: int32
+      │  └─ To:
+      │     └─ Identifier: fun
+      └─ FunctionDeclaration
+         ├─ BuiltinType: void
+         ├─ Identifier: fun2
+         └─ Arguments
+            └─ Declaration
+               ├─ FunctionType
+               │  ├─ BuiltinType: str
+               │  └─ Arguments:
+               │     └─ BuiltinType: int32
+               └─ Identifier: param

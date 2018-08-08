@@ -213,7 +213,10 @@ def type_POINTER(typ):
   }.get(subtype.kind)
   if builtin_type is not None:
     return builtin_type
-  return ast.Reference(type_to_ehlit(subtype))
+  res = type_to_ehlit(subtype)
+  if type(res) == ast.FunctionType:
+    return res
+  return ast.Reference(res)
 
 def type_TYPEDEF(typ):
   return ast.Symbol([ast.Identifier(0, typ.get_declaration().spelling)])
@@ -245,3 +248,12 @@ def type_RECORD(typ):
       raise KeyError
     return res
   return ast.Symbol([ast.Identifier(0, typ.spelling)])
+
+def type_FUNCTIONPROTO(typ):
+  args = []
+  for a in typ.argument_types():
+    args.append(type_to_ehlit(a))
+  return ast.FunctionType(type_to_ehlit(typ.get_result()), args)
+
+def type_UNEXPOSED(typ):
+  return type_to_ehlit(typ.get_canonical())
