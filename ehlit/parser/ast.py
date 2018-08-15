@@ -416,6 +416,14 @@ class FunctionType(Type):
   def ref_offset(self):
     return self.ret.ref_offset
 
+  @property
+  def decl(self):
+    return self
+
+  @property
+  def typ(self):
+    return self
+
 class Operator(Node):
   def __init__(self, op):
     self.op = op
