@@ -1,6 +1,7 @@
 PROJECT_NAME           = "Ehlit Code"
 
 INPUT                  = "ehlit"
+EXTRACT_PRIVATE        = YES
 OPTIMIZE_OUTPUT_JAVA   = YES
 OUTPUT_DIRECTORY       = "doc"
 RECURSIVE              = YES

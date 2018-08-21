@@ -19,6 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from abc import abstractmethod
 from os import path, getcwd, listdir
 from typing import List, Union
 from ehlit.parser import c_compat, parse
@@ -139,12 +140,22 @@ class Node:
 
 
 class GenericExternInclusion(Node):
-  def __init__(self, pos: int, lib) -> None:
+  '''! Base for include and import defining shared behaviors '''
+  def __init__(self, pos: int, lib: 'Symbol') -> None:
+    '''! Constructor
+    @param pos @b int The position of the node in the source file
+    @param lib @b Symbol Path of the file to be imported
+    '''
     super().__init__(pos)
-    self.lib = Identifier(lib.pos, path.join(*[x.name for x in lib.elems]))
+    ## @b Identifier The library that will be imported
+    self.lib: 'Identifier' = Identifier(lib.pos, path.join(*[x.name for x in lib.elems]))
+    ## @b List[Node] The symbols that have been imported from the library
     self.syms: List[Node] = []
 
-  def build(self, parent: Node):
+  def build(self, parent: Node) -> None:
+    '''! Build the node, this actually imports the file
+    @param parent @b Node The parent of this node
+    '''
     super().build(parent)
     try:
       self.syms = self.parse()
@@ -155,20 +166,35 @@ class GenericExternInclusion(Node):
     for s in self.syms:
       s.build(self)
 
+  @abstractmethod
   def parse(self) -> List[Node]:
+    '''! Parse the imported file
+    @return @b List[Node] A list of the imported nodes
+    '''
     raise NotImplementedError
 
-  def get_declaration(self, sym):
+  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+    '''! Look for a declaration from the imported file
+    @param sym @b List[str] The symbol to look for
+    @return @b Declaration|FunctionDeclaration The declaration if found, @c None otherwise
+    '''
     for s in self.syms:
-      decl = s.get_declaration(sym)
+      decl: OptionalDeclarationType = s.get_declaration(sym)
       if decl is not None:
         return decl
+    return None
 
 class Import(GenericExternInclusion):
-  def import_dir(self, dir):
-    res = []
+  '''! Specialization of GenericExternInclusion for Ehlit imports. '''
+  def import_dir(self, dir: str) -> List[Node]:
+    '''! Import a whole directory.
+    This recursively imports all Ehlit files in the specified directory.
+    @param dir @b str The directory to import.
+    @return @b List[Node] A list of the imported nodes.
+    '''
+    res: List[Node] = []
     for sub in listdir(dir):
-      full_path = path.join(dir, sub)
+      full_path: str = path.join(dir, sub)
       if full_path in imported:
         continue
       imported.append(full_path)
@@ -178,9 +204,12 @@ class Import(GenericExternInclusion):
         res += parse.parse(full_path).nodes
     return res
 
-  def parse(self):
+  def parse(self) -> List[Node]:
+    '''! Parse the imported file or directory contents.
+    @return @b List[Node] A list of the imported nodes.
+    '''
     for p in self.import_paths:
-      full_path = path.abspath(path.join(p, self.lib.name))
+      full_path: str = path.abspath(path.join(p, self.lib.name))
       if path.isdir(full_path):
         if full_path in imported:
           return []
@@ -196,22 +225,42 @@ class Import(GenericExternInclusion):
     return []
 
 class Include(GenericExternInclusion):
-  def parse(self):
+  '''! Specialization of GenericExternInclusion for C includes. '''
+  def parse(self) -> List[Node]:
+    '''! Parse the included file.
+    @return @b List[Node] A list of the imported nodes.
+    '''
     return c_compat.parse_header(self.lib.name)
 
 class Value(Node):
-  def __init__(self, pos=0):
+  '''! Base for all nodes representing a value. '''
+  def __init__(self, pos: int =0) -> None:
+    '''! Constructor
+    @param pos @b int The position of the node in the source file
+    '''
     super().__init__(pos)
-    self.ref_offset = 0
-    self.cast = None
+    ## @b int Referencing offset to be applied when writing this value.
+    self.ref_offset: int = 0
+    ## @b Type Cast to apply to this value when writing it, if relevant.
+    self.cast: 'Type' = None
 
-  def from_any_aligned(self, target, source, is_casting):
-    target_ref_count = source.ref_offset
-    res = target.typ.from_any()
+  def _from_any_aligned(target: Node, source: 'Type', is_casting: bool) -> 'Type':
+    '''! Compute the conversion needed to transform an any into target.
+    This function computes the referencing offset and / or the cast to make an @b any, or a
+    container of @b any, binary compatible with target. It also takes into account the will of the
+    developper if he wants more references than the minimum required.
+    @param target @b Node The target of the conversion, with which source will be made compatible.
+    @param source @b Type The source type that should be converted. It shall be either an @c any, or
+      any container of it.
+    @param is_casting @b bool Whether we are already in a casting context or not.
+    @return @b Type The cast needed for a successful conversion.
+    '''
+    target_ref_count: int = source.ref_offset
+    res: 'Type' = target.typ.from_any()
     if is_casting:
       # We align the result to match the ref offset of the target
       if not target.is_declaration() and not target.is_type:
-        target_ref_offset = target.ref_offset
+        target_ref_offset: int = target.ref_offset
         while target_ref_offset > 0:
           res = res.child
           target_ref_offset -= 1
@@ -230,17 +279,20 @@ class Value(Node):
         target_ref_count -= 1
     return res
 
-  def auto_cast(self, target):
-    src = self.typ
-    target_ref_level = 0
-    self_typ = self.typ.inner_child
-    target_typ = target.typ.inner_child
+  def auto_cast(self, target: Node) -> None:
+    '''! Make this value binary compatible with target.
+    @param target @b Node The node that this value shall be made compatible with.
+    '''
+    src: 'Type' = self.typ
+    target_ref_level: int = 0
+    self_typ: 'Type' = self.typ.inner_child
+    target_typ: 'Type' = target.typ.inner_child
     if self_typ != target_typ:
       if self_typ == BuiltinType('any'):
-        src = self.from_any_aligned(target, self.typ, True)
+        src = Value._from_any_aligned(target, self.typ, True)
         self.cast = src
       elif target_typ == BuiltinType('any'):
-        target = self.from_any_aligned(self, target.typ, False)
+        target = Value._from_any_aligned(self, target.typ, False)
         parent = self.parent
         if type(parent) is Symbol:
           parent = parent.parent
@@ -453,6 +505,7 @@ class Assignment(Node):
 
 class Declaration(Node):
   def __init__(self, typ, sym):
+    super().__init__(0)
     self.typ = typ
     self.name = sym.name if sym is not None else None
     self.sym = sym
