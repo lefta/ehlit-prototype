@@ -23,11 +23,6 @@ from arpeggio import PTNodeVisitor
 
 from ehlit.parser import ast
 
-class UnparsedContents:
-  def __init__(self, contents, pos):
-    self.contents = contents
-    self.pos = pos
-
 class ASTBuilder(PTNodeVisitor):
   def visit_comment(self, node, children): return None
   def visit_trailing_comma(self, node, children): return None
@@ -220,7 +215,7 @@ class ASTBuilder(PTNodeVisitor):
       res += str(s)
     return res
   def visit_control_structure_body_stub(self, node, children):
-    return UnparsedContents(children[0], node.position)
+    return ast.UnparsedContents(children[0], node.position)
 
   def visit_function_prototype(self, node, children):
     args = []

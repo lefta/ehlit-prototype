@@ -30,6 +30,18 @@ MOD_CONST = 1
 
 imported: List[str] = []
 
+class UnparsedContents:
+  '''!
+  Contents for which parsing have been delayed, for example because of a lack of context.
+  '''
+  def __init__(self, contents: str, pos: int) -> None:
+    '''! Constructor
+    @param contents @b str Contents to be parsed later.
+    @param pos @b int Position of the contents in the file.
+    '''
+    self.contents: str = contents
+    self.pos: int = pos
+
 class Node:
   '''!
   Base class for all AST node types. It defines some default behaviors.
@@ -574,10 +586,10 @@ class FunctionDeclaration(Declaration):
 
 class FunctionDefinition(FunctionDeclaration):
   def __init__(self, typ: Type, sym: 'Symbol', args: List[VariableDeclaration],
-               body_str: str, is_variadic: bool =False) -> None:
+               body_str: UnparsedContents, is_variadic: bool =False) -> None:
     super().__init__(typ, sym, args, is_variadic)
     self.body: List[Statement] = []
-    self.body_str: str = body_str
+    self.body_str: UnparsedContents = body_str
     self.predeclarations: List[Declaration] = []
 
   def build(self, parent: Node) -> None:
@@ -813,8 +825,9 @@ class Identifier(Value, Type):
   def build(self, parent: Node) -> None:
     super().build(parent)
     if not parent.is_declaration():
-      # Only declarations use an identifier directly, all other node types shall use Symbol
-      self.decl = parent.find_declaration(self)
+      # Only declarations may use an identifier directly, all other node types must use Symbol
+      assert isinstance(parent, Symbol), "Only declarations may use an identifier directly"
+      self.decl = parent.find_declaration_for(self)
       if self.decl is None:
         self.error(self.pos, "use of undeclared identifier %s" % self.name)
       else:
@@ -881,12 +894,13 @@ class Symbol(Value, Type):
   def from_any(self) -> Type:
     return self.elems[-1].from_any()
 
-  def find_declaration(self, identifier: List[str]) -> Optional[Declaration]:
+  def find_declaration_for(self, identifier: Identifier) -> Optional[Declaration]:
     i: int = 0
     while i < len(self.elems):
       if identifier is self.elems[i]:
         return self.parent.find_declaration([x.name for x in self.elems[:i+1]])
       i += 1
+    assert False, "This code may not be reached"
     return None
 
 class String(Value):
@@ -1103,7 +1117,6 @@ class AST(Node):
       getcwd(),
       path.dirname(args.output_import_file)]
 
-    self.parent = None
     for n in self.nodes:
       n.build(self)
     if len(self.failures) != 0:
