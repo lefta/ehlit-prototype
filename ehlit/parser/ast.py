@@ -30,8 +30,7 @@ MOD_CONST = 1
 
 imported: List[str] = []
 
-DeclarationType = Union['Declaration', 'FunctionDeclaration']
-OptionalDeclarationType = Union[DeclarationType, None]
+OptionalDeclarationType = Union['Declaration', None]
 
 class Node:
   '''!
@@ -125,7 +124,7 @@ class Node:
     '''
     self.parent.fail(ParseError.Severity.Warning, pos, msg)
 
-  def predeclare(self, decl: DeclarationType) -> None:
+  def predeclare(self, decl: 'Declaration') -> None:
     '''! Pre-declare a symbol.
     By default, this is only propagated to the parent. This may be overriden to handle the
     pre-declaration, for example for declaring a function before the one using it.
@@ -531,10 +530,6 @@ class Declaration(Node):
   def is_type(self) -> bool:
     return False
 
-  @property
-  def args(self) -> Union[List['VariableDeclaration'], None]:
-    return self.typ.args if type(self.typ) is FunctionType else None
-
 class VariableDeclaration(Declaration):
   def __init__(self, typ: Type, sym: 'Symbol', assign: VariableAssignment) -> None:
     super().__init__(typ, sym)
@@ -546,42 +541,31 @@ class VariableDeclaration(Declaration):
       self.assign.build(self)
       self.assign.expr.auto_cast(self)
 
-class FunctionDeclaration(Node):
+  @property
+  def args(self) -> Union[List['VariableDeclaration'], None]:
+    return self.typ.args if type(self.typ) is FunctionType else None
+
+class FunctionDeclaration(Declaration):
   def __init__(self, typ: Type, sym: 'Symbol', args: List[VariableDeclaration],
-               variadic: bool =False) -> None:
-    super().__init__(-1)
-    self.typ: Type = typ
-    self.sym: 'Symbol' = sym
+               is_variadic: bool =False) -> None:
+    super().__init__(typ, sym)
     self.args: List[VariableDeclaration] = args
-    self.name: str = sym.name
-    self.variadic: bool = variadic
+    self.is_variadic: bool = is_variadic
 
   def build(self, parent: Node) -> None:
     super().build(parent)
-    self.typ.build(self)
-    self.sym.build(self)
     for a in self.args:
       a.build(self)
 
   def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
-    if self.sym.name == sym[0]:
-      return self.declaration_match(sym)
+    decl: OptionalDeclarationType = super().get_declaration(sym)
+    if decl is not None:
+      return decl
     for a in self.args:
       decl: OptionalDeclarationType = a.get_declaration(sym)
       if decl is not None:
         return decl
     return None
-
-  def is_declaration(self) -> bool:
-    return True
-
-  @property
-  def is_type(self) -> bool:
-    return False
-
-  @property
-  def is_variadic(self) -> bool:
-    return self.variadic
 
 class FunctionDefinition(Node):
   def __init__(self, proto: FunctionDeclaration, body_str: str) -> None:
