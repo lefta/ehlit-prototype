@@ -228,10 +228,11 @@ class ASTBuilder(PTNodeVisitor):
     while i < len(children):
       args.append(children[i])
       i += 2
-    return ast.FunctionDeclaration(children[0], children[1], args)
-  def visit_function_declaration(self, node, children): return children[0]
+    return children[0], children[1], args
+  def visit_function_declaration(self, node, children):
+    return ast.FunctionDeclaration(*children[0])
   def visit_function_definition(self, node, children):
-    return ast.FunctionDefinition(children[0], children[1])
+    return ast.FunctionDefinition(*children[0], children[1])
   def visit_function(self, node, children): return children[0]
 
   def visit_include_instruction(self, node, children):

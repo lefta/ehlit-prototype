@@ -122,7 +122,7 @@ class DumpWriter:
   @indent
   def dumpFunctionDefinition(self, fun):
     self.dump('FunctionDefinition')
-    self.print_node(fun.proto)
+    self.dumpFunctionDeclaration(fun)
     self.print_node_list('FunctionBody', fun.body, False)
 
   @indent

@@ -21,7 +21,7 @@
 
 import sys
 from ehlit.parser.ast import (Reference, Array, ArrayAccess, BuiltinType, FunctionType,
-  FunctionDeclaration, FunctionCall, Symbol, Struct)
+  FunctionDeclaration, FunctionDefinition, FunctionCall, Symbol, Struct)
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -74,7 +74,7 @@ class SourceWriter:
       i += 1
 
   def write_value(self, node):
-    if type(node.decl) is FunctionDeclaration:
+    if isinstance(node.decl, FunctionDeclaration):
       parent = node.parent
       while type(parent) is Reference or type(parent) is Symbol:
         parent = parent.parent
@@ -216,17 +216,22 @@ class SourceWriter:
 
   def writeFunctionDefinition(self, fun):
     if self.in_import > 0:
-      self.writeFunctionDeclaration(fun.proto)
+      self.writeFunctionDeclaration(fun)
       return
 
     if len(fun.predeclarations) is not 0:
       self.file.write('\n')
     for decl in fun.predeclarations:
-      self.write(decl)
+      # It is possible that we get the definition of the function, but we only want to write
+      # its prototype. For all other declaration types, we can write it as is.
+      if type(decl) is FunctionDefinition:
+        self.writeFunctionDeclaration(decl)
+      else:
+        self.write(decl)
 
     self.write_indent()
     self.file.write("\n")
-    self.writeFunctionPrototype(fun.proto)
+    self.writeFunctionPrototype(fun)
     self.file.write("\n{\n")
 
     self.indent += 1

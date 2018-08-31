@@ -47,7 +47,7 @@ class ImportWriter:
   def writeImport(self, node): pass
   def write_type_prefix(self, node): pass
 
-  def writeFunctionDefinition(self, node): self.write(node.proto)
+  def writeFunctionDefinition(self, node): self.writeFunctionDeclaration(node)
 
   def writeFunctionDeclaration(self, node): SourceWriter.writeFunctionPrototype(self, node)
   def writeDeclaration(self, node):

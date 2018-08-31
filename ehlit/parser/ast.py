@@ -567,19 +567,17 @@ class FunctionDeclaration(Declaration):
         return decl
     return None
 
-class FunctionDefinition(Node):
-  def __init__(self, proto: FunctionDeclaration, body_str: str) -> None:
-    self.proto: FunctionDeclaration = proto
-    self.name: str = proto.sym.name
-    self.typ: Type = proto.typ
-    self.body: List[Node] = []
+class FunctionDefinition(FunctionDeclaration):
+  def __init__(self, typ: Type, sym: 'Symbol', args: List[VariableDeclaration],
+               body_str: str, is_variadic: bool =False) -> None:
+    super().__init__(typ, sym, args, is_variadic)
+    self.body: List[Statement] = []
     self.body_str: str = body_str
-    self.predeclarations: List[Node] = []
+    self.predeclarations: List[Declaration] = []
 
   def build(self, parent: Node) -> None:
     from ehlit.parser.parse import parse_function
     super().build(parent)
-    self.proto.build(self)
     try:
       typ: Type = self.typ
       if (type(typ) is Symbol):
@@ -594,7 +592,7 @@ class FunctionDefinition(Node):
         self.fail(f.severity, f.pos + self.body_str.pos, f.msg)
 
   def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
-    decl: OptionalDeclarationType = self.proto.get_declaration(sym)
+    decl: OptionalDeclarationType = super().get_declaration(sym)
     if decl is not None:
       return decl
 
@@ -603,9 +601,6 @@ class FunctionDefinition(Node):
       if decl is not None:
         return decl
     return None
-
-  def is_declaration(self) -> bool:
-    return True
 
   def fail(self, severity: int, pos: int, msg: str) -> None:
     super().fail(severity, pos + self.body_str.pos, msg)
