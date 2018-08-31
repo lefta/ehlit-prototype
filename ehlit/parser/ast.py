@@ -503,11 +503,10 @@ class Assignment(Node):
     self.expr.build(self)
 
 class Declaration(Node):
-  def __init__(self, typ: Type, sym: 'Symbol') -> None:
+  def __init__(self, typ: Type, sym: 'Identifier') -> None:
     super().__init__(0)
     self.typ: Type = typ
-    self.name: str = sym.name if sym is not None else None
-    self.sym: 'Symbol' = sym
+    self.sym: 'Identifier' = sym
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -529,6 +528,10 @@ class Declaration(Node):
   @property
   def is_type(self) -> bool:
     return False
+
+  @property
+  def name(self) -> str:
+    return self.sym.name if self.sym is not None else None
 
 class VariableDeclaration(Declaration):
   def __init__(self, typ: Type, sym: 'Symbol', assign: VariableAssignment) -> None:
