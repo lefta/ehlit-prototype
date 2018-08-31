@@ -84,8 +84,7 @@ def function_type_args(): return Optional(full_type), ZeroOrMore(',', full_type)
 def function_type(): return 'func', '<', full_type, '(', function_type_args, ')', '>'
 def full_type(): return [function_type, (modifier, [reference, builtin_type, symbol], array)]
 
-def declaration(): return full_type, identifier
-def variable_declaration(): return declaration, Optional(assignment)
+def variable_declaration(): return full_type, identifier, Optional(assignment)
 def variable_assignment():
   return [referenced_value, symbol], Optional(array_access), operation_assignment
 def return_instruction():

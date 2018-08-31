@@ -170,7 +170,8 @@ def parse_VAR_DECL(cursor):
     if got_eq is False:
       logging.debug('c_compat: error: unhandled assignment')
   return ast.VariableDeclaration(
-    ast.Declaration(type_to_ehlit(cursor.type), ast.Identifier(0, cursor.spelling)),
+    type_to_ehlit(cursor.type),
+    ast.Identifier(0, cursor.spelling),
     ast.Assignment(value) if value is not None else None
   )
 
@@ -196,10 +197,11 @@ def parse_STRUCT_DECL(cursor):
     return ast.Struct(0, ast.Identifier(0, cursor.spelling), None)
   fields = []
   for f in cursor.type.get_fields():
-    fields.append(ast.VariableDeclaration(ast.Declaration(
+    fields.append(ast.VariableDeclaration(
       type_to_ehlit(f.type),
-      ast.Identifier(0, f.spelling)
-    ), None))
+      ast.Identifier(0, f.spelling),
+      None
+    ))
   return ast.Struct(0, ast.Identifier(0, cursor.spelling), fields)
 
 

@@ -509,7 +509,6 @@ class Declaration(Node):
     self.typ: Type = typ
     self.name: str = sym.name if sym is not None else None
     self.sym: 'Symbol' = sym
-    self.assign: Assignment = None
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -536,31 +535,16 @@ class Declaration(Node):
   def args(self) -> Union[List['VariableDeclaration'], None]:
     return self.typ.args if type(self.typ) is FunctionType else None
 
-class VariableDeclaration(Node):
-  def __init__(self, decl: 'VariableDeclaration', assign: VariableAssignment) -> None:
-    self.decl: 'VariableDeclaration' = decl
+class VariableDeclaration(Declaration):
+  def __init__(self, typ: Type, sym: 'Symbol', assign: VariableAssignment) -> None:
+    super().__init__(typ, sym)
     self.assign: VariableAssignment = assign
 
   def build(self, parent: Node) -> None:
     super().build(parent)
-    self.decl.build(self)
     if self.assign is not None:
       self.assign.build(self)
-      self.assign.expr.auto_cast(self.decl)
-
-  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
-    return self.decl.get_declaration(sym)
-
-  def is_declaration(self) -> bool:
-    return True
-
-  @property
-  def typ(self) -> Type:
-    return self.decl.typ
-
-  @property
-  def sym(self) -> 'Symbol':
-    return self.decl.sym
+      self.assign.expr.auto_cast(self)
 
 class FunctionDeclaration(Node):
   def __init__(self, typ: Type, sym: 'Symbol', args: List[VariableDeclaration],

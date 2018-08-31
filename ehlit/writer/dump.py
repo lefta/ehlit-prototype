@@ -107,10 +107,10 @@ class DumpWriter:
   def dumpVariableDeclaration(self, decl):
     self.dump('VariableDeclaration')
     if decl.assign is not None:
-      self.print_node(decl.decl)
+      self.dumpDeclaration(decl)
       self.print_node(decl.assign, False)
     else:
-      self.print_node(decl.decl, False)
+      self.dumpDeclaration(decl, False)
 
   @indent
   def dumpFunctionDeclaration(self, fun):

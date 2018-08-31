@@ -184,7 +184,7 @@ class SourceWriter:
     self.write_declaration_post(decl.typ)
 
   def writeVariableDeclaration(self, decl):
-    self.write(decl.decl)
+    self.writeDeclaration(decl)
     if decl.assign is not None:
       self.write(decl.assign)
 
