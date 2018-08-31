@@ -427,7 +427,11 @@ class Reference(Value, Type):
 
   @property
   def typ(self) -> Type:
-    return self if self.is_type else self.decl.typ
+    if self.is_type:
+      return self
+    if self.decl is not None:
+      return self.decl.typ
+    return BuiltinType('any')
 
   @property
   def inner_child(self) -> Type:
