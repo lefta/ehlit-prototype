@@ -21,7 +21,7 @@
 
 from abc import abstractmethod
 from os import path, getcwd, listdir
-from typing import Any, List, Union
+from typing import Any, List, Optional, Union
 from ehlit.parser import c_compat, parse
 from ehlit.parser.error import ParseError, Failure
 
@@ -29,8 +29,6 @@ MOD_NONE = 0
 MOD_CONST = 1
 
 imported: List[str] = []
-
-OptionalDeclarationType = Union['Declaration', None]
 
 class Node:
   '''!
@@ -62,19 +60,19 @@ class Node:
     '''
     return False
 
-  def find_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def find_declaration(self, sym: List[str]) -> Optional['Declaration']:
     '''! Find a declaration when coming from downsides.
     Scoping structures (like functions) would want to search symbols in this function. The default
     is to try get_declaration on self, then to try with parent.
     @param sym @b List[str] The symbol to find.
     @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
     '''
-    decl: OptionalDeclarationType = self.get_declaration(sym)
+    decl: Optional[Declaration] = self.get_declaration(sym)
     if decl is None:
       return self.parent.find_declaration(sym)
     return decl
 
-  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def get_declaration(self, sym: List[str]) -> Optional['Declaration']:
     '''! Find a declaration when coming from upsides.
     Structures exposing symbols to their parent (like Import) would want to search symbols in this
     function.
@@ -83,7 +81,7 @@ class Node:
     '''
     return None
 
-  def get_inner_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def get_inner_declaration(self, sym: List[str]) -> Optional['Declaration']:
     '''! Find a declaration strictly in children.
     Container types (like structs) would want to search symbols in this function.
     @param sym @b List[str] The symbol to find.
@@ -91,7 +89,7 @@ class Node:
     '''
     return None
 
-  def declaration_match(self, sym: List[str]) -> OptionalDeclarationType:
+  def declaration_match(self, sym: List[str]) -> Optional['Declaration']:
     '''! Scoping nodes should call this function when they get a match in their respective
     `get_declaration` to automatically handle scope access (`foo.bar`).
     @param sym @b List[str] The symbol looked for.
@@ -172,13 +170,13 @@ class GenericExternInclusion(Node):
     '''
     raise NotImplementedError
 
-  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def get_declaration(self, sym: List[str]) -> Optional['Declaration']:
     '''! Look for a declaration from the imported file
     @param sym @b List[str] The symbol to look for
     @return @b Declaration|FunctionDeclaration The declaration if found, @c None otherwise
     '''
     for s in self.syms:
-      decl: OptionalDeclarationType = s.get_declaration(sym)
+      decl: Optional[Declaration] = s.get_declaration(sym)
       if decl is not None:
         return decl
     return None
@@ -357,7 +355,7 @@ class BuiltinType(Type):
     return self
 
   @property
-  def decl(self) -> OptionalDeclarationType:
+  def decl(self) -> Optional['Declaration']:
     return self
 
   def from_any(self) -> Type:
@@ -413,7 +411,7 @@ class Reference(Value, Type):
     return self.child.is_type
 
   @property
-  def decl(self) -> OptionalDeclarationType:
+  def decl(self) -> Optional['Declaration']:
     return self.child.decl
 
   @property
@@ -468,7 +466,7 @@ class FunctionType(Type):
     return self.ret.ref_offset
 
   @property
-  def decl(self) -> OptionalDeclarationType:
+  def decl(self) -> Optional['Declaration']:
     return self
 
   @property
@@ -514,12 +512,12 @@ class Declaration(Node):
     if self.sym is not None:
       self.sym.build(self)
 
-  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def get_declaration(self, sym: List[str]) -> Optional['Declaration']:
     if self.name == sym[0]:
       return self.declaration_match(sym)
     return None
 
-  def get_inner_declaration(self, sym: 'Symbol') -> OptionalDeclarationType:
+  def get_inner_declaration(self, sym: 'Symbol') -> Optional['Declaration']:
     return None if self.typ.decl is None else self.typ.decl.get_inner_declaration(sym)
 
   def is_declaration(self) -> bool:
@@ -560,12 +558,12 @@ class FunctionDeclaration(Declaration):
     for a in self.args:
       a.build(self)
 
-  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
-    decl: OptionalDeclarationType = super().get_declaration(sym)
+  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
+    decl: Optional[Declaration] = super().get_declaration(sym)
     if decl is not None:
       return decl
     for a in self.args:
-      decl: OptionalDeclarationType = a.get_declaration(sym)
+      decl: Optional[Declaration] = a.get_declaration(sym)
       if decl is not None:
         return decl
     return None
@@ -594,8 +592,8 @@ class FunctionDefinition(FunctionDeclaration):
       for f in err.failures:
         self.fail(f.severity, f.pos + self.body_str.pos, f.msg)
 
-  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
-    decl: OptionalDeclarationType = super().get_declaration(sym)
+  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
+    decl: Optional[Declaration] = super().get_declaration(sym)
     if decl is not None:
       return decl
 
@@ -619,7 +617,7 @@ class Statement(Node):
     super().build(parent)
     self.expr.build(self)
 
-  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
     return self.expr.get_declaration(sym)
 
 class Expression(Node):
@@ -697,7 +695,7 @@ class FunctionCall(Node):
     return self.sym if self.is_cast else self.sym.typ
 
   @property
-  def decl(self) -> OptionalDeclarationType:
+  def decl(self) -> Optional[Declaration]:
     return self.sym if self.is_cast else self.sym.decl
 
   @property
@@ -728,7 +726,7 @@ class ArrayAccess(Value):
     return False
 
   @property
-  def decl(self) -> OptionalDeclarationType:
+  def decl(self) -> Optional[Declaration]:
     return self.child.decl
 
   def from_any(self) -> Type:
@@ -747,9 +745,9 @@ class ControlStructure(Node):
     for s in self.body:
       s.build(self)
 
-  def find_declaration(self, name: List[str]) -> OptionalDeclarationType:
+  def find_declaration(self, name: List[str]) -> Optional[Declaration]:
     for s in self.body:
-      decl: OptionalDeclarationType = s.get_declaration(name)
+      decl: Optional[Declaration] = s.get_declaration(name)
       if decl is not None:
         return decl
     return super().find_declaration(name)
@@ -806,7 +804,7 @@ class Identifier(Value, Type):
   def __init__(self, pos: int, name: str) -> None:
     super().__init__(pos)
     self.name: str = name
-    self.decl: OptionalDeclarationType = None
+    self.decl: Optional[Declaration] = None
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -858,7 +856,7 @@ class Symbol(Value, Type):
     return self.elems[-1].is_type
 
   @property
-  def decl(self) -> OptionalDeclarationType:
+  def decl(self) -> Optional[Declaration]:
     return self.elems[-1].decl
 
   @property
@@ -879,7 +877,7 @@ class Symbol(Value, Type):
   def from_any(self) -> Type:
     return self.elems[-1].from_any()
 
-  def find_declaration(self, identifier: List[str]) -> OptionalDeclarationType:
+  def find_declaration(self, identifier: List[str]) -> Optional[Declaration]:
     i: int = 0
     while i < len(self.elems):
       if identifier is self.elems[i]:
@@ -960,7 +958,7 @@ class UnaryOperatorValue(Node):
     return self.val.typ
 
   @property
-  def decl(self) -> OptionalDeclarationType:
+  def decl(self) -> Optional[Declaration]:
     return self.val.decl
 
   def auto_cast(self, tgt: Type) -> None:
@@ -993,7 +991,7 @@ class Alias(Node):
     super().build(parent)
     self.src.build(self)
 
-  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
     if self.dst.name == sym[0]:
       if type(self.src) is BuiltinType:
         return self.declaration_match(sym)
@@ -1044,10 +1042,10 @@ class Struct(Node):
     return True
 
   @property
-  def decl(self) -> OptionalDeclarationType:
+  def decl(self) -> Optional[Declaration]:
     return self
 
-  def get_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
     if self.sym.name == sym[0]:
       return self.declaration_match(sym)
     return None
@@ -1068,9 +1066,9 @@ class Struct(Node):
   def name(self) -> str:
     return self.sym.name
 
-  def get_inner_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def get_inner_declaration(self, sym: List[str]) -> Optional[Declaration]:
     for f in self.fields:
-      decl: OptionalDeclarationType = f.get_declaration(sym)
+      decl: Optional[Declaration] = f.get_declaration(sym)
       if decl is not None:
         return decl.declaration_match(sym)
     return None
@@ -1110,9 +1108,9 @@ class AST(Node):
   def fail(self, severity: int, pos: int, msg: str) -> None:
     self.failures.append(Failure(severity, pos, msg, self.parser.file_name))
 
-  def find_declaration(self, sym: List[str]) -> OptionalDeclarationType:
+  def find_declaration(self, sym: List[str]) -> Optional[Declaration]:
     for n in self.nodes:
-      res: OptionalDeclarationType = n.get_declaration(sym)
+      res: Optional[Declaration] = n.get_declaration(sym)
       if res is not None:
         return res
     return None
