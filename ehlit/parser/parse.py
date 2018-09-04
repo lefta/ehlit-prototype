@@ -20,13 +20,14 @@
 # SOFTWARE.
 
 from arpeggio import ParserPython, visit_parse_tree, NoMatch, StrMatch
+from typing import List
 
 from ehlit.parser.grammar import grammar, function_body_grammar, Context
 from ehlit.parser.ast_builder import ASTBuilder
 from ehlit.parser.error import ParseError, Failure
 
 def handle_parse_error(err, parser):
-  exp = []
+  exp: List[str] = []
   for r in err.rules:
     if type(r) is StrMatch:
       r = "'%s'" % str(r)
