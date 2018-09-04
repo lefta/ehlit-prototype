@@ -502,10 +502,6 @@ class FunctionType(Type):
     return self.ret.ref_offset
 
   @property
-  def decl(self) -> Optional['Declaration']:
-    return self
-
-  @property
   def typ(self) -> Type:
     return self
 
@@ -555,9 +551,6 @@ class Declaration(DeclarationBase):
 
   def get_inner_declaration(self, sym: List[str]) -> Optional['DeclarationBase']:
     return None if self.typ.decl is None else self.typ.decl.get_inner_declaration(sym)
-
-  def is_declaration(self) -> bool:
-    return True
 
   @property
   def is_type(self) -> bool:
