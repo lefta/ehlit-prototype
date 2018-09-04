@@ -249,9 +249,25 @@ class Value(Node):
     '''
     super().__init__(pos)
     ## @b int Referencing offset to be applied when writing this value.
-    self.ref_offset: int = 0
+    self._ref_offset: int = 0
     ## @b Type Cast to apply to this value when writing it, if relevant.
-    self.cast: Union['Type', None] = None
+    self._cast: Optional['Type'] = None
+
+  @property
+  def ref_offset(self) -> int:
+    return self._ref_offset
+
+  @ref_offset.setter
+  def ref_offset(self, v: int) -> None:
+    self._ref_offset = v
+
+  @property
+  def cast(self) -> Optional['Type']:
+    return self._cast
+
+  @cast.setter
+  def cast(self, v: Optional['Type']) -> None:
+    self._cast = v
 
   def _from_any_aligned(target: Node, source: 'Type', is_casting: bool) -> 'Type':
     '''! Compute the conversion needed to transform an any into target.
