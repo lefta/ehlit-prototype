@@ -245,8 +245,6 @@ class DumpWriter:
   @indent
   def dumpIdentifier(self, node):
     self.dump('Identifier: ' + node.name)
-    if node.is_const:
-      self.print_str('Modifiers: const')
 
   @indent
   def dumpNumber(self, num):

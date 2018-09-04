@@ -121,8 +121,6 @@ class ImportWriter:
       fst = False
 
   def writeIdentifier(self, node):
-    if node.is_const:
-      self.file.write('const ')
     self.file.write(node.name)
 
   def writeNumber(self, node):

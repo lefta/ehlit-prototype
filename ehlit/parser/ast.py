@@ -832,7 +832,7 @@ class Return(Node):
       self.expr.auto_cast(decl)
 
 
-class Identifier(Value, Type):
+class Identifier(Value):
   def __init__(self, pos: int, name: str) -> None:
     super().__init__(pos)
     self.name: str = name
