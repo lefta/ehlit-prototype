@@ -8,7 +8,8 @@
       │  │     └─ Arguments:
       │  │        └─ BuiltinType: int32
       │  └─ To:
-      │     └─ Identifier: fun
+      │     └─ Symbol
+      │        └─ Identifier: fun
       └─ FunctionDeclaration
          ├─ BuiltinType: void
          ├─ Identifier: fun2

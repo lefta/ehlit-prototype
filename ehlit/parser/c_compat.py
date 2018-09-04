@@ -190,7 +190,8 @@ def parse_FUNCTION_DECL(cursor):
 def parse_TYPEDEF_DECL(cursor):
   return ast.Alias(
     type_to_ehlit(cursor.underlying_typedef_type),
-    ast.Identifier(0, cursor.spelling))
+    ast.Symbol([ast.Identifier(0, cursor.spelling)])
+  )
 
 def parse_STRUCT_DECL(cursor):
   if not cursor.is_definition():
