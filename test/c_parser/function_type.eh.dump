@@ -13,9 +13,10 @@
          ├─ BuiltinType: void
          ├─ Identifier: fun2
          └─ Arguments
-            └─ Declaration
-               ├─ FunctionType
-               │  ├─ BuiltinType: str
-               │  └─ Arguments:
-               │     └─ BuiltinType: int32
-               └─ Identifier: param
+            └─ VariableDeclaration
+               └─ Declaration
+                  ├─ FunctionType
+                  │  ├─ BuiltinType: str
+                  │  └─ Arguments:
+                  │     └─ BuiltinType: int32
+                  └─ Identifier: param

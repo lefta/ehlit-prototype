@@ -179,7 +179,7 @@ def parse_FUNCTION_DECL(cursor):
   args = []
   for c in cursor.get_children():
     if c.kind == CursorKind.PARM_DECL:
-      args.append(ast.Declaration(type_to_ehlit(c.type), ast.Identifier(0, c.spelling)))
+      args.append(ast.VariableDeclaration(type_to_ehlit(c.type), ast.Identifier(0, c.spelling)))
 
   return ast.FunctionDeclaration(
     type_to_ehlit(cursor.type.get_result()),
