@@ -72,19 +72,19 @@ class Node:
     '''
     return False
 
-  def find_declaration(self, sym: List[str]) -> Optional['Declaration']:
+  def find_declaration(self, sym: List[str]) -> Optional['DeclarationBase']:
     '''! Find a declaration when coming from downsides.
     Scoping structures (like functions) would want to search symbols in this function. The default
     is to try get_declaration on self, then to try with parent.
     @param sym @b List[str] The symbol to find.
     @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
     '''
-    decl: Optional[Declaration] = self.get_declaration(sym)
+    decl: Optional[DeclarationBase] = self.get_declaration(sym)
     if decl is None:
       return self.parent.find_declaration(sym)
     return decl
 
-  def get_declaration(self, sym: List[str]) -> Optional['Declaration']:
+  def get_declaration(self, sym: List[str]) -> Optional['DeclarationBase']:
     '''! Find a declaration when coming from upsides.
     Structures exposing symbols to their parent (like Import) would want to search symbols in this
     function.
@@ -92,24 +92,6 @@ class Node:
     @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
     '''
     return None
-
-  def get_inner_declaration(self, sym: List[str]) -> Optional['Declaration']:
-    '''! Find a declaration strictly in children.
-    Container types (like structs) would want to search symbols in this function.
-    @param sym @b List[str] The symbol to find.
-    @return @b Declaration|FunctionDeclaration The inner declaration if found, None otherwise.
-    '''
-    return None
-
-  def declaration_match(self, sym: List[str]) -> Optional['Declaration']:
-    '''! Scoping nodes should call this function when they get a match in their respective
-    `get_declaration` to automatically handle scope access (`foo.bar`).
-    @param sym @b List[str] The symbol looked for.
-    @return @b Declaration|FunctionDeclaration The deepest declaration if found, None otherwise.
-    '''
-    if len(sym) is 1:
-      return self
-    return self.get_inner_declaration(sym[1:])
 
   def fail(self, severity: int, pos: int, msg: str) -> None:
     '''! Report a failure to the parent, up to the AST where it will be handled.
@@ -134,7 +116,7 @@ class Node:
     '''
     self.parent.fail(ParseError.Severity.Warning, pos, msg)
 
-  def predeclare(self, decl: 'Declaration') -> None:
+  def predeclare(self, decl: 'DeclarationBase') -> None:
     '''! Pre-declare a symbol.
     By default, this is only propagated to the parent. This may be overriden to handle the
     pre-declaration, for example for declaring a function before the one using it.
@@ -182,13 +164,13 @@ class GenericExternInclusion(Node):
     '''
     raise NotImplementedError
 
-  def get_declaration(self, sym: List[str]) -> Optional['Declaration']:
+  def get_declaration(self, sym: List[str]) -> Optional['DeclarationBase']:
     '''! Look for a declaration from the imported file
     @param sym @b List[str] The symbol to look for
     @return @b Declaration|FunctionDeclaration The declaration if found, @c None otherwise
     '''
     for s in self.syms:
-      decl: Optional[Declaration] = s.get_declaration(sym)
+      decl: Optional[DeclarationBase] = s.get_declaration(sym)
       if decl is not None:
         return decl
     return None
@@ -333,6 +315,28 @@ class Value(Node):
         target_ref_level += target.typ.ref_offset - target.ref_offset
       self.ref_offset = src.ref_offset - target_ref_level
 
+class DeclarationBase(Node):
+  def declaration_match(self, sym: List[str]) -> Optional['DeclarationBase']:
+    '''! Scoping nodes should call this function when they get a match in their respective
+    `get_declaration` to automatically handle scope access (`foo.bar`).
+    @param sym @b List[str] The symbol looked for.
+    @return @b Declaration|FunctionDeclaration The deepest declaration if found, None otherwise.
+    '''
+    if len(sym) is 1:
+      return self
+    return self.get_inner_declaration(sym[1:])
+
+  def get_inner_declaration(self, sym: List[str]) -> Optional['DeclarationBase']:
+    '''! Find a declaration strictly in children.
+    Container types (like structs) would want to search symbols in this function.
+    @param sym @b List[str] The symbol to find.
+    @return @b Declaration|FunctionDeclaration The inner declaration if found, None otherwise.
+    '''
+    return None
+
+  def is_declaration(self) -> bool:
+    return True
+
 class Type(Node):
   def __init__(self, pos: int =0) -> None:
     super().__init__(pos)
@@ -357,7 +361,7 @@ class Type(Node):
   def inner_child(self) -> Node:
     return self
 
-class BuiltinType(Type):
+class BuiltinType(Type, DeclarationBase):
   def __init__(self, name: str) -> None:
     super().__init__()
     self.name: str = name
@@ -383,7 +387,7 @@ class BuiltinType(Type):
     return self
 
   @property
-  def decl(self) -> Optional['Declaration']:
+  def decl(self) -> Optional['DeclarationBase']:
     return self
 
   def from_any(self) -> Type:
@@ -439,7 +443,7 @@ class Reference(Value, Type):
     return self.child.is_type
 
   @property
-  def decl(self) -> Optional['Declaration']:
+  def decl(self) -> Optional['DeclarationBase']:
     return self.child.decl
 
   @property
@@ -532,7 +536,7 @@ class Assignment(Node):
     super().build(parent)
     self.expr.build(self)
 
-class Declaration(Node):
+class Declaration(DeclarationBase):
   def __init__(self, typ: Type, sym: 'Identifier') -> None:
     super().__init__(0)
     self.typ: Type = typ
@@ -544,12 +548,12 @@ class Declaration(Node):
     if self.sym is not None:
       self.sym.build(self)
 
-  def get_declaration(self, sym: List[str]) -> Optional['Declaration']:
+  def get_declaration(self, sym: List[str]) -> Optional['DeclarationBase']:
     if self.name == sym[0]:
       return self.declaration_match(sym)
     return None
 
-  def get_inner_declaration(self, sym: 'Symbol') -> Optional['Declaration']:
+  def get_inner_declaration(self, sym: List[str]) -> Optional['DeclarationBase']:
     return None if self.typ.decl is None else self.typ.decl.get_inner_declaration(sym)
 
   def is_declaration(self) -> bool:
@@ -590,12 +594,12 @@ class FunctionDeclaration(Declaration):
     for a in self.args:
       a.build(self)
 
-  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
-    decl: Optional[Declaration] = super().get_declaration(sym)
+  def get_declaration(self, sym: List[str]) -> Optional[DeclarationBase]:
+    decl: Optional[DeclarationBase] = super().get_declaration(sym)
     if decl is not None:
       return decl
     for a in self.args:
-      decl: Optional[Declaration] = a.get_declaration(sym)
+      decl: Optional[DeclarationBase] = a.get_declaration(sym)
       if decl is not None:
         return decl
     return None
@@ -606,7 +610,7 @@ class FunctionDefinition(FunctionDeclaration):
     super().__init__(typ, sym, args, is_variadic)
     self.body: List[Statement] = []
     self.body_str: UnparsedContents = body_str
-    self.predeclarations: List[Declaration] = []
+    self.predeclarations: List[DeclarationBase] = []
 
   def build(self, parent: Node) -> None:
     from ehlit.parser.parse import parse_function
@@ -624,8 +628,8 @@ class FunctionDefinition(FunctionDeclaration):
       for f in err.failures:
         self.fail(f.severity, f.pos + self.body_str.pos, f.msg)
 
-  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
-    decl: Optional[Declaration] = super().get_declaration(sym)
+  def get_declaration(self, sym: List[str]) -> Optional[DeclarationBase]:
+    decl: Optional[DeclarationBase] = super().get_declaration(sym)
     if decl is not None:
       return decl
 
@@ -638,7 +642,7 @@ class FunctionDefinition(FunctionDeclaration):
   def fail(self, severity: int, pos: int, msg: str) -> None:
     super().fail(severity, pos + self.body_str.pos, msg)
 
-  def predeclare(self, decl: Node) -> None:
+  def predeclare(self, decl: DeclarationBase) -> None:
     self.predeclarations.append(decl)
 
 class Statement(Node):
@@ -649,7 +653,7 @@ class Statement(Node):
     super().build(parent)
     self.expr.build(self)
 
-  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
+  def get_declaration(self, sym: List[str]) -> Optional[DeclarationBase]:
     return self.expr.get_declaration(sym)
 
 class Expression(Node):
@@ -727,7 +731,7 @@ class FunctionCall(Node):
     return self.sym if self.is_cast else self.sym.typ
 
   @property
-  def decl(self) -> Optional[Declaration]:
+  def decl(self) -> Optional[DeclarationBase]:
     return self.sym if self.is_cast else self.sym.decl
 
   @property
@@ -758,7 +762,7 @@ class ArrayAccess(Value):
     return False
 
   @property
-  def decl(self) -> Optional[Declaration]:
+  def decl(self) -> Optional[DeclarationBase]:
     return self.child.decl
 
   def from_any(self) -> Type:
@@ -777,9 +781,9 @@ class ControlStructure(Node):
     for s in self.body:
       s.build(self)
 
-  def find_declaration(self, name: List[str]) -> Optional[Declaration]:
+  def find_declaration(self, name: List[str]) -> Optional[DeclarationBase]:
     for s in self.body:
-      decl: Optional[Declaration] = s.get_declaration(name)
+      decl: Optional[DeclarationBase] = s.get_declaration(name)
       if decl is not None:
         return decl
     return super().find_declaration(name)
@@ -836,7 +840,7 @@ class Identifier(Value):
   def __init__(self, pos: int, name: str) -> None:
     super().__init__(pos)
     self.name: str = name
-    self.decl: Optional[Declaration] = None
+    self.decl: Optional[DeclarationBase] = None
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -889,7 +893,7 @@ class Symbol(Value, Type):
     return self.elems[-1].is_type
 
   @property
-  def decl(self) -> Optional[Declaration]:
+  def decl(self) -> Optional[DeclarationBase]:
     return self.elems[-1].decl
 
   @property
@@ -910,7 +914,7 @@ class Symbol(Value, Type):
   def from_any(self) -> Type:
     return self.elems[-1].from_any()
 
-  def find_declaration_for(self, identifier: Identifier) -> Optional[Declaration]:
+  def find_declaration_for(self, identifier: Identifier) -> Optional[DeclarationBase]:
     i: int = 0
     while i < len(self.elems):
       if identifier is self.elems[i]:
@@ -992,7 +996,7 @@ class UnaryOperatorValue(Node):
     return self.val.typ
 
   @property
-  def decl(self) -> Optional[Declaration]:
+  def decl(self) -> Optional[DeclarationBase]:
     return self.val.decl
 
   def auto_cast(self, tgt: Type) -> None:
@@ -1016,7 +1020,7 @@ class Sizeof(Value):
   def typ(self) -> Type:
     return BuiltinType('size')
 
-class Alias(Node):
+class Alias(DeclarationBase):
   def __init__(self, src: Identifier, dst: Symbol) -> None:
     self.src: Identifier = src
     self.dst: Symbol = dst
@@ -1025,7 +1029,7 @@ class Alias(Node):
     super().build(parent)
     self.src.build(self)
 
-  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
+  def get_declaration(self, sym: List[str]) -> Optional[DeclarationBase]:
     if self.dst.name == sym[0]:
       if type(self.src) is BuiltinType:
         return self.declaration_match(sym)
@@ -1057,7 +1061,7 @@ class Alias(Node):
   def inner_child(self) -> Node:
     return self.dst
 
-class Struct(Node):
+class Struct(DeclarationBase):
   def __init__(self, pos: int, sym: Identifier,
                fields: Optional[List[VariableDeclaration]]) -> None:
     super().__init__(pos)
@@ -1073,14 +1077,11 @@ class Struct(Node):
         if f.assign is not None:
           self.error(self.pos, "struct fields may not have a value yet")
 
-  def is_declaration(self) -> bool:
-    return True
-
   @property
-  def decl(self) -> Optional[Declaration]:
+  def decl(self) -> Optional[DeclarationBase]:
     return self
 
-  def get_declaration(self, sym: List[str]) -> Optional[Declaration]:
+  def get_declaration(self, sym: List[str]) -> Optional[DeclarationBase]:
     if self.sym.name == sym[0]:
       return self.declaration_match(sym)
     return None
@@ -1101,9 +1102,9 @@ class Struct(Node):
   def name(self) -> str:
     return self.sym.name
 
-  def get_inner_declaration(self, sym: List[str]) -> Optional[Declaration]:
+  def get_inner_declaration(self, sym: List[str]) -> Optional[DeclarationBase]:
     for f in self.fields:
-      decl: Optional[Declaration] = f.get_declaration(sym)
+      decl: Optional[DeclarationBase] = f.get_declaration(sym)
       if decl is not None:
         return decl.declaration_match(sym)
     return None
@@ -1142,9 +1143,9 @@ class AST(Node):
   def fail(self, severity: int, pos: int, msg: str) -> None:
     self.failures.append(Failure(severity, pos, msg, self.parser.file_name))
 
-  def find_declaration(self, sym: List[str]) -> Optional[Declaration]:
+  def find_declaration(self, sym: List[str]) -> Optional[DeclarationBase]:
     for n in self.nodes:
-      res: Optional[Declaration] = n.get_declaration(sym)
+      res: Optional[DeclarationBase] = n.get_declaration(sym)
       if res is not None:
         return res
     return None
