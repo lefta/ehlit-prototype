@@ -944,9 +944,9 @@ class Char(Value):
     pass
 
 class Number(Value):
-  def __init__(self, num: int) -> None:
+  def __init__(self, num: str) -> None:
     super().__init__()
-    self.num: int = num
+    self.num: str = num
 
   @property
   def typ(self) -> Type:
