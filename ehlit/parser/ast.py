@@ -403,10 +403,10 @@ class BuiltinType(Type, DeclarationBase):
     return self.name == rhs.name
 
 class Array(Type):
-  def __init__(self, child: Type, length: Node) -> None:
+  def __init__(self, child: Type, length: Optional[Node]) -> None:
     super().__init__()
     self.child: Type = child
-    self.length: Node = length
+    self.length: Optional[Node] = length
 
   def build(self, parent: Node):
     super().build(parent)
@@ -484,10 +484,10 @@ class Reference(Value, Type):
     return self.child.any_memory_offset
 
 class FunctionType(Type):
-  def __init__(self, ret: Type, args: List['Declaration']) -> None:
+  def __init__(self, ret: Type, args: List['VariableDeclaration']) -> None:
     super().__init__()
+    self.args: List['VariableDeclaration'] = args
     self.ret: Type = ret
-    self.args: List['Declaration'] = args
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -517,8 +517,8 @@ class Operator(Node):
     pass
 
 class VariableAssignment(Node):
-  def __init__(self, var: 'VariableDeclaration', assign: 'Assignment') -> None:
-    self.var: 'VariableDeclaration' = var
+  def __init__(self, var: 'Symbol', assign: 'Assignment') -> None:
+    self.var: 'Symbol' = var
     self.assign: 'Assignment' = assign
 
   def build(self, parent: Node) -> None:
@@ -568,9 +568,9 @@ class Declaration(DeclarationBase):
     return self.sym.name if self.sym is not None else None
 
 class VariableDeclaration(Declaration):
-  def __init__(self, typ: Type, sym: 'Symbol', assign: VariableAssignment) -> None:
+  def __init__(self, typ: Type, sym: 'Identifier', assign: Optional[Assignment] =None) -> None:
     super().__init__(typ, sym)
-    self.assign: VariableAssignment = assign
+    self.assign: Optional[Assignment] = assign
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -583,7 +583,7 @@ class VariableDeclaration(Declaration):
     return self.typ.args if type(self.typ) is FunctionType else None
 
 class FunctionDeclaration(Declaration):
-  def __init__(self, typ: Type, sym: 'Symbol', args: List[VariableDeclaration],
+  def __init__(self, typ: Type, sym: 'Identifier', args: List[VariableDeclaration],
                is_variadic: bool =False) -> None:
     super().__init__(typ, sym)
     self.args: List[VariableDeclaration] = args
@@ -605,7 +605,7 @@ class FunctionDeclaration(Declaration):
     return None
 
 class FunctionDefinition(FunctionDeclaration):
-  def __init__(self, typ: Type, sym: 'Symbol', args: List[VariableDeclaration],
+  def __init__(self, typ: Type, sym: 'Identifier', args: List[VariableDeclaration],
                body_str: UnparsedContents, is_variadic: bool =False) -> None:
     super().__init__(typ, sym, args, is_variadic)
     self.body: List[Statement] = []
