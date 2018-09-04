@@ -1096,6 +1096,9 @@ class Struct(DeclarationBase):
     return self.sym.name
 
   def get_inner_declaration(self, sym: List[str]) -> Optional[DeclarationBase]:
+    if self.fields is None:
+      self.error(self.sym.pos, 'accessing incomplete struct {}'.format(self.sym.name))
+      return None
     for f in self.fields:
       decl: Optional[DeclarationBase] = f.get_declaration(sym)
       if decl is not None:
