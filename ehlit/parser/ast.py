@@ -1058,10 +1058,11 @@ class Alias(Node):
     return self.dst
 
 class Struct(Node):
-  def __init__(self, pos: int, sym: Symbol, fields: List[VariableDeclaration]) -> None:
+  def __init__(self, pos: int, sym: Identifier,
+               fields: Optional[List[VariableDeclaration]]) -> None:
     super().__init__(pos)
-    self.sym: Symbol = sym
-    self.fields: List[VariableDeclaration] = fields
+    self.sym: Identifier = sym
+    self.fields: Optional[List[VariableDeclaration]] = fields
 
   def build(self, parent: Node) -> None:
     super().build(parent)
