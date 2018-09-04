@@ -394,7 +394,7 @@ class BuiltinType(Type):
     return 0 if self.name == 'str' else 1
 
   def __eq__(self, rhs: object) -> bool:
-    if type(rhs) != BuiltinType:
+    if not isinstance(rhs, BuiltinType):
       return False
     return self.name == rhs.name
 
