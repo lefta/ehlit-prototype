@@ -1,27 +1,29 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: puts
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: str
-│  │           └─ Identifier: s
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: str
+│  │              └─ Identifier: s
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
-   │     ├─ VariableDeclaration
-   │     │  └─ Declaration
-   │     │     ├─ BuiltinType: int
-   │     │     └─ Identifier: ac
-   │     └─ VariableDeclaration
-   │        └─ Declaration
-   │           ├─ Array
-   │           │  └─ BuiltinType: str
-   │           └─ Identifier: av
+   │  └─ FunctionType
+   │     ├─ BuiltinType: int
+   │     └─ Arguments:
+   │        ├─ VariableDeclaration
+   │        │  └─ Declaration
+   │        │     ├─ BuiltinType: int
+   │        │     └─ Identifier: ac
+   │        └─ VariableDeclaration
+   │           └─ Declaration
+   │              ├─ Array
+   │              │  └─ BuiltinType: str
+   │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration

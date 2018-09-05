@@ -1,18 +1,19 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ Reference
-│  │  │  ├─ Modifiers: const
-│  │  │  └─ BuiltinType: int
-│  │  │     ├─ Modifiers: const
 │  │  ├─ Identifier: print_int
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  ├─ Modifiers: const
-│  │           │  └─ BuiltinType: int
-│  │           │     ├─ Modifiers: const
-│  │           └─ Identifier: i
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  ├─ Modifiers: const
+│  │     │  └─ BuiltinType: int
+│  │     │     ├─ Modifiers: const
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  ├─ Modifiers: const
+│  │              │  └─ BuiltinType: int
+│  │              │     ├─ Modifiers: const
+│  │              └─ Identifier: i
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -22,9 +23,9 @@
 │                    └─ Identifier: i
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ BuiltinType: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration

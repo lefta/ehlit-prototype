@@ -1,17 +1,18 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: int
 │  │  ├─ Identifier: fun
-│  │  └─ Arguments
-│  │     ├─ VariableDeclaration
-│  │     │  └─ Declaration
-│  │     │     ├─ BuiltinType: int
-│  │     │     └─ Identifier: i
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ BuiltinType: int
-│  │           └─ Identifier: j
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: int
+│  │     └─ Arguments:
+│  │        ├─ VariableDeclaration
+│  │        │  └─ Declaration
+│  │        │     ├─ BuiltinType: int
+│  │        │     └─ Identifier: i
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: int
+│  │              └─ Identifier: j
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -20,15 +21,16 @@
 │                 └─ Identifier: j
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ Reference
-│  │  │  └─ BuiltinType: int
 │  │  ├─ Identifier: ref_fun
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ BuiltinType: int
-│  │           └─ Identifier: i
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  └─ BuiltinType: int
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: int
+│  │              └─ Identifier: i
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -37,9 +39,9 @@
 │                 └─ Identifier: i
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ BuiltinType: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration

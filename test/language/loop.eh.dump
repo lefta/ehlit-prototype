@@ -1,14 +1,14 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: do_something
-│  │  └─ Arguments
+│  │  └─ FunctionType
+│  │     └─ BuiltinType: void
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ BuiltinType: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration

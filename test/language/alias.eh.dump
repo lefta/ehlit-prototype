@@ -12,15 +12,16 @@
 │        └─ Identifier: nothing
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ Symbol
-│  │  │  └─ Identifier: nothing
 │  │  ├─ Identifier: inc
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ BuiltinType: int
-│  │           └─ Identifier: number
+│  │  └─ FunctionType
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: nothing
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: int
+│  │              └─ Identifier: number
 │  └─ FunctionBody
 │     ├─ ConditionBranches
 │     │  └─ ControlStructure: if
@@ -43,21 +44,22 @@
 │                 └─ Number: 1
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: do_nothing
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Symbol
-│  │           │  └─ Identifier: nb
-│  │           └─ Identifier: n
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: nb
+│  │              └─ Identifier: n
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ Symbol
-   │  │  └─ Identifier: nb
    │  ├─ Identifier: main
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ Symbol
+   │        └─ Identifier: nb
    └─ FunctionBody
       ├─ Alias
       │  ├─ From:

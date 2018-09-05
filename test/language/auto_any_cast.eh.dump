@@ -1,12 +1,13 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: any
 │  │  ├─ Identifier: returning_any
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: any
-│  │           └─ Identifier: data
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: any
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: any
+│  │              └─ Identifier: data
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -15,15 +16,16 @@
 │                 └─ Identifier: data
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ Reference
-│  │  │  └─ BuiltinType: any
 │  │  ├─ Identifier: same_with_ref_any
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ BuiltinType: any
-│  │           └─ Identifier: data
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  └─ BuiltinType: any
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: any
+│  │              └─ Identifier: data
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableDeclaration
@@ -46,9 +48,9 @@
 │                 └─ Identifier: data
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ BuiltinType: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration

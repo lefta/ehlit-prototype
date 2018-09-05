@@ -1,18 +1,19 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: take_char
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: char
-│  │           └─ Identifier: c
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: char
+│  │              └─ Identifier: c
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ BuiltinType: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration

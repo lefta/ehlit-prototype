@@ -223,7 +223,7 @@ class ASTBuilder(PTNodeVisitor):
     while i < len(children):
       args.append(children[i])
       i += 2
-    return children[0], children[1], args
+    return ast.FunctionType(children[0], args), children[1]
   def visit_function_declaration(self, node, children):
     return ast.FunctionDeclaration(*children[0])
   def visit_function_definition(self, node, children):

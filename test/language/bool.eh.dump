@@ -1,12 +1,13 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: bool
 │  │  ├─ Identifier: not_true
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: bool
-│  │           └─ Identifier: v
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: bool
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: bool
+│  │              └─ Identifier: v
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -17,9 +18,9 @@
 │                    └─ Identifier: v
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ BuiltinType: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration

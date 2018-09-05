@@ -182,10 +182,13 @@ def parse_FUNCTION_DECL(cursor):
       args.append(ast.VariableDeclaration(type_to_ehlit(c.type), ast.Identifier(0, c.spelling)))
 
   return ast.FunctionDeclaration(
-    type_to_ehlit(cursor.type.get_result()),
-    ast.Identifier(0, cursor.spelling),
-    args,
-    cursor.type.is_function_variadic())
+    ast.FunctionType(
+      type_to_ehlit(cursor.type.get_result()),
+      args,
+      cursor.type.is_function_variadic()
+    ),
+    ast.Identifier(0, cursor.spelling)
+  )
 
 def parse_TYPEDEF_DECL(cursor):
   return ast.Alias(

@@ -1,13 +1,14 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: int
 │  │  ├─ Identifier: set_int
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ BuiltinType: int
-│  │           └─ Identifier: i
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: int
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: int
+│  │              └─ Identifier: i
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableAssignment
@@ -23,20 +24,21 @@
 │                 └─ Identifier: i
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ Reference
-│  │  │  └─ BuiltinType: int
 │  │  ├─ Identifier: set_int_to
-│  │  └─ Arguments
-│  │     ├─ VariableDeclaration
-│  │     │  └─ Declaration
-│  │     │     ├─ Reference
-│  │     │     │  └─ BuiltinType: int
-│  │     │     └─ Identifier: i
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ BuiltinType: int
-│  │           └─ Identifier: j
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  └─ BuiltinType: int
+│  │     └─ Arguments:
+│  │        ├─ VariableDeclaration
+│  │        │  └─ Declaration
+│  │        │     ├─ Reference
+│  │        │     │  └─ BuiltinType: int
+│  │        │     └─ Identifier: i
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: int
+│  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableAssignment
@@ -54,20 +56,21 @@
 │                    └─ Identifier: i
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ Reference
-│  │  │  └─ BuiltinType: int
 │  │  ├─ Identifier: set_int_ref
-│  │  └─ Arguments
-│  │     ├─ VariableDeclaration
-│  │     │  └─ Declaration
-│  │     │     ├─ Reference
-│  │     │     │  └─ BuiltinType: int
-│  │     │     └─ Identifier: i
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ BuiltinType: int
-│  │           └─ Identifier: j
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  └─ BuiltinType: int
+│  │     └─ Arguments:
+│  │        ├─ VariableDeclaration
+│  │        │  └─ Declaration
+│  │        │     ├─ Reference
+│  │        │     │  └─ BuiltinType: int
+│  │        │     └─ Identifier: i
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: int
+│  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableAssignment
@@ -87,23 +90,24 @@
 │                    └─ Identifier: i
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ Reference
-│  │  │  └─ Reference
-│  │  │     └─ BuiltinType: int
 │  │  ├─ Identifier: set_int_ref_ref
-│  │  └─ Arguments
-│  │     ├─ VariableDeclaration
-│  │     │  └─ Declaration
-│  │     │     ├─ Reference
-│  │     │     │  └─ Reference
-│  │     │     │     └─ BuiltinType: int
-│  │     │     └─ Identifier: i
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ Reference
-│  │           │     └─ BuiltinType: int
-│  │           └─ Identifier: j
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  └─ Reference
+│  │     │     └─ BuiltinType: int
+│  │     └─ Arguments:
+│  │        ├─ VariableDeclaration
+│  │        │  └─ Declaration
+│  │        │     ├─ Reference
+│  │        │     │  └─ Reference
+│  │        │     │     └─ BuiltinType: int
+│  │        │     └─ Identifier: i
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ Reference
+│  │              │     └─ BuiltinType: int
+│  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableAssignment
@@ -126,21 +130,22 @@
 │                       └─ Identifier: i
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: set_int_ref_lv2
-│  │  └─ Arguments
-│  │     ├─ VariableDeclaration
-│  │     │  └─ Declaration
-│  │     │     ├─ Reference
-│  │     │     │  └─ Reference
-│  │     │     │     └─ BuiltinType: int
-│  │     │     └─ Identifier: i
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ Reference
-│  │           │     └─ BuiltinType: int
-│  │           └─ Identifier: j
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        ├─ VariableDeclaration
+│  │        │  └─ Declaration
+│  │        │     ├─ Reference
+│  │        │     │  └─ Reference
+│  │        │     │     └─ BuiltinType: int
+│  │        │     └─ Identifier: i
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ Reference
+│  │              │     └─ BuiltinType: int
+│  │              └─ Identifier: j
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ VariableAssignment
@@ -154,9 +159,9 @@
 │                       └─ Identifier: j
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ BuiltinType: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration

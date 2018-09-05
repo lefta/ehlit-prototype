@@ -1,27 +1,29 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: want_int
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: int
-│  │           └─ Identifier: n
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: int
+│  │              └─ Identifier: n
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
-   │     ├─ VariableDeclaration
-   │     │  └─ Declaration
-   │     │     ├─ BuiltinType: int
-   │     │     └─ Identifier: ac
-   │     └─ VariableDeclaration
-   │        └─ Declaration
-   │           ├─ Array
-   │           │  └─ BuiltinType: str
-   │           └─ Identifier: av
+   │  └─ FunctionType
+   │     ├─ BuiltinType: int
+   │     └─ Arguments:
+   │        ├─ VariableDeclaration
+   │        │  └─ Declaration
+   │        │     ├─ BuiltinType: int
+   │        │     └─ Identifier: ac
+   │        └─ VariableDeclaration
+   │           └─ Declaration
+   │              ├─ Array
+   │              │  └─ BuiltinType: str
+   │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ Expression

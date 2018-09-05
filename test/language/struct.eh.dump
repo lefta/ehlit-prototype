@@ -20,28 +20,30 @@
 │  ├─ Forward declaration
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: fun
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ BuiltinType: int
-│  │           └─ Identifier: i
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: int
+│  │              └─ Identifier: i
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ Reference
-│  │  │  └─ Symbol
-│  │  │     └─ Identifier: test_struct
 │  │  ├─ Identifier: struct_fun
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ Symbol
-│  │           │     └─ Identifier: test_struct
-│  │           └─ Identifier: s
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  └─ Symbol
+│  │     │     └─ Identifier: test_struct
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ Symbol
+│  │              │     └─ Identifier: test_struct
+│  │              └─ Identifier: s
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -50,13 +52,14 @@
 │                 └─ Identifier: s
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: any
 │  │  ├─ Identifier: any_fun
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: any
-│  │           └─ Identifier: p
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: any
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: any
+│  │              └─ Identifier: p
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -65,9 +68,9 @@
 │                 └─ Identifier: p
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: int
    │  ├─ Identifier: main
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ BuiltinType: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration

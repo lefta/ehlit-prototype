@@ -115,9 +115,8 @@ class DumpWriter:
   @indent
   def dumpFunctionDeclaration(self, fun):
     self.dump('FunctionDeclaration')
-    self.print_node(fun.typ)
     self.print_node(fun.sym)
-    self.print_node_list('Arguments', fun.args, False)
+    self.print_node(fun.typ, False)
 
   @indent
   def dumpFunctionDefinition(self, fun):
@@ -142,10 +141,10 @@ class DumpWriter:
     else:
       self.dump('FunctionCall')
       self.print_node(call.sym)
-      if call.sym.cast:
+      if call.cast:
         self.increment_prefix(True)
         self.dump('Automatic cast')
-        self.print_node(call.sym.cast, False)
+        self.print_node(call.cast, False)
         self.decrement_prefix()
       self.print_node_list('Arguments', call.args, False)
 

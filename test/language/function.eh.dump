@@ -1,29 +1,31 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: simple_fn
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: int
-│  │           └─ Identifier: i
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: int
+│  │              └─ Identifier: i
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: simple_fn_str
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: str
-│  │           └─ Identifier: s
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: str
+│  │              └─ Identifier: s
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ Reference
-│  │  │  └─ BuiltinType: int
 │  │  ├─ Identifier: ref_call
-│  │  └─ Arguments
+│  │  └─ FunctionType
+│  │     └─ Reference
+│  │        └─ BuiltinType: int
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -31,14 +33,15 @@
 │              └─ NullValue
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: inc
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Reference
-│  │           │  └─ BuiltinType: int
-│  │           └─ Identifier: nb
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: int
+│  │              └─ Identifier: nb
 │  └─ FunctionBody
 │     ├─ ConditionBranches
 │     │  └─ ControlStructure: if
@@ -61,13 +64,14 @@
 │                 └─ Number: 1
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: inner_parens
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: int
-│  │           └─ Identifier: i
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: int
+│  │              └─ Identifier: i
 │  └─ FunctionBody
 │     ├─ ConditionBranches
 │     │  └─ ControlStructure: if
@@ -133,45 +137,48 @@
 │                          └─ Number: 5
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: func_with_default_params
-│  │  └─ Arguments
-│  │     ├─ VariableDeclaration
-│  │     │  └─ Declaration
-│  │     │     ├─ BuiltinType: int
-│  │     │     └─ Identifier: par1
-│  │     └─ VariableDeclaration
-│  │        ├─ Declaration
-│  │        │  ├─ BuiltinType: int
-│  │        │  └─ Identifier: par2
-│  │        └─ Assignment
-│  │           └─ Expression
-│  │              └─ Number: 0
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        ├─ VariableDeclaration
+│  │        │  └─ Declaration
+│  │        │     ├─ BuiltinType: int
+│  │        │     └─ Identifier: par1
+│  │        └─ VariableDeclaration
+│  │           ├─ Declaration
+│  │           │  ├─ BuiltinType: int
+│  │           │  └─ Identifier: par2
+│  │           └─ Assignment
+│  │              └─ Expression
+│  │                 └─ Number: 0
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: void
 │  │  ├─ Identifier: func_with_trailing_comma
-│  │  └─ Arguments
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ BuiltinType: int
-│  │           └─ Identifier: arg
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: int
+│  │              └─ Identifier: arg
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
-│  │  ├─ BuiltinType: int
 │  │  ├─ Identifier: main
-│  │  └─ Arguments
-│  │     ├─ VariableDeclaration
-│  │     │  └─ Declaration
-│  │     │     ├─ BuiltinType: int
-│  │     │     └─ Identifier: ac
-│  │     └─ VariableDeclaration
-│  │        └─ Declaration
-│  │           ├─ Array
-│  │           │  └─ BuiltinType: str
-│  │           └─ Identifier: av
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: int
+│  │     └─ Arguments:
+│  │        ├─ VariableDeclaration
+│  │        │  └─ Declaration
+│  │        │     ├─ BuiltinType: int
+│  │        │     └─ Identifier: ac
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Array
+│  │              │  └─ BuiltinType: str
+│  │              └─ Identifier: av
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ Expression
@@ -246,7 +253,7 @@
 │              └─ Number: 0
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ BuiltinType: void
    │  ├─ Identifier: declared_later
-   │  └─ Arguments
+   │  └─ FunctionType
+   │     └─ BuiltinType: void
    └─ FunctionBody

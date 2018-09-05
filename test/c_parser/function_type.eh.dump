@@ -11,13 +11,14 @@
       │     └─ Symbol
       │        └─ Identifier: fun
       └─ FunctionDeclaration
-         ├─ BuiltinType: void
          ├─ Identifier: fun2
-         └─ Arguments
-            └─ VariableDeclaration
-               └─ Declaration
-                  ├─ FunctionType
-                  │  ├─ BuiltinType: str
-                  │  └─ Arguments:
-                  │     └─ BuiltinType: int32
-                  └─ Identifier: param
+         └─ FunctionType
+            ├─ BuiltinType: void
+            └─ Arguments:
+               └─ VariableDeclaration
+                  └─ Declaration
+                     ├─ FunctionType
+                     │  ├─ BuiltinType: str
+                     │  └─ Arguments:
+                     │     └─ BuiltinType: int32
+                     └─ Identifier: param

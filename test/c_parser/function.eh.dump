@@ -2,6 +2,6 @@
    ├─ Identifier: c_parser/function
    └─ Symbols found
       └─ FunctionDeclaration
-         ├─ BuiltinType: void
          ├─ Identifier: fun
-         └─ Arguments
+         └─ FunctionType
+            └─ BuiltinType: void

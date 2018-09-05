@@ -1,0 +1,3 @@
+language_error/call_non_function_type.eh:6:3: calling non function type i
+language_error/call_non_function_type.eh:6:7: calling non function type s
+language_error/call_non_function_type.eh:6:11: calling non function type a

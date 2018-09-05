@@ -74,7 +74,7 @@ class SourceWriter:
       i += 1
 
   def write_value(self, node):
-    if isinstance(node.decl, FunctionDeclaration):
+    if isinstance(node.decl, FunctionDeclaration) and not isinstance(node, FunctionCall):
       parent = node.parent
       while type(parent) is Reference or type(parent) is Symbol:
         parent = parent.parent
@@ -201,12 +201,12 @@ class SourceWriter:
           self.file.write(', ')
 
   def writeFunctionPrototype(self, proto):
-    self.write_type_prefix(proto.typ)
-    self.write(proto.typ)
+    self.write_type_prefix(proto.typ.ret)
+    self.write(proto.typ.ret)
     self.file.write(' ')
     self.write(proto.sym)
     self.file.write('(')
-    self.writeArgumentDefinitionList(proto.args)
+    self.writeArgumentDefinitionList(proto.typ.args)
     self.file.write(")")
 
   def writeFunctionDeclaration(self, fun):
@@ -279,6 +279,7 @@ class SourceWriter:
       self.write(call.args[0])
       self.file.write(')')
     else:
+      self.write_value(call)
       self.write(call.sym)
       self.file.write('(')
       i = 0

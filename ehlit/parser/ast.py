@@ -484,10 +484,12 @@ class Reference(Value, Type):
     return self.child.any_memory_offset
 
 class FunctionType(Type):
-  def __init__(self, ret: Type, args: List['VariableDeclaration']) -> None:
+  def __init__(self, ret: Type, args: List['VariableDeclaration'],
+               is_variadic: bool =False) -> None:
     super().__init__()
     self.args: List['VariableDeclaration'] = args
     self.ret: Type = ret
+    self.is_variadic: bool = is_variadic
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -576,31 +578,22 @@ class VariableDeclaration(Declaration):
     return self.typ.args if type(self.typ) is FunctionType else None
 
 class FunctionDeclaration(Declaration):
-  def __init__(self, typ: Type, sym: 'Identifier', args: List[VariableDeclaration],
-               is_variadic: bool =False) -> None:
+  def __init__(self, typ: FunctionType, sym: 'Identifier') -> None:
     super().__init__(typ, sym)
-    self.args: List[VariableDeclaration] = args
-    self.is_variadic: bool = is_variadic
-
-  def build(self, parent: Node) -> None:
-    super().build(parent)
-    for a in self.args:
-      a.build(self)
 
   def get_declaration(self, sym: List[str]) -> Optional[DeclarationBase]:
     decl: Optional[DeclarationBase] = super().get_declaration(sym)
     if decl is not None:
       return decl
-    for a in self.args:
-      decl: Optional[DeclarationBase] = a.get_declaration(sym)
+    for a in self.typ.args:
+      decl = a.get_declaration(sym)
       if decl is not None:
         return decl
     return None
 
 class FunctionDefinition(FunctionDeclaration):
-  def __init__(self, typ: Type, sym: 'Identifier', args: List[VariableDeclaration],
-               body_str: UnparsedContents, is_variadic: bool =False) -> None:
-    super().__init__(typ, sym, args, is_variadic)
+  def __init__(self, typ: FunctionType, sym: 'Identifier', body_str: UnparsedContents) -> None:
+    super().__init__(typ, sym)
     self.body: List[Statement] = []
     self.body_str: UnparsedContents = body_str
     self.predeclarations: List[DeclarationBase] = []
@@ -609,12 +602,13 @@ class FunctionDefinition(FunctionDeclaration):
     from ehlit.parser.parse import parse_function
     super().build(parent)
     try:
-      typ: Type = self.typ
+      assert isinstance(self.typ, FunctionType)
+      typ: Type = self.typ.ret
       if (type(typ) is Symbol):
         typ = typ.decl
-      have_return_value: bool = not ((type(typ) is Alias and typ.src == BuiltinType('void')) or
-        typ == BuiltinType('void'))
-      self.body = parse_function(self.body_str.contents, have_return_value)
+      if (type(typ) is Alias):
+        typ = typ.src
+      self.body = parse_function(self.body_str.contents, not typ == BuiltinType('void'))
       for s in self.body:
         s.build(self)
     except ParseError as err:
@@ -667,9 +661,9 @@ class Expression(Node):
   def is_parenthesised(self) -> bool:
     return self.parenthesised
 
-class FunctionCall(Node):
+class FunctionCall(Value):
   def __init__(self, pos: int, sym: 'Symbol', args: List[Expression]) -> None:
-    self.pos: int = pos
+    super().__init__(pos)
     self.sym: Symbol = sym
     self.args: List[Expression] = args
 
@@ -677,7 +671,10 @@ class FunctionCall(Node):
     super().build(parent)
     self.sym.build(self)
     if not self.is_cast:
-      self.ref_offset = 0
+      # Avoid symbol to write ref offsets, this will conflict with ours.
+      self.sym.ref_offset = 0
+    for a in self.args:
+      a.build(self)
 
     if self.is_cast:
       if len(self.args) < 1:
@@ -685,35 +682,27 @@ class FunctionCall(Node):
       elif len(self.args) > 1:
         self.error(self.pos, 'too many values for cast expression')
     elif self.sym.decl is not None:
-      diff = len(self.args) - len(self.sym.decl.args)
+      if not isinstance(self.sym.decl.typ, FunctionType):
+        self.error(self.pos, "calling non function type {}".format(self.sym.name))
+        return
+      diff = len(self.args) - len(self.sym.decl.typ.args)
       i = 0
-      while i < len(self.sym.decl.args):
+      while i < len(self.sym.decl.typ.args):
         if i >= len(self.args):
-          if self.sym.decl.args[i].assign is not None:
-            self.args.append(self.sym.decl.args[i].assign.expr)
+          if self.sym.decl.typ.args[i].assign is not None:
+            self.args.append(self.sym.decl.typ.args[i].assign.expr)
             diff += 1
           else:
             break
         i += 1
-      if diff < 0 or (diff > 0 and not self.sym.decl.is_variadic):
+      if diff < 0 or (diff > 0 and not self.sym.decl.typ.is_variadic):
         self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(
-          'not enough' if diff < 0 else 'too many', self.sym.name, len(self.sym.decl.args),
+          'not enough' if diff < 0 else 'too many', self.sym.name, len(self.sym.decl.typ.args),
           len(self.args)))
-
-    i = 0
-    while i < len(self.args):
-      self.args[i].build(self)
-      if not self.is_cast and self.sym.decl is not None and i < len(self.sym.decl.args):
-        self.args[i].auto_cast(self.sym.decl.args[i])
-      i += 1
-
-  @property
-  def ref_offset(self) -> int:
-    return self.sym.ref_offset
-
-  @ref_offset.setter
-  def ref_offset(self, val: int) -> None:
-    self.sym.ref_offset = val
+      i = 0
+      while i < len(self.args) and i < len(self.sym.decl.typ.args):
+        self.args[i].auto_cast(self.sym.decl.typ.args[i])
+        i += 1
 
   @property
   def is_cast(self) -> bool:
@@ -721,7 +710,7 @@ class FunctionCall(Node):
 
   @property
   def typ(self) -> Type:
-    return self.sym if self.is_cast else self.sym.typ
+    return self.sym if self.is_cast else self.sym.typ.ret
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
@@ -733,7 +722,7 @@ class FunctionCall(Node):
 
   def auto_cast(self, target_type: Type) -> None:
     if not self.is_cast:
-      self.sym.auto_cast(target_type)
+      super().auto_cast(target_type)
 
 class ArrayAccess(Value):
   def __init__(self, child: Node, idx: Expression) -> None:
@@ -826,8 +815,7 @@ class Return(Node):
       decl: Node = self.parent
       while type(decl) is not FunctionDefinition:
         decl = decl.parent
-      self.expr.auto_cast(decl)
-
+      self.expr.auto_cast(decl.typ.ret)
 
 class Identifier(Value):
   def __init__(self, pos: int, name: str) -> None:
