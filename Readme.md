@@ -60,7 +60,7 @@ int main(int ac, str[] av)
 
 ## Requirements
 
-* Python 3.5+
+* Python 3.6+
 * arpeggio Python module
 * clang with Python 3.5+ bindings (shipped with clang 5.0+)
 
