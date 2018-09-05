@@ -22,7 +22,8 @@
 from abc import abstractmethod
 from os import path, getcwd, listdir
 from typing import Any, List, Optional, Tuple, Union
-from ehlit.parser import c_compat, parse
+from ehlit.parser import c_compat
+import ehlit.parser.parse
 from ehlit.parser.error import ParseError, Failure
 
 DeclarationLookup = Tuple[Optional['DeclarationBase'], Optional[str]]
@@ -196,7 +197,7 @@ class Import(GenericExternInclusion):
       if path.isdir(full_path):
         res += self.import_dir(full_path)
       elif path.isfile(full_path):
-        res += parse.parse(full_path).nodes
+        res += ehlit.parser.parse(full_path).nodes
     return res
 
   def parse(self) -> List[Node]:
@@ -215,7 +216,7 @@ class Import(GenericExternInclusion):
         if full_path in imported:
           return []
         imported.append(full_path)
-        return parse.parse(full_path).nodes
+        return ehlit.parser.parse(full_path).nodes
     self.error(self.pos, '%s: no such file or directory' % self.lib.name)
     return []
 
@@ -407,12 +408,13 @@ class BuiltinType(Type, DeclarationBase):
     return self.name == rhs.name
 
 class Array(Type):
-  def __init__(self, child: Type, length: Optional[Node]) -> None:
+  def __init__(self, child: Optional[Type], length: Optional[Node]) -> None:
     super().__init__()
-    self.child: Type = child
+    self.child: Optional[Type] = child
     self.length: Optional[Node] = length
 
   def build(self, parent: Node):
+    assert self.child is not None
     super().build(parent)
     self.child.build(self)
 
@@ -477,8 +479,8 @@ class Reference(Value, Type):
   def name(self) -> str:
     return self.child.name
 
-  def auto_cast(self, target: Node) -> Type:
-    return self.child.auto_cast(target)
+  def auto_cast(self, target: Node) -> None:
+    self.child.auto_cast(target)
 
   def from_any(self) -> Type:
     return self
@@ -532,17 +534,17 @@ class VariableAssignment(Node):
 class Assignment(Node):
   def __init__(self, expr: 'Expression') -> None:
     self.expr: 'Expression' = expr
-    self.operator: str = None
+    self.operator: Optional[str] = None
 
   def build(self, parent: Node) -> None:
     super().build(parent)
     self.expr.build(self)
 
 class Declaration(DeclarationBase):
-  def __init__(self, typ: Type, sym: 'Identifier') -> None:
+  def __init__(self, typ: Type, sym: Optional['Identifier']) -> None:
     super().__init__(0)
     self.typ: Type = typ
-    self.sym: 'Identifier' = sym
+    self.sym: Optional['Identifier'] = sym
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -564,7 +566,7 @@ class Declaration(DeclarationBase):
 
   @property
   def name(self) -> str:
-    return self.sym.name if self.sym is not None else None
+    return self.sym.name if self.sym is not None else ''
 
 class VariableDeclaration(Declaration):
   def __init__(self, typ: Type, sym: 'Identifier', assign: Optional[Assignment] =None) -> None:
@@ -653,7 +655,7 @@ class Expression(Node):
     for e in self.contents:
       e.build(self)
 
-  def auto_cast(self, target_type: Type) -> None:
+  def auto_cast(self, target_type: Node) -> None:
     for e in self.contents:
       e.auto_cast(target_type)
 
@@ -689,8 +691,9 @@ class FunctionCall(Value):
       i = 0
       while i < len(self.sym.decl.typ.args):
         if i >= len(self.args):
-          if self.sym.decl.typ.args[i].assign is not None:
-            self.args.append(self.sym.decl.typ.args[i].assign.expr)
+          assign: Optional[Assignment] = self.sym.decl.typ.args[i].assign
+          if assign is not None:
+            self.args.append(assign.expr)
             diff += 1
           else:
             break
@@ -720,23 +723,25 @@ class FunctionCall(Value):
   def is_type(self) -> bool:
     return False
 
-  def auto_cast(self, target_type: Type) -> None:
+  def auto_cast(self, target_type: Node) -> None:
     if not self.is_cast:
       super().auto_cast(target_type)
 
 class ArrayAccess(Value):
-  def __init__(self, child: Node, idx: Expression) -> None:
+  def __init__(self, child: Optional[Node], idx: Expression) -> None:
     super().__init__()
-    self.child: Node = child
+    self.child: Optional[Node] = child
     self.idx: Expression = idx
 
   def build(self, parent: Node) -> None:
+    assert self.child is not None
     super().build(parent)
     self.child.build(self)
     self.idx.build(self)
 
   @property
   def typ(self) -> Type:
+    assert self.child is not None
     return self.child.typ.child
 
   @property
@@ -745,15 +750,18 @@ class ArrayAccess(Value):
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
+    assert self.child is not None
     return self.child.decl
 
   def from_any(self) -> Type:
+    assert self.child is not None
     return self.child.typ.from_any()
 
 class ControlStructure(Node):
-  def __init__(self, name: str, cond: Expression, body: List[Statement]) -> None:
+  def __init__(self, name: str, cond: Optional[Expression], body: List[Statement]) -> None:
+    assert cond is not None or name == 'else'
     self.name: str = name
-    self.cond: Expression = cond
+    self.cond: Optional[Expression] = cond
     self.body: List[Statement] = body
 
   def build(self, parent: Node) -> None:
@@ -785,8 +793,8 @@ class SwitchCase(Node):
     self.body: 'SwitchCaseBody' = body
 
 class SwitchCaseTest(Node):
-  def __init__(self, test: Value) -> None:
-    self.test: Value = test
+  def __init__(self, test: Optional[Value]) -> None:
+    self.test: Optional[Value] = test
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -891,7 +899,7 @@ class Symbol(Value, Type):
   def cast(self, value: Type) -> None:
     self.elems[-1].cast = value
 
-  def auto_cast(self, tgt: Type) -> None:
+  def auto_cast(self, tgt: Node) -> None:
     return self.elems[-1].auto_cast(tgt)
 
   def from_any(self) -> Type:
@@ -915,7 +923,7 @@ class String(Value):
   def typ(self) -> Type:
     return BuiltinType('str')
 
-  def auto_cast(self, target_type: Type) -> None:
+  def auto_cast(self, target_type: Node) -> None:
     pass
 
 class Char(Value):
@@ -927,7 +935,7 @@ class Char(Value):
   def typ(self) -> Type:
     return BuiltinType('char')
 
-  def auto_cast(self, target_type: Type) -> None:
+  def auto_cast(self, target_type: Node) -> None:
     pass
 
 class Number(Value):
@@ -939,7 +947,7 @@ class Number(Value):
   def typ(self) -> Type:
     return BuiltinType('int')
 
-  def auto_cast(self, target_type: Type) -> None:
+  def auto_cast(self, target_type: Node) -> None:
     pass
 
 class NullValue(Value):
@@ -950,7 +958,7 @@ class NullValue(Value):
   def typ(self) -> Type:
     return BuiltinType('any')
 
-  def auto_cast(self, target_type: Type) -> None:
+  def auto_cast(self, target_type: Node) -> None:
     pass
 
 class BoolValue(Value):
@@ -962,7 +970,7 @@ class BoolValue(Value):
   def typ(self) -> Type:
     return BuiltinType('bool')
 
-  def auto_cast(self, target_type: Type) -> None:
+  def auto_cast(self, target_type: Node) -> None:
     pass
 
 class UnaryOperatorValue(Node):
