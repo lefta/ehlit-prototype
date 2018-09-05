@@ -577,10 +577,6 @@ class VariableDeclaration(Declaration):
       self.assign.build(self)
       self.assign.expr.auto_cast(self)
 
-  @property
-  def args(self) -> Union[List['VariableDeclaration'], None]:
-    return self.typ.args if type(self.typ) is FunctionType else None
-
 class FunctionDeclaration(Declaration):
   def __init__(self, typ: FunctionType, sym: 'Identifier') -> None:
     super().__init__(typ, sym)
