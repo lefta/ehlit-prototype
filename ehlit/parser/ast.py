@@ -375,9 +375,9 @@ class BuiltinType(Type, DeclarationBase):
     return self
 
   @property
-  def child(self) -> Union[Type, None]:
+  def child(self) -> Optional[Type]:
     if self.name == 'str':
-      ch: 'Type' = BuiltinType('char')
+      ch: Type = BuiltinType('char')
       ch.parent = self
       return ch
     return None
