@@ -1,2 +1,1 @@
-language_error/access_into_incomplete_struct.eh:1:8: accessing incomplete struct incomplete
-language_error/access_into_incomplete_struct.eh:4:21: use of undeclared identifier result
+language_error/access_into_incomplete_struct.eh:4:21: accessing incomplete struct incomplete
