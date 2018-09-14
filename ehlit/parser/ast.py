@@ -407,7 +407,7 @@ class BuiltinType(Type, DeclarationBase):
       return False
     return self.name == rhs.name
 
-class Array(Type):
+class Array(Type, DeclarationBase):
   def __init__(self, child: Optional[Type], length: Optional[Node]) -> None:
     super().__init__()
     self.child: Optional[Type] = child
@@ -489,7 +489,7 @@ class Reference(Value, Type):
   def any_memory_offset(self) -> int:
     return self.child.any_memory_offset
 
-class FunctionType(Type):
+class FunctionType(Type, DeclarationBase):
   def __init__(self, ret: Type, args: List['VariableDeclaration'],
                is_variadic: bool =False) -> None:
     super().__init__()
@@ -1052,7 +1052,7 @@ class Alias(DeclarationBase):
   def inner_child(self) -> Node:
     return self.dst
 
-class Struct(DeclarationBase):
+class Struct(Type, DeclarationBase):
   def __init__(self, pos: int, sym: Identifier,
                fields: Optional[List[VariableDeclaration]]) -> None:
     super().__init__(pos)
