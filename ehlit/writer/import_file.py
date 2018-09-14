@@ -55,8 +55,6 @@ class ImportWriter:
     if node.sym is not None:
       self.file.write(' ')
       self.write(node.sym)
-    if node.assign is not None:
-      self.write(node.assign)
 
   def writeArgumentDefinitionList(self, node):
     if len(node) != 0:
