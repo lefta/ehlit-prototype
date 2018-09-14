@@ -297,8 +297,12 @@ class Value(Node):
     '''
     src: 'Type' = self.typ
     target_ref_level: int = 0
-    self_typ: 'Type' = self.typ.inner_child
-    target_typ: 'Type' = target.typ.inner_child
+    self_typ: 'Type' = self.typ
+    if isinstance(self_typ, Reference):
+      self_typ = self_typ.inner_child
+    target_typ: 'Type' = target.typ
+    if isinstance(target_typ, Reference):
+      target_typ = target_typ.inner_child
     if self_typ != target_typ:
       if self_typ == BuiltinType('any'):
         src = Value._from_any_aligned(target, self.typ, True)
@@ -361,10 +365,6 @@ class Type(Node):
   @property
   def any_memory_offset(self) -> int:
     return 1
-
-  @property
-  def inner_child(self) -> Node:
-    return self
 
 class BuiltinType(Type, DeclarationBase):
   def __init__(self, name: str) -> None:
@@ -473,7 +473,9 @@ class Reference(Value, Type):
 
   @property
   def inner_child(self) -> Type:
-    return self.child.inner_child
+    if isinstance(self.child, Reference):
+      return self.child.inner_child
+    return self.child
 
   @property
   def name(self) -> str:
@@ -1055,10 +1057,6 @@ class Alias(DeclarationBase):
   @ref_offset.setter
   def ref_offset(self, offset: int) -> None:
     self.dst.ref_offset = offset
-
-  @property
-  def inner_child(self) -> Node:
-    return self.dst
 
 class Struct(Type, DeclarationBase):
   def __init__(self, pos: int, sym: Identifier,
