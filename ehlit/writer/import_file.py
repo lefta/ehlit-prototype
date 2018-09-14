@@ -51,7 +51,7 @@ class ImportWriter:
 
   def writeFunctionDeclaration(self, node): SourceWriter.writeFunctionPrototype(self, node)
   def writeDeclaration(self, node):
-    self.write(node.typ)
+    self.write(node.typ_src)
     if node.sym is not None:
       self.file.write(' ')
       self.write(node.sym)

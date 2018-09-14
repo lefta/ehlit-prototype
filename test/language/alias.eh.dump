@@ -10,6 +10,17 @@
 │  └─ To:
 │     └─ Symbol
 │        └─ Identifier: nothing
+├─ Alias
+│  ├─ From:
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ Declaration
+│  │           └─ Symbol
+│  │              └─ Identifier: nb
+│  └─ To:
+│     └─ Symbol
+│        └─ Identifier: pfn
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: inc
@@ -78,6 +89,16 @@
       │        └─ Expression
       │           └─ Number: 42
       ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: pfn
+      │     │  └─ Identifier: pdn
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Symbol
+      │              └─ Identifier: dn
+      ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
       │        ├─ Symbol
@@ -91,6 +112,15 @@
       │     └─ FunctionCall
       │        ├─ Symbol
       │        │  └─ Identifier: dn
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Symbol
+      │                 └─ Identifier: i
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: pdn
       │        └─ Arguments
       │           └─ Expression
       │              └─ Symbol

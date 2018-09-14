@@ -176,12 +176,12 @@ class SourceWriter:
       self.file.write(prefix + ' ')
 
   def writeDeclaration(self, decl):
-    self.write_type_prefix(decl.typ)
-    self.write(decl.typ)
+    self.write_type_prefix(decl.typ_src)
+    self.write(decl.typ_src)
     if decl.sym is not None:
       self.file.write(' ')
       self.write(decl.sym)
-    self.write_declaration_post(decl.typ)
+    self.write_declaration_post(decl.typ_src)
 
   def writeVariableDeclaration(self, decl):
     self.writeDeclaration(decl)
@@ -463,6 +463,7 @@ class SourceWriter:
       self.write(node.src)
       self.file.write(' ')
       self.write(node.dst)
+      self.write_declaration_post(node.src)
       self.file.write(';\n')
 
   def writeStruct(self, node):

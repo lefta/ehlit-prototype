@@ -543,12 +543,20 @@ class Assignment(Node):
 class Declaration(DeclarationBase):
   def __init__(self, typ: Type, sym: Optional['Identifier']) -> None:
     super().__init__(0)
-    self.typ: Type = typ
+    self.typ = typ
+    self.typ_src: Type = typ
     self.sym: Optional['Identifier'] = sym
 
   def build(self, parent: Node) -> None:
     super().build(parent)
-    self.typ.build(self)
+    self.typ_src.build(self)
+    typ = type(self.typ)
+    while typ is Symbol or typ is Alias:
+      if typ is Alias:
+        self.typ = self.typ_src.typ
+      else:
+        self.typ = self.typ_src.decl
+      typ = type(self.typ)
     if self.sym is not None:
       self.sym.build(self)
 
@@ -1022,7 +1030,7 @@ class Alias(DeclarationBase):
 
   def get_declaration(self, sym: List[str]) -> DeclarationLookup:
     if self.dst.name == sym[0]:
-      if type(self.src) is BuiltinType:
+      if self.src.is_type:
         return self.declaration_match(sym)
       if self.src.decl is not None:
         return self.src.decl.declaration_match(sym)
