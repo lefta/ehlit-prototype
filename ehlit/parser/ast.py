@@ -375,6 +375,11 @@ class Type(Node):
   def any_memory_offset(self) -> int:
     return 1
 
+  @property
+  @abstractmethod
+  def ref_offset(self) -> int:
+    raise NotImplementedError
+
 class BuiltinType(Type, DeclarationBase):
   def __init__(self, name: str) -> None:
     super().__init__()
