@@ -562,10 +562,10 @@ class Declaration(DeclarationBase):
     self.typ_src.build(self)
     typ = type(self.typ)
     while typ is Symbol or typ is Alias:
-      if typ is Alias:
-        self.typ = self.typ_src.typ
+      if isinstance(self.typ, Alias):
+        self.typ = self.typ.typ
       else:
-        self.typ = self.typ_src.decl
+        self.typ = self.typ.decl
       typ = type(self.typ)
     if self.sym is not None:
       self.sym.build(self)
@@ -605,6 +605,7 @@ class FunctionDeclaration(Declaration):
     decl, err = super().get_declaration(sym)
     if decl is not None or err is not None:
       return decl, err
+    assert isinstance(self.typ, FunctionType)
     for a in self.typ.args:
       decl, err = a.get_declaration(sym)
       if decl is not None or err is not None:
@@ -624,9 +625,10 @@ class FunctionDefinition(FunctionDeclaration):
     try:
       assert isinstance(self.typ, FunctionType)
       typ: Type = self.typ.ret
-      if (type(typ) is Symbol):
-        typ = typ.decl
-      if (type(typ) is Alias):
+      if isinstance(typ, Symbol):
+        decl = typ.decl
+        typ = decl.typ if decl is not None else BuiltinType('any')
+      if isinstance(typ, Alias):
         typ = typ.src
       self.body = parse_function(self.body_str.contents, not typ == BuiltinType('void'))
       for s in self.body:
