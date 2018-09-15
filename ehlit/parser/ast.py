@@ -699,6 +699,7 @@ class FunctionCall(Value):
       elif len(self.args) > 1:
         self.error(self.pos, 'too many values for cast expression')
     elif self.sym.decl is not None:
+      assert isinstance(self.sym.decl, Declaration)
       if not isinstance(self.sym.decl.typ, FunctionType):
         self.error(self.pos, "calling non function type {}".format(self.sym.name))
         return
