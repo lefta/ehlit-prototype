@@ -481,10 +481,6 @@ class Reference(Value, Type):
       return self.child.inner_child
     return self.child
 
-  @property
-  def name(self) -> str:
-    return self.child.name
-
   def auto_cast(self, target: Type) -> None:
     self.child.auto_cast(target)
 
