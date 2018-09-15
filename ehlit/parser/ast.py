@@ -376,9 +376,8 @@ class Type(Node):
     return 1
 
   @property
-  @abstractmethod
   def ref_offset(self) -> int:
-    raise NotImplementedError
+    return 0
 
 class BuiltinType(Type, DeclarationBase):
   def __init__(self, name: str) -> None:
@@ -396,10 +395,6 @@ class BuiltinType(Type, DeclarationBase):
       ch.parent = self
       return ch
     return None
-
-  @property
-  def ref_offset(self) -> int:
-    return 0
 
   @property
   def typ(self) -> Type:
@@ -435,10 +430,6 @@ class Array(Type, DeclarationBase):
   @property
   def typ(self) -> Type:
     return self
-
-  @property
-  def ref_offset(self) -> int:
-    return 0
 
   def from_any(self) -> Type:
     return self
@@ -1114,10 +1105,6 @@ class Struct(Type, DeclarationBase):
   @property
   def typ(self) -> Node:
     return self
-
-  @property
-  def ref_offset(self) -> int:
-    return 0
 
   @property
   def is_type(self) -> bool:
