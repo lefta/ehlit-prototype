@@ -271,18 +271,22 @@ class Value(Node):
     res: 'Type' = target.typ.from_any()
     if is_casting:
       # We align the result to match the ref offset of the target
-      if not target.is_declaration() and not target.is_type:
+      if not target.is_type:
         target_ref_offset: int = target.ref_offset
         while target_ref_offset > 0:
-          res = res.child
+          assert isinstance(res, Reference), "Attempt to dereference a non Reference"
+          tmp = res.child
+          res = tmp if isinstance(tmp, Type) else tmp.typ
           target_ref_offset -= 1
     else:
       # We reduce the result to the minimal Referencing needed for the conversion.
-      if type(res) is Reference:
-        while type(res.child) is Reference:
-          res = res.child
+      if isinstance(res, Reference):
+        while isinstance(res.child, Reference):
+          tmp = res.child
+          res = tmp if isinstance(tmp, Type) else tmp.typ
         if res.any_memory_offset is 0:
-          res = res.child
+          tmp = res.child
+          res = tmp if isinstance(tmp, Type) else tmp.typ
     if target_ref_count is not 0:
       # The developper asked for some referencing
       target_ref_count -= res.ref_offset - res.any_memory_offset
@@ -291,7 +295,7 @@ class Value(Node):
         target_ref_count -= 1
     return res
 
-  def auto_cast(self, target: Node) -> None:
+  def auto_cast(self, target: 'Type') -> None:
     '''! Make this value binary compatible with target.
     @param target @b Node The node that this value shall be made compatible with.
     '''
@@ -300,7 +304,7 @@ class Value(Node):
     self_typ: 'Type' = self.typ
     if isinstance(self_typ, Reference):
       self_typ = self_typ.inner_child
-    target_typ: 'Type' = target.typ
+    target_typ: 'Type' = target
     if isinstance(target_typ, Reference):
       target_typ = target_typ.inner_child
     if self_typ != target_typ:
@@ -308,7 +312,7 @@ class Value(Node):
         src = Value._from_any_aligned(target, self.typ, True)
         self.cast = src
       elif target_typ == BuiltinType('any'):
-        target = Value._from_any_aligned(self, target.typ, False)
+        target = Value._from_any_aligned(self, target, False)
         parent = self.parent
         if type(parent) is Symbol:
           parent = parent.parent
@@ -316,10 +320,10 @@ class Value(Node):
           target_ref_level += 1
           parent = parent.parent
         if target_ref_level is not 0:
-          target_ref_level -= target.typ.ref_offset
+          target_ref_level -= target.ref_offset
     if src:
-      if target.is_declaration() or target.is_type:
-        target_ref_level += target.typ.ref_offset
+      if target.is_type:
+        target_ref_level += target.ref_offset
       else:
         target_ref_level += target.typ.ref_offset - target.ref_offset
       self.ref_offset = src.ref_offset - target_ref_level
@@ -481,7 +485,7 @@ class Reference(Value, Type):
   def name(self) -> str:
     return self.child.name
 
-  def auto_cast(self, target: Node) -> None:
+  def auto_cast(self, target: Type) -> None:
     self.child.auto_cast(target)
 
   def from_any(self) -> Type:
@@ -519,7 +523,7 @@ class Operator(Node):
   def __init__(self, op: str) -> None:
     self.op: str = op
 
-  def auto_cast(self, target_type: Node):
+  def auto_cast(self, target: Type):
     pass
 
 class VariableAssignment(Node):
@@ -587,7 +591,7 @@ class VariableDeclaration(Declaration):
     super().build(parent)
     if self.assign is not None:
       self.assign.build(self)
-      self.assign.expr.auto_cast(self)
+      self.assign.expr.auto_cast(self.typ)
 
 class FunctionDeclaration(Declaration):
   def __init__(self, typ: FunctionType, sym: 'Identifier') -> None:
@@ -665,9 +669,9 @@ class Expression(Node):
     for e in self.contents:
       e.build(self)
 
-  def auto_cast(self, target_type: Node) -> None:
+  def auto_cast(self, target: Type) -> None:
     for e in self.contents:
-      e.auto_cast(target_type)
+      e.auto_cast(target)
 
   @property
   def is_parenthesised(self) -> bool:
@@ -714,7 +718,7 @@ class FunctionCall(Value):
           len(self.args)))
       i = 0
       while i < len(self.args) and i < len(self.sym.decl.typ.args):
-        self.args[i].auto_cast(self.sym.decl.typ.args[i])
+        self.args[i].auto_cast(self.sym.decl.typ.args[i].typ)
         i += 1
 
   @property
@@ -733,9 +737,9 @@ class FunctionCall(Value):
   def is_type(self) -> bool:
     return False
 
-  def auto_cast(self, target_type: Node) -> None:
+  def auto_cast(self, target: Type) -> None:
     if not self.is_cast:
-      super().auto_cast(target_type)
+      super().auto_cast(target)
 
 class ArrayAccess(Value):
   def __init__(self, child: Optional[Node], idx: Expression) -> None:
@@ -909,8 +913,8 @@ class Symbol(Value, Type):
   def cast(self, value: Type) -> None:
     self.elems[-1].cast = value
 
-  def auto_cast(self, tgt: Node) -> None:
-    return self.elems[-1].auto_cast(tgt)
+  def auto_cast(self, target: Type) -> None:
+    return self.elems[-1].auto_cast(target)
 
   def from_any(self) -> Type:
     return self.elems[-1].from_any()
@@ -933,7 +937,7 @@ class String(Value):
   def typ(self) -> Type:
     return BuiltinType('str')
 
-  def auto_cast(self, target_type: Node) -> None:
+  def auto_cast(self, target: Type) -> None:
     pass
 
 class Char(Value):
@@ -945,7 +949,7 @@ class Char(Value):
   def typ(self) -> Type:
     return BuiltinType('char')
 
-  def auto_cast(self, target_type: Node) -> None:
+  def auto_cast(self, target: Type) -> None:
     pass
 
 class Number(Value):
@@ -957,7 +961,7 @@ class Number(Value):
   def typ(self) -> Type:
     return BuiltinType('int')
 
-  def auto_cast(self, target_type: Node) -> None:
+  def auto_cast(self, target: Type) -> None:
     pass
 
 class NullValue(Value):
@@ -968,7 +972,7 @@ class NullValue(Value):
   def typ(self) -> Type:
     return BuiltinType('any')
 
-  def auto_cast(self, target_type: Node) -> None:
+  def auto_cast(self, target: Type) -> None:
     pass
 
 class BoolValue(Value):
@@ -980,7 +984,7 @@ class BoolValue(Value):
   def typ(self) -> Type:
     return BuiltinType('bool')
 
-  def auto_cast(self, target_type: Node) -> None:
+  def auto_cast(self, target: Type) -> None:
     pass
 
 class UnaryOperatorValue(Node):
@@ -1000,8 +1004,8 @@ class UnaryOperatorValue(Node):
   def decl(self) -> Optional[DeclarationBase]:
     return self.val.decl
 
-  def auto_cast(self, tgt: Type) -> None:
-    return self.val.auto_cast(tgt)
+  def auto_cast(self, target: Type) -> None:
+    return self.val.auto_cast(target)
 
 class PrefixOperatorValue(UnaryOperatorValue):
   pass
