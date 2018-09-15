@@ -723,7 +723,14 @@ class FunctionCall(Value):
 
   @property
   def typ(self) -> Type:
-    return self.sym if self.is_cast else self.sym.typ.ret
+    if self.is_cast:
+      return self.sym
+    if self.sym.decl is None:
+      return BuiltinType('any')
+    assert isinstance(self.sym.decl, Declaration)
+    if not isinstance(self.sym.decl.typ, FunctionType):
+      return self.sym.decl.typ
+    return self.sym.decl.typ.ret
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
