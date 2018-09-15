@@ -456,6 +456,7 @@ class Reference(Value, Type):
     super().build(parent)
     self.child.build(self)
     if not isinstance(self.child, Type) or not self.child.is_type:
+      assert isinstance(self.child, Value)
       self.child.ref_offset -= 1
 
   @property
@@ -476,6 +477,7 @@ class Reference(Value, Type):
   @ref_offset.setter
   def ref_offset(self, val: int) -> None:
     if not self.is_type:
+      assert isinstance(self.child, Value)
       self.child.ref_offset = val
 
   @property
@@ -483,6 +485,7 @@ class Reference(Value, Type):
     if self.is_type:
       return self
     if self.decl is not None:
+      assert isinstance(self.decl, Declaration)
       return self.decl.typ
     return BuiltinType('any')
 
@@ -502,6 +505,7 @@ class Reference(Value, Type):
 
   @property
   def any_memory_offset(self) -> int:
+    assert isinstance(self.child, Type)
     return self.child.any_memory_offset
 
 class FunctionType(Type, DeclarationBase):
@@ -570,6 +574,7 @@ class Declaration(DeclarationBase):
       if isinstance(self.typ, Alias):
         self.typ = self.typ.typ
       else:
+        assert isinstance(self.typ, Symbol) and isinstance(self.typ.decl, Type)
         self.typ = self.typ.decl
       typ = type(self.typ)
     if self.sym is not None:
@@ -1044,7 +1049,7 @@ class Sizeof(Value):
   def typ(self) -> Type:
     return BuiltinType('size')
 
-class Alias(DeclarationBase):
+class Alias(Type, DeclarationBase):
   def __init__(self, src: Identifier, dst: Symbol) -> None:
     self.src: Identifier = src
     self.dst: Symbol = dst
