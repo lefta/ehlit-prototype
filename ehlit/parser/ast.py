@@ -516,10 +516,6 @@ class FunctionType(Type, DeclarationBase):
       i += 1
 
   @property
-  def ref_offset(self) -> int:
-    return self.ret.ref_offset
-
-  @property
   def typ(self) -> Type:
     return self
 
