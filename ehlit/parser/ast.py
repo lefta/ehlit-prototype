@@ -256,6 +256,11 @@ class Value(Node):
   def cast(self, v: Optional['Type']) -> None:
     self._cast = v
 
+  @property
+  @abstractmethod
+  def typ(self) -> 'Type':
+    raise NotImplementedError
+
   def _from_any_aligned(target: Node, source: 'Type', is_casting: bool) -> 'Type':
     '''! Compute the conversion needed to transform an any into target.
     This function computes the referencing offset and / or the cast to make an @b any, or a
