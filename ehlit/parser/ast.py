@@ -443,27 +443,28 @@ class Array(Type, DeclarationBase):
     return 0
 
 class Reference(Value, Type):
-  def __init__(self, child: Node) -> None:
-    self.child: Node = child
+  def __init__(self, child: Union[Value, Type]) -> None:
+    self.child: Union[Value, Type] = child
     super().__init__()
 
   def build(self, parent: Node) -> None:
     super().build(parent)
     self.child.build(self)
-    if not self.child.is_type:
+    if not isinstance(self.child, Type) or not self.child.is_type:
       self.child.ref_offset -= 1
 
   @property
   def is_type(self) -> bool:
-    return self.child.is_type
+    return isinstance(self.child, Type) and self.child.is_type
 
   @property
   def decl(self) -> Optional['DeclarationBase']:
+    assert isinstance(self.child, Value)
     return self.child.decl
 
   @property
   def ref_offset(self) -> int:
-    if self.child.is_type:
+    if isinstance(self.child, Type) and self.child.is_type:
       return self.child.ref_offset + 1
     return self.child.ref_offset
 
@@ -484,9 +485,11 @@ class Reference(Value, Type):
   def inner_child(self) -> Type:
     if isinstance(self.child, Reference):
       return self.child.inner_child
+    assert isinstance(self.child, Type)
     return self.child
 
   def auto_cast(self, target: Type) -> None:
+    assert isinstance(self.child, Value)
     self.child.auto_cast(target)
 
   def from_any(self) -> Type:
