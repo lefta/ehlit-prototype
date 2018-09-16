@@ -382,6 +382,37 @@
       │                 └─ Expression
       │                    └─ Symbol
       │                       └─ Identifier: rstring
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ BuiltinType: any
+      │        └─ Identifier: a1
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ BuiltinType: any
+      │        └─ Identifier: a2
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: a1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Symbol
+      │              └─ Identifier: a2
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: a1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: returning_any
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: a2
       └─ Statement
          └─ Return
             └─ Expression

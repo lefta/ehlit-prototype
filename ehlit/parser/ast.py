@@ -309,9 +309,13 @@ class Value(Node):
     self_typ: 'Type' = self.typ
     if isinstance(self_typ, Reference):
       self_typ = self_typ.inner_child
+    if isinstance(self_typ, Symbol):
+      self_typ = self_typ.typ
     target_typ: 'Type' = target
     if isinstance(target_typ, Reference):
       target_typ = target_typ.inner_child
+    if isinstance(target_typ, Symbol):
+      target_typ = target_typ.typ
     if self_typ != target_typ:
       if self_typ == BuiltinType('any'):
         src = Value._from_any_aligned(target, self.typ, True)

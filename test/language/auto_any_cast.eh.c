@@ -34,5 +34,9 @@ int32_t main(void)
     rrnb = (int32_t**)same_with_ref_any(rrnb);
     char** rstring = (char**)same_with_ref_any(&string);
     string = *(char**)same_with_ref_any(rstring);
+    void* a1;
+    void* a2;
+    a1 = a2;
+    a1 = returning_any(a2);
     return (0);
 }

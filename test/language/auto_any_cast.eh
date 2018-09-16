@@ -36,5 +36,11 @@ int main()
 	ref str rstring = same_with_ref_any(string)
 	string = same_with_ref_any(rstring)
 
+	// Don't cast from any to any
+	any a1
+	any a2
+	a1 = a2
+	a1 = returning_any(a2)
+
 	return 0
 }
