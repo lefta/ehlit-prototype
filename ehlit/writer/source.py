@@ -21,7 +21,7 @@
 
 import sys
 from ehlit.parser.ast import (Reference, Array, ArrayAccess, BuiltinType, FunctionType,
-  FunctionDeclaration, FunctionDefinition, FunctionCall, Symbol, Struct)
+  FunctionDeclaration, FunctionDefinition, FunctionCall, Symbol, Struct, EhUnion)
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -171,6 +171,7 @@ class SourceWriter:
       typ = typ.decl
     prefix = {
       Struct: 'struct',
+      EhUnion: 'union',
     }.get(type(typ))
     if prefix is not None:
       self.file.write(prefix + ' ')
@@ -466,8 +467,7 @@ class SourceWriter:
       self.write_declaration_post(node.src)
       self.file.write(';\n')
 
-  def writeStruct(self, node):
-    self.file.write('\nstruct ')
+  def writeContainerStructure(self, node):
     self.write(node.sym)
     if node.fields is not None:
       self.file.write('\n{\n')
@@ -479,3 +479,11 @@ class SourceWriter:
       self.indent -= 1
       self.file.write('}')
     self.file.write(';\n')
+
+  def writeStruct(self, node):
+    self.file.write('\nstruct ')
+    self.writeContainerStructure(node)
+
+  def writeEhUnion(self, node):
+    self.file.write('\nunion ')
+    self.writeContainerStructure(node)

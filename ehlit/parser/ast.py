@@ -1073,12 +1073,13 @@ class Alias(Type, DeclarationBase):
   def ref_offset(self, offset: int) -> None:
     self.dst.ref_offset = offset
 
-class Struct(Type, DeclarationBase):
+class ContainerStructure(Type, DeclarationBase):
   def __init__(self, pos: int, sym: Identifier,
                fields: Optional[List[VariableDeclaration]]) -> None:
     super().__init__(pos)
     self.sym: Identifier = sym
     self.fields: Optional[List[VariableDeclaration]] = fields
+    self.display_name = ''
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -1086,8 +1087,6 @@ class Struct(Type, DeclarationBase):
     if self.fields is not None:
       for f in self.fields:
         f.build(self)
-        if f.assign is not None:
-          self.error(self.pos, "struct fields may not have a value yet")
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
@@ -1112,7 +1111,7 @@ class Struct(Type, DeclarationBase):
 
   def get_inner_declaration(self, sym: List[str]) -> DeclarationLookup:
     if self.fields is None:
-      return None, 'accessing incomplete struct {}'.format(self.sym.name)
+      return None, 'accessing incomplete {} {}'.format(self.display_name, self.sym.name)
     for f in self.fields:
       decl, err = f.get_declaration(sym)
       if err is not None:
@@ -1125,6 +1124,18 @@ class Struct(Type, DeclarationBase):
     res = Reference(Symbol([Identifier(0, self.sym.name)]))
     res.build(self)  # Needs to be built to get the declaration
     return res
+
+class Struct(ContainerStructure):
+  def __init__(self, pos: int, sym: Identifier,
+               fields: Optional[List[VariableDeclaration]]) -> None:
+    super().__init__(pos, sym, fields)
+    self.display_name = 'struct'
+
+class EhUnion(ContainerStructure):
+  def __init__(self, pos: int, sym: Identifier,
+               fields: Optional[List[VariableDeclaration]]) -> None:
+    super().__init__(pos, sym, fields)
+    self.display_name = 'union'
 
 class AST(Node):
   def __init__(self, nodes: List[Node]) -> None:

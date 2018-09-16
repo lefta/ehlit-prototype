@@ -302,3 +302,12 @@ class DumpWriter:
       self.print_str('Forward declaration')
     else:
       self.print_node_list('Fields', node.fields, False)
+
+  @indent
+  def dumpEhUnion(self, node):
+    self.dump('Union')
+    self.print_node(node.sym)
+    if node.fields is None:
+      self.print_str('Forward declaration')
+    else:
+      self.print_node_list('Fields', node.fields, False)

@@ -209,11 +209,12 @@ class ASTBuilder(PTNodeVisitor):
   ############
 
   def visit_variable_declaration(self, node, children):
-    return ast.VariableDeclaration(
-      children[0],
-      children[1],
-      children[2] if len(children) == 3 else None
-    )
+    return ast.VariableDeclaration(children[0], children[1], None)
+
+  def visit_variable_declaration_assignable(self, node, children):
+    if len(children) == 2:
+      children[0].assign = children[1]
+    return children[0]
 
   def visit_variable_assignment(self, node, children):
     if len(children) == 2:
@@ -342,6 +343,11 @@ class ASTBuilder(PTNodeVisitor):
     if len(children) is 2:
       return ast.Struct(node.position, children[1], None)
     return ast.Struct(node.position, children[1], children[2:])
+
+  def visit_union(self, node, children):
+    if len(children) is 2:
+      return ast.EhUnion(node.position, children[1], None)
+    return ast.EhUnion(node.position, children[1], children[2:])
 
   # Root grammars
   ###############

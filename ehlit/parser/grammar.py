@@ -171,7 +171,10 @@ def full_type():
 ############
 
 def variable_declaration():
-  return full_type, identifier, Optional(assignment)
+  return full_type, identifier
+
+def variable_declaration_assignable():
+  return variable_declaration, Optional(assignment)
 
 def variable_assignment():
   return [referenced_value, symbol], Optional(array_access), operation_assignment
@@ -182,7 +185,7 @@ def return_instruction():
   return 'return'
 
 def statement():
-  return [return_instruction, variable_assignment, variable_declaration, expression]
+  return [return_instruction, variable_assignment, variable_declaration_assignable, expression]
 
 def instruction():
   return [comment, condition, while_loop, switch, alias, statement]
@@ -254,7 +257,7 @@ def control_structure_body_stub():
 ###########
 
 def function_prototype():
-  return (full_type, identifier, '(', ZeroOrMore(variable_declaration, sep=','),
+  return (full_type, identifier, '(', ZeroOrMore(variable_declaration_assignable, sep=','),
     trailing_comma, ')')
 
 def function_declaration():
@@ -287,6 +290,9 @@ def alias():
 def struct():
   return 'struct', identifier, Optional('{', ZeroOrMore(variable_declaration), '}')
 
+def union():
+  return 'union', identifier, Optional('{', ZeroOrMore(variable_declaration), '}')
+
 # Root grammars
 ###############
 
@@ -294,5 +300,5 @@ def function_body_grammar():
   return '{', ZeroOrMore(instruction), '}', EOF
 
 def grammar():
-  return ZeroOrMore([comment, import_instruction, include_instruction, struct, alias,
+  return ZeroOrMore([comment, import_instruction, include_instruction, struct, union, alias,
     function]), EOF

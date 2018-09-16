@@ -137,8 +137,8 @@ class ImportWriter:
       self.file.write(' = ')
       self.write(node.assign)
 
-  def writeStruct(self, node):
-    self.file.write('\nstruct ')
+  def writeContainerStructure(self, node):
+    self.file.write('\n{} '.format(node.display_name))
     self.write(node.sym)
     if node.fields is not None:
       self.file.write(' {\n')
@@ -149,3 +149,9 @@ class ImportWriter:
         self.file.write('\n')
       self.indent -= 1
       self.file.write('}\n')
+
+  def writeStruct(self, node):
+    self.writeContainerStructure(node)
+
+  def writeEhUnion(self, node):
+    self.writeContainerStructure(node)

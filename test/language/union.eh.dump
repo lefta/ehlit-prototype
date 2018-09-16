@@ -1,0 +1,264 @@
+├─ Union
+│  ├─ Identifier: test_union
+│  └─ Fields
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ BuiltinType: int
+│     │     └─ Identifier: field1
+│     ├─ VariableDeclaration
+│     │  └─ Declaration
+│     │     ├─ BuiltinType: str
+│     │     └─ Identifier: field2
+│     └─ VariableDeclaration
+│        └─ Declaration
+│           ├─ Reference
+│           │  └─ Array
+│           │     └─ BuiltinType: int
+│           └─ Identifier: field3
+├─ Union
+│  ├─ Identifier: forward_decl
+│  ├─ Forward declaration
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: fun
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ BuiltinType: int
+│  │              └─ Identifier: i
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: union_fun
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  └─ Symbol
+│  │     │     └─ Identifier: test_union
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ Reference
+│  │              │  └─ Symbol
+│  │              │     └─ Identifier: test_union
+│  │              └─ Identifier: s
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ Symbol
+│                 └─ Identifier: s
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: any_fun
+│  │  └─ FunctionType
+│  │     ├─ BuiltinType: any
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ BuiltinType: any
+│  │              └─ Identifier: p
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ Symbol
+│                 └─ Identifier: p
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ Identifier: main
+   │  └─ FunctionType
+   │     └─ BuiltinType: int
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ Symbol
+      │        │  └─ Identifier: test_union
+      │        └─ Identifier: t
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  ├─ Identifier: t
+      │     │  └─ Identifier: field1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 0
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  ├─ Identifier: t
+      │     │  └─ Identifier: field2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ String: 123456
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     ├─ Identifier: t
+      │     │     └─ Identifier: field3
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ NullValue
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Symbol
+      │                 ├─ Identifier: t
+      │                 └─ Identifier: field1
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Reference
+      │     │  │  └─ Symbol
+      │     │  │     └─ Identifier: test_union
+      │     │  └─ Identifier: rt
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Symbol
+      │              └─ Identifier: t
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  ├─ Identifier: rt
+      │     │  └─ Identifier: field1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 0
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  ├─ Identifier: rt
+      │     │  └─ Identifier: field2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ String: 123456
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     ├─ Identifier: rt
+      │     │     └─ Identifier: field3
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ NullValue
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ Symbol
+      │        │  └─ Identifier: fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ Symbol
+      │                 ├─ Identifier: rt
+      │                 └─ Identifier: field1
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     └─ Identifier: rt
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: union_fun
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: t
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ BuiltinType: size
+      │     │  └─ Identifier: ss
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Sizeof
+      │              └─ Symbol
+      │                 └─ Identifier: test_union
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: ss
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Sizeof
+      │              └─ Reference
+      │                 └─ Symbol
+      │                    └─ Identifier: test_union
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ FunctionType
+      │     │  │  ├─ Reference
+      │     │  │  │  └─ Symbol
+      │     │  │  │     └─ Identifier: test_union
+      │     │  │  └─ Arguments:
+      │     │  │     └─ Declaration
+      │     │  │        └─ Reference
+      │     │  │           └─ Symbol
+      │     │  │              └─ Identifier: test_union
+      │     │  └─ Identifier: psf
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Symbol
+      │              └─ Identifier: union_fun
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     └─ Identifier: rt
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: any_fun
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ Symbol
+      │              │        └─ Identifier: test_union
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: rt
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Symbol
+      │     │  └─ Identifier: t
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ Symbol
+      │              │  └─ Identifier: any_fun
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ Symbol
+      │              │        └─ Identifier: test_union
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: t
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ Symbol
+      │     │     └─ Identifier: rt
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Cast
+      │              ├─ Reference
+      │              │  └─ Symbol
+      │              │     └─ Identifier: test_union
+      │              └─ Expression
+      │                 └─ Number: 0
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0
