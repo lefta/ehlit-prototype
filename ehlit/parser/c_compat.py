@@ -208,6 +208,18 @@ def parse_STRUCT_DECL(cursor):
     ))
   return ast.Struct(0, ast.Identifier(0, cursor.spelling), fields)
 
+def parse_UNION_DECL(cursor):
+  if not cursor.is_definition():
+    return ast.EhUnion(0, ast.Identifier(0, cursor.spelling), None)
+  fields = []
+  for f in cursor.type.get_fields():
+    fields.append(ast.VariableDeclaration(
+      type_to_ehlit(f.type),
+      ast.Identifier(0, f.spelling),
+      None
+    ))
+  return ast.EhUnion(0, ast.Identifier(0, cursor.spelling), fields)
+
 
 def type_VOID(typ): return ast.BuiltinType('void')
 def type_POINTER(typ):

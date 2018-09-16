@@ -1,0 +1,33 @@
+└─ Include
+   ├─ Identifier: c_parser/union
+   └─ Symbols found
+      ├─ Union
+      │  ├─ Identifier: test_union
+      │  └─ Fields
+      │     ├─ VariableDeclaration
+      │     │  └─ Declaration
+      │     │     ├─ BuiltinType: int32
+      │     │     └─ Identifier: field1
+      │     └─ VariableDeclaration
+      │        └─ Declaration
+      │           ├─ BuiltinType: str
+      │           └─ Identifier: field2
+      ├─ Union
+      │  ├─ Identifier: 
+      │  └─ Fields
+      │     └─ VariableDeclaration
+      │        └─ Declaration
+      │           ├─ BuiltinType: int32
+      │           └─ Identifier: field1
+      └─ Alias
+         ├─ From:
+         │  └─ Union
+         │     ├─ Identifier: 
+         │     └─ Fields
+         │        └─ VariableDeclaration
+         │           └─ Declaration
+         │              ├─ BuiltinType: int32
+         │              └─ Identifier: field1
+         └─ To:
+            └─ Symbol
+               └─ Identifier: test_union_t
