@@ -48,7 +48,7 @@ def comment():
 
 def builtin_keyword():
   return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', 'func', 'alias', 'switch', 'case',
-    'fallthrough', 'default', builtin_type, bool_value]
+    'fallthrough', 'default', 'struct', 'union', builtin_type, bool_value]
 
 def identifier():
   return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='identifier')
