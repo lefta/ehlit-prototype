@@ -272,11 +272,17 @@ def function():
 # External includes
 ###################
 
+def include_part():
+  return RegExMatch(r'[^/ \n\t\r\f\v]+', str_repr='include path part')
+
 def include_instruction():
-  return 'include', symbol
+  return 'include', OneOrMore(include_part, sep='/')
+
+def import_part():
+  return RegExMatch(r'[^/. \n\t\r\f\v]+', str_repr='import path part')
 
 def import_instruction():
-  return 'import', symbol
+  return 'import', OneOrMore(import_part, sep='.')
 
 # Misc
 ######

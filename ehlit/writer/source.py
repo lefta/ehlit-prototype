@@ -99,8 +99,8 @@ class SourceWriter:
   def writeInclude(self, inc):
     self.write_indent()
     self.file.write('#include <')
-    self.write(inc.lib)
-    self.file.write('.h>\n')
+    self.file.write(inc.lib)
+    self.file.write('>\n')
 
   def writeImport(self, node):
     self.in_import += 1

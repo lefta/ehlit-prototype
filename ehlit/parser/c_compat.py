@@ -137,7 +137,7 @@ def find_file_in_path(filename):
     '%s: no such file or directory' % filename, None)])
 
 def parse_header(filename):
-  path = find_file_in_path(filename + '.h')
+  path = find_file_in_path(filename)
   index = Index.create()
   try:
     tu = index.parse(path)

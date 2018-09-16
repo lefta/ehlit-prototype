@@ -137,14 +137,14 @@ class Node:
 
 class GenericExternInclusion(Node):
   '''! Base for include and import defining shared behaviors '''
-  def __init__(self, pos: int, lib: 'Symbol') -> None:
+  def __init__(self, pos: int, lib: List[str]) -> None:
     '''! Constructor
     @param pos @b int The position of the node in the source file
-    @param lib @b Symbol Path of the file to be imported
+    @param lib @b List[str] Path of the file to be imported
     '''
     super().__init__(pos)
-    ## @b Identifier The library that will be imported
-    self.lib: 'Identifier' = Identifier(lib.pos, path.join(*[x.name for x in lib.elems]))
+    ## @b str The library that will be imported
+    self.lib: str = path.join(*lib)
     ## @b List[Node] The symbols that have been imported from the library
     self.syms: List[Node] = []
 
@@ -205,7 +205,7 @@ class Import(GenericExternInclusion):
     @return @b List[Node] A list of the imported nodes.
     '''
     for p in self.import_paths:
-      full_path: str = path.abspath(path.join(p, self.lib.name))
+      full_path: str = path.abspath(path.join(p, self.lib))
       if path.isdir(full_path):
         if full_path in imported:
           return []
@@ -217,7 +217,7 @@ class Import(GenericExternInclusion):
           return []
         imported.append(full_path)
         return ehlit.parser.parse(full_path).nodes
-    self.error(self.pos, '%s: no such file or directory' % self.lib.name)
+    self.error(self.pos, '%s: no such file or directory' % self.lib)
     return []
 
 class Include(GenericExternInclusion):
@@ -226,7 +226,7 @@ class Include(GenericExternInclusion):
     '''! Parse the included file.
     @return @b List[Node] A list of the imported nodes.
     '''
-    return c_compat.parse_header(self.lib.name)
+    return c_compat.parse_header(self.lib)
 
 class Value(Node):
   '''! Base for all nodes representing a value. '''

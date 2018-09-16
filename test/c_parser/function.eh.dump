@@ -1,5 +1,5 @@
 └─ Include
-   ├─ Identifier: c_parser/function
+   ├─ Path: c_parser/function.h
    └─ Symbols found
       └─ FunctionDeclaration
          ├─ Identifier: fun

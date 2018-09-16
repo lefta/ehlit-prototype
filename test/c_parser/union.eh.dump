@@ -1,5 +1,5 @@
 └─ Include
-   ├─ Identifier: c_parser/union
+   ├─ Path: c_parser/union.h
    └─ Symbols found
       ├─ Union
       │  ├─ Identifier: test_union

@@ -324,11 +324,17 @@ class ASTBuilder(PTNodeVisitor):
   # External includes
   ###################
 
+  def visit_include_part(self, node, children):
+    return str(node)
+
   def visit_include_instruction(self, node, children):
-    return ast.Include(node.position, children[1])
+    return ast.Include(node.position, children[1::2])
+
+  def visit_import_part(self, node, children):
+    return str(node)
 
   def visit_import_instruction(self, node, children):
-    return ast.Import(node.position, children[1])
+    return ast.Import(node.position, children[1::2])
 
   # Misc
   ######

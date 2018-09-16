@@ -1,5 +1,5 @@
 └─ Include
-   ├─ Identifier: c_parser/variable
+   ├─ Path: c_parser/variable.h
    └─ Symbols found
       ├─ VariableDeclaration
       │  └─ Declaration

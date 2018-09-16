@@ -1,1 +1,1 @@
-include c_parser.function_type
+include c_parser/function_type.h

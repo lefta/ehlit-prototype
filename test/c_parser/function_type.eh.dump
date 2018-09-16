@@ -1,5 +1,5 @@
 └─ Include
-   ├─ Identifier: c_parser/function_type
+   ├─ Path: c_parser/function_type.h
    └─ Symbols found
       ├─ Alias
       │  ├─ From:

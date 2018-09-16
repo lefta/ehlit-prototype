@@ -1,1 +1,1 @@
-include c_parser.struct
+include c_parser/struct.h
