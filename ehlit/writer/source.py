@@ -93,8 +93,6 @@ class SourceWriter:
       self.write_type_prefix(node.cast)
       self.write(node.cast)
       self.file.write(')')
-    if node.is_type and node.is_const:
-      self.file.write(' const')
 
   def writeInclude(self, inc):
     self.write_indent()
@@ -107,11 +105,6 @@ class SourceWriter:
     for sym in node.syms:
       self.write(sym)
     self.in_import -= 1
-
-  def writeBuiltinType(self, typ):
-    self.file.write(self.types[typ.name])
-    if typ.is_const:
-      self.file.write(' const')
 
   def writeReference(self, ref):
     self.write(ref.child)
@@ -175,6 +168,10 @@ class SourceWriter:
     }.get(type(typ))
     if prefix is not None:
       self.file.write(prefix + ' ')
+
+  def write_type_suffix(self, node):
+    if node.is_const:
+      self.file.write(' const')
 
   def writeDeclaration(self, decl):
     self.write_type_prefix(decl.typ_src)
@@ -299,6 +296,8 @@ class SourceWriter:
     while type(decl) is Array or type(decl) is Reference or BuiltinType('str') == decl:
       if type(sym) is ArrayAccess:
         sym = sym.child
+      if isinstance(decl, Symbol):
+        decl = decl.typ
       decl = decl.child
     cur = sym.parent
     decl = decl.parent
@@ -414,10 +413,15 @@ class SourceWriter:
       else:
         self.write(node.elems[i])
       i += 1
+    if node.is_type:
+      self.write_type_suffix(node)
 
   def writeIdentifier(self, node):
     if node.decl is not None:
-      self.file.write(node.decl.name)
+      if node.decl.name in self.types:
+        self.file.write(self.types[node.decl.name])
+      else:
+        self.file.write(node.decl.name)
     else:
       self.file.write(node.name)
 

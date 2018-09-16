@@ -3,11 +3,13 @@
    └─ Symbols found
       ├─ VariableDeclaration
       │  └─ Declaration
-      │     ├─ BuiltinType: int32
+      │     ├─ Symbol
+      │     │  └─ Identifier: int32
       │     └─ Identifier: var
       └─ VariableDeclaration
          ├─ Declaration
-         │  ├─ BuiltinType: int32
+         │  ├─ Symbol
+         │  │  └─ Identifier: int32
          │  └─ Identifier: assigned_var
          └─ Assignment
             └─ Number: 2

@@ -2,23 +2,27 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: take_char
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: void
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ BuiltinType: char
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: char
 │  │              └─ Identifier: c
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: char
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: char
       │     │  └─ Identifier: c
       │     └─ Assignment
       │        └─ Expression
@@ -98,7 +102,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: char
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: char
       │     │  └─ Identifier: space
       │     └─ Assignment
       │        └─ Expression

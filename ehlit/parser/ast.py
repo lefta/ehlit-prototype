@@ -22,7 +22,6 @@
 from abc import abstractmethod
 from os import path, getcwd, listdir
 from typing import Any, List, Optional, Tuple, Union
-from ehlit.parser import c_compat
 import ehlit.parser.parse
 from ehlit.parser.error import ParseError, Failure
 
@@ -32,6 +31,10 @@ MOD_NONE = 0
 MOD_CONST = 1
 
 imported: List[str] = []
+builtin_types: List[str] = [
+  'char', 'int', 'int8', 'int16', 'int32', 'int64',
+  'uint8', 'uint16', 'uint32', 'uint64',
+  'size', 'str', 'any', 'void', 'bool']
 
 class UnparsedContents:
   '''!
@@ -226,7 +229,8 @@ class Include(GenericExternInclusion):
     '''! Parse the included file.
     @return @b List[Node] A list of the imported nodes.
     '''
-    return c_compat.parse_header(self.lib)
+    from ehlit.parser import c_compat
+    return c_compat.parse_header(self.lib, self)
 
 class Value(Node):
   '''! Base for all nodes representing a value. '''
@@ -274,6 +278,8 @@ class Value(Node):
     '''
     target_ref_count: int = source.ref_offset
     res: 'Type' = target.typ.from_any()
+    # print('target', target.typ)
+    # print('in', res)
     if is_casting:
       # We align the result to match the ref offset of the target
       if not target.is_type:
@@ -298,6 +304,7 @@ class Value(Node):
       while target_ref_count > 0:
         res = Reference(res)
         target_ref_count -= 1
+    # print('out', res)
     return res
 
   def auto_cast(self, target: 'Type') -> None:
@@ -384,6 +391,11 @@ class Type(Node):
     return 0
 
 class BuiltinType(Type, DeclarationBase):
+  def make(parent: Node, name: str) -> 'Symbol':
+    res = Symbol([Identifier(parent.pos, name)])
+    res.build(parent)
+    return res
+
   def __init__(self, name: str) -> None:
     super().__init__()
     self.name: str = name
@@ -395,9 +407,7 @@ class BuiltinType(Type, DeclarationBase):
   @property
   def child(self) -> Optional[Type]:
     if self.name == 'str':
-      ch: Type = BuiltinType('char')
-      ch.parent = self
-      return ch
+      return BuiltinType.make(self, 'char')
     return None
 
   @property
@@ -409,16 +419,20 @@ class BuiltinType(Type, DeclarationBase):
     return self
 
   def from_any(self) -> Type:
-    return self if self.name == 'str' else Reference(self)
+    if self.name == 'str':
+      return BuiltinType.make(self, 'str')
+    return Reference(BuiltinType.make(self, self.name))
 
   @property
   def any_memory_offset(self) -> int:
     return 0 if self.name == 'str' else 1
 
   def __eq__(self, rhs: object) -> bool:
-    if not isinstance(rhs, BuiltinType):
-      return False
-    return self.name == rhs.name
+    if isinstance(rhs, Symbol):
+      rhs = rhs.decl
+    if isinstance(rhs, BuiltinType):
+      return self.name == rhs.name
+    return False
 
 class Array(Type, DeclarationBase):
   def __init__(self, child: Optional[Type], length: Optional[Node]) -> None:
@@ -482,7 +496,7 @@ class Reference(Value, Type):
     if self.decl is not None:
       assert isinstance(self.decl, Declaration)
       return self.decl.typ
-    return BuiltinType('any')
+    return BuiltinType.make(self, 'any')
 
   @property
   def inner_child(self) -> Type:
@@ -628,7 +642,7 @@ class FunctionDefinition(FunctionDeclaration):
       typ: Type = self.typ.ret
       if isinstance(typ, Symbol):
         decl = typ.decl
-        typ = decl.typ if decl is not None else BuiltinType('any')
+        typ = decl.typ if decl is not None else BuiltinType.make(self, 'any')
       if isinstance(typ, Alias):
         typ = typ.src
       self.body = parse_function(self.body_str.contents, not typ == BuiltinType('void'))
@@ -738,7 +752,7 @@ class FunctionCall(Value):
     if self.is_cast:
       return self.sym
     if self.sym.decl is None:
-      return BuiltinType('any')
+      return BuiltinType.make(self, 'any')
     assert isinstance(self.sym.decl, Declaration)
     if not isinstance(self.sym.decl.typ, FunctionType):
       return self.sym.decl.typ
@@ -881,7 +895,7 @@ class Identifier(Value):
 
   @property
   def typ(self) -> Type:
-    return self.decl.typ if self.decl is not None else BuiltinType('any')
+    return self.decl.typ if self.decl is not None else BuiltinType.make(self, 'any')
 
   def from_any(self) -> Type:
     return self.decl.from_any() if self.decl is not None else self
@@ -934,6 +948,10 @@ class Symbol(Value, Type):
   def from_any(self) -> Type:
     return self.elems[-1].from_any()
 
+  @property
+  def any_memory_offset(self):
+    return self.elems[-1].typ.any_memory_offset
+
   def find_declaration_for(self, identifier: Identifier) -> DeclarationLookup:
     i: int = 0
     while i < len(self.elems):
@@ -950,7 +968,7 @@ class String(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType('str')
+    return BuiltinType.make(self, 'str')
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -962,7 +980,7 @@ class Char(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType('char')
+    return BuiltinType.make(self, 'char')
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -974,7 +992,7 @@ class Number(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType('int')
+    return BuiltinType.make(self, 'int')
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -985,7 +1003,7 @@ class NullValue(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType('any')
+    return BuiltinType.make(self, 'any')
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -997,7 +1015,7 @@ class BoolValue(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType('bool')
+    return BuiltinType.make(self, 'bool')
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -1038,7 +1056,7 @@ class Sizeof(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType('size')
+    return BuiltinType.make(self, 'size')
 
 class Alias(Type, DeclarationBase):
   def __init__(self, src: Identifier, dst: Symbol) -> None:
@@ -1175,6 +1193,10 @@ class AST(Node):
       res, err = n.get_declaration(sym)
       if res is not None or err is not None:
         return res, err
+    if sym[0] in builtin_types:
+      res = BuiltinType(sym[0])
+      res.build(self)
+      return res.declaration_match(sym)
     return None, None
 
   @property

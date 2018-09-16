@@ -2,34 +2,40 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: puts
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: void
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ BuiltinType: str
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: str
 │  │              └─ Identifier: s
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     ├─ BuiltinType: int
+   │     ├─ Symbol
+   │     │  └─ Identifier: int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
    │        │  └─ Declaration
-   │        │     ├─ BuiltinType: int
+   │        │     ├─ Symbol
+   │        │     │  └─ Identifier: int
    │        │     └─ Identifier: ac
    │        └─ VariableDeclaration
    │           └─ Declaration
    │              ├─ Array
-   │              │  └─ BuiltinType: str
+   │              │  └─ Symbol
+   │              │     └─ Identifier: str
    │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Array
-      │     │  │  └─ BuiltinType: str
+      │     │  │  └─ Symbol
+      │     │  │     └─ Identifier: str
       │     │  └─ Identifier: av2
       │     └─ Assignment
       │        └─ Expression
@@ -89,7 +95,8 @@
       │     └─ Declaration
       │        ├─ Array
       │        │  └─ Array
-      │        │     └─ BuiltinType: int
+      │        │     └─ Symbol
+      │        │        └─ Identifier: int
       │        └─ Identifier: sarr1
       ├─ Statement
       │  └─ VariableDeclaration
@@ -98,7 +105,8 @@
       │        │  ├─ Sub-type:
       │        │  │  └─ Array
       │        │  │     ├─ Sub-type:
-      │        │  │     │  └─ BuiltinType: int
+      │        │  │     │  └─ Symbol
+      │        │  │     │     └─ Identifier: int
       │        │  │     └─ Length:
       │        │  │        └─ Expression
       │        │  │           └─ Number: 5
@@ -125,7 +133,8 @@
       │        ├─ Array
       │        │  ├─ Sub-type:
       │        │  │  └─ Array
-      │        │  │     └─ BuiltinType: int
+      │        │  │     └─ Symbol
+      │        │  │        └─ Identifier: int
       │        │  └─ Length:
       │        │     └─ Expression
       │        │        └─ Number: 20
@@ -136,7 +145,8 @@
       │        ├─ Array
       │        │  └─ Array
       │        │     ├─ Sub-type:
-      │        │     │  └─ BuiltinType: int
+      │        │     │  └─ Symbol
+      │        │     │     └─ Identifier: int
       │        │     └─ Length:
       │        │        └─ Expression
       │        │           └─ Number: 20
@@ -149,7 +159,8 @@
       │        │  │  └─ Array
       │        │  │     └─ Array
       │        │  │        ├─ Sub-type:
-      │        │  │        │  └─ BuiltinType: int
+      │        │  │        │  └─ Symbol
+      │        │  │        │     └─ Identifier: int
       │        │  │        └─ Length:
       │        │  │           └─ Expression
       │        │  │              └─ Number: 20
@@ -164,7 +175,8 @@
       │        │  └─ Array
       │        │     ├─ Sub-type:
       │        │     │  └─ Array
-      │        │     │     └─ BuiltinType: int
+      │        │     │     └─ Symbol
+      │        │     │        └─ Identifier: int
       │        │     └─ Length:
       │        │        └─ Expression
       │        │           └─ Number: 12
@@ -178,7 +190,8 @@
       │        │     │  └─ Array
       │        │     │     └─ Array
       │        │     │        ├─ Sub-type:
-      │        │     │        │  └─ BuiltinType: int
+      │        │     │        │  └─ Symbol
+      │        │     │        │     └─ Identifier: int
       │        │     │        └─ Length:
       │        │     │           └─ Expression
       │        │     │              └─ Number: 20
@@ -195,7 +208,8 @@
       │        │  │     └─ Array
       │        │  │        ├─ Sub-type:
       │        │  │        │  └─ Array
-      │        │  │        │     └─ BuiltinType: int
+      │        │  │        │     └─ Symbol
+      │        │  │        │        └─ Identifier: int
       │        │  │        └─ Length:
       │        │  │           └─ Expression
       │        │  │              └─ Number: 12
@@ -212,7 +226,8 @@
       │        │  │     ├─ Sub-type:
       │        │  │     │  └─ Array
       │        │  │     │     └─ Array
-      │        │  │     │        └─ BuiltinType: int
+      │        │  │     │        └─ Symbol
+      │        │  │     │           └─ Identifier: int
       │        │  │     └─ Length:
       │        │  │        └─ Expression
       │        │  │           └─ Number: 12
@@ -229,7 +244,8 @@
       │        │        ├─ Sub-type:
       │        │        │  └─ Array
       │        │        │     ├─ Sub-type:
-      │        │        │     │  └─ BuiltinType: int
+      │        │        │     │  └─ Symbol
+      │        │        │     │     └─ Identifier: int
       │        │        │     └─ Length:
       │        │        │        └─ Expression
       │        │        │           └─ Number: 20
@@ -246,7 +262,8 @@
       │        │     │  └─ Array
       │        │     │     ├─ Sub-type:
       │        │     │     │  └─ Array
-      │        │     │     │     └─ BuiltinType: int
+      │        │     │     │     └─ Symbol
+      │        │     │     │        └─ Identifier: int
       │        │     │     └─ Length:
       │        │     │        └─ Expression
       │        │     │           └─ Number: 12
@@ -260,7 +277,8 @@
       │        ├─ Array
       │        │  ├─ Sub-type:
       │        │  │  └─ Reference
-      │        │  │     └─ BuiltinType: int
+      │        │  │     └─ Symbol
+      │        │  │        └─ Identifier: int
       │        │  └─ Length:
       │        │     └─ Expression
       │        │        └─ Number: 20
@@ -281,7 +299,8 @@
       │        ├─ Reference
       │        │  └─ Array
       │        │     ├─ Sub-type:
-      │        │     │  └─ BuiltinType: int
+      │        │     │  └─ Symbol
+      │        │     │     └─ Identifier: int
       │        │     └─ Length:
       │        │        └─ Expression
       │        │           └─ Number: 20
@@ -304,7 +323,8 @@
       │        │  │  └─ Reference
       │        │  │     └─ Array
       │        │  │        ├─ Sub-type:
-      │        │  │        │  └─ BuiltinType: int
+      │        │  │        │  └─ Symbol
+      │        │  │        │     └─ Identifier: int
       │        │  │        └─ Length:
       │        │  │           └─ Expression
       │        │  │              └─ Number: 20
@@ -332,7 +352,8 @@
       │        │  └─ Array
       │        │     ├─ Sub-type:
       │        │     │  └─ Reference
-      │        │     │     └─ BuiltinType: int
+      │        │     │     └─ Symbol
+      │        │     │        └─ Identifier: int
       │        │     └─ Length:
       │        │        └─ Expression
       │        │           └─ Number: 12
@@ -356,7 +377,8 @@
       │        │     │  └─ Reference
       │        │     │     └─ Array
       │        │     │        ├─ Sub-type:
-      │        │     │        │  └─ BuiltinType: int
+      │        │     │        │  └─ Symbol
+      │        │     │        │     └─ Identifier: int
       │        │     │        └─ Length:
       │        │     │           └─ Expression
       │        │     │              └─ Number: 20
@@ -386,7 +408,8 @@
       │        │  │     └─ Array
       │        │  │        ├─ Sub-type:
       │        │  │        │  └─ Reference
-      │        │  │        │     └─ BuiltinType: int
+      │        │  │        │     └─ Symbol
+      │        │  │        │        └─ Identifier: int
       │        │  │        └─ Length:
       │        │  │           └─ Expression
       │        │  │              └─ Number: 12
@@ -416,7 +439,8 @@
       │        │  │     ├─ Sub-type:
       │        │  │     │  └─ Reference
       │        │  │     │     └─ Reference
-      │        │  │     │        └─ BuiltinType: int
+      │        │  │     │        └─ Symbol
+      │        │  │     │           └─ Identifier: int
       │        │  │     └─ Length:
       │        │  │        └─ Expression
       │        │  │           └─ Number: 12
@@ -446,7 +470,8 @@
       │        │        ├─ Sub-type:
       │        │        │  └─ Array
       │        │        │     ├─ Sub-type:
-      │        │        │     │  └─ BuiltinType: int
+      │        │        │     │  └─ Symbol
+      │        │        │     │     └─ Identifier: int
       │        │        │     └─ Length:
       │        │        │        └─ Expression
       │        │        │           └─ Number: 20
@@ -476,7 +501,8 @@
       │        │     │  └─ Array
       │        │     │     ├─ Sub-type:
       │        │     │     │  └─ Reference
-      │        │     │     │     └─ BuiltinType: int
+      │        │     │     │     └─ Symbol
+      │        │     │     │        └─ Identifier: int
       │        │     │     └─ Length:
       │        │     │        └─ Expression
       │        │     │           └─ Number: 12

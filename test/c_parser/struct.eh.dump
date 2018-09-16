@@ -6,18 +6,21 @@
       │  └─ Fields
       │     ├─ VariableDeclaration
       │     │  └─ Declaration
-      │     │     ├─ BuiltinType: int32
+      │     │     ├─ Symbol
+      │     │     │  └─ Identifier: int32
       │     │     └─ Identifier: field1
       │     └─ VariableDeclaration
       │        └─ Declaration
-      │           ├─ BuiltinType: str
+      │           ├─ Symbol
+      │           │  └─ Identifier: str
       │           └─ Identifier: field2
       ├─ Struct
       │  ├─ Identifier: 
       │  └─ Fields
       │     └─ VariableDeclaration
       │        └─ Declaration
-      │           ├─ BuiltinType: int32
+      │           ├─ Symbol
+      │           │  └─ Identifier: int32
       │           └─ Identifier: field1
       ├─ Alias
       │  ├─ From:
@@ -26,7 +29,8 @@
       │  │     └─ Fields
       │  │        └─ VariableDeclaration
       │  │           └─ Declaration
-      │  │              ├─ BuiltinType: int32
+      │  │              ├─ Symbol
+      │  │              │  └─ Identifier: int32
       │  │              └─ Identifier: field1
       │  └─ To:
       │     └─ Symbol
@@ -36,7 +40,8 @@
          └─ Fields
             ├─ VariableDeclaration
             │  └─ Declaration
-            │     ├─ BuiltinType: any
+            │     ├─ Symbol
+            │     │  └─ Identifier: any
             │     └─ Identifier: contents
             └─ VariableDeclaration
                └─ Declaration

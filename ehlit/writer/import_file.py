@@ -80,11 +80,6 @@ class ImportWriter:
       self.write(node.length)
     self.file.write(']')
 
-  def writeBuiltinType(self, node):
-    if node.is_const:
-      self.file.write('const ')
-    self.file.write(node.name)
-
   def writeReference(self, node):
     if node.is_const:
       self.file.write('const ')

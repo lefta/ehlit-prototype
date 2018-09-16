@@ -2,7 +2,8 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: function
 │  │  └─ FunctionType
-│  │     └─ BuiltinType: any
+│  │     └─ Symbol
+│  │        └─ Identifier: any
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -12,23 +13,27 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: get_null
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: void
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ BuiltinType: any
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: any
 │  │              └─ Identifier: p
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: str
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: str
       │     │  └─ Identifier: s
       │     └─ Assignment
       │        └─ Expression

@@ -2,18 +2,21 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: do_something
 │  │  └─ FunctionType
-│  │     └─ BuiltinType: void
+│  │     └─ Symbol
+│  │        └─ Identifier: void
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression

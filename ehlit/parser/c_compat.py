@@ -26,9 +26,10 @@ from argparse import ArgumentParser
 from clang.cindex import Index, TranslationUnitLoadError, CursorKind, TypeKind
 from ehlit.parser.error import ParseError, Failure
 from ehlit.parser import ast
-from typing import List
+from typing import List, Optional
 
 include_dirs: List[str] = []
+gparent: Optional[ast.Node] = None
 
 # Add CFLAGS environment variable include dirs
 parser = ArgumentParser()
@@ -107,16 +108,17 @@ int_types = {
 }
 
 def type_to_ehlit(typ):
+  assert gparent is not None
   if typ.kind.name in uint_types:
-    return ast.BuiltinType('uint' + str(typ.get_size() * 8))
+    return ast.BuiltinType.make(gparent, 'uint' + str(typ.get_size() * 8))
   if typ.kind.name in int_types:
-    return ast.BuiltinType('int' + str(typ.get_size() * 8))
+    return ast.BuiltinType.make(gparent, 'int' + str(typ.get_size() * 8))
 
   try:
     return globals()['type_' + typ.kind.name](typ)
   except KeyError:
     logging.debug('c_compat: unimplemented: type_%s' % typ.kind.name)
-  return ast.BuiltinType('any')
+  return ast.BuiltinType.make(gparent, 'any')
 
 def value_to_ehlit(val, typ):
   if typ.kind.name in uint_types or typ.kind.name in int_types:
@@ -136,7 +138,10 @@ def find_file_in_path(filename):
   raise ParseError([Failure(ParseError.Severity.Error, 0,
     '%s: no such file or directory' % filename, None)])
 
-def parse_header(filename):
+def parse_header(filename, parent):
+  global gparent
+  gparent = parent
+
   path = find_file_in_path(filename)
   index = Index.create()
   try:
@@ -221,13 +226,17 @@ def parse_UNION_DECL(cursor):
   return ast.EhUnion(0, ast.Identifier(0, cursor.spelling), fields)
 
 
-def type_VOID(typ): return ast.BuiltinType('void')
+def type_VOID(typ):
+  assert gparent is not None
+  return ast.BuiltinType.make(gparent, 'void')
+
 def type_POINTER(typ):
+  assert gparent is not None
   subtype = typ.get_pointee()
   builtin_type = {
-    TypeKind.CHAR_S: ast.BuiltinType('str'),
-    TypeKind.SCHAR: ast.BuiltinType('str'),
-    TypeKind.VOID: ast.BuiltinType('any')
+    TypeKind.CHAR_S: ast.BuiltinType.make(gparent, 'str'),
+    TypeKind.SCHAR: ast.BuiltinType.make(gparent, 'str'),
+    TypeKind.VOID: ast.BuiltinType.make(gparent, 'any')
   }.get(subtype.kind)
   if builtin_type is not None:
     return builtin_type

@@ -150,9 +150,6 @@ class ASTBuilder(PTNodeVisitor):
   # Types
   #######
 
-  def visit_builtin_type(self, node, children):
-    return ast.BuiltinType(str(node))
-
   def visit_modifier(self, node, children):
     return ast.MOD_CONST
 

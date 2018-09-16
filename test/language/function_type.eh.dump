@@ -2,32 +2,38 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun1
 │  │  └─ FunctionType
-│  │     └─ BuiltinType: void
+│  │     └─ Symbol
+│  │        └─ Identifier: void
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun2
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: int
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ BuiltinType: int
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun3
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: int
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
-│  │        │     ├─ BuiltinType: int
+│  │        │     ├─ Symbol
+│  │        │     │  └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ BuiltinType: int
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 ├─ FunctionDefinition
@@ -36,38 +42,44 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  └─ Array
-│  │     │     └─ BuiltinType: int
+│  │     │     └─ Symbol
+│  │     │        └─ Identifier: int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ Array
-│  │              │     └─ BuiltinType: int
+│  │              │     └─ Symbol
+│  │              │        └─ Identifier: int
 │  │              └─ Identifier: arr
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun5
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: void
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ BuiltinType: char
+│  │              │  └─ Symbol
+│  │              │     └─ Identifier: char
 │  │              └─ Identifier: c
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ FunctionType
-      │     │  │  └─ BuiltinType: void
+      │     │  │  └─ Symbol
+      │     │  │     └─ Identifier: void
       │     │  └─ Identifier: pfn1
       │     └─ Assignment
       │        └─ Expression
@@ -77,10 +89,12 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ FunctionType
-      │     │  │  ├─ BuiltinType: int
+      │     │  │  ├─ Symbol
+      │     │  │  │  └─ Identifier: int
       │     │  │  └─ Arguments:
       │     │  │     └─ Declaration
-      │     │  │        └─ BuiltinType: int
+      │     │  │        └─ Symbol
+      │     │  │           └─ Identifier: int
       │     │  └─ Identifier: pfn2
       │     └─ Assignment
       │        └─ Expression
@@ -90,12 +104,15 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ FunctionType
-      │     │  │  ├─ BuiltinType: int
+      │     │  │  ├─ Symbol
+      │     │  │  │  └─ Identifier: int
       │     │  │  └─ Arguments:
       │     │  │     ├─ Declaration
-      │     │  │     │  └─ BuiltinType: int
+      │     │  │     │  └─ Symbol
+      │     │  │     │     └─ Identifier: int
       │     │  │     └─ Declaration
-      │     │  │        └─ BuiltinType: int
+      │     │  │        └─ Symbol
+      │     │  │           └─ Identifier: int
       │     │  └─ Identifier: pfn3
       │     └─ Assignment
       │        └─ Expression
@@ -107,12 +124,14 @@
       │     │  ├─ FunctionType
       │     │  │  ├─ Reference
       │     │  │  │  └─ Array
-      │     │  │  │     └─ BuiltinType: int
+      │     │  │  │     └─ Symbol
+      │     │  │  │        └─ Identifier: int
       │     │  │  └─ Arguments:
       │     │  │     └─ Declaration
       │     │  │        └─ Reference
       │     │  │           └─ Array
-      │     │  │              └─ BuiltinType: int
+      │     │  │              └─ Symbol
+      │     │  │                 └─ Identifier: int
       │     │  └─ Identifier: pfn4
       │     └─ Assignment
       │        └─ Expression
@@ -122,11 +141,13 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ FunctionType
-      │     │  │  ├─ BuiltinType: void
+      │     │  │  ├─ Symbol
+      │     │  │  │  └─ Identifier: void
       │     │  │  └─ Arguments:
       │     │  │     └─ Declaration
       │     │  │        └─ Reference
-      │     │  │           └─ BuiltinType: char
+      │     │  │           └─ Symbol
+      │     │  │              └─ Identifier: char
       │     │  └─ Identifier: pfn5
       │     └─ Assignment
       │        └─ Expression
@@ -149,7 +170,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
@@ -196,7 +218,8 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  └─ Array
-      │     │  │     └─ BuiltinType: int
+      │     │  │     └─ Symbol
+      │     │  │        └─ Identifier: int
       │     │  └─ Identifier: rai
       │     └─ Assignment
       │        └─ Expression
@@ -210,7 +233,8 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Array
-      │     │  │  └─ BuiltinType: int
+      │     │  │  └─ Symbol
+      │     │  │     └─ Identifier: int
       │     │  └─ Identifier: ai
       │     └─ Assignment
       │        └─ Expression
@@ -223,7 +247,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: str
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: str
       │     │  └─ Identifier: s
       │     └─ Assignment
       │        └─ Expression

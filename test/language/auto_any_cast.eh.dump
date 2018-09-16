@@ -2,11 +2,13 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: returning_any
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: any
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ BuiltinType: any
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: any
 │  │              └─ Identifier: data
 │  └─ FunctionBody
 │     └─ Statement
@@ -19,18 +21,21 @@
 │  │  ├─ Identifier: same_with_ref_any
 │  │  └─ FunctionType
 │  │     ├─ Reference
-│  │     │  └─ BuiltinType: any
+│  │     │  └─ Symbol
+│  │     │     └─ Identifier: any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ BuiltinType: any
+│  │              │  └─ Symbol
+│  │              │     └─ Identifier: any
 │  │              └─ Identifier: data
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableDeclaration
 │     │     ├─ Declaration
-│     │     │  ├─ BuiltinType: any
+│     │     │  ├─ Symbol
+│     │     │  │  └─ Identifier: any
 │     │     │  └─ Identifier: dummy
 │     │     └─ Assignment
 │     │        └─ Expression
@@ -50,12 +55,14 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: number
       │     └─ Assignment
       │        └─ Expression
@@ -71,7 +78,8 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ BuiltinType: int
+      │              │     └─ Symbol
+      │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
@@ -80,7 +88,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: number2
       │     └─ Assignment
       │        └─ Expression
@@ -89,7 +98,8 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ BuiltinType: int
+      │              │     └─ Symbol
+      │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -97,7 +107,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: str
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: str
       │     │  └─ Identifier: string
       │     └─ Assignment
       │        └─ Expression
@@ -112,7 +123,8 @@
       │              ├─ Symbol
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
-      │              │  └─ BuiltinType: str
+      │              │  └─ Symbol
+      │              │     └─ Identifier: str
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -120,7 +132,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: str
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: str
       │     │  └─ Identifier: string2
       │     └─ Assignment
       │        └─ Expression
@@ -128,7 +141,8 @@
       │              ├─ Symbol
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
-      │              │  └─ BuiltinType: str
+      │              │  └─ Symbol
+      │              │     └─ Identifier: str
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -137,7 +151,8 @@
       │  └─ VariableDeclaration
       │     └─ Declaration
       │        ├─ Array
-      │        │  └─ BuiltinType: int
+      │        │  └─ Symbol
+      │        │     └─ Identifier: int
       │        └─ Identifier: array
       ├─ Statement
       │  └─ VariableAssignment
@@ -150,7 +165,8 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Array
-      │              │     └─ BuiltinType: int
+      │              │     └─ Symbol
+      │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -159,7 +175,8 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Array
-      │     │  │  └─ BuiltinType: int
+      │     │  │  └─ Symbol
+      │     │  │     └─ Identifier: int
       │     │  └─ Identifier: array2
       │     └─ Assignment
       │        └─ Expression
@@ -168,7 +185,8 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Array
-      │              │     └─ BuiltinType: int
+      │              │     └─ Symbol
+      │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -187,7 +205,8 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ BuiltinType: int
+      │              │     └─ Symbol
+      │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ ArrayAccess
@@ -198,7 +217,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: array0
       │     └─ Assignment
       │        └─ Expression
@@ -207,7 +227,8 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ BuiltinType: int
+      │              │     └─ Symbol
+      │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ ArrayAccess
@@ -219,7 +240,8 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ BuiltinType: int
+      │     │  │  └─ Symbol
+      │     │  │     └─ Identifier: int
       │     │  └─ Identifier: rnb
       │     └─ Assignment
       │        └─ Expression
@@ -228,7 +250,8 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ BuiltinType: int
+      │              │     └─ Symbol
+      │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
@@ -246,7 +269,8 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ BuiltinType: int
+      │              │     └─ Symbol
+      │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -256,7 +280,8 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  └─ Reference
-      │     │  │     └─ BuiltinType: int
+      │     │  │     └─ Symbol
+      │     │  │        └─ Identifier: int
       │     │  └─ Identifier: rrnb
       │     └─ Assignment
       │        └─ Expression
@@ -266,7 +291,8 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ Reference
-      │              │        └─ BuiltinType: int
+      │              │        └─ Symbol
+      │              │           └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
@@ -285,7 +311,8 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ BuiltinType: int
+      │              │     └─ Symbol
+      │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -304,7 +331,8 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ Reference
-      │              │        └─ BuiltinType: int
+      │              │        └─ Symbol
+      │              │           └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
@@ -324,7 +352,8 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ Reference
-      │              │        └─ BuiltinType: int
+      │              │        └─ Symbol
+      │              │           └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -343,7 +372,8 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ Reference
-      │              │        └─ BuiltinType: int
+      │              │        └─ Symbol
+      │              │           └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -352,7 +382,8 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ BuiltinType: str
+      │     │  │  └─ Symbol
+      │     │  │     └─ Identifier: str
       │     │  └─ Identifier: rstring
       │     └─ Assignment
       │        └─ Expression
@@ -361,7 +392,8 @@
       │              │  └─ Identifier: same_with_ref_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ BuiltinType: str
+      │              │     └─ Symbol
+      │              │        └─ Identifier: str
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -377,7 +409,8 @@
       │              │  └─ Identifier: same_with_ref_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ BuiltinType: str
+      │              │     └─ Symbol
+      │              │        └─ Identifier: str
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Symbol
@@ -385,12 +418,14 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
-      │        ├─ BuiltinType: any
+      │        ├─ Symbol
+      │        │  └─ Identifier: any
       │        └─ Identifier: a1
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
-      │        ├─ BuiltinType: any
+      │        ├─ Symbol
+      │        │  └─ Identifier: any
       │        └─ Identifier: a2
       ├─ Statement
       │  └─ VariableAssignment

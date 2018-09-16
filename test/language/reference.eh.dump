@@ -2,12 +2,14 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: set_int
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: int
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ BuiltinType: int
+│  │              │  └─ Symbol
+│  │              │     └─ Identifier: int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 │     ├─ Statement
@@ -27,17 +29,20 @@
 │  │  ├─ Identifier: set_int_to
 │  │  └─ FunctionType
 │  │     ├─ Reference
-│  │     │  └─ BuiltinType: int
+│  │     │  └─ Symbol
+│  │     │     └─ Identifier: int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
-│  │        │     │  └─ BuiltinType: int
+│  │        │     │  └─ Symbol
+│  │        │     │     └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ BuiltinType: int
+│  │              │  └─ Symbol
+│  │              │     └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
@@ -59,17 +64,20 @@
 │  │  ├─ Identifier: set_int_ref
 │  │  └─ FunctionType
 │  │     ├─ Reference
-│  │     │  └─ BuiltinType: int
+│  │     │  └─ Symbol
+│  │     │     └─ Identifier: int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
-│  │        │     │  └─ BuiltinType: int
+│  │        │     │  └─ Symbol
+│  │        │     │     └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ BuiltinType: int
+│  │              │  └─ Symbol
+│  │              │     └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
@@ -94,19 +102,22 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  └─ Reference
-│  │     │     └─ BuiltinType: int
+│  │     │     └─ Symbol
+│  │     │        └─ Identifier: int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
 │  │        │     │  └─ Reference
-│  │        │     │     └─ BuiltinType: int
+│  │        │     │     └─ Symbol
+│  │        │     │        └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ Reference
-│  │              │     └─ BuiltinType: int
+│  │              │     └─ Symbol
+│  │              │        └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
@@ -132,19 +143,22 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: set_int_ref_lv2
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: void
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
 │  │        │     │  └─ Reference
-│  │        │     │     └─ BuiltinType: int
+│  │        │     │     └─ Symbol
+│  │        │     │        └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ Reference
-│  │              │     └─ BuiltinType: int
+│  │              │     └─ Symbol
+│  │              │        └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     └─ Statement
@@ -161,18 +175,21 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
-      │        ├─ BuiltinType: int
+      │        ├─ Symbol
+      │        │  └─ Identifier: int
       │        └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ BuiltinType: int
+      │     │  │  └─ Symbol
+      │     │  │     └─ Identifier: int
       │     │  └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
@@ -234,7 +251,8 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  └─ Reference
-      │     │  │     └─ BuiltinType: int
+      │     │  │     └─ Symbol
+      │     │  │        └─ Identifier: int
       │     │  └─ Identifier: k
       │     └─ Assignment
       │        └─ Expression

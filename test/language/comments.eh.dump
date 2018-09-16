@@ -2,27 +2,32 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: printf
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: void
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ BuiltinType: str
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: str
 │  │              └─ Identifier: s
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     ├─ BuiltinType: int
+   │     ├─ Symbol
+   │     │  └─ Identifier: int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
    │        │  └─ Declaration
-   │        │     ├─ BuiltinType: int
+   │        │     ├─ Symbol
+   │        │     │  └─ Identifier: int
    │        │     └─ Identifier: ac
    │        └─ VariableDeclaration
    │           └─ Declaration
    │              ├─ Array
-   │              │  └─ BuiltinType: str
+   │              │  └─ Symbol
+   │              │     └─ Identifier: str
    │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement

@@ -4,21 +4,26 @@
       ├─ Alias
       │  ├─ From:
       │  │  └─ FunctionType
-      │  │     ├─ BuiltinType: str
+      │  │     ├─ Symbol
+      │  │     │  └─ Identifier: str
       │  │     └─ Arguments:
-      │  │        └─ BuiltinType: int32
+      │  │        └─ Symbol
+      │  │           └─ Identifier: int32
       │  └─ To:
       │     └─ Symbol
       │        └─ Identifier: fun
       └─ FunctionDeclaration
          ├─ Identifier: fun2
          └─ FunctionType
-            ├─ BuiltinType: void
+            ├─ Symbol
+            │  └─ Identifier: void
             └─ Arguments:
                └─ VariableDeclaration
                   └─ Declaration
                      ├─ FunctionType
-                     │  ├─ BuiltinType: str
+                     │  ├─ Symbol
+                     │  │  └─ Identifier: str
                      │  └─ Arguments:
-                     │     └─ BuiltinType: int32
+                     │     └─ Symbol
+                     │        └─ Identifier: int32
                      └─ Identifier: param

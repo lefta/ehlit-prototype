@@ -212,12 +212,6 @@ class DumpWriter:
     self.dump('Operator: ' + op.op)
 
   @indent
-  def dumpBuiltinType(self, typ):
-    self.dump('BuiltinType: ' + typ.name)
-    if typ.is_const:
-      self.print_str('Modifiers: const')
-
-  @indent
   def dumpArray(self, arr):
     self.dump('Array')
     if arr.length is not None:
@@ -239,7 +233,17 @@ class DumpWriter:
       self.print_node_list('Arguments:', node.args, False)
 
   def dumpSymbol(self, node, is_next):
-    self.print_node_list('Symbol', node.elems, is_next)
+    if node.is_type and node.is_const:
+      self.increment_prefix(is_next)
+      self.dump('Symbol')
+      self.print_str('Modifiers: const')
+      i = 0
+      while i < len(node.elems):
+        self.print_node(node.elems[i], i < len(node.elems) - 1)
+        i += 1
+      self.decrement_prefix()
+    else:
+      self.print_node_list('Symbol', node.elems, is_next)
 
   @indent
   def dumpIdentifier(self, node):

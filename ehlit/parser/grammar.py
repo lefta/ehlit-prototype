@@ -48,7 +48,7 @@ def comment():
 
 def builtin_keyword():
   return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', 'func', 'alias', 'switch', 'case',
-    'fallthrough', 'default', 'struct', 'union', builtin_type, bool_value]
+    'fallthrough', 'default', 'struct', 'union', bool_value]
 
 def identifier():
   return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='identifier')
@@ -142,10 +142,6 @@ def operation_assignment():
 # Types
 #######
 
-def builtin_type():
-  return ['char', 'int', 'int8', 'int16', 'int32', 'int64', 'uint8', 'uint16', 'uint32', 'uint64',
-    'size', 'str', 'any', 'void', 'bool']
-
 def modifier():
   return Optional('const')
 
@@ -165,7 +161,7 @@ def function_type():
   return 'func', '<', full_type, '(', function_type_args, ')', '>'
 
 def full_type():
-  return [function_type, (modifier, [reference, builtin_type, symbol], array)]
+  return [function_type, (modifier, [reference, symbol], array)]
 
 # Statements
 ############

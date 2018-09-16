@@ -2,17 +2,20 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: sz
       │     └─ Assignment
       │        └─ Expression
       │           └─ Sizeof
-      │              └─ BuiltinType: int
+      │              └─ Symbol
+      │                 └─ Identifier: int
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Symbol
@@ -21,7 +24,8 @@
       │        └─ Expression
       │           └─ Sizeof
       │              └─ Array
-      │                 └─ BuiltinType: int
+      │                 └─ Symbol
+      │                    └─ Identifier: int
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Symbol
@@ -30,7 +34,8 @@
       │        └─ Expression
       │           └─ Sizeof
       │              └─ Reference
-      │                 └─ BuiltinType: int
+      │                 └─ Symbol
+      │                    └─ Identifier: int
       └─ Statement
          └─ Return
             └─ Expression

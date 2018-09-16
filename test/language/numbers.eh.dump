@@ -2,12 +2,14 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
@@ -15,7 +17,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression

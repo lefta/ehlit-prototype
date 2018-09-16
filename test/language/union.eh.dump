@@ -3,17 +3,20 @@
 │  └─ Fields
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
-│     │     ├─ BuiltinType: int
+│     │     ├─ Symbol
+│     │     │  └─ Identifier: int
 │     │     └─ Identifier: field1
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
-│     │     ├─ BuiltinType: str
+│     │     ├─ Symbol
+│     │     │  └─ Identifier: str
 │     │     └─ Identifier: field2
 │     └─ VariableDeclaration
 │        └─ Declaration
 │           ├─ Reference
 │           │  └─ Array
-│           │     └─ BuiltinType: int
+│           │     └─ Symbol
+│           │        └─ Identifier: int
 │           └─ Identifier: field3
 ├─ Union
 │  ├─ Identifier: forward_decl
@@ -22,12 +25,14 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: void
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ BuiltinType: int
+│  │              │  └─ Symbol
+│  │              │     └─ Identifier: int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 ├─ FunctionDefinition
@@ -54,11 +59,13 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: any_fun
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: any
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ BuiltinType: any
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: any
 │  │              └─ Identifier: p
 │  └─ FunctionBody
 │     └─ Statement
@@ -70,7 +77,8 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
@@ -176,7 +184,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: size
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: size
       │     │  └─ Identifier: ss
       │     └─ Assignment
       │        └─ Expression

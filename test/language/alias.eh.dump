@@ -1,19 +1,22 @@
 ├─ Alias
 │  ├─ From:
-│  │  └─ BuiltinType: int
+│  │  └─ Symbol
+│  │     └─ Identifier: int
 │  └─ To:
 │     └─ Symbol
 │        └─ Identifier: nb
 ├─ Alias
 │  ├─ From:
-│  │  └─ BuiltinType: void
+│  │  └─ Symbol
+│  │     └─ Identifier: void
 │  └─ To:
 │     └─ Symbol
 │        └─ Identifier: nothing
 ├─ Alias
 │  ├─ From:
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: void
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ Declaration
 │  │           └─ Symbol
@@ -31,7 +34,8 @@
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ BuiltinType: int
+│  │              │  └─ Symbol
+│  │              │     └─ Identifier: int
 │  │              └─ Identifier: number
 │  └─ FunctionBody
 │     ├─ ConditionBranches
@@ -57,7 +61,8 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: do_nothing
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: void
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration

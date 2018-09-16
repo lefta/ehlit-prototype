@@ -2,11 +2,13 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: not_true
 │  │  └─ FunctionType
-│  │     ├─ BuiltinType: bool
+│  │     ├─ Symbol
+│  │     │  └─ Identifier: bool
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ BuiltinType: bool
+│  │              ├─ Symbol
+│  │              │  └─ Identifier: bool
 │  │              └─ Identifier: v
 │  └─ FunctionBody
 │     └─ Statement
@@ -20,12 +22,14 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: bool
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: bool
       │     │  └─ Identifier: b1
       │     └─ Assignment
       │        └─ Expression
@@ -33,7 +37,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: bool
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: bool
       │     │  └─ Identifier: b2
       │     └─ Assignment
       │        └─ Expression

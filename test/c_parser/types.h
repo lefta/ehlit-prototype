@@ -14,7 +14,7 @@ long long ll;
 unsigned long long ull;
 signed long long sll;
 
-char* str;
+char* cstr;
 unsigned char* ustr;
 signed char* sstr;
 short* ps;

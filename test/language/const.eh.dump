@@ -4,15 +4,17 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  ├─ Modifiers: const
-│  │     │  └─ BuiltinType: int
+│  │     │  └─ Symbol
 │  │     │     ├─ Modifiers: const
+│  │     │     └─ Identifier: int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  ├─ Modifiers: const
-│  │              │  └─ BuiltinType: int
+│  │              │  └─ Symbol
 │  │              │     ├─ Modifiers: const
+│  │              │     └─ Identifier: int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 │     └─ Statement
@@ -25,13 +27,15 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ BuiltinType: int
+   │     └─ Symbol
+   │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
       │     │  │  ├─ Modifiers: const
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
@@ -41,8 +45,9 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  ├─ Modifiers: const
-      │     │  │  └─ BuiltinType: int
+      │     │  │  └─ Symbol
       │     │  │     ├─ Modifiers: const
+      │     │  │     └─ Identifier: int
       │     │  └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
@@ -59,8 +64,9 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ BuiltinType: int
+      │     │  │  └─ Symbol
       │     │  │     ├─ Modifiers: const
+      │     │  │     └─ Identifier: int
       │     │  └─ Identifier: k
       │     └─ Assignment
       │        └─ Expression
@@ -70,7 +76,8 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ BuiltinType: int
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: int
       │     │  └─ Identifier: l
       │     └─ Assignment
       │        └─ Expression
@@ -80,7 +87,8 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  ├─ Modifiers: const
-      │     │  │  └─ BuiltinType: int
+      │     │  │  └─ Symbol
+      │     │  │     └─ Identifier: int
       │     │  └─ Identifier: m
       │     └─ Assignment
       │        └─ Expression
