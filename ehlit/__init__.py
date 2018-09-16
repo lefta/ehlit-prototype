@@ -32,13 +32,14 @@ def build(args):
   logging.debug('building %s to %s\n', args.source, args.output_file)
 
   failure = None
+  ast = None
   try:
     ast = parse(args.source)
     ast.build(args)
   except ParseError as err:
     failure = err
 
-  if args.verbose:
+  if ast and args.verbose:
     WriteDump(ast)
 
   if failure is not None and failure.max_level > ParseError.Severity.Warning:
