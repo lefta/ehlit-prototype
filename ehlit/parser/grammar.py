@@ -35,7 +35,7 @@ def trailing_comma():
 ##########
 
 def block_comment():
-  return ('/*', RegExMatch(r'[^*/]*'), '*/')
+  return ('/*', RegExMatch(r'[\s\S]*?(?=\*\/)'), '*/')
 
 def line_comment():
   return ('//', RegExMatch(r'.*$'))

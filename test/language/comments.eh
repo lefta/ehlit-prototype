@@ -1,3 +1,8 @@
+/* Test for testing comments
+	 * and / are allowed in multiline comments, but not both of them
+*/
+
+/**/
 // Defining a stub printf function for testing
 void printf(str s) {}
 
