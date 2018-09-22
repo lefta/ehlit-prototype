@@ -20,8 +20,8 @@
 # SOFTWARE.
 
 import sys
-from ehlit.parser.ast import (Reference, Array, ArrayAccess, BuiltinType, FunctionType,
-  FunctionDeclaration, FunctionDefinition, FunctionCall, CompoundIdentifier, Struct, EhUnion)
+from ehlit.parser.ast import (Symbol, Reference, Array, ArrayAccess, BuiltinType, FunctionType,
+  FunctionDeclaration, FunctionDefinition, FunctionCall, CompoundIdentifier, Struct, EhUnion, Alias)
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -417,11 +417,18 @@ class SourceWriter:
       self.write_type_suffix(node)
 
   def writeIdentifier(self, node):
-    if node.decl is not None:
-      if node.decl.name in self.types:
-        self.file.write(self.types[node.decl.name])
+    if isinstance(node.decl, Alias) and node.decl.is_type:
+      self.file.write(node.decl.dst.name)
+      return
+
+    decl = node.decl
+    if isinstance(decl, Symbol):
+      decl = decl.solve()
+    if decl is not None:
+      if isinstance(decl, BuiltinType):
+        self.file.write(self.types[decl.name])
       else:
-        self.file.write(node.decl.name)
+        self.file.write(decl.name)
     else:
       self.file.write(node.name)
 

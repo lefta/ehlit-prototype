@@ -318,12 +318,12 @@ class Value(Node):
     self_typ: 'Type' = self.typ
     if isinstance(self_typ, Reference):
       self_typ = self_typ.inner_child
-    if isinstance(self_typ, CompoundIdentifier):
+    if isinstance(self_typ, Symbol):
       self_typ = self_typ.typ
     target_typ: 'Type' = target
     if isinstance(target_typ, Reference):
       target_typ = target_typ.inner_child
-    if isinstance(target_typ, CompoundIdentifier):
+    if isinstance(target_typ, Symbol):
       target_typ = target_typ.typ
     if self_typ != target_typ:
       if self_typ == BuiltinType('any'):
@@ -392,6 +392,23 @@ class Type(Node):
   def ref_offset(self) -> int:
     return 0
 
+class Symbol(Value, Type):
+  def solve(self) -> Optional[DeclarationBase]:
+    decl = self.decl
+    while decl is not None and isinstance(decl, Symbol):
+      decl = decl.decl
+    return decl
+
+  @property
+  @abstractmethod
+  def decl(self) -> Optional[DeclarationBase]:
+    raise NotImplementedError
+
+  @property
+  @abstractmethod
+  def repr(self) -> str:
+    raise NotImplementedError
+
 class BuiltinType(Type, DeclarationBase):
   def make(parent: Node, name: str) -> 'CompoundIdentifier':
     res = CompoundIdentifier([Identifier(parent.pos, name)])
@@ -430,7 +447,7 @@ class BuiltinType(Type, DeclarationBase):
     return 0 if self.name == 'str' else 1
 
   def __eq__(self, rhs: object) -> bool:
-    if isinstance(rhs, CompoundIdentifier):
+    if isinstance(rhs, Symbol):
       rhs = rhs.decl
     if isinstance(rhs, BuiltinType):
       return self.name == rhs.name
@@ -520,11 +537,11 @@ class Reference(Value, Type):
     return self.child.any_memory_offset
 
 class FunctionType(Type, DeclarationBase):
-  def __init__(self, ret: 'CompoundIdentifier', args: List['VariableDeclaration'],
+  def __init__(self, ret: Symbol, args: List['VariableDeclaration'],
                is_variadic: bool =False) -> None:
     super().__init__()
     self.args: List['VariableDeclaration'] = args
-    self.ret: CompoundIdentifier = ret
+    self.ret: Symbol = ret
     self.is_variadic: bool = is_variadic
 
   def build(self, parent: Node) -> None:
@@ -547,8 +564,8 @@ class Operator(Node):
     pass
 
 class VariableAssignment(Node):
-  def __init__(self, var: 'CompoundIdentifier', assign: 'Assignment') -> None:
-    self.var: 'CompoundIdentifier' = var
+  def __init__(self, var: Symbol, assign: 'Assignment') -> None:
+    self.var: Symbol = var
     self.assign: 'Assignment' = assign
 
   def build(self, parent: Node) -> None:
@@ -576,14 +593,7 @@ class Declaration(DeclarationBase):
   def build(self, parent: Node) -> None:
     super().build(parent)
     self.typ_src.build(self)
-    typ = type(self.typ)
-    while typ is CompoundIdentifier or typ is Alias:
-      if isinstance(self.typ, Alias):
-        self.typ = self.typ.typ
-      else:
-        assert isinstance(self.typ, CompoundIdentifier) and isinstance(self.typ.decl, Type)
-        self.typ = self.typ.decl
-      typ = type(self.typ)
+    self.typ = self.typ_src.solve() if isinstance(self.typ_src, Symbol) else self.typ_src
     if self.sym is not None:
       self.sym.build(self)
 
@@ -644,11 +654,8 @@ class FunctionDefinition(FunctionDeclaration):
     try:
       assert isinstance(self.typ, FunctionType)
       typ: Type = self.typ.ret
-      if isinstance(typ, CompoundIdentifier):
-        decl = typ.decl
-        typ = decl.typ if decl is not None else BuiltinType.make(self, 'any')
-      if isinstance(typ, Alias):
-        typ = typ.src
+      if isinstance(typ, Symbol):
+        typ = typ.solve()
       self.body = parse_function(self.body_str.contents, not typ == BuiltinType('void'))
       for s in self.body:
         s.build(self)
@@ -703,9 +710,9 @@ class Expression(Node):
     return self.parenthesised
 
 class FunctionCall(Value):
-  def __init__(self, pos: int, sym: 'CompoundIdentifier', args: List[Expression]) -> None:
+  def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
     super().__init__(pos)
-    self.sym: CompoundIdentifier = sym
+    self.sym: Symbol = sym
     self.args: List[Expression] = args
 
   def build(self, parent: Node) -> None:
@@ -725,7 +732,7 @@ class FunctionCall(Value):
     elif self.sym.decl is not None:
       assert isinstance(self.sym.decl, Declaration)
       if not isinstance(self.sym.decl.typ, FunctionType):
-        self.error(self.pos, "calling non function type {}".format(self.sym.name))
+        self.error(self.pos, "calling non function type {}".format(self.sym.repr))
         return
       diff = len(self.args) - len(self.sym.decl.typ.args)
       i = 0
@@ -740,7 +747,7 @@ class FunctionCall(Value):
         i += 1
       if diff < 0 or (diff > 0 and not self.sym.decl.typ.is_variadic):
         self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(
-          'not enough' if diff < 0 else 'too many', self.sym.name, len(self.sym.decl.typ.args),
+          'not enough' if diff < 0 else 'too many', self.sym.repr, len(self.sym.decl.typ.args),
           len(self.args)))
       i = 0
       while i < len(self.args) and i < len(self.sym.decl.typ.args):
@@ -906,7 +913,7 @@ class Identifier(Value):
   def from_any(self) -> Type:
     return self.decl.from_any() if self.decl is not None else self
 
-class CompoundIdentifier(Value, Type):
+class CompoundIdentifier(Symbol):
   def __init__(self, elems: List[Identifier]) -> None:
     self.elems: List[Identifier] = elems
     super().__init__()
@@ -937,8 +944,8 @@ class CompoundIdentifier(Value, Type):
     return self.elems[-1].decl
 
   @property
-  def name(self) -> str:
-    return self.elems[-1].name
+  def repr(self) -> str:
+    return '.'.join([x.name for x in self.elems])
 
   @property
   def cast(self) -> Union[Type, None]:
@@ -1068,9 +1075,9 @@ class Sizeof(Value):
   def typ(self) -> Type:
     return BuiltinType.make(self, 'size')
 
-class Alias(Type, DeclarationBase):
-  def __init__(self, src: CompoundIdentifier, dst: Identifier) -> None:
-    self.src: CompoundIdentifier = src
+class Alias(Symbol, DeclarationBase):
+  def __init__(self, src: Symbol, dst: Identifier) -> None:
+    self.src: Symbol = src
     self.dst: Identifier = dst
 
   def build(self, parent: Node) -> None:
@@ -1090,12 +1097,12 @@ class Alias(Type, DeclarationBase):
     return self.src.typ
 
   @property
-  def name(self) -> str:
-    return self.dst.name
+  def repr(self) -> str:
+    return self.src.repr
 
   @property
   def is_type(self) -> bool:
-    return self.dst.is_type
+    return self.src.is_type
 
   @property
   def ref_offset(self) -> int:
@@ -1104,6 +1111,10 @@ class Alias(Type, DeclarationBase):
   @ref_offset.setter
   def ref_offset(self, offset: int) -> None:
     self.dst.ref_offset = offset
+
+  @property
+  def decl(self) -> Optional[DeclarationBase]:
+    return self.src if self.src.is_declaration() else self.src.decl
 
 class ContainerStructure(Type, DeclarationBase):
   def __init__(self, pos: int, sym: Identifier,
