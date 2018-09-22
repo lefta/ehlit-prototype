@@ -2,13 +2,13 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
@@ -17,7 +17,7 @@
       ├─ ConditionBranches
       │  ├─ ControlStructure: if
       │  │  ├─ Expression
-      │  │  │  ├─ Symbol
+      │  │  │  ├─ CompoundIdentifier
       │  │  │  │  └─ Identifier: i
       │  │  │  ├─ Operator: ==
       │  │  │  └─ Expression
@@ -25,14 +25,14 @@
       │  │  └─ ControlStructureBody
       │  │     └─ Statement
       │  │        └─ VariableAssignment
-      │  │           ├─ Symbol
+      │  │           ├─ CompoundIdentifier
       │  │           │  └─ Identifier: i
       │  │           └─ Assignment
       │  │              └─ Expression
       │  │                 └─ Number: 3
       │  ├─ ControlStructure: elif
       │  │  ├─ Expression
-      │  │  │  ├─ Symbol
+      │  │  │  ├─ CompoundIdentifier
       │  │  │  │  └─ Identifier: i
       │  │  │  ├─ Operator: ==
       │  │  │  └─ Expression
@@ -40,7 +40,7 @@
       │  │  └─ ControlStructureBody
       │  │     └─ Statement
       │  │        └─ VariableAssignment
-      │  │           ├─ Symbol
+      │  │           ├─ CompoundIdentifier
       │  │           │  └─ Identifier: i
       │  │           └─ Assignment
       │  │              └─ Expression
@@ -49,7 +49,7 @@
       │     └─ ControlStructureBody
       │        └─ Statement
       │           └─ VariableAssignment
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: i
       │              └─ Assignment
       │                 └─ Expression

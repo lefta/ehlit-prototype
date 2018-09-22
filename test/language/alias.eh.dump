@@ -1,40 +1,40 @@
 ├─ Alias
 │  ├─ From:
-│  │  └─ Symbol
+│  │  └─ CompoundIdentifier
 │  │     └─ Identifier: int
 │  └─ To:
-│     └─ Symbol
+│     └─ CompoundIdentifier
 │        └─ Identifier: nb
 ├─ Alias
 │  ├─ From:
-│  │  └─ Symbol
+│  │  └─ CompoundIdentifier
 │  │     └─ Identifier: void
 │  └─ To:
-│     └─ Symbol
+│     └─ CompoundIdentifier
 │        └─ Identifier: nothing
 ├─ Alias
 │  ├─ From:
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ Declaration
-│  │           └─ Symbol
+│  │           └─ CompoundIdentifier
 │  │              └─ Identifier: nb
 │  └─ To:
-│     └─ Symbol
+│     └─ CompoundIdentifier
 │        └─ Identifier: pfn
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: inc
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: nothing
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: int
 │  │              └─ Identifier: number
 │  └─ FunctionBody
@@ -44,14 +44,14 @@
 │     │     │  └─ PrefixOperatorValue
 │     │     │     ├─ Operator: !
 │     │     │     └─ Reference
-│     │     │        └─ Symbol
+│     │     │        └─ CompoundIdentifier
 │     │     │           └─ Identifier: number
 │     │     └─ ControlStructureBody
 │     │        └─ Statement
 │     │           └─ Return
 │     └─ Statement
 │        └─ VariableAssignment
-│           ├─ Symbol
+│           ├─ CompoundIdentifier
 │           │  └─ Identifier: number
 │           └─ Assignment
 │              ├─ Operator: +
@@ -61,12 +61,12 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: do_nothing
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: nb
 │  │              └─ Identifier: n
 │  └─ FunctionBody
@@ -74,20 +74,20 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: nb
    └─ FunctionBody
       ├─ Alias
       │  ├─ From:
-      │  │  └─ Symbol
+      │  │  └─ CompoundIdentifier
       │  │     └─ Identifier: do_nothing
       │  └─ To:
-      │     └─ Symbol
+      │     └─ CompoundIdentifier
       │        └─ Identifier: dn
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: nb
       │     │  └─ Identifier: i
       │     └─ Assignment
@@ -96,42 +96,42 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: pfn
       │     │  └─ Identifier: pdn
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: dn
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: inc
       │        └─ Arguments
       │           └─ Expression
-      │              └─ Symbol
+      │              └─ CompoundIdentifier
       │                 └─ Identifier: i
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: dn
       │        └─ Arguments
       │           └─ Expression
-      │              └─ Symbol
+      │              └─ CompoundIdentifier
       │                 └─ Identifier: i
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: pdn
       │        └─ Arguments
       │           └─ Expression
-      │              └─ Symbol
+      │              └─ CompoundIdentifier
       │                 └─ Identifier: i
       └─ Statement
          └─ Return
             └─ Expression
-               └─ Symbol
+               └─ CompoundIdentifier
                   └─ Identifier: i

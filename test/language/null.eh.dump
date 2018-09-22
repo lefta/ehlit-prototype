@@ -2,7 +2,7 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: function
 │  │  └─ FunctionType
-│  │     └─ Symbol
+│  │     └─ CompoundIdentifier
 │  │        └─ Identifier: any
 │  └─ FunctionBody
 │     └─ Statement
@@ -13,12 +13,12 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: get_null
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: any
 │  │              └─ Identifier: p
 │  └─ FunctionBody
@@ -26,13 +26,13 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: str
       │     │  └─ Identifier: s
       │     └─ Assignment
@@ -41,7 +41,7 @@
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: get_null
       │        └─ Arguments
       │           └─ Expression

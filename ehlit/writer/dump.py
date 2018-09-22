@@ -232,10 +232,10 @@ class DumpWriter:
     if len(node.args) is not 0:
       self.print_node_list('Arguments:', node.args, False)
 
-  def dumpSymbol(self, node, is_next):
+  def dumpCompoundIdentifier(self, node, is_next):
     if node.is_type and node.is_const:
       self.increment_prefix(is_next)
-      self.dump('Symbol')
+      self.dump('CompoundIdentifier')
       self.print_str('Modifiers: const')
       i = 0
       while i < len(node.elems):
@@ -243,7 +243,7 @@ class DumpWriter:
         i += 1
       self.decrement_prefix()
     else:
-      self.print_node_list('Symbol', node.elems, is_next)
+      self.print_node_list('CompoundIdentifier', node.elems, is_next)
 
   @indent
   def dumpIdentifier(self, node):

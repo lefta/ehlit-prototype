@@ -2,19 +2,19 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun1
 │  │  └─ FunctionType
-│  │     └─ Symbol
+│  │     └─ CompoundIdentifier
 │  │        └─ Identifier: void
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun2
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
@@ -22,17 +22,17 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun3
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
-│  │        │     ├─ Symbol
+│  │        │     ├─ CompoundIdentifier
 │  │        │     │  └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
@@ -42,14 +42,14 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  └─ Array
-│  │     │     └─ Symbol
+│  │     │     └─ CompoundIdentifier
 │  │     │        └─ Identifier: int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ Array
-│  │              │     └─ Symbol
+│  │              │     └─ CompoundIdentifier
 │  │              │        └─ Identifier: int
 │  │              └─ Identifier: arr
 │  └─ FunctionBody
@@ -57,13 +57,13 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun5
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: char
 │  │              └─ Identifier: c
 │  └─ FunctionBody
@@ -71,52 +71,52 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ FunctionType
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     └─ Identifier: void
       │     │  └─ Identifier: pfn1
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: fun1
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ FunctionType
-      │     │  │  ├─ Symbol
+      │     │  │  ├─ CompoundIdentifier
       │     │  │  │  └─ Identifier: int
       │     │  │  └─ Arguments:
       │     │  │     └─ Declaration
-      │     │  │        └─ Symbol
+      │     │  │        └─ CompoundIdentifier
       │     │  │           └─ Identifier: int
       │     │  └─ Identifier: pfn2
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: fun2
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ FunctionType
-      │     │  │  ├─ Symbol
+      │     │  │  ├─ CompoundIdentifier
       │     │  │  │  └─ Identifier: int
       │     │  │  └─ Arguments:
       │     │  │     ├─ Declaration
-      │     │  │     │  └─ Symbol
+      │     │  │     │  └─ CompoundIdentifier
       │     │  │     │     └─ Identifier: int
       │     │  │     └─ Declaration
-      │     │  │        └─ Symbol
+      │     │  │        └─ CompoundIdentifier
       │     │  │           └─ Identifier: int
       │     │  └─ Identifier: pfn3
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: fun3
       ├─ Statement
       │  └─ VariableDeclaration
@@ -124,45 +124,45 @@
       │     │  ├─ FunctionType
       │     │  │  ├─ Reference
       │     │  │  │  └─ Array
-      │     │  │  │     └─ Symbol
+      │     │  │  │     └─ CompoundIdentifier
       │     │  │  │        └─ Identifier: int
       │     │  │  └─ Arguments:
       │     │  │     └─ Declaration
       │     │  │        └─ Reference
       │     │  │           └─ Array
-      │     │  │              └─ Symbol
+      │     │  │              └─ CompoundIdentifier
       │     │  │                 └─ Identifier: int
       │     │  └─ Identifier: pfn4
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: fun4
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ FunctionType
-      │     │  │  ├─ Symbol
+      │     │  │  ├─ CompoundIdentifier
       │     │  │  │  └─ Identifier: void
       │     │  │  └─ Arguments:
       │     │  │     └─ Declaration
       │     │  │        └─ Reference
-      │     │  │           └─ Symbol
+      │     │  │           └─ CompoundIdentifier
       │     │  │              └─ Identifier: char
       │     │  └─ Identifier: pfn5
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: fun5
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: pfn1
       │        └─ Arguments
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: pfn2
       │        └─ Arguments
       │           └─ Expression
@@ -170,13 +170,13 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: pfn2
       │              └─ Arguments
       │                 └─ Expression
@@ -184,7 +184,7 @@
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: pfn3
       │        └─ Arguments
       │           ├─ Expression
@@ -193,12 +193,12 @@
       │              └─ Number: 0
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: pfn3
       │              └─ Arguments
       │                 ├─ Expression
@@ -208,7 +208,7 @@
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: pfn4
       │        └─ Arguments
       │           └─ Expression
@@ -218,13 +218,13 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  └─ Array
-      │     │  │     └─ Symbol
+      │     │  │     └─ CompoundIdentifier
       │     │  │        └─ Identifier: int
       │     │  └─ Identifier: rai
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: pfn4
       │              └─ Arguments
       │                 └─ Expression
@@ -233,13 +233,13 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Array
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     └─ Identifier: int
       │     │  └─ Identifier: ai
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: pfn4
       │              └─ Arguments
       │                 └─ Expression
@@ -247,7 +247,7 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: str
       │     │  └─ Identifier: s
       │     └─ Assignment
@@ -256,14 +256,14 @@
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: pfn5
       │        └─ Arguments
       │           └─ Expression
       │              └─ ArrayAccess
       │                 ├─ Expression
       │                 │  └─ Number: 0
-      │                 └─ Symbol
+      │                 └─ CompoundIdentifier
       │                    └─ Identifier: s
       └─ Statement
          └─ Return

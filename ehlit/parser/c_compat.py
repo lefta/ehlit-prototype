@@ -108,15 +108,15 @@ int_types = {
 
 def type_to_ehlit(typ):
   if typ.kind.name in uint_types:
-    return ast.Symbol([ast.Identifier(0, 'uint' + str(typ.get_size() * 8))])
+    return ast.CompoundIdentifier([ast.Identifier(0, 'uint' + str(typ.get_size() * 8))])
   if typ.kind.name in int_types:
-    return ast.Symbol([ast.Identifier(0, 'int' + str(typ.get_size() * 8))])
+    return ast.CompoundIdentifier([ast.Identifier(0, 'int' + str(typ.get_size() * 8))])
 
   try:
     return globals()['type_' + typ.kind.name](typ)
   except KeyError:
     logging.debug('c_compat: unimplemented: type_%s' % typ.kind.name)
-  return ast.Symbol([ast.Identifier(0, 'any')])
+  return ast.CompoundIdentifier([ast.Identifier(0, 'any')])
 
 def value_to_ehlit(val, typ):
   if typ.kind.name in uint_types or typ.kind.name in int_types:
@@ -193,7 +193,7 @@ def parse_FUNCTION_DECL(cursor):
 def parse_TYPEDEF_DECL(cursor):
   return ast.Alias(
     type_to_ehlit(cursor.underlying_typedef_type),
-    ast.Symbol([ast.Identifier(0, cursor.spelling)])
+    ast.CompoundIdentifier([ast.Identifier(0, cursor.spelling)])
   )
 
 def parse_STRUCT_DECL(cursor):
@@ -222,14 +222,14 @@ def parse_UNION_DECL(cursor):
 
 
 def type_VOID(typ):
-  return ast.Symbol([ast.Identifier(0, 'void')])
+  return ast.CompoundIdentifier([ast.Identifier(0, 'void')])
 
 def type_POINTER(typ):
   subtype = typ.get_pointee()
   builtin_type = {
-    TypeKind.CHAR_S: ast.Symbol([ast.Identifier(0, 'str')]),
-    TypeKind.SCHAR: ast.Symbol([ast.Identifier(0, 'str')]),
-    TypeKind.VOID: ast.Symbol([ast.Identifier(0, 'any')])
+    TypeKind.CHAR_S: ast.CompoundIdentifier([ast.Identifier(0, 'str')]),
+    TypeKind.SCHAR: ast.CompoundIdentifier([ast.Identifier(0, 'str')]),
+    TypeKind.VOID: ast.CompoundIdentifier([ast.Identifier(0, 'any')])
   }.get(subtype.kind)
   if builtin_type is not None:
     return builtin_type
@@ -239,7 +239,7 @@ def type_POINTER(typ):
   return ast.Reference(res)
 
 def type_TYPEDEF(typ):
-  return ast.Symbol([ast.Identifier(0, typ.get_declaration().spelling)])
+  return ast.CompoundIdentifier([ast.Identifier(0, typ.get_declaration().spelling)])
 
 def type_CONSTANTARRAY(typ):
   if typ.element_count == 1:
@@ -256,7 +256,7 @@ def type_ELABORATED(typ):
       # The underlying type is not handled, so make this elaborated type unhandled too
       raise KeyError
     return res
-  return ast.Symbol([ast.Identifier(0, decl.spelling)])
+  return ast.CompoundIdentifier([ast.Identifier(0, decl.spelling)])
 
 def type_RECORD(typ):
   typ = typ.get_declaration()
@@ -268,7 +268,7 @@ def type_RECORD(typ):
       # The underlying type is not handled, so make this elaborated type unhandled too
       raise KeyError
     return res
-  return ast.Symbol([ast.Identifier(0, typ.spelling)])
+  return ast.CompoundIdentifier([ast.Identifier(0, typ.spelling)])
 
 def type_FUNCTIONPROTO(typ):
   args = []

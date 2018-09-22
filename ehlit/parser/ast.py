@@ -318,12 +318,12 @@ class Value(Node):
     self_typ: 'Type' = self.typ
     if isinstance(self_typ, Reference):
       self_typ = self_typ.inner_child
-    if isinstance(self_typ, Symbol):
+    if isinstance(self_typ, CompoundIdentifier):
       self_typ = self_typ.typ
     target_typ: 'Type' = target
     if isinstance(target_typ, Reference):
       target_typ = target_typ.inner_child
-    if isinstance(target_typ, Symbol):
+    if isinstance(target_typ, CompoundIdentifier):
       target_typ = target_typ.typ
     if self_typ != target_typ:
       if self_typ == BuiltinType('any'):
@@ -332,7 +332,7 @@ class Value(Node):
       elif target_typ == BuiltinType('any'):
         target = Value._from_any_aligned(self, target, False)
         parent = self.parent
-        if type(parent) is Symbol:
+        if type(parent) is CompoundIdentifier:
           parent = parent.parent
         while type(parent) is Reference:
           target_ref_level += 1
@@ -393,8 +393,8 @@ class Type(Node):
     return 0
 
 class BuiltinType(Type, DeclarationBase):
-  def make(parent: Node, name: str) -> 'Symbol':
-    res = Symbol([Identifier(parent.pos, name)])
+  def make(parent: Node, name: str) -> 'CompoundIdentifier':
+    res = CompoundIdentifier([Identifier(parent.pos, name)])
     res.build(parent)
     return res
 
@@ -430,7 +430,7 @@ class BuiltinType(Type, DeclarationBase):
     return 0 if self.name == 'str' else 1
 
   def __eq__(self, rhs: object) -> bool:
-    if isinstance(rhs, Symbol):
+    if isinstance(rhs, CompoundIdentifier):
       rhs = rhs.decl
     if isinstance(rhs, BuiltinType):
       return self.name == rhs.name
@@ -547,8 +547,8 @@ class Operator(Node):
     pass
 
 class VariableAssignment(Node):
-  def __init__(self, var: 'Symbol', assign: 'Assignment') -> None:
-    self.var: 'Symbol' = var
+  def __init__(self, var: 'CompoundIdentifier', assign: 'Assignment') -> None:
+    self.var: 'CompoundIdentifier' = var
     self.assign: 'Assignment' = assign
 
   def build(self, parent: Node) -> None:
@@ -577,11 +577,11 @@ class Declaration(DeclarationBase):
     super().build(parent)
     self.typ_src.build(self)
     typ = type(self.typ)
-    while typ is Symbol or typ is Alias:
+    while typ is CompoundIdentifier or typ is Alias:
       if isinstance(self.typ, Alias):
         self.typ = self.typ.typ
       else:
-        assert isinstance(self.typ, Symbol) and isinstance(self.typ.decl, Type)
+        assert isinstance(self.typ, CompoundIdentifier) and isinstance(self.typ.decl, Type)
         self.typ = self.typ.decl
       typ = type(self.typ)
     if self.sym is not None:
@@ -644,7 +644,7 @@ class FunctionDefinition(FunctionDeclaration):
     try:
       assert isinstance(self.typ, FunctionType)
       typ: Type = self.typ.ret
-      if isinstance(typ, Symbol):
+      if isinstance(typ, CompoundIdentifier):
         decl = typ.decl
         typ = decl.typ if decl is not None else BuiltinType.make(self, 'any')
       if isinstance(typ, Alias):
@@ -703,9 +703,9 @@ class Expression(Node):
     return self.parenthesised
 
 class FunctionCall(Value):
-  def __init__(self, pos: int, sym: 'Symbol', args: List[Expression]) -> None:
+  def __init__(self, pos: int, sym: 'CompoundIdentifier', args: List[Expression]) -> None:
     super().__init__(pos)
-    self.sym: Symbol = sym
+    self.sym: CompoundIdentifier = sym
     self.args: List[Expression] = args
 
   def build(self, parent: Node) -> None:
@@ -881,8 +881,10 @@ class Identifier(Value):
   def build(self, parent: Node) -> None:
     super().build(parent)
     if not parent.is_declaration():
-      # Only declarations may use an identifier directly, all other node types must use Symbol
-      assert isinstance(parent, Symbol), "Only declarations may use an identifier directly"
+      # Only declarations may use an Identifier directly, all other node types must use
+      # CompoundIdentifier
+      assert isinstance(parent, CompoundIdentifier), (
+        'Only declarations may use an identifier directly')
       self.decl, err = parent.find_declaration_for(self)
       if self.decl is None:
         if err is None:
@@ -904,7 +906,7 @@ class Identifier(Value):
   def from_any(self) -> Type:
     return self.decl.from_any() if self.decl is not None else self
 
-class Symbol(Value, Type):
+class CompoundIdentifier(Value, Type):
   def __init__(self, elems: List[Identifier]) -> None:
     self.elems: List[Identifier] = elems
     super().__init__()
@@ -1067,9 +1069,9 @@ class Sizeof(Value):
     return BuiltinType.make(self, 'size')
 
 class Alias(Type, DeclarationBase):
-  def __init__(self, src: Identifier, dst: Symbol) -> None:
+  def __init__(self, src: Identifier, dst: CompoundIdentifier) -> None:
     self.src: Identifier = src
-    self.dst: Symbol = dst
+    self.dst: CompoundIdentifier = dst
 
   def build(self, parent: Node) -> None:
     super().build(parent)
@@ -1151,7 +1153,7 @@ class ContainerStructure(Type, DeclarationBase):
     return None, None
 
   def from_any(self) -> Type:
-    res = Reference(Symbol([Identifier(0, self.sym.name)]))
+    res = Reference(CompoundIdentifier([Identifier(0, self.sym.name)]))
     res.build(self)  # Needs to be built to get the declaration
     return res
 

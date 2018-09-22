@@ -2,13 +2,13 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
@@ -17,7 +17,7 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: j
       │     └─ Assignment

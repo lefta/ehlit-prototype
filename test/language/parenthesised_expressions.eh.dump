@@ -2,13 +2,13 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
@@ -24,7 +24,7 @@
       │                       └─ Number: 2
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
@@ -39,7 +39,7 @@
       │              └─ Number: 2
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
@@ -54,7 +54,7 @@
       │                       └─ Number: 2
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression

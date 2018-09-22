@@ -105,7 +105,7 @@ class ImportWriter:
     self.file.write('= ')
     self.write(node.expr)
 
-  def writeSymbol(self, node):
+  def writeCompoundIdentifier(self, node):
     fst = True
     for e in node.elems:
       if not fst:

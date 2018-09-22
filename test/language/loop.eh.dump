@@ -2,20 +2,20 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: do_something
 │  │  └─ FunctionType
-│  │     └─ Symbol
+│  │     └─ CompoundIdentifier
 │  │        └─ Identifier: void
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
@@ -23,45 +23,45 @@
       │           └─ Number: 3
       ├─ ControlStructure: while
       │  ├─ Expression
-      │  │  └─ Symbol
+      │  │  └─ CompoundIdentifier
       │  │     └─ Identifier: i
       │  └─ ControlStructureBody
       │     ├─ Statement
       │     │  └─ Expression
       │     │     └─ FunctionCall
-      │     │        ├─ Symbol
+      │     │        ├─ CompoundIdentifier
       │     │        │  └─ Identifier: do_something
       │     │        └─ Arguments
       │     └─ Statement
       │        └─ VariableAssignment
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: i
       │           └─ Assignment
       │              └─ Expression
-      │                 ├─ Symbol
+      │                 ├─ CompoundIdentifier
       │                 │  └─ Identifier: i
       │                 ├─ Operator: -
       │                 └─ Expression
       │                    └─ Number: 1
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 3
       ├─ ControlStructure: while
       │  ├─ Expression
-      │  │  └─ Symbol
+      │  │  └─ CompoundIdentifier
       │  │     └─ Identifier: i
       │  └─ ControlStructureBody
       │     └─ Statement
       │        └─ VariableAssignment
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: i
       │           └─ Assignment
       │              └─ Expression
-      │                 ├─ Symbol
+      │                 ├─ CompoundIdentifier
       │                 │  └─ Identifier: i
       │                 ├─ Operator: -
       │                 └─ Expression

@@ -2,12 +2,12 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: simple_fn
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
@@ -15,12 +15,12 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: simple_fn_str
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: str
 │  │              └─ Identifier: s
 │  └─ FunctionBody
@@ -29,7 +29,7 @@
 │  │  ├─ Identifier: ref_call
 │  │  └─ FunctionType
 │  │     └─ Reference
-│  │        └─ Symbol
+│  │        └─ CompoundIdentifier
 │  │           └─ Identifier: int
 │  └─ FunctionBody
 │     └─ Statement
@@ -40,13 +40,13 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: inc
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: int
 │  │              └─ Identifier: nb
 │  └─ FunctionBody
@@ -56,14 +56,14 @@
 │     │     │  └─ PrefixOperatorValue
 │     │     │     ├─ Operator: !
 │     │     │     └─ Reference
-│     │     │        └─ Symbol
+│     │     │        └─ CompoundIdentifier
 │     │     │           └─ Identifier: nb
 │     │     └─ ControlStructureBody
 │     │        └─ Statement
 │     │           └─ Return
 │     └─ Statement
 │        └─ VariableAssignment
-│           ├─ Symbol
+│           ├─ CompoundIdentifier
 │           │  └─ Identifier: nb
 │           └─ Assignment
 │              ├─ Operator: +
@@ -73,12 +73,12 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: inner_parens
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
@@ -89,7 +89,7 @@
 │     │     └─ ControlStructureBody
 │     │        ├─ Statement
 │     │        │  └─ VariableAssignment
-│     │        │     ├─ Symbol
+│     │        │     ├─ CompoundIdentifier
 │     │        │     │  └─ Identifier: i
 │     │        │     └─ Assignment
 │     │        │        └─ Expression
@@ -101,7 +101,7 @@
 │     │        │     └─ ControlStructureBody
 │     │        │        └─ Statement
 │     │        │           └─ VariableAssignment
-│     │        │              ├─ Symbol
+│     │        │              ├─ CompoundIdentifier
 │     │        │              │  └─ Identifier: i
 │     │        │              └─ Assignment
 │     │        │                 └─ Expression
@@ -113,21 +113,21 @@
 │     │        │     └─ ControlStructureBody
 │     │        │        └─ Statement
 │     │        │           └─ VariableAssignment
-│     │        │              ├─ Symbol
+│     │        │              ├─ CompoundIdentifier
 │     │        │              │  └─ Identifier: i
 │     │        │              └─ Assignment
 │     │        │                 └─ Expression
 │     │        │                    └─ Number: 2
 │     │        └─ Statement
 │     │           └─ VariableAssignment
-│     │              ├─ Symbol
+│     │              ├─ CompoundIdentifier
 │     │              │  └─ Identifier: i
 │     │              └─ Assignment
 │     │                 └─ Expression
 │     │                    └─ Number: 3
 │     ├─ Statement
 │     │  └─ VariableAssignment
-│     │     ├─ Symbol
+│     │     ├─ CompoundIdentifier
 │     │     │  └─ Identifier: i
 │     │     └─ Assignment
 │     │        └─ Expression
@@ -139,7 +139,7 @@
 │           └─ ControlStructureBody
 │              └─ Statement
 │                 └─ VariableAssignment
-│                    ├─ Symbol
+│                    ├─ CompoundIdentifier
 │                    │  └─ Identifier: i
 │                    └─ Assignment
 │                       └─ Expression
@@ -148,17 +148,17 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: func_with_default_params
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
-│  │        │     ├─ Symbol
+│  │        │     ├─ CompoundIdentifier
 │  │        │     │  └─ Identifier: int
 │  │        │     └─ Identifier: par1
 │  │        └─ VariableDeclaration
 │  │           ├─ Declaration
-│  │           │  ├─ Symbol
+│  │           │  ├─ CompoundIdentifier
 │  │           │  │  └─ Identifier: int
 │  │           │  └─ Identifier: par2
 │  │           └─ Assignment
@@ -169,12 +169,12 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: func_with_trailing_comma
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: int
 │  │              └─ Identifier: arg
 │  └─ FunctionBody
@@ -182,25 +182,25 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: main
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
-│  │        │     ├─ Symbol
+│  │        │     ├─ CompoundIdentifier
 │  │        │     │  └─ Identifier: int
 │  │        │     └─ Identifier: ac
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Array
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: str
 │  │              └─ Identifier: av
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ Expression
 │     │     └─ FunctionCall
-│     │        ├─ Symbol
+│     │        ├─ CompoundIdentifier
 │     │        │  └─ Identifier: simple_fn
 │     │        └─ Arguments
 │     │           └─ Expression
@@ -208,7 +208,7 @@
 │     ├─ Statement
 │     │  └─ Expression
 │     │     └─ FunctionCall
-│     │        ├─ Symbol
+│     │        ├─ CompoundIdentifier
 │     │        │  └─ Identifier: simple_fn
 │     │        └─ Arguments
 │     │           └─ Expression
@@ -219,7 +219,7 @@
 │     ├─ Statement
 │     │  └─ Expression
 │     │     └─ FunctionCall
-│     │        ├─ Symbol
+│     │        ├─ CompoundIdentifier
 │     │        │  └─ Identifier: simple_fn_str
 │     │        └─ Arguments
 │     │           └─ Expression
@@ -227,13 +227,13 @@
 │     ├─ Statement
 │     │  └─ Expression
 │     │     └─ FunctionCall
-│     │        ├─ Symbol
+│     │        ├─ CompoundIdentifier
 │     │        │  └─ Identifier: ref_call
 │     │        └─ Arguments
 │     ├─ Statement
 │     │  └─ Expression
 │     │     └─ FunctionCall
-│     │        ├─ Symbol
+│     │        ├─ CompoundIdentifier
 │     │        │  └─ Identifier: func_with_default_params
 │     │        └─ Arguments
 │     │           ├─ Expression
@@ -243,7 +243,7 @@
 │     ├─ Statement
 │     │  └─ Expression
 │     │     └─ FunctionCall
-│     │        ├─ Symbol
+│     │        ├─ CompoundIdentifier
 │     │        │  └─ Identifier: func_with_default_params
 │     │        └─ Arguments
 │     │           ├─ Expression
@@ -253,7 +253,7 @@
 │     ├─ Statement
 │     │  └─ Expression
 │     │     └─ FunctionCall
-│     │        ├─ Symbol
+│     │        ├─ CompoundIdentifier
 │     │        │  └─ Identifier: func_with_trailing_comma
 │     │        └─ Arguments
 │     │           └─ Expression
@@ -261,7 +261,7 @@
 │     ├─ Statement
 │     │  └─ Expression
 │     │     └─ FunctionCall
-│     │        ├─ Symbol
+│     │        ├─ CompoundIdentifier
 │     │        │  └─ Identifier: declared_later
 │     │        └─ Arguments
 │     └─ Statement
@@ -272,6 +272,6 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: declared_later
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: void
    └─ FunctionBody

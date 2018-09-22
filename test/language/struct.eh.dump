@@ -3,19 +3,19 @@
 │  └─ Fields
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
-│     │     ├─ Symbol
+│     │     ├─ CompoundIdentifier
 │     │     │  └─ Identifier: int
 │     │     └─ Identifier: field1
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
-│     │     ├─ Symbol
+│     │     ├─ CompoundIdentifier
 │     │     │  └─ Identifier: str
 │     │     └─ Identifier: field2
 │     └─ VariableDeclaration
 │        └─ Declaration
 │           ├─ Reference
 │           │  └─ Array
-│           │     └─ Symbol
+│           │     └─ CompoundIdentifier
 │           │        └─ Identifier: int
 │           └─ Identifier: field3
 ├─ Struct
@@ -25,13 +25,13 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
@@ -40,55 +40,55 @@
 │  │  ├─ Identifier: struct_fun
 │  │  └─ FunctionType
 │  │     ├─ Reference
-│  │     │  └─ Symbol
+│  │     │  └─ CompoundIdentifier
 │  │     │     └─ Identifier: test_struct
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: test_struct
 │  │              └─ Identifier: s
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
-│              └─ Symbol
+│              └─ CompoundIdentifier
 │                 └─ Identifier: s
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: any_fun
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: any
 │  │              └─ Identifier: p
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
-│              └─ Symbol
+│              └─ CompoundIdentifier
 │                 └─ Identifier: p
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: test_struct
       │        └─ Identifier: t
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  ├─ Identifier: t
       │     │  └─ Identifier: field1
       │     └─ Assignment
@@ -96,7 +96,7 @@
       │           └─ Number: 0
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  ├─ Identifier: t
       │     │  └─ Identifier: field2
       │     └─ Assignment
@@ -105,7 +105,7 @@
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     ├─ Identifier: t
       │     │     └─ Identifier: field3
       │     └─ Assignment
@@ -114,27 +114,27 @@
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: fun
       │        └─ Arguments
       │           └─ Expression
-      │              └─ Symbol
+      │              └─ CompoundIdentifier
       │                 ├─ Identifier: t
       │                 └─ Identifier: field1
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     └─ Identifier: test_struct
       │     │  └─ Identifier: rt
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: t
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  ├─ Identifier: rt
       │     │  └─ Identifier: field1
       │     └─ Assignment
@@ -142,7 +142,7 @@
       │           └─ Number: 0
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  ├─ Identifier: rt
       │     │  └─ Identifier: field2
       │     └─ Assignment
@@ -151,7 +151,7 @@
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     ├─ Identifier: rt
       │     │     └─ Identifier: field3
       │     └─ Assignment
@@ -160,110 +160,110 @@
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: fun
       │        └─ Arguments
       │           └─ Expression
-      │              └─ Symbol
+      │              └─ CompoundIdentifier
       │                 ├─ Identifier: rt
       │                 └─ Identifier: field1
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: rt
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: struct_fun
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: t
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: size
       │     │  └─ Identifier: ss
       │     └─ Assignment
       │        └─ Expression
       │           └─ Sizeof
-      │              └─ Symbol
+      │              └─ CompoundIdentifier
       │                 └─ Identifier: test_struct
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: ss
       │     └─ Assignment
       │        └─ Expression
       │           └─ Sizeof
       │              └─ Reference
-      │                 └─ Symbol
+      │                 └─ CompoundIdentifier
       │                    └─ Identifier: test_struct
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ FunctionType
       │     │  │  ├─ Reference
-      │     │  │  │  └─ Symbol
+      │     │  │  │  └─ CompoundIdentifier
       │     │  │  │     └─ Identifier: test_struct
       │     │  │  └─ Arguments:
       │     │  │     └─ Declaration
       │     │  │        └─ Reference
-      │     │  │           └─ Symbol
+      │     │  │           └─ CompoundIdentifier
       │     │  │              └─ Identifier: test_struct
       │     │  └─ Identifier: psf
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: struct_fun
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: rt
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: any_fun
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: test_struct
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: rt
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: t
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: any_fun
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: test_struct
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: t
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: rt
       │     └─ Assignment
       │        └─ Expression
       │           └─ Cast
       │              ├─ Reference
-      │              │  └─ Symbol
+      │              │  └─ CompoundIdentifier
       │              │     └─ Identifier: test_struct
       │              └─ Expression
       │                 └─ Number: 0

@@ -2,39 +2,39 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: sz
       │     └─ Assignment
       │        └─ Expression
       │           └─ Sizeof
-      │              └─ Symbol
+      │              └─ CompoundIdentifier
       │                 └─ Identifier: int
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: sz
       │     └─ Assignment
       │        └─ Expression
       │           └─ Sizeof
       │              └─ Array
-      │                 └─ Symbol
+      │                 └─ CompoundIdentifier
       │                    └─ Identifier: int
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: sz
       │     └─ Assignment
       │        └─ Expression
       │           └─ Sizeof
       │              └─ Reference
-      │                 └─ Symbol
+      │                 └─ CompoundIdentifier
       │                    └─ Identifier: int
       └─ Statement
          └─ Return

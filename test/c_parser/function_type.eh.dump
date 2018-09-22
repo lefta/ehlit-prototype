@@ -4,26 +4,26 @@
       ├─ Alias
       │  ├─ From:
       │  │  └─ FunctionType
-      │  │     ├─ Symbol
+      │  │     ├─ CompoundIdentifier
       │  │     │  └─ Identifier: str
       │  │     └─ Arguments:
-      │  │        └─ Symbol
+      │  │        └─ CompoundIdentifier
       │  │           └─ Identifier: int32
       │  └─ To:
-      │     └─ Symbol
+      │     └─ CompoundIdentifier
       │        └─ Identifier: fun
       └─ FunctionDeclaration
          ├─ Identifier: fun2
          └─ FunctionType
-            ├─ Symbol
+            ├─ CompoundIdentifier
             │  └─ Identifier: void
             └─ Arguments:
                └─ VariableDeclaration
                   └─ Declaration
                      ├─ FunctionType
-                     │  ├─ Symbol
+                     │  ├─ CompoundIdentifier
                      │  │  └─ Identifier: str
                      │  └─ Arguments:
-                     │     └─ Symbol
+                     │     └─ CompoundIdentifier
                      │        └─ Identifier: int32
                      └─ Identifier: param

@@ -39,8 +39,8 @@ class ASTBuilder(PTNodeVisitor):
   def visit_identifier(self, node, children):
     return ast.Identifier(node.position, str(node))
 
-  def visit_symbol(self, node, children):
-    return ast.Symbol(children)
+  def visit_compound_identifier(self, node, children):
+    return ast.CompoundIdentifier(children)
 
   def visit_char(self, node, children):
     return ast.Char(str(children[0]))

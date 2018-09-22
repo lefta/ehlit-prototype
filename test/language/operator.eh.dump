@@ -2,13 +2,13 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
@@ -16,62 +16,62 @@
       │           └─ Number: 0
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: i
       │           ├─ Operator: +
       │           └─ Expression
       │              └─ Number: 5
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: i
       │           ├─ Operator: -
       │           └─ Expression
       │              └─ Number: 3
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: i
       │           ├─ Operator: *
       │           └─ Expression
       │              └─ Number: 4
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: i
       │           ├─ Operator: /
       │           └─ Expression
       │              └─ Number: 3
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: i
       │           ├─ Operator: %
       │           └─ Expression
       │              └─ Number: 3
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        ├─ Operator: +
@@ -79,7 +79,7 @@
       │           └─ Number: 4
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        ├─ Operator: -
@@ -87,7 +87,7 @@
       │           └─ Number: 8
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        ├─ Operator: *
@@ -95,7 +95,7 @@
       │           └─ Number: 5
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        ├─ Operator: /
@@ -103,7 +103,7 @@
       │           └─ Number: 1
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        ├─ Operator: %
@@ -113,30 +113,30 @@
       │  └─ Expression
       │     └─ SuffixOperatorValue
       │        ├─ Operator: --
-      │        └─ Symbol
+      │        └─ CompoundIdentifier
       │           └─ Identifier: i
       ├─ Statement
       │  └─ Expression
       │     └─ SuffixOperatorValue
       │        ├─ Operator: ++
-      │        └─ Symbol
+      │        └─ CompoundIdentifier
       │           └─ Identifier: i
       ├─ Statement
       │  └─ Expression
       │     └─ PrefixOperatorValue
       │        ├─ Operator: ++
-      │        └─ Symbol
+      │        └─ CompoundIdentifier
       │           └─ Identifier: i
       ├─ Statement
       │  └─ Expression
       │     └─ PrefixOperatorValue
       │        ├─ Operator: --
-      │        └─ Symbol
+      │        └─ CompoundIdentifier
       │           └─ Identifier: i
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: ==
       │     │  └─ Expression
@@ -149,7 +149,7 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: !=
       │     │  └─ Expression
@@ -162,7 +162,7 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: >
       │     │  └─ Expression
@@ -175,7 +175,7 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: <
       │     │  └─ Expression
@@ -188,7 +188,7 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: >=
       │     │  └─ Expression
@@ -201,7 +201,7 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: <=
       │     │  └─ Expression
@@ -216,7 +216,7 @@
       │     ├─ Expression
       │     │  └─ PrefixOperatorValue
       │     │     ├─ Operator: !
-      │     │     └─ Symbol
+      │     │     └─ CompoundIdentifier
       │     │        └─ Identifier: i
       │     └─ ControlStructureBody
       │        └─ Statement
@@ -226,20 +226,20 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: i
       │     └─ ControlStructureBody
       │        └─ Statement
       │           └─ Expression
       │              └─ PrefixOperatorValue
       │                 ├─ Operator: ++
-      │                 └─ Symbol
+      │                 └─ CompoundIdentifier
       │                    └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     └─ Identifier: int
       │     │  └─ Identifier: ri
       │     └─ Assignment
@@ -249,23 +249,23 @@
       │  └─ Expression
       │     └─ SuffixOperatorValue
       │        ├─ Operator: ++
-      │        └─ Symbol
+      │        └─ CompoundIdentifier
       │           └─ Identifier: ri
       ├─ Statement
       │  └─ Expression
       │     └─ SuffixOperatorValue
       │        ├─ Operator: --
-      │        └─ Symbol
+      │        └─ CompoundIdentifier
       │           └─ Identifier: ri
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: ==
       │     │  ├─ Number: 1
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: ==
       │     │  └─ Number: 2
@@ -277,22 +277,22 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: ==
       │     │  ├─ Number: 1
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: ==
       │     │  ├─ Number: 2
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: ==
       │     │  ├─ Number: 3
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: ==
       │     │  └─ Number: 4
@@ -304,12 +304,12 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: !=
       │     │  ├─ Number: 1
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: !=
       │     │  └─ Number: 2
@@ -321,22 +321,22 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: !=
       │     │  ├─ Number: 1
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: !=
       │     │  ├─ Number: 2
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: !=
       │     │  ├─ Number: 3
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: !=
       │     │  └─ Number: 4
@@ -350,10 +350,10 @@
       │     ├─ Expression
       │     │  ├─ Number: 1
       │     │  ├─ Operator: <
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: <
       │     │  └─ Number: 10
@@ -367,10 +367,10 @@
       │     ├─ Expression
       │     │  ├─ Number: 1
       │     │  ├─ Operator: >
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: >
       │     │  └─ Number: 10
@@ -384,10 +384,10 @@
       │     ├─ Expression
       │     │  ├─ Number: 1
       │     │  ├─ Operator: <=
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: <=
       │     │  └─ Number: 10
@@ -401,10 +401,10 @@
       │     ├─ Expression
       │     │  ├─ Number: 1
       │     │  ├─ Operator: >=
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: >=
       │     │  └─ Number: 10
@@ -418,10 +418,10 @@
       │     ├─ Expression
       │     │  ├─ Number: 1
       │     │  ├─ Operator: <
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: <=
       │     │  └─ Number: 10
@@ -435,10 +435,10 @@
       │     ├─ Expression
       │     │  ├─ Number: 1
       │     │  ├─ Operator: >
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: >=
       │     │  └─ Number: 10
@@ -452,10 +452,10 @@
       │     ├─ Expression
       │     │  ├─ Number: 1
       │     │  ├─ Operator: <=
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: <
       │     │  └─ Number: 10
@@ -469,10 +469,10 @@
       │     ├─ Expression
       │     │  ├─ Number: 1
       │     │  ├─ Operator: >=
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: &&
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: >
       │     │  └─ Number: 10

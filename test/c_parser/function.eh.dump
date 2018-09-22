@@ -4,5 +4,5 @@
       └─ FunctionDeclaration
          ├─ Identifier: fun
          └─ FunctionType
-            └─ Symbol
+            └─ CompoundIdentifier
                └─ Identifier: void

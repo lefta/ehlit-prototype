@@ -53,7 +53,7 @@ def builtin_keyword():
 def identifier():
   return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='identifier')
 
-def symbol():
+def compound_identifier():
   return identifier, ZeroOrMore('.', identifier)
 
 def char():
@@ -76,13 +76,13 @@ def referenced_value():
   return 'ref', value
 
 def function_call():
-  return [full_type, symbol], '(', ZeroOrMore(expression, sep=','), trailing_comma, ')'
+  return [full_type, compound_identifier], '(', ZeroOrMore(expression, sep=','), trailing_comma, ')'
 
 def writable_value():
-  return [referenced_value, symbol]
+  return [referenced_value, compound_identifier]
 
 def disambiguated_prefix_operator_value():
-  return "", Sequence(['++', '--'], And(['ref', symbol]), skipws=False)
+  return "", Sequence(['++', '--'], And(['ref', compound_identifier]), skipws=False)
 
 def prefix_operator_value():
   return [disambiguated_prefix_operator_value, '!'], writable_value
@@ -161,7 +161,7 @@ def function_type():
   return 'func', '<', full_type, '(', function_type_args, ')', '>'
 
 def full_type():
-  return [function_type, (modifier, [reference, symbol], array)]
+  return [function_type, (modifier, [reference, compound_identifier], array)]
 
 # Statements
 ############
@@ -173,7 +173,7 @@ def variable_declaration_assignable():
   return variable_declaration, Optional(assignment)
 
 def variable_assignment():
-  return [referenced_value, symbol], Optional(array_access), operation_assignment
+  return [referenced_value, compound_identifier], Optional(array_access), operation_assignment
 
 def return_instruction():
   if Context.return_value:
@@ -284,7 +284,7 @@ def import_instruction():
 ######
 
 def alias():
-  return 'alias', full_type, symbol
+  return 'alias', full_type, compound_identifier
 
 # Container structures
 ######################

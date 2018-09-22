@@ -2,19 +2,19 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: set_int
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableAssignment
-│     │     ├─ Symbol
+│     │     ├─ CompoundIdentifier
 │     │     │  └─ Identifier: i
 │     │     └─ Assignment
 │     │        └─ Expression
@@ -22,79 +22,79 @@
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
-│              └─ Symbol
+│              └─ CompoundIdentifier
 │                 └─ Identifier: i
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: set_int_to
 │  │  └─ FunctionType
 │  │     ├─ Reference
-│  │     │  └─ Symbol
+│  │     │  └─ CompoundIdentifier
 │  │     │     └─ Identifier: int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
-│  │        │     │  └─ Symbol
+│  │        │     │  └─ CompoundIdentifier
 │  │        │     │     └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableAssignment
-│     │     ├─ Symbol
+│     │     ├─ CompoundIdentifier
 │     │     │  └─ Identifier: i
 │     │     └─ Assignment
 │     │        └─ Expression
-│     │           └─ Symbol
+│     │           └─ CompoundIdentifier
 │     │              └─ Identifier: j
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ Reference
-│                 └─ Symbol
+│                 └─ CompoundIdentifier
 │                    └─ Identifier: i
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: set_int_ref
 │  │  └─ FunctionType
 │  │     ├─ Reference
-│  │     │  └─ Symbol
+│  │     │  └─ CompoundIdentifier
 │  │     │     └─ Identifier: int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
-│  │        │     │  └─ Symbol
+│  │        │     │  └─ CompoundIdentifier
 │  │        │     │     └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableAssignment
 │     │     ├─ Reference
-│     │     │  └─ Symbol
+│     │     │  └─ CompoundIdentifier
 │     │     │     └─ Identifier: i
 │     │     └─ Assignment
 │     │        └─ Expression
 │     │           └─ Reference
-│     │              └─ Symbol
+│     │              └─ CompoundIdentifier
 │     │                 └─ Identifier: j
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ Reference
-│                 └─ Symbol
+│                 └─ CompoundIdentifier
 │                    └─ Identifier: i
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
@@ -102,21 +102,21 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  └─ Reference
-│  │     │     └─ Symbol
+│  │     │     └─ CompoundIdentifier
 │  │     │        └─ Identifier: int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
 │  │        │     │  └─ Reference
-│  │        │     │     └─ Symbol
+│  │        │     │     └─ CompoundIdentifier
 │  │        │     │        └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ Reference
-│  │              │     └─ Symbol
+│  │              │     └─ CompoundIdentifier
 │  │              │        └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
@@ -124,71 +124,71 @@
 │     │  └─ VariableAssignment
 │     │     ├─ Reference
 │     │     │  └─ Reference
-│     │     │     └─ Symbol
+│     │     │     └─ CompoundIdentifier
 │     │     │        └─ Identifier: i
 │     │     └─ Assignment
 │     │        └─ Expression
 │     │           └─ Reference
 │     │              └─ Reference
-│     │                 └─ Symbol
+│     │                 └─ CompoundIdentifier
 │     │                    └─ Identifier: j
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ Reference
 │                 └─ Reference
-│                    └─ Symbol
+│                    └─ CompoundIdentifier
 │                       └─ Identifier: i
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: set_int_ref_lv2
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
 │  │        │     │  └─ Reference
-│  │        │     │     └─ Symbol
+│  │        │     │     └─ CompoundIdentifier
 │  │        │     │        └─ Identifier: int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ Reference
-│  │              │     └─ Symbol
+│  │              │     └─ CompoundIdentifier
 │  │              │        └─ Identifier: int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ VariableAssignment
 │           ├─ Reference
-│           │  └─ Symbol
+│           │  └─ CompoundIdentifier
 │           │     └─ Identifier: i
 │           └─ Assignment
 │              └─ Expression
 │                 └─ Reference
-│                    └─ Symbol
+│                    └─ CompoundIdentifier
 │                       └─ Identifier: j
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: int
       │        └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     └─ Identifier: int
       │     │  └─ Identifier: j
       │     └─ Assignment
@@ -196,73 +196,73 @@
       │           └─ Number: 21
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: set_int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
-      │                       └─ Symbol
+      │                       └─ CompoundIdentifier
       │                          └─ Identifier: i
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
       │              ├─ Reference
-      │              │  └─ Symbol
+      │              │  └─ CompoundIdentifier
       │              │     └─ Identifier: set_int_to
       │              └─ Arguments
       │                 ├─ Expression
       │                 │  └─ Reference
-      │                 │     └─ Symbol
+      │                 │     └─ CompoundIdentifier
       │                 │        └─ Identifier: i
       │                 └─ Expression
       │                    └─ Reference
-      │                       └─ Symbol
+      │                       └─ CompoundIdentifier
       │                          └─ Identifier: j
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: set_int_ref
       │              └─ Arguments
       │                 ├─ Expression
       │                 │  └─ Reference
-      │                 │     └─ Symbol
+      │                 │     └─ CompoundIdentifier
       │                 │        └─ Identifier: i
       │                 └─ Expression
       │                    └─ Reference
-      │                       └─ Symbol
+      │                       └─ CompoundIdentifier
       │                          └─ Identifier: j
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  └─ Reference
-      │     │  │     └─ Symbol
+      │     │  │     └─ CompoundIdentifier
       │     │  │        └─ Identifier: int
       │     │  └─ Identifier: k
       │     └─ Assignment
       │        └─ Expression
       │           └─ Reference
       │              └─ Reference
-      │                 └─ Symbol
+      │                 └─ CompoundIdentifier
       │                    └─ Identifier: j
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: k
       │     └─ Assignment
       │        └─ Expression
@@ -270,33 +270,33 @@
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: k
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: j
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
       │     │  └─ Reference
-      │     │     └─ Symbol
+      │     │     └─ CompoundIdentifier
       │     │        └─ Identifier: k
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: set_int_ref_ref
       │              └─ Arguments
       │                 ├─ Expression
       │                 │  └─ Reference
       │                 │     └─ Reference
-      │                 │        └─ Symbol
+      │                 │        └─ CompoundIdentifier
       │                 │           └─ Identifier: j
       │                 └─ Expression
       │                    └─ Reference
       │                       └─ Reference
-      │                          └─ Symbol
+      │                          └─ CompoundIdentifier
       │                             └─ Identifier: k
       └─ Statement
          └─ Return

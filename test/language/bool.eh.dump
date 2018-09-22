@@ -2,12 +2,12 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: not_true
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: bool
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: bool
 │  │              └─ Identifier: v
 │  └─ FunctionBody
@@ -16,19 +16,19 @@
 │           └─ Expression
 │              └─ PrefixOperatorValue
 │                 ├─ Operator: !
-│                 └─ Symbol
+│                 └─ CompoundIdentifier
 │                    └─ Identifier: v
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: bool
       │     │  └─ Identifier: b1
       │     └─ Assignment
@@ -37,7 +37,7 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: bool
       │     │  └─ Identifier: b2
       │     └─ Assignment
@@ -45,14 +45,14 @@
       │           └─ false
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: b1
       │     └─ Assignment
       │        └─ Expression
       │           └─ false
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: b2
       │     └─ Assignment
       │        └─ Expression
@@ -61,7 +61,7 @@
       │  └─ ControlStructure: if
       │     ├─ Expression
       │     │  └─ FunctionCall
-      │     │     ├─ Symbol
+      │     │     ├─ CompoundIdentifier
       │     │     │  └─ Identifier: not_true
       │     │     └─ Arguments
       │     │        └─ Expression

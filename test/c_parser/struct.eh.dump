@@ -6,12 +6,12 @@
       │  └─ Fields
       │     ├─ VariableDeclaration
       │     │  └─ Declaration
-      │     │     ├─ Symbol
+      │     │     ├─ CompoundIdentifier
       │     │     │  └─ Identifier: int32
       │     │     └─ Identifier: field1
       │     └─ VariableDeclaration
       │        └─ Declaration
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: str
       │           └─ Identifier: field2
       ├─ Struct
@@ -19,7 +19,7 @@
       │  └─ Fields
       │     └─ VariableDeclaration
       │        └─ Declaration
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: int32
       │           └─ Identifier: field1
       ├─ Alias
@@ -29,23 +29,23 @@
       │  │     └─ Fields
       │  │        └─ VariableDeclaration
       │  │           └─ Declaration
-      │  │              ├─ Symbol
+      │  │              ├─ CompoundIdentifier
       │  │              │  └─ Identifier: int32
       │  │              └─ Identifier: field1
       │  └─ To:
-      │     └─ Symbol
+      │     └─ CompoundIdentifier
       │        └─ Identifier: test_struct_t
       └─ Struct
          ├─ Identifier: linked_list
          └─ Fields
             ├─ VariableDeclaration
             │  └─ Declaration
-            │     ├─ Symbol
+            │     ├─ CompoundIdentifier
             │     │  └─ Identifier: any
             │     └─ Identifier: contents
             └─ VariableDeclaration
                └─ Declaration
                   ├─ Reference
-                  │  └─ Symbol
+                  │  └─ CompoundIdentifier
                   │     └─ Identifier: linked_list
                   └─ Identifier: next

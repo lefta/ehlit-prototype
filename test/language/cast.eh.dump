@@ -2,12 +2,12 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: want_int
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: int
 │  │              └─ Identifier: n
 │  └─ FunctionBody
@@ -15,53 +15,53 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     ├─ Symbol
+   │     ├─ CompoundIdentifier
    │     │  └─ Identifier: int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
    │        │  └─ Declaration
-   │        │     ├─ Symbol
+   │        │     ├─ CompoundIdentifier
    │        │     │  └─ Identifier: int
    │        │     └─ Identifier: ac
    │        └─ VariableDeclaration
    │           └─ Declaration
    │              ├─ Array
-   │              │  └─ Symbol
+   │              │  └─ CompoundIdentifier
    │              │     └─ Identifier: str
    │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: want_int
       │        └─ Arguments
       │           └─ Expression
       │              └─ Cast
-      │                 ├─ Symbol
+      │                 ├─ CompoundIdentifier
       │                 │  └─ Identifier: int
       │                 └─ Expression
       │                    └─ Reference
-      │                       └─ Symbol
+      │                       └─ CompoundIdentifier
       │                          └─ Identifier: av
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: any
       │     │  └─ Identifier: test
       │     └─ Assignment
       │        └─ Expression
       │           └─ Cast
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: str
       │              └─ Expression
-      │                 └─ Symbol
+      │                 └─ CompoundIdentifier
       │                    └─ Identifier: ac
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: size
       │     │  └─ Identifier: i
       │     └─ Assignment
@@ -71,15 +71,15 @@
       │              │  └─ Number: 0
       │              └─ Cast
       │                 ├─ Array
-      │                 │  └─ Symbol
+      │                 │  └─ CompoundIdentifier
       │                 │     └─ Identifier: size
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: av
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: char
       │     │  └─ Identifier: c
       │     └─ Assignment
@@ -88,10 +88,10 @@
       │              ├─ Expression
       │              │  └─ Number: 0
       │              └─ Cast
-      │                 ├─ Symbol
+      │                 ├─ CompoundIdentifier
       │                 │  └─ Identifier: str
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: ac
       └─ Statement
          └─ Return

@@ -21,7 +21,7 @@
 
 import sys
 from ehlit.parser.ast import (Reference, Array, ArrayAccess, BuiltinType, FunctionType,
-  FunctionDeclaration, FunctionDefinition, FunctionCall, Symbol, Struct, EhUnion)
+  FunctionDeclaration, FunctionDefinition, FunctionCall, CompoundIdentifier, Struct, EhUnion)
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -76,7 +76,7 @@ class SourceWriter:
   def write_value(self, node):
     if isinstance(node.decl, FunctionDeclaration) and not isinstance(node, FunctionCall):
       parent = node.parent
-      while type(parent) is Reference or type(parent) is Symbol:
+      while type(parent) is Reference or type(parent) is CompoundIdentifier:
         parent = parent.parent
       if type(parent) is not FunctionCall:
         self.file.write('&')
@@ -160,7 +160,7 @@ class SourceWriter:
   def write_type_prefix(self, typ):
     while type(typ) is Reference:
       typ = typ.child
-    if type(typ) is Symbol:
+    if type(typ) is CompoundIdentifier:
       typ = typ.decl
     prefix = {
       Struct: 'struct',
@@ -296,7 +296,7 @@ class SourceWriter:
     while type(decl) is Array or type(decl) is Reference or BuiltinType('str') == decl:
       if type(sym) is ArrayAccess:
         sym = sym.child
-      if isinstance(decl, Symbol):
+      if isinstance(decl, CompoundIdentifier):
         decl = decl.typ
       decl = decl.child
     cur = sym.parent
@@ -391,7 +391,7 @@ class SourceWriter:
   def writeOperator(self, op):
     self.file.write(op.op)
 
-  def writeSymbol(self, node):
+  def writeCompoundIdentifier(self, node):
     self.write_value(node)
     i = 0
     while i < len(node.elems):

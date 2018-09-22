@@ -3,12 +3,12 @@
    └─ Symbols found
       ├─ VariableDeclaration
       │  └─ Declaration
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: int32
       │     └─ Identifier: var
       └─ VariableDeclaration
          ├─ Declaration
-         │  ├─ Symbol
+         │  ├─ CompoundIdentifier
          │  │  └─ Identifier: int32
          │  └─ Identifier: assigned_var
          └─ Assignment

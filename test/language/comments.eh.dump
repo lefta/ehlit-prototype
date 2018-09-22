@@ -2,12 +2,12 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: printf
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: str
 │  │              └─ Identifier: s
 │  └─ FunctionBody
@@ -15,25 +15,25 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     ├─ Symbol
+   │     ├─ CompoundIdentifier
    │     │  └─ Identifier: int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
    │        │  └─ Declaration
-   │        │     ├─ Symbol
+   │        │     ├─ CompoundIdentifier
    │        │     │  └─ Identifier: int
    │        │     └─ Identifier: ac
    │        └─ VariableDeclaration
    │           └─ Declaration
    │              ├─ Array
-   │              │  └─ Symbol
+   │              │  └─ CompoundIdentifier
    │              │     └─ Identifier: str
    │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: printf
       │        └─ Arguments
       │           └─ Expression

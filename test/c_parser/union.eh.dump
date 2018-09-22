@@ -6,12 +6,12 @@
       │  └─ Fields
       │     ├─ VariableDeclaration
       │     │  └─ Declaration
-      │     │     ├─ Symbol
+      │     │     ├─ CompoundIdentifier
       │     │     │  └─ Identifier: int32
       │     │     └─ Identifier: field1
       │     └─ VariableDeclaration
       │        └─ Declaration
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: str
       │           └─ Identifier: field2
       ├─ Union
@@ -19,7 +19,7 @@
       │  └─ Fields
       │     └─ VariableDeclaration
       │        └─ Declaration
-      │           ├─ Symbol
+      │           ├─ CompoundIdentifier
       │           │  └─ Identifier: int32
       │           └─ Identifier: field1
       └─ Alias
@@ -29,9 +29,9 @@
          │     └─ Fields
          │        └─ VariableDeclaration
          │           └─ Declaration
-         │              ├─ Symbol
+         │              ├─ CompoundIdentifier
          │              │  └─ Identifier: int32
          │              └─ Identifier: field1
          └─ To:
-            └─ Symbol
+            └─ CompoundIdentifier
                └─ Identifier: test_union_t

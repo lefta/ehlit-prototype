@@ -2,29 +2,29 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     ├─ Symbol
+   │     ├─ CompoundIdentifier
    │     │  └─ Identifier: int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
    │        │  └─ Declaration
-   │        │     ├─ Symbol
+   │        │     ├─ CompoundIdentifier
    │        │     │  └─ Identifier: int
    │        │     └─ Identifier: ac
    │        └─ VariableDeclaration
    │           └─ Declaration
    │              ├─ Array
-   │              │  └─ Symbol
+   │              │  └─ CompoundIdentifier
    │              │     └─ Identifier: str
    │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: int
       │        └─ Identifier: res
       ├─ ControlStructure: switch
-      │  ├─ Symbol
+      │  ├─ CompoundIdentifier
       │  │  └─ Identifier: ac
       │  └─ ControlStructureBody
       │     ├─ Case
@@ -35,7 +35,7 @@
       │     │  └─ Body
       │     │     └─ Statement
       │     │        └─ VariableAssignment
-      │     │           ├─ Symbol
+      │     │           ├─ CompoundIdentifier
       │     │           │  └─ Identifier: res
       │     │           └─ Assignment
       │     │              └─ Expression
@@ -49,7 +49,7 @@
       │     │  └─ Body
       │     │     └─ Statement
       │     │        └─ VariableAssignment
-      │     │           ├─ Symbol
+      │     │           ├─ CompoundIdentifier
       │     │           │  └─ Identifier: res
       │     │           └─ Assignment
       │     │              └─ Expression
@@ -62,7 +62,7 @@
       │     │  └─ Body
       │     │     └─ Statement
       │     │        └─ VariableAssignment
-      │     │           ├─ Symbol
+      │     │           ├─ CompoundIdentifier
       │     │           │  └─ Identifier: res
       │     │           └─ Assignment
       │     │              └─ Expression
@@ -76,7 +76,7 @@
       │     │  └─ Body
       │     │     └─ Statement
       │     │        └─ VariableAssignment
-      │     │           ├─ Symbol
+      │     │           ├─ CompoundIdentifier
       │     │           │  └─ Identifier: res
       │     │           └─ Assignment
       │     │              └─ Expression
@@ -89,7 +89,7 @@
       │     │  └─ Body
       │     │     └─ Statement
       │     │        └─ VariableAssignment
-      │     │           ├─ Symbol
+      │     │           ├─ CompoundIdentifier
       │     │           │  └─ Identifier: res
       │     │           └─ Assignment
       │     │              └─ Expression
@@ -102,7 +102,7 @@
       │     │  └─ Body
       │     │     └─ Statement
       │     │        └─ VariableAssignment
-      │     │           ├─ Symbol
+      │     │           ├─ CompoundIdentifier
       │     │           │  └─ Identifier: res
       │     │           └─ Assignment
       │     │              └─ Expression
@@ -115,7 +115,7 @@
       │        └─ Body
       │           └─ Statement
       │              └─ VariableAssignment
-      │                 ├─ Symbol
+      │                 ├─ CompoundIdentifier
       │                 │  └─ Identifier: res
       │                 └─ Assignment
       │                    └─ Expression

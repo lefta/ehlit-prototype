@@ -2,13 +2,13 @@
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
       │     └─ Assignment
@@ -17,12 +17,12 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: int
       │        └─ Identifier: j
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
@@ -30,25 +30,25 @@
       ├─ ConditionBranches
       │  └─ ControlStructure: if
       │     ├─ Expression
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: i
       │     │  ├─ Operator: /
       │     │  └─ Expression
       │     │     ├─ Number: 2
       │     │     ├─ Operator: ==
       │     │     └─ Expression
-      │     │        └─ Symbol
+      │     │        └─ CompoundIdentifier
       │     │           └─ Identifier: j
       │     └─ ControlStructureBody
       │        ├─ Statement
       │        │  └─ VariableDeclaration
       │        │     └─ Declaration
-      │        │        ├─ Symbol
+      │        │        ├─ CompoundIdentifier
       │        │        │  └─ Identifier: int
       │        │        └─ Identifier: k
       │        └─ Statement
       │           └─ VariableAssignment
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: k
       │              └─ Assignment
       │                 └─ Expression

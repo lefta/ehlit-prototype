@@ -4,7 +4,7 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  ├─ Modifiers: const
-│  │     │  └─ Symbol
+│  │     │  └─ CompoundIdentifier
 │  │     │     ├─ Modifiers: const
 │  │     │     └─ Identifier: int
 │  │     └─ Arguments:
@@ -12,7 +12,7 @@
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  ├─ Modifiers: const
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     ├─ Modifiers: const
 │  │              │     └─ Identifier: int
 │  │              └─ Identifier: i
@@ -21,19 +21,19 @@
 │        └─ Return
 │           └─ Expression
 │              └─ Reference
-│                 └─ Symbol
+│                 └─ CompoundIdentifier
 │                    └─ Identifier: i
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  ├─ Modifiers: const
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: i
@@ -45,7 +45,7 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  ├─ Modifiers: const
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     ├─ Modifiers: const
       │     │  │     └─ Identifier: int
       │     │  └─ Identifier: j
@@ -53,30 +53,30 @@
       │        └─ Expression
       │           └─ FunctionCall
       │              ├─ Reference
-      │              │  └─ Symbol
+      │              │  └─ CompoundIdentifier
       │              │     └─ Identifier: print_int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
-      │                       └─ Symbol
+      │                       └─ CompoundIdentifier
       │                          └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     ├─ Modifiers: const
       │     │  │     └─ Identifier: int
       │     │  └─ Identifier: k
       │     └─ Assignment
       │        └─ Expression
       │           └─ Reference
-      │              └─ Symbol
+      │              └─ CompoundIdentifier
       │                 └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: l
       │     └─ Assignment
@@ -87,13 +87,13 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  ├─ Modifiers: const
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     └─ Identifier: int
       │     │  └─ Identifier: m
       │     └─ Assignment
       │        └─ Expression
       │           └─ Reference
-      │              └─ Symbol
+      │              └─ CompoundIdentifier
       │                 └─ Identifier: l
       └─ Statement
          └─ Return

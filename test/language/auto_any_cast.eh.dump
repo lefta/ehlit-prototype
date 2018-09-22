@@ -2,66 +2,66 @@
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: returning_any
 │  │  └─ FunctionType
-│  │     ├─ Symbol
+│  │     ├─ CompoundIdentifier
 │  │     │  └─ Identifier: any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
-│  │              ├─ Symbol
+│  │              ├─ CompoundIdentifier
 │  │              │  └─ Identifier: any
 │  │              └─ Identifier: data
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
-│              └─ Symbol
+│              └─ CompoundIdentifier
 │                 └─ Identifier: data
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: same_with_ref_any
 │  │  └─ FunctionType
 │  │     ├─ Reference
-│  │     │  └─ Symbol
+│  │     │  └─ CompoundIdentifier
 │  │     │     └─ Identifier: any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
-│  │              │  └─ Symbol
+│  │              │  └─ CompoundIdentifier
 │  │              │     └─ Identifier: any
 │  │              └─ Identifier: data
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableDeclaration
 │     │     ├─ Declaration
-│     │     │  ├─ Symbol
+│     │     │  ├─ CompoundIdentifier
 │     │     │  │  └─ Identifier: any
 │     │     │  └─ Identifier: dummy
 │     │     └─ Assignment
 │     │        └─ Expression
 │     │           └─ FunctionCall
-│     │              ├─ Symbol
+│     │              ├─ CompoundIdentifier
 │     │              │  └─ Identifier: returning_any
 │     │              └─ Arguments
 │     │                 └─ Expression
-│     │                    └─ Symbol
+│     │                    └─ CompoundIdentifier
 │     │                       └─ Identifier: data
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
-│              └─ Symbol
+│              └─ CompoundIdentifier
 │                 └─ Identifier: data
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
-   │     └─ Symbol
+   │     └─ CompoundIdentifier
    │        └─ Identifier: int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: number
       │     └─ Assignment
@@ -69,45 +69,45 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: number
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
-      │                       └─ Symbol
+      │                       └─ CompoundIdentifier
       │                          └─ Identifier: number
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: number2
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: number
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: str
       │     │  └─ Identifier: string
       │     └─ Assignment
@@ -115,338 +115,338 @@
       │           └─ String: Hello, World!
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: string
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
-      │              │  └─ Symbol
+      │              │  └─ CompoundIdentifier
       │              │     └─ Identifier: str
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: string
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: str
       │     │  └─ Identifier: string2
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
-      │              │  └─ Symbol
+      │              │  └─ CompoundIdentifier
       │              │     └─ Identifier: str
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: string
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
       │        ├─ Array
-      │        │  └─ Symbol
+      │        │  └─ CompoundIdentifier
       │        │     └─ Identifier: int
       │        └─ Identifier: array
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: array
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Array
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: array
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Array
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     └─ Identifier: int
       │     │  └─ Identifier: array2
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Array
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: array
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
       │     │  ├─ Expression
       │     │  │  └─ Number: 0
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: array
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ ArrayAccess
       │                       ├─ Expression
       │                       │  └─ Number: 0
-      │                       └─ Symbol
+      │                       └─ CompoundIdentifier
       │                          └─ Identifier: array
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ Symbol
+      │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: int
       │     │  └─ Identifier: array0
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ ArrayAccess
       │                       ├─ Expression
       │                       │  └─ Number: 0
-      │                       └─ Symbol
+      │                       └─ CompoundIdentifier
       │                          └─ Identifier: array
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     └─ Identifier: int
       │     │  └─ Identifier: rnb
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
-      │                       └─ Symbol
+      │                       └─ CompoundIdentifier
       │                          └─ Identifier: number
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: rnb
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: rnb
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  └─ Reference
-      │     │  │     └─ Symbol
+      │     │  │     └─ CompoundIdentifier
       │     │  │        └─ Identifier: int
       │     │  └─ Identifier: rrnb
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ Reference
-      │              │        └─ Symbol
+      │              │        └─ CompoundIdentifier
       │              │           └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
       │                       └─ Reference
-      │                          └─ Symbol
+      │                          └─ CompoundIdentifier
       │                             └─ Identifier: rnb
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: rrnb
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: rrnb
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
       │     │  └─ Reference
-      │     │     └─ Symbol
+      │     │     └─ CompoundIdentifier
       │     │        └─ Identifier: rrnb
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ Reference
-      │              │        └─ Symbol
+      │              │        └─ CompoundIdentifier
       │              │           └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
       │                       └─ Reference
-      │                          └─ Symbol
+      │                          └─ CompoundIdentifier
       │                             └─ Identifier: rrnb
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
-      │     │  └─ Symbol
+      │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: rnb
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: same_with_ref_any
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ Reference
-      │              │        └─ Symbol
+      │              │        └─ CompoundIdentifier
       │              │           └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: rnb
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
       │     │  └─ Reference
-      │     │     └─ Symbol
+      │     │     └─ CompoundIdentifier
       │     │        └─ Identifier: rrnb
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: same_with_ref_any
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ Reference
-      │              │        └─ Symbol
+      │              │        └─ CompoundIdentifier
       │              │           └─ Identifier: int
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: rrnb
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
-      │     │  │  └─ Symbol
+      │     │  │  └─ CompoundIdentifier
       │     │  │     └─ Identifier: str
       │     │  └─ Identifier: rstring
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: same_with_ref_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: str
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: string
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: string
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: same_with_ref_any
       │              ├─ Automatic cast
       │              │  └─ Reference
-      │              │     └─ Symbol
+      │              │     └─ CompoundIdentifier
       │              │        └─ Identifier: str
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: rstring
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: any
       │        └─ Identifier: a1
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
-      │        ├─ Symbol
+      │        ├─ CompoundIdentifier
       │        │  └─ Identifier: any
       │        └─ Identifier: a2
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: a1
       │     └─ Assignment
       │        └─ Expression
-      │           └─ Symbol
+      │           └─ CompoundIdentifier
       │              └─ Identifier: a2
       ├─ Statement
       │  └─ VariableAssignment
-      │     ├─ Symbol
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: a1
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
-      │              ├─ Symbol
+      │              ├─ CompoundIdentifier
       │              │  └─ Identifier: returning_any
       │              └─ Arguments
       │                 └─ Expression
-      │                    └─ Symbol
+      │                    └─ CompoundIdentifier
       │                       └─ Identifier: a2
       └─ Statement
          └─ Return
