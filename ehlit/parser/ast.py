@@ -520,11 +520,11 @@ class Reference(Value, Type):
     return self.child.any_memory_offset
 
 class FunctionType(Type, DeclarationBase):
-  def __init__(self, ret: Type, args: List['VariableDeclaration'],
+  def __init__(self, ret: 'CompoundIdentifier', args: List['VariableDeclaration'],
                is_variadic: bool =False) -> None:
     super().__init__()
     self.args: List['VariableDeclaration'] = args
-    self.ret: Type = ret
+    self.ret: CompoundIdentifier = ret
     self.is_variadic: bool = is_variadic
 
   def build(self, parent: Node) -> None:
