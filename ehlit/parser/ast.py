@@ -278,8 +278,6 @@ class Value(Node):
     '''
     target_ref_count: int = source.ref_offset
     res: 'Type' = target.typ.from_any()
-    # print('target', target.typ)
-    # print('in', res)
     if is_casting:
       # We align the result to match the ref offset of the target
       if not target.is_type:
@@ -304,7 +302,6 @@ class Value(Node):
       while target_ref_count > 0:
         res = Reference(res)
         target_ref_count -= 1
-    # print('out', res)
     return res
 
   def auto_cast(self, target: 'Type') -> None:
