@@ -76,6 +76,23 @@
       │                 └─ Expression
       │                    └─ Symbol
       │                       └─ Identifier: av
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ Symbol
+      │     │  │  └─ Identifier: char
+      │     │  └─ Identifier: c
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ ArrayAccess
+      │              ├─ Expression
+      │              │  └─ Number: 0
+      │              └─ Cast
+      │                 ├─ Symbol
+      │                 │  └─ Identifier: str
+      │                 └─ Expression
+      │                    └─ Symbol
+      │                       └─ Identifier: ac
       └─ Statement
          └─ Return
             └─ Expression

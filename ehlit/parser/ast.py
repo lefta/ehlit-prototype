@@ -952,6 +952,10 @@ class Symbol(Value, Type):
   def any_memory_offset(self):
     return self.elems[-1].typ.any_memory_offset
 
+  @property
+  def child(self) -> Type:
+    return self.typ.child
+
   def find_declaration_for(self, identifier: Identifier) -> DeclarationLookup:
     i: int = 0
     while i < len(self.elems):
