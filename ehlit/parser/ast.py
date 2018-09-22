@@ -1069,9 +1069,9 @@ class Sizeof(Value):
     return BuiltinType.make(self, 'size')
 
 class Alias(Type, DeclarationBase):
-  def __init__(self, src: Identifier, dst: CompoundIdentifier) -> None:
-    self.src: Identifier = src
-    self.dst: CompoundIdentifier = dst
+  def __init__(self, src: CompoundIdentifier, dst: Identifier) -> None:
+    self.src: CompoundIdentifier = src
+    self.dst: Identifier = dst
 
   def build(self, parent: Node) -> None:
     super().build(parent)

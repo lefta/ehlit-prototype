@@ -10,8 +10,7 @@
       │  │        └─ CompoundIdentifier
       │  │           └─ Identifier: int32
       │  └─ To:
-      │     └─ CompoundIdentifier
-      │        └─ Identifier: fun
+      │     └─ Identifier: fun
       └─ FunctionDeclaration
          ├─ Identifier: fun2
          └─ FunctionType

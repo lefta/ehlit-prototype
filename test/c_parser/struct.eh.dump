@@ -33,8 +33,7 @@
       │  │              │  └─ Identifier: int32
       │  │              └─ Identifier: field1
       │  └─ To:
-      │     └─ CompoundIdentifier
-      │        └─ Identifier: test_struct_t
+      │     └─ Identifier: test_struct_t
       └─ Struct
          ├─ Identifier: linked_list
          └─ Fields

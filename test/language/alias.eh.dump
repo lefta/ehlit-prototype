@@ -3,15 +3,13 @@
 │  │  └─ CompoundIdentifier
 │  │     └─ Identifier: int
 │  └─ To:
-│     └─ CompoundIdentifier
-│        └─ Identifier: nb
+│     └─ Identifier: nb
 ├─ Alias
 │  ├─ From:
 │  │  └─ CompoundIdentifier
 │  │     └─ Identifier: void
 │  └─ To:
-│     └─ CompoundIdentifier
-│        └─ Identifier: nothing
+│     └─ Identifier: nothing
 ├─ Alias
 │  ├─ From:
 │  │  └─ FunctionType
@@ -22,8 +20,7 @@
 │  │           └─ CompoundIdentifier
 │  │              └─ Identifier: nb
 │  └─ To:
-│     └─ CompoundIdentifier
-│        └─ Identifier: pfn
+│     └─ Identifier: pfn
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: inc
@@ -82,8 +79,7 @@
       │  │  └─ CompoundIdentifier
       │  │     └─ Identifier: do_nothing
       │  └─ To:
-      │     └─ CompoundIdentifier
-      │        └─ Identifier: dn
+      │     └─ Identifier: dn
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration

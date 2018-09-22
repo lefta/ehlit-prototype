@@ -284,7 +284,7 @@ def import_instruction():
 ######
 
 def alias():
-  return 'alias', full_type, compound_identifier
+  return 'alias', full_type, identifier
 
 # Container structures
 ######################
