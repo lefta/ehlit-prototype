@@ -29,7 +29,6 @@ from ehlit.parser import ast
 from typing import List, Optional
 
 include_dirs: List[str] = []
-gparent: Optional[ast.Node] = None
 
 # Add CFLAGS environment variable include dirs
 parser = ArgumentParser()
@@ -108,17 +107,16 @@ int_types = {
 }
 
 def type_to_ehlit(typ):
-  assert gparent is not None
   if typ.kind.name in uint_types:
-    return ast.BuiltinType.make(gparent, 'uint' + str(typ.get_size() * 8))
+    return ast.Symbol([ast.Identifier(0, 'uint' + str(typ.get_size() * 8))])
   if typ.kind.name in int_types:
-    return ast.BuiltinType.make(gparent, 'int' + str(typ.get_size() * 8))
+    return ast.Symbol([ast.Identifier(0, 'int' + str(typ.get_size() * 8))])
 
   try:
     return globals()['type_' + typ.kind.name](typ)
   except KeyError:
     logging.debug('c_compat: unimplemented: type_%s' % typ.kind.name)
-  return ast.BuiltinType.make(gparent, 'any')
+  return ast.Symbol([ast.Identifier(0, 'any')])
 
 def value_to_ehlit(val, typ):
   if typ.kind.name in uint_types or typ.kind.name in int_types:
@@ -138,10 +136,7 @@ def find_file_in_path(filename):
   raise ParseError([Failure(ParseError.Severity.Error, 0,
     '%s: no such file or directory' % filename, None)])
 
-def parse_header(filename, parent):
-  global gparent
-  gparent = parent
-
+def parse_header(filename):
   path = find_file_in_path(filename)
   index = Index.create()
   try:
@@ -227,16 +222,14 @@ def parse_UNION_DECL(cursor):
 
 
 def type_VOID(typ):
-  assert gparent is not None
-  return ast.BuiltinType.make(gparent, 'void')
+  return ast.Symbol([ast.Identifier(0, 'void')])
 
 def type_POINTER(typ):
-  assert gparent is not None
   subtype = typ.get_pointee()
   builtin_type = {
-    TypeKind.CHAR_S: ast.BuiltinType.make(gparent, 'str'),
-    TypeKind.SCHAR: ast.BuiltinType.make(gparent, 'str'),
-    TypeKind.VOID: ast.BuiltinType.make(gparent, 'any')
+    TypeKind.CHAR_S: ast.Symbol([ast.Identifier(0, 'str')]),
+    TypeKind.SCHAR: ast.Symbol([ast.Identifier(0, 'str')]),
+    TypeKind.VOID: ast.Symbol([ast.Identifier(0, 'any')])
   }.get(subtype.kind)
   if builtin_type is not None:
     return builtin_type

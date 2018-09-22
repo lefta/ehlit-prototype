@@ -230,7 +230,7 @@ class Include(GenericExternInclusion):
     @return @b List[Node] A list of the imported nodes.
     '''
     from ehlit.parser import c_compat
-    return c_compat.parse_header(self.lib, self)
+    return c_compat.parse_header(self.lib)
 
 class Value(Node):
   '''! Base for all nodes representing a value. '''
