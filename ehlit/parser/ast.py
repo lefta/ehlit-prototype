@@ -137,6 +137,11 @@ class Node:
     '''! @c property @b List[str] The list of paths to be looked up when importing a module. '''
     return self.parent.import_paths
 
+  def is_child_of(self, cls: Any) -> bool:
+    '''! Check if this node is a descendant of some node type
+    @param cls @b Class The class to check for
+    '''
+    return type(self) is cls or self.parent.is_child_of(cls)
 
 class GenericExternInclusion(Node):
   '''! Base for include and import defining shared behaviors '''
@@ -634,6 +639,8 @@ class FunctionDefinition(FunctionDeclaration):
   def build(self, parent: Node) -> None:
     from ehlit.parser.parse import parse_function
     super().build(parent)
+    if self.is_child_of(Import):
+      return
     try:
       assert isinstance(self.typ, FunctionType)
       typ: Type = self.typ.ret
@@ -1203,3 +1210,6 @@ class AST(Node):
   @property
   def import_paths(self) -> List[str]:
     return self._import_paths
+
+  def is_child_of(self, cls) -> bool:
+    return False
