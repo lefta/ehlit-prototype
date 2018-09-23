@@ -182,11 +182,11 @@ def parse_FUNCTION_DECL(cursor):
       args.append(ast.VariableDeclaration(type_to_ehlit(c.type), ast.Identifier(0, c.spelling)))
 
   return ast.FunctionDeclaration(
-    ast.FunctionType(
+    ast.TemplatedIdentifier('func', [ast.FunctionType(
       type_to_ehlit(cursor.type.get_result()),
       args,
       cursor.type.is_function_variadic()
-    ),
+    )]),
     ast.Identifier(0, cursor.spelling)
   )
 
@@ -234,7 +234,7 @@ def type_POINTER(typ):
   if builtin_type is not None:
     return builtin_type
   res = type_to_ehlit(subtype)
-  if type(res) == ast.FunctionType:
+  if type(res) is ast.TemplatedIdentifier and res.name == 'func':
     return res
   return ast.Reference(res)
 
@@ -274,7 +274,7 @@ def type_FUNCTIONPROTO(typ):
   args = []
   for a in typ.argument_types():
     args.append(type_to_ehlit(a))
-  return ast.FunctionType(type_to_ehlit(typ.get_result()), args)
+  return ast.TemplatedIdentifier('func', [ast.FunctionType(type_to_ehlit(typ.get_result()), args)])
 
 def type_UNEXPOSED(typ):
   return type_to_ehlit(typ.get_canonical())

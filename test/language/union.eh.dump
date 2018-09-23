@@ -205,15 +205,17 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ FunctionType
-      │     │  │  ├─ Reference
-      │     │  │  │  └─ CompoundIdentifier
-      │     │  │  │     └─ Identifier: test_union
-      │     │  │  └─ Arguments:
-      │     │  │     └─ Declaration
-      │     │  │        └─ Reference
-      │     │  │           └─ CompoundIdentifier
-      │     │  │              └─ Identifier: test_union
+      │     │  ├─ TemplatedIdentifier: func
+      │     │  │  └─ Types
+      │     │  │     └─ FunctionType
+      │     │  │        ├─ Reference
+      │     │  │        │  └─ CompoundIdentifier
+      │     │  │        │     └─ Identifier: test_union
+      │     │  │        └─ Arguments:
+      │     │  │           └─ Declaration
+      │     │  │              └─ Reference
+      │     │  │                 └─ CompoundIdentifier
+      │     │  │                    └─ Identifier: test_union
       │     │  └─ Identifier: psf
       │     └─ Assignment
       │        └─ Expression

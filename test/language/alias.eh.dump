@@ -12,13 +12,15 @@
 │     └─ Identifier: nothing
 ├─ Alias
 │  ├─ From:
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
-│  │     └─ Arguments:
-│  │        └─ Declaration
-│  │           └─ CompoundIdentifier
-│  │              └─ Identifier: nb
+│  │  └─ TemplatedIdentifier: func
+│  │     └─ Types
+│  │        └─ FunctionType
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: void
+│  │           └─ Arguments:
+│  │              └─ Declaration
+│  │                 └─ CompoundIdentifier
+│  │                    └─ Identifier: nb
 │  └─ To:
 │     └─ Identifier: pfn
 ├─ FunctionDefinition

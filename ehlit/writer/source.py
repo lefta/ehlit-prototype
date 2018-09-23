@@ -20,8 +20,9 @@
 # SOFTWARE.
 
 import sys
-from ehlit.parser.ast import (Symbol, Reference, Array, ArrayAccess, BuiltinType, FunctionType,
-  FunctionDeclaration, FunctionDefinition, FunctionCall, CompoundIdentifier, Struct, EhUnion, Alias)
+from ehlit.parser.ast import (Symbol, Reference, Array, ArrayAccess, BuiltinType,
+  FunctionDeclaration, FunctionDefinition, FunctionCall, CompoundIdentifier, Struct, EhUnion, Alias,
+  TemplatedIdentifier)
 
 class SourceWriter:
   def __init__(self, ast, f):
@@ -134,13 +135,13 @@ class SourceWriter:
 
   def write_declaration_post(self, node):
     typ = type(node)
-    if typ is FunctionType:
+    if typ is TemplatedIdentifier and node.name == 'func':
       self.file.write(')(')
       i = 0
-      while i < len(node.args):
+      while i < len(node.typ.args):
         if i is not 0:
           self.file.write(', ')
-        self.write(node.args[i])
+        self.write(node.typ.args[i])
         i += 1
       self.file.write(')')
     elif typ is Array or typ is Reference:
@@ -431,6 +432,9 @@ class SourceWriter:
         self.file.write(decl.name)
     else:
       self.file.write(node.name)
+
+  def writeTemplatedIdentifier(self, node):
+    self.write(node.typ)
 
   def writeChar(self, c):
     self.file.write('\'')

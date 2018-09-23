@@ -87,7 +87,6 @@ class ImportWriter:
     self.write(node.child)
 
   def writeFunctionType(self, node):
-    self.file.write('func<')
     self.write(node.ret)
     self.file.write('(')
     i = 0
@@ -96,7 +95,7 @@ class ImportWriter:
         self.file.write(', ')
       self.write(node.args[i])
       i += 1
-    self.file.write(')>')
+    self.file.write(')')
 
   def writeAssignment(self, node):
     self.file.write(' ')
@@ -115,6 +114,15 @@ class ImportWriter:
 
   def writeIdentifier(self, node):
     self.file.write(node.name)
+
+  def writeTemplatedIdentifier(self, node):
+    self.file.write(node.name)
+    self.file.write('<')
+    for t in node.types:
+      self.write(t)
+      if t is not node.types[-1]:
+        self.file.write(', ')
+    self.file.write('>')
 
   def writeNumber(self, node):
     self.file.write(node.num)

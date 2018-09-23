@@ -250,6 +250,11 @@ class DumpWriter:
     self.dump('Identifier: ' + node.name)
 
   @indent
+  def dumpTemplatedIdentifier(self, node):
+    self.dump('TemplatedIdentifier: ' + node.name)
+    self.print_node_list('Types', node.types, False)
+
+  @indent
   def dumpNumber(self, num):
     self.dump('Number: ' + num.num)
 

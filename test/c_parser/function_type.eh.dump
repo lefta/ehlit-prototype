@@ -3,12 +3,14 @@
    └─ Symbols found
       ├─ Alias
       │  ├─ From:
-      │  │  └─ FunctionType
-      │  │     ├─ CompoundIdentifier
-      │  │     │  └─ Identifier: str
-      │  │     └─ Arguments:
-      │  │        └─ CompoundIdentifier
-      │  │           └─ Identifier: int32
+      │  │  └─ TemplatedIdentifier: func
+      │  │     └─ Types
+      │  │        └─ FunctionType
+      │  │           ├─ CompoundIdentifier
+      │  │           │  └─ Identifier: str
+      │  │           └─ Arguments:
+      │  │              └─ CompoundIdentifier
+      │  │                 └─ Identifier: int32
       │  └─ To:
       │     └─ Identifier: fun
       └─ FunctionDeclaration
@@ -19,10 +21,12 @@
             └─ Arguments:
                └─ VariableDeclaration
                   └─ Declaration
-                     ├─ FunctionType
-                     │  ├─ CompoundIdentifier
-                     │  │  └─ Identifier: str
-                     │  └─ Arguments:
-                     │     └─ CompoundIdentifier
-                     │        └─ Identifier: int32
+                     ├─ TemplatedIdentifier: func
+                     │  └─ Types
+                     │     └─ FunctionType
+                     │        ├─ CompoundIdentifier
+                     │        │  └─ Identifier: str
+                     │        └─ Arguments:
+                     │           └─ CompoundIdentifier
+                     │              └─ Identifier: int32
                      └─ Identifier: param

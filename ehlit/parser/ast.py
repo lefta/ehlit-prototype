@@ -475,6 +475,9 @@ class Array(Type, DeclarationBase):
   def any_memory_offset(self) -> int:
     return 0
 
+  def solve(self) -> Type:
+    return self
+
 class Reference(Value, Type):
   def __init__(self, child: Union[Value, Type]) -> None:
     self.child: Union[Value, Type] = child
@@ -625,18 +628,15 @@ class VariableDeclaration(Declaration):
       self.assign.expr.auto_cast(self.typ)
 
 class FunctionDeclaration(Declaration):
-  def __init__(self, typ: FunctionType, sym: 'Identifier') -> None:
-    super().__init__(typ, sym)
-
   def get_declaration(self, sym: List[str]) -> DeclarationLookup:
     decl, err = super().get_declaration(sym)
     if decl is not None or err is not None:
       return decl, err
-    assert isinstance(self.typ, FunctionType)
-    for a in self.typ.args:
-      decl, err = a.get_declaration(sym)
-      if decl is not None or err is not None:
-        return decl, err
+    if isinstance(self.typ, FunctionType):
+      for a in self.typ.args:
+        decl, err = a.get_declaration(sym)
+        if decl is not None or err is not None:
+          return decl, err
     return None, None
 
 class FunctionDefinition(FunctionDeclaration):
@@ -731,27 +731,28 @@ class FunctionCall(Value):
         self.error(self.pos, 'too many values for cast expression')
     elif self.sym.decl is not None:
       assert isinstance(self.sym.decl, Declaration)
-      if not isinstance(self.sym.decl.typ, FunctionType):
+      typ = self.sym.decl.typ_src.solve()
+      if not isinstance(typ, FunctionType):
         self.error(self.pos, "calling non function type {}".format(self.sym.repr))
         return
-      diff = len(self.args) - len(self.sym.decl.typ.args)
+      diff = len(self.args) - len(typ.args)
       i = 0
-      while i < len(self.sym.decl.typ.args):
+      while i < len(typ.args):
         if i >= len(self.args):
-          assign: Optional[Assignment] = self.sym.decl.typ.args[i].assign
+          assign: Optional[Assignment] = typ.args[i].assign
           if assign is not None:
             self.args.append(assign.expr)
             diff += 1
           else:
             break
         i += 1
-      if diff < 0 or (diff > 0 and not self.sym.decl.typ.is_variadic):
+      if diff < 0 or (diff > 0 and not typ.is_variadic):
         self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(
-          'not enough' if diff < 0 else 'too many', self.sym.repr, len(self.sym.decl.typ.args),
+          'not enough' if diff < 0 else 'too many', self.sym.repr, len(typ.args),
           len(self.args)))
       i = 0
-      while i < len(self.args) and i < len(self.sym.decl.typ.args):
-        self.args[i].auto_cast(self.sym.decl.typ.args[i].typ)
+      while i < len(self.args) and i < len(typ.args):
+        self.args[i].auto_cast(typ.args[i].typ)
         i += 1
 
   @property
@@ -977,6 +978,29 @@ class CompoundIdentifier(Symbol):
       i += 1
     assert False, "This code may not be reached"
     return None, None
+
+class TemplatedIdentifier(Symbol):
+  def __init__(self, name: str, types: List[Union[Symbol, Type]]) -> None:
+    self.name: str = name
+    self.types: List[Union[Symbol, Type]] = types
+    super().__init__()
+
+  def build(self, parent: Node) -> None:
+    super().build(parent)
+    for t in self.types:
+      t.build(self)
+
+  @property
+  def decl(self) -> Optional[DeclarationBase]:
+    return self.types[0]
+
+  @property
+  def typ(self) -> Type:
+    return self.types[0]
+
+  @property
+  def repr(self) -> str:
+    return '{}<>'.format(self.name)
 
 class String(Value):
   def __init__(self, string: str) -> None:

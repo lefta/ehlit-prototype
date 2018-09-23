@@ -205,15 +205,17 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ FunctionType
-      │     │  │  ├─ Reference
-      │     │  │  │  └─ CompoundIdentifier
-      │     │  │  │     └─ Identifier: test_struct
-      │     │  │  └─ Arguments:
-      │     │  │     └─ Declaration
-      │     │  │        └─ Reference
-      │     │  │           └─ CompoundIdentifier
-      │     │  │              └─ Identifier: test_struct
+      │     │  ├─ TemplatedIdentifier: func
+      │     │  │  └─ Types
+      │     │  │     └─ FunctionType
+      │     │  │        ├─ Reference
+      │     │  │        │  └─ CompoundIdentifier
+      │     │  │        │     └─ Identifier: test_struct
+      │     │  │        └─ Arguments:
+      │     │  │           └─ Declaration
+      │     │  │              └─ Reference
+      │     │  │                 └─ CompoundIdentifier
+      │     │  │                    └─ Identifier: test_struct
       │     │  └─ Identifier: psf
       │     └─ Assignment
       │        └─ Expression

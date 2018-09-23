@@ -183,9 +183,10 @@ class ASTBuilder(PTNodeVisitor):
     return res
 
   def visit_function_type(self, node, children):
-    if len(children) is 2:  # No arguments
-      return ast.FunctionType(children[1], [])
-    return ast.FunctionType(children[1], children[2])
+    return ast.TemplatedIdentifier('func', [ast.FunctionType(
+      children[1],
+      [] if len(children) is 2 else children[2]
+    )])
 
   def visit_full_type(self, node, children):
     mods = 0
@@ -308,7 +309,7 @@ class ASTBuilder(PTNodeVisitor):
     while i < len(children):
       args.append(children[i])
       i += 2
-    return ast.FunctionType(children[0], args), children[1]
+    return ast.TemplatedIdentifier('func', [ast.FunctionType(children[0], args)]), children[1]
 
   def visit_function_declaration(self, node, children):
     return ast.FunctionDeclaration(*children[0])
