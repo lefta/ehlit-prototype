@@ -75,7 +75,10 @@ class SourceWriter:
       i += 1
 
   def write_value(self, node):
-    if isinstance(node.decl, FunctionDeclaration) and not isinstance(node, FunctionCall):
+    decl = node.decl
+    if type(node.decl) is Alias:
+      decl = decl.solve()
+    if isinstance(decl, FunctionDeclaration) and not isinstance(node, FunctionCall):
       parent = node.parent
       while type(parent) is Reference or type(parent) is CompoundIdentifier:
         parent = parent.parent
