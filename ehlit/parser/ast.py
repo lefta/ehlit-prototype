@@ -1119,28 +1119,41 @@ class Sizeof(Value):
     return BuiltinType.make(self, 'size')
 
 class Alias(Symbol, DeclarationBase):
-  def __init__(self, src: Symbol, dst: Identifier) -> None:
-    self.src: Symbol = src
+  def __init__(self, src: Union[Symbol, DeclarationBase], dst: Identifier) -> None:
+    self.src_sym: Union[Symbol, DeclarationBase] = src
+    self.src: Optional[DeclarationBase] = None
     self.dst: Identifier = dst
 
   def build(self, parent: Node) -> None:
     super().build(parent)
-    self.src.build(self)
+    self.src_sym.build(self)
+    if isinstance(self.src_sym, Symbol):
+      self.src = self.src_sym.solve()
+    else:
+      self.src = self.src_sym
 
   @property
   def typ(self) -> Type:
+    if self.src is None:
+      return BuiltinType.make(self, 'any')
     return self.src.typ
 
   @property
   def repr(self) -> str:
-    return self.src.repr
+    if isinstance(self.src_sym, DeclarationBase):
+      return self.src_sym.name
+    return self.src_sym.repr
 
   @property
   def name(self) -> str:
+    if self.src is None:
+      return ''
     return self.dst.name
 
   @property
   def is_type(self) -> bool:
+    if self.src is None:
+      return False
     return self.src.is_type
 
   @property
@@ -1153,7 +1166,7 @@ class Alias(Symbol, DeclarationBase):
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
-    return self.src if self.src.is_declaration() else self.src.decl
+    return self.src
 
 class ContainerStructure(Type, DeclarationBase, Scope):
   def __init__(self, pos: int, sym: Identifier,

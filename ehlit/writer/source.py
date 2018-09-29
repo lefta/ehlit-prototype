@@ -479,10 +479,10 @@ class SourceWriter:
   def writeAlias(self, node):
     if node.src.is_type:
       self.file.write('typedef ')
-      self.write(node.src)
+      self.write(node.src_sym)
       self.file.write(' ')
       self.write(node.dst)
-      self.write_declaration_post(node.src)
+      self.write_declaration_post(node.src_sym)
       self.file.write(';\n')
 
   def writeContainerStructure(self, node):

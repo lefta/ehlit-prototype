@@ -129,7 +129,7 @@ class ImportWriter:
 
   def writeAlias(self, node):
     self.file.write('alias ')
-    self.write(node.src)
+    self.write(node.src_sym)
     self.file.write(' ')
     self.write(node.dst)
     self.file.write('\n')

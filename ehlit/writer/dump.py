@@ -296,7 +296,7 @@ class DumpWriter:
     self.dump('Alias')
     self.print_str('From:')
     self.increment_prefix(True)
-    self.print_node(node.src, False)
+    self.print_node(node.src_sym, False)
     self.decrement_prefix()
     self.print_str('To:', False)
     self.increment_prefix(False)
