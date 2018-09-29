@@ -29,8 +29,8 @@ class TestTypings(TestCase):
     chdir('..')
 
   def test_typings(self):
-    out, errs, res = mypy.api.run(['ehlit', '--ignore-missing-imports', '--check-untyped-defs'])
     environ['MYPYPATH'] = 'mypy'
+    out, errs, res = mypy.api.run(['ehlit', '--check-untyped-defs'])
     self.assertEqual(errs, '')
     self.assertEqual(out, '')
     self.assertEqual(res, 0)
