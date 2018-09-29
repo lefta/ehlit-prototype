@@ -377,7 +377,7 @@ class DeclarationBase(Node):
     super().build(parent)
     parent.declare(self)
 
-  def get_declaration(self, sym: List[str]):
+  def get_declaration(self, sym: List[str]) -> DeclarationLookup:
     if self.name == sym[0]:
       return self.declaration_match(sym)
     return None, None
@@ -503,7 +503,7 @@ class Array(Type, DeclarationBase):
     self.child: Optional[Type] = child
     self.length: Optional[Node] = length
 
-  def build(self, parent: Node):
+  def build(self, parent: Node) -> None:
     assert self.child is not None
     super().build(parent)
     self.child.build(self)
@@ -615,7 +615,7 @@ class Operator(Node):
   def __init__(self, op: str) -> None:
     self.op: str = op
 
-  def auto_cast(self, target: Type):
+  def auto_cast(self, target: Type) -> None:
     pass
 
 class VariableAssignment(Node):
@@ -641,7 +641,7 @@ class Assignment(Node):
 class Declaration(DeclarationBase):
   def __init__(self, typ: Type, sym: Optional['Identifier']) -> None:
     super().__init__(0)
-    self._typ = typ
+    self._typ: Type = typ
     self.typ_src: Type = typ
     self.sym: Optional['Identifier'] = sym
 
@@ -883,7 +883,7 @@ class SwitchCaseBody(Scope):
     self.block: bool = block
     self.fallthrough: bool = fallthrough
 
-  def build(self, parent):
+  def build(self, parent: Node) -> None:
     super().build(parent)
     for i in self.contents:
       i.build(self)
@@ -982,7 +982,7 @@ class CompoundIdentifier(Symbol):
     return self.elems[-1].from_any()
 
   @property
-  def any_memory_offset(self):
+  def any_memory_offset(self) -> int:
     return self.elems[-1].typ.any_memory_offset
 
   @property
