@@ -20,8 +20,36 @@
 # SOFTWARE.
 
 from arpeggio import PTNodeVisitor
+from typing import Optional, Union
 
 from ehlit.parser import ast
+
+class ArrayBuilder:
+  def __init__(self, child: Optional[Union[ast.Node, 'ArrayBuilder']],
+               param: Optional[ast.Node]) -> None:
+    self.child: Optional[Union[ast.Node, ArrayBuilder]] = child
+    self.param: Optional[ast.Node] = param
+
+  def set_child(self, child: ast.Node) -> None:
+    if self.child is None:
+      self.child = child
+    else:
+      assert isinstance(self.child, ArrayBuilder)
+      self.child.set_child(child)
+
+  def to_array(self) -> ast.Array:
+    if isinstance(self.child, ArrayBuilder):
+      self.child = self.child.to_array()
+    assert isinstance(self.child, ast.Type)
+    return ast.Array(self.child, self.param)
+
+  def to_array_access(self) -> ast.ArrayAccess:
+    if isinstance(self.child, ArrayBuilder):
+      self.child = self.child.to_array_access()
+    assert self.child is not None
+    assert isinstance(self.param, ast.Expression)
+    return ast.ArrayAccess(self.child, self.param)
+
 
 class ASTBuilder(PTNodeVisitor):
   # Comments
@@ -81,18 +109,15 @@ class ASTBuilder(PTNodeVisitor):
     res = None
     i = len(children) - 1
     while i >= 0:
-      res = ast.ArrayAccess(res, children[i])
+      res = ArrayBuilder(res, children[i])
       i -= 1
     return res
 
   def visit_value(self, node, children):
     if len(children) == 1:
       return children[0]
-    arr = res = children[1]
-    while arr.child is not None:
-      arr = arr.child
-    arr.child = children[0]
-    return res
+    children[1].set_child(children[0])
+    return children[1].to_array_access()
 
   # Operators
   ###########
@@ -155,8 +180,8 @@ class ASTBuilder(PTNodeVisitor):
 
   def visit_array_element(self, node, children):
     if len(children) is 0:
-      return ast.Array(None, None)
-    return ast.Array(None, children[0])
+      return ArrayBuilder(None, None)
+    return ArrayBuilder(None, children[0])
 
   def visit_array(self, node, children):
     res = None
@@ -170,11 +195,8 @@ class ASTBuilder(PTNodeVisitor):
   def visit_reference(self, node, children):
     if len(children) == 2:
       return ast.Reference(children[1])
-    arr = children[1]
-    while arr.child is not None:
-      arr = arr.child
-    arr.child = ast.Reference(children[2])
-    return children[1]
+    children[1].set_child(ast.Reference(children[2]))
+    return children[1].to_array()
 
   def visit_function_type_args(self, node, children):
     res = []
@@ -194,14 +216,11 @@ class ASTBuilder(PTNodeVisitor):
     if len(children) > 0 and type(children[0]) is int:
       mods = children[0]
       i = 1
-    res = children[i]
     children[i].set_modifiers(mods)
     if len(children) == i + 2:
-      arr = res = children[i + 1]
-      while arr.child is not None:
-        arr = arr.child
-      arr.child = children[i]
-    return res
+      children[i + 1].set_child(children[i])
+      return children[i + 1].to_array()
+    return children[i]
 
   # Statements
   ############
@@ -217,11 +236,8 @@ class ASTBuilder(PTNodeVisitor):
   def visit_variable_assignment(self, node, children):
     if len(children) == 2:
       return ast.VariableAssignment(children[0], children[1])
-    arr = res = children[1]
-    while arr.child is not None:
-      arr = arr.child
-    arr.child = children[0]
-    return ast.VariableAssignment(res, children[2])
+    children[1].set_child(children[0])
+    return ast.VariableAssignment(children[1].to_array_access(), children[2])
 
   def visit_return_instruction(self, node, children):
     if len(children) is 0:

@@ -517,13 +517,12 @@ class BuiltinType(Type, DeclarationBase):
     return False
 
 class Array(Type, DeclarationBase):
-  def __init__(self, child: Optional[Type], length: Optional[Node]) -> None:
+  def __init__(self, child: Type, length: Optional[Node]) -> None:
     super().__init__()
     self.child: Optional[Type] = child
     self.length: Optional[Node] = length
 
   def build(self, parent: Node) -> 'Array':
-    assert self.child is not None
     super().build(parent)
     self.child = self.child.build(self)
     return self
@@ -836,13 +835,12 @@ class FunctionCall(Value):
       super().auto_cast(target)
 
 class ArrayAccess(Value):
-  def __init__(self, child: Optional[Node], idx: Expression) -> None:
+  def __init__(self, child: Node, idx: Expression) -> None:
     super().__init__()
-    self.child: Optional[Node] = child
+    self.child: Node = child
     self.idx: Expression = idx
 
   def build(self, parent: Node) -> 'ArrayAccess':
-    assert self.child is not None
     super().build(parent)
     self.child = self.child.build(self)
     self.idx = self.idx.build(self)
@@ -850,7 +848,6 @@ class ArrayAccess(Value):
 
   @property
   def typ(self) -> Type:
-    assert self.child is not None
     return self.child.typ.child
 
   @property
@@ -859,11 +856,9 @@ class ArrayAccess(Value):
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
-    assert self.child is not None
     return self.child.decl
 
   def from_any(self) -> Type:
-    assert self.child is not None
     return self.child.typ.from_any()
 
 class ControlStructure(Scope):
