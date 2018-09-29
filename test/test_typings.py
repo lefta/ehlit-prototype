@@ -21,7 +21,7 @@
 
 from unittest import TestCase
 import mypy.api
-from os import chdir
+from os import chdir, environ
 
 class TestTypings(TestCase):
   def setUp(self):
@@ -30,6 +30,7 @@ class TestTypings(TestCase):
 
   def test_typings(self):
     out, errs, res = mypy.api.run(['ehlit', '--ignore-missing-imports', '--check-untyped-defs'])
+    environ['MYPYPATH'] = 'mypy'
     self.assertEqual(errs, '')
     self.assertEqual(out, '')
     self.assertEqual(res, 0)
