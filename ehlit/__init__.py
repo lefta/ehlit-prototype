@@ -35,7 +35,7 @@ def build(args):
   ast = None
   try:
     ast = parse(args.source)
-    ast.build(args)
+    ast.build_ast(args)
   except ParseError as err:
     failure = err
 

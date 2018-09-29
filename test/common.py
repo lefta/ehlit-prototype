@@ -139,7 +139,7 @@ class EhlitTestCase(TestCase):
 				source = ''
 				output_import_file = '-'
 			ast = ehlit.parser.parse(src)
-			ast.build(args)
+			ast.build_ast(args)
 			ehlit.writer.WriteDump(ast)
 			self.logHandler.flush()
 			self.tearDown()

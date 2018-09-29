@@ -1,4 +1,4 @@
-from typing import Callable, Generic, List, TypeVar, Union
+from typing import Callable, Generic, List, Tuple, TypeVar, Union
 import typing
 import re
 
@@ -59,9 +59,12 @@ class Parser:
         pass
 
 class ParserPython(Parser):
+    file_name: str
     def __init__(self, fun: Callable[[], TokenType], debug: bool = True, **kwargs: bool) -> None:
         pass
     def parse_file(self, file_name: str) -> ParseTree:
+        pass
+    def pos_to_linecol(self, pos: int) -> Tuple[int, int]:
         pass
 
 class PTNodeVisitor(Generic[T]):

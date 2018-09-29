@@ -48,6 +48,7 @@ class ArrayBuilder:
       self.child = self.child.to_array_access()
     assert self.child is not None
     assert isinstance(self.param, ast.Expression)
+    assert isinstance(self.child, ast.Value)
     return ast.ArrayAccess(self.child, self.param)
 
 

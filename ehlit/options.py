@@ -22,6 +22,10 @@
 from argparse import ArgumentParser
 from os import path, makedirs
 
+class OptionsStruct:
+  output_import_file: str
+  source: str
+
 class ArgError(Exception):
   def __init__(self, msg):
     self.msg = msg

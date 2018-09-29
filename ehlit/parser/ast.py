@@ -20,10 +20,13 @@
 # SOFTWARE.
 
 from abc import abstractmethod
+from arpeggio import ParserPython
 from os import path, getcwd, listdir
-from typing import Any, List, Optional, Tuple, Union
+from typing import Iterable, List, Optional, Tuple, Union
+import typing
 import ehlit.parser.parse
 from ehlit.parser.error import ParseError, Failure
+from ehlit.options import OptionsStruct
 
 DeclarationLookup = Tuple[Optional['DeclarationBase'], Optional[str]]
 
@@ -128,7 +131,7 @@ class Node:
     '''! @c property @b List[str] The list of paths to be looked up when importing a module. '''
     return self.parent.import_paths
 
-  def is_child_of(self, cls: Any) -> bool:
+  def is_child_of(self, cls: typing.Type['Node']) -> bool:
     '''! Check if this node is a descendant of some node type
     @param cls @b Class The class to check for
     '''
@@ -379,7 +382,7 @@ class Value(Node):
       self.ref_offset = src.ref_offset - target_ref_level
 
 class DeclarationBase(Node):
-  def build(self, parent: Node) -> 'DeclarationBase':
+  def build(self, parent: Node) -> 'Node':
     super().build(parent)
     parent.declare(self)
     return self
@@ -519,7 +522,7 @@ class BuiltinType(Type, DeclarationBase):
 class Array(Type, DeclarationBase):
   def __init__(self, child: Type, length: Optional[Node]) -> None:
     super().__init__()
-    self.child: Optional[Type] = child
+    self.child: Type = child
     self.length: Optional[Node] = length
 
   def build(self, parent: Node) -> 'Array':
@@ -662,10 +665,10 @@ class Assignment(Node):
     return self
 
 class Declaration(DeclarationBase):
-  def __init__(self, typ: Type, sym: Optional['Identifier']) -> None:
+  def __init__(self, typ: Symbol, sym: Optional['Identifier']) -> None:
     super().__init__(0)
     self._typ: Type = typ
-    self.typ_src: Type = typ
+    self.typ_src: Symbol = typ
     self.sym: Optional['Identifier'] = sym
 
   def build(self, parent: Node) -> 'Declaration':
@@ -694,7 +697,7 @@ class Declaration(DeclarationBase):
     return self._typ
 
 class VariableDeclaration(Declaration):
-  def __init__(self, typ: Type, sym: 'Identifier', assign: Optional[Assignment] =None) -> None:
+  def __init__(self, typ: Symbol, sym: 'Identifier', assign: Optional[Assignment] =None) -> None:
     super().__init__(typ, sym)
     self.assign: Optional[Assignment] = assign
 
@@ -709,7 +712,8 @@ class FunctionDeclaration(Declaration):
   pass
 
 class FunctionDefinition(FunctionDeclaration, Scope):
-  def __init__(self, typ: FunctionType, sym: 'Identifier', body_str: UnparsedContents) -> None:
+  def __init__(self, typ: 'TemplatedIdentifier', sym: 'Identifier', body_str: UnparsedContents
+               ) -> None:
     super().__init__(typ, sym)
     self.body: List[Statement] = []
     self.body_str: UnparsedContents = body_str
@@ -785,7 +789,7 @@ class FunctionCall(Value):
       typ = self.sym.decl.typ
       if not isinstance(typ, FunctionType):
         self.error(self.pos, "calling non function type {}".format(self.sym.repr))
-        return
+        return self
       diff = len(self.args) - len(typ.args)
       i = 0
       while i < len(typ.args):
@@ -835,9 +839,9 @@ class FunctionCall(Value):
       super().auto_cast(target)
 
 class ArrayAccess(Value):
-  def __init__(self, child: Node, idx: Expression) -> None:
+  def __init__(self, child: Value, idx: Expression) -> None:
     super().__init__()
-    self.child: Node = child
+    self.child: Value = child
     self.idx: Expression = idx
 
   def build(self, parent: Node) -> 'ArrayAccess':
@@ -924,6 +928,7 @@ class Return(Node):
       decl: Node = self.parent
       while not isinstance(decl, FunctionDefinition):
         decl = decl.parent
+      assert isinstance(decl.typ, FunctionType)
       self.expr.auto_cast(decl.typ.ret)
     return self
 
@@ -1260,19 +1265,23 @@ class AST(UnorderedScope):
     super().__init__(0)
     self.nodes: List[Node] = nodes
     self.failures: List[Failure] = []
-    self.parser: Any = None
+    self.parser: Optional[ParserPython] = None
 
-  def __iter__(self):
+  def __iter__(self) -> Iterable[Node]:
     return self.nodes.__iter__()
 
-  def __getitem__(self, key):
+  def __getitem__(self, key: int) -> Node:
     return self.nodes[key]
 
-  def __len__(self):
+  def __len__(self) -> int:
     return len(self.nodes)
 
-  def build(self, args) -> 'AST':
-    self.builtins: List[DeclarationBase] = [
+  def build(self, parent: Node) -> 'Node':
+    raise Exception('AST.build may not be called')
+
+  def build_ast(self, args: OptionsStruct) -> None:
+    super().build(Node(0))
+    self.builtins: List[Type] = [
       FunctionType(CompoundIdentifier([Identifier(0, 'any')]), []),
       BuiltinType('int'), BuiltinType('int8'), BuiltinType('int16'), BuiltinType('int32'),
       BuiltinType('int64'), BuiltinType('uint'), BuiltinType('uint8'), BuiltinType('uint16'),
@@ -1289,9 +1298,9 @@ class AST(UnorderedScope):
       n.build(self)
     if len(self.failures) != 0:
       raise ParseError(self.failures, self.parser)
-    return self
 
   def fail(self, severity: int, pos: int, msg: str) -> None:
+    assert self.parser is not None
     self.failures.append(Failure(severity, pos, msg, self.parser.file_name))
 
   @property
@@ -1313,5 +1322,5 @@ class AST(UnorderedScope):
   def import_paths(self) -> List[str]:
     return self._import_paths
 
-  def is_child_of(self, cls) -> bool:
+  def is_child_of(self, cls: typing.Type[Node]) -> bool:
     return False

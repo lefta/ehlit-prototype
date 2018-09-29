@@ -19,14 +19,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-class Failure(Exception):
-  def __init__(self, severity, pos, msg, file):
-    self.severity = severity
-    self.pos = pos
-    self.msg = msg
-    self.file = file
+from arpeggio import ParserPython
+from typing import List, Optional, Tuple
 
-  def __str__(self):
+class Failure(Exception):
+  def __init__(self, severity: int, pos: int, msg: str, file: Optional[str]) -> None:
+    self.severity: int = severity
+    self.pos: int = pos
+    self.msg: str = msg
+    self.file: Optional[str] = file
+    self.linecol: Optional[Tuple[int, int]] = None
+
+  def __str__(self) -> str:
+    assert self.linecol is not None and self.file is not None
     return self.file + ':' + str(self.linecol[0]) + ':' + str(self.linecol[1]) + ': ' + self.msg
 
 class ParseError(Exception):
@@ -35,11 +40,11 @@ class ParseError(Exception):
     Error = 2
     Fatal = 3
 
-  def __init__(self, failures, parser = None):
-    self.failures = failures
-    self.max_level = -1
-    self.errors = 0
-    self.warnings = 0
+  def __init__(self, failures: List[Failure], parser: Optional[ParserPython] =None) -> None:
+    self.failures: List[Failure] = failures
+    self.max_level: int = -1
+    self.errors: int = 0
+    self.warnings: int = 0
     if parser is not None:
       for f in failures:
         if f.severity > self.max_level: self.max_level = f.severity
@@ -48,13 +53,13 @@ class ParseError(Exception):
         f.linecol = parser.pos_to_linecol(f.pos)
 
   @property
-  def summary(self):
     if self.warnings is 0: return 'build finished with %d errors' % self.errors
     elif self.errors is 0: return 'build finished with %d warnings' % self.warnings
     else: return 'build finished with %d errors and %d warnings' % (self.errors, self.warnings)
+  def summary(self) -> str:
 
-  def __str__(self):
-    res = []
+  def __str__(self) -> str:
+    res: List[str] = []
     for f in self.failures:
       res.append(str(f))
     return '\n'.join(res) + '\n'
