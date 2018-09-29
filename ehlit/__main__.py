@@ -29,7 +29,7 @@ logging.addLevelName(logging.WARNING, '\033[1;35mWarning\033[m: ')
 logging.addLevelName(logging.INFO, '\033[1;37mNote\033[m: ')
 logging.addLevelName(logging.DEBUG, '> ')
 logging.basicConfig(format='%(levelname)s%(message)s',
-  level=logging.DEBUG if opts.verbose else logging.INFO)
+                    level=logging.DEBUG if opts.verbose else logging.INFO)
 
 # Do not import submodules before the logger is initialized, as they may use it
 from ehlit.parser import ParseError

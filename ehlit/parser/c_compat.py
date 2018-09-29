@@ -26,7 +26,7 @@ from argparse import ArgumentParser
 from clang.cindex import Index, TranslationUnitLoadError, CursorKind, TypeKind
 from ehlit.parser.error import ParseError, Failure
 from ehlit.parser import ast
-from typing import List, Optional
+from typing import List
 
 include_dirs: List[str] = []
 
@@ -53,7 +53,7 @@ try:
   # - They should be quite the same than the ones actually used
   # - Only differences should be minor / internal enough to not have consequences on ehlit code
   proc = subprocess.run(['clang', '-E', '-v', '-'], stdin=subprocess.PIPE,
-    stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf-8')
+                        stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf-8')
 
   if proc.returncode != 0:
     # Just to stop the execution of the try block
@@ -61,15 +61,15 @@ try:
 
   i1 = i2 = None
   lines = proc.stderr.split('\n')
-  for i, l in enumerate(lines):
-    if l == '#include "..." search starts here:':
+  for i, line in enumerate(lines):
+    if line == '#include "..." search starts here:':
       i1 = i
-    elif l == 'End of search list.':
+    elif line == 'End of search list.':
       i2 = i
 
   # Should not happen unless clang changes its output, which is very unlikely
   assert i1 is not None and i2 is not None and i1 < i2
-  lines = lines[i1+1:i2]
+  lines = lines[i1 + 1:i2]
   lines.remove('#include <...> search starts here:')
   include_dirs += [l.strip() for l in lines]
 
@@ -106,6 +106,7 @@ int_types = {
   'LONGLONG',
 }
 
+
 def type_to_ehlit(typ):
   if typ.kind.name in uint_types:
     return ast.CompoundIdentifier([ast.Identifier(0, 'uint' + str(typ.get_size() * 8))])
@@ -118,6 +119,7 @@ def type_to_ehlit(typ):
     logging.debug('c_compat: unimplemented: type_%s' % typ.kind.name)
   return ast.CompoundIdentifier([ast.Identifier(0, 'any')])
 
+
 def value_to_ehlit(val, typ):
   if typ.kind.name in uint_types or typ.kind.name in int_types:
     return ast.Number(val)
@@ -128,13 +130,15 @@ def value_to_ehlit(val, typ):
     logging.debug('c_compat: unimplemented: value_%s' % typ.kind.name)
   return None
 
+
 def find_file_in_path(filename):
   for d in include_dirs:
     path = os.path.join(d, filename)
     if os.path.isfile(path):
       return path
   raise ParseError([Failure(ParseError.Severity.Error, 0,
-    '%s: no such file or directory' % filename, None)])
+                    '%s: no such file or directory' % filename, None)])
+
 
 def parse_header(filename):
   path = find_file_in_path(filename)
@@ -175,6 +179,7 @@ def parse_VAR_DECL(cursor):
     ast.Assignment(value) if value is not None else None
   )
 
+
 def parse_FUNCTION_DECL(cursor):
   args = []
   for c in cursor.get_children():
@@ -190,11 +195,13 @@ def parse_FUNCTION_DECL(cursor):
     ast.Identifier(0, cursor.spelling)
   )
 
+
 def parse_TYPEDEF_DECL(cursor):
   return ast.Alias(
     type_to_ehlit(cursor.underlying_typedef_type),
     ast.Identifier(0, cursor.spelling)
   )
+
 
 def parse_STRUCT_DECL(cursor):
   if not cursor.is_definition():
@@ -207,6 +214,7 @@ def parse_STRUCT_DECL(cursor):
       None
     ))
   return ast.Struct(0, ast.Identifier(0, cursor.spelling), fields)
+
 
 def parse_UNION_DECL(cursor):
   if not cursor.is_definition():
@@ -224,6 +232,7 @@ def parse_UNION_DECL(cursor):
 def type_VOID(typ):
   return ast.CompoundIdentifier([ast.Identifier(0, 'void')])
 
+
 def type_POINTER(typ):
   subtype = typ.get_pointee()
   builtin_type = {
@@ -238,13 +247,16 @@ def type_POINTER(typ):
     return res
   return ast.Reference(res)
 
+
 def type_TYPEDEF(typ):
   return ast.CompoundIdentifier([ast.Identifier(0, typ.get_declaration().spelling)])
+
 
 def type_CONSTANTARRAY(typ):
   if typ.element_count == 1:
     return ast.Array(type_to_ehlit(typ.element_type), None)
   return ast.Array(type_to_ehlit(typ.element_type), ast.Number(str(typ.element_count)))
+
 
 def type_ELABORATED(typ):
   decl = typ.get_canonical().get_declaration()
@@ -258,6 +270,7 @@ def type_ELABORATED(typ):
     return res
   return ast.CompoundIdentifier([ast.Identifier(0, decl.spelling)])
 
+
 def type_RECORD(typ):
   typ = typ.get_declaration()
   # If the type do not have a name, it may not be referenced. In the case, we have to embed
@@ -270,11 +283,13 @@ def type_RECORD(typ):
     return res
   return ast.CompoundIdentifier([ast.Identifier(0, typ.spelling)])
 
+
 def type_FUNCTIONPROTO(typ):
   args = []
   for a in typ.argument_types():
     args.append(type_to_ehlit(a))
   return ast.TemplatedIdentifier('func', [ast.FunctionType(type_to_ehlit(typ.get_result()), args)])
+
 
 def type_UNEXPOSED(typ):
   return type_to_ehlit(typ.get_canonical())

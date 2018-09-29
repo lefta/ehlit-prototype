@@ -24,6 +24,7 @@ from typing import Optional, Union
 
 from ehlit.parser import ast
 
+
 class ArrayBuilder:
   def __init__(self, child: Optional[Union[ast.Node, 'ArrayBuilder']],
                param: Optional[ast.Node]) -> None:
@@ -141,11 +142,11 @@ class ASTBuilder(PTNodeVisitor):
 
   def visit_lesser_than_sequence(self, node, children):
     return [children[0], ast.Operator(str(children[1])), children[2], ast.Operator('&&'),
-      children[2], ast.Operator(str(children[3])), children[4]]
+            children[2], ast.Operator(str(children[3])), children[4]]
 
   def visit_greater_than_sequence(self, node, children):
     return [children[0], ast.Operator(str(children[1])), children[2], ast.Operator('&&'),
-      children[2], ast.Operator(str(children[3])), children[4]]
+            children[2], ast.Operator(str(children[3])), children[4]]
 
   def visit_operator_sequence(self, node, children):
     return children[0]
@@ -334,7 +335,8 @@ class ASTBuilder(PTNodeVisitor):
   def visit_function_definition(self, node, children):
     return ast.FunctionDefinition(children[0][0], children[0][1], children[1])
 
-  def visit_function(self, node, children): return children[0]
+  def visit_function(self, node, children):
+    return children[0]
 
   # External includes
   ###################

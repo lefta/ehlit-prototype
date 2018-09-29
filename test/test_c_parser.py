@@ -22,8 +22,10 @@
 import os.path
 from common import EhlitTestCase
 
-""" Test the interfacing with C """
+
 class TestCParser(EhlitTestCase):
+  """ Test the interfacing with C """
+
   def __init__(self, arg):
     super().__init__(arg)
     self.test_dir = 'c_parser'

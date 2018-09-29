@@ -20,9 +20,11 @@
 # SOFTWARE.
 
 import sys
-from ehlit.parser.ast import (Symbol, Reference, Array, ArrayAccess, BuiltinType,
-  FunctionDeclaration, FunctionDefinition, FunctionCall, CompoundIdentifier, Struct, EhUnion, Alias,
-  TemplatedIdentifier)
+from ehlit.parser.ast import (
+    Alias, Array, ArrayAccess, BuiltinType, CompoundIdentifier, EhUnion, FunctionCall,
+    FunctionDeclaration, FunctionDefinition, Reference, Struct, Symbol, TemplatedIdentifier,
+)
+
 
 class SourceWriter:
   def __init__(self, ast, f):

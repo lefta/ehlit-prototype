@@ -26,6 +26,7 @@ from ehlit.parser.grammar import grammar, function_body_grammar, Context
 from ehlit.parser.ast_builder import ASTBuilder
 from ehlit.parser.error import ParseError, Failure
 
+
 def handle_parse_error(err, parser):
   exp: List[str] = []
   for r in err.rules:
@@ -36,7 +37,8 @@ def handle_parse_error(err, parser):
     if r not in exp:
       exp.append(r)
   raise ParseError([Failure(ParseError.Severity.Fatal, err.position,
-    'expected %s' % (' or '.join(exp)), parser.file_name)], parser)
+                            'expected %s' % (' or '.join(exp)), parser.file_name)], parser)
+
 
 def parse(source):
   parser = ParserPython(grammar, autokwd=True, memoization=True)
@@ -47,6 +49,7 @@ def parse(source):
   except NoMatch as err:
     handle_parse_error(err, parser)
   return ast
+
 
 def parse_function(source, have_return_value):
   Context.return_value = have_return_value

@@ -21,6 +21,7 @@
 
 import logging
 
+
 def indent(fn):
   def fn_wrapper(cls, node, is_next=True):
     cls.increment_prefix(is_next)
@@ -60,9 +61,9 @@ class DumpWriter:
 
     self.prev_have_next = is_next
     if is_next:
-      self.prefix += '\u251c'+'\u2500 '
+      self.prefix += '\u251c' + '\u2500 '
     else:
-      self.prefix += '\u2514'+'\u2500 '
+      self.prefix += '\u2514' + '\u2500 '
     self.upd_prefix = True
 
   def print_node(self, node, is_next=True):
@@ -78,7 +79,6 @@ class DumpWriter:
       self.print_node(lst[i], i < cnt - 1)
       i += 1
     self.decrement_prefix()
-
 
   @indent
   def print_str(self, s):

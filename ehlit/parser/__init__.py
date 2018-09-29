@@ -19,5 +19,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from ehlit.parser.parse import parse
-from ehlit.parser.error import ParseError
+from ehlit.parser.parse import parse       # noqa
+from ehlit.parser.error import ParseError  # noqa

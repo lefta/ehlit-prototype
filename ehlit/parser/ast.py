@@ -35,10 +35,12 @@ MOD_CONST = 1
 
 imported: List[str] = []
 
+
 class UnparsedContents:
   '''!
   Contents for which parsing have been delayed, for example because of a lack of context.
   '''
+
   def __init__(self, contents: str, pos: int) -> None:
     '''! Constructor
     @param contents @b str Contents to be parsed later.
@@ -47,10 +49,12 @@ class UnparsedContents:
     self.contents: str = contents
     self.pos: int = pos
 
+
 class Node:
   '''!
   Base class for all AST node types. It defines some default behaviors.
   '''
+
   def __init__(self, pos: int) -> None:
     '''! Constructor
     @param pos @b int The position of the node in the source file
@@ -137,6 +141,7 @@ class Node:
     '''
     return type(self) is cls or self.parent.is_child_of(cls)
 
+
 class Scope(Node):
   def __init__(self, pos: int) -> None:
     super().__init__(pos)
@@ -156,6 +161,7 @@ class Scope(Node):
       self.predeclarations.append(res)
     return res, err
 
+
 class UnorderedScope(Scope):
   def find_declaration(self, sym: List[str]) -> DeclarationLookup:
     for node in self.scope_contents:
@@ -169,8 +175,10 @@ class UnorderedScope(Scope):
   def scope_contents(self) -> List[Node]:
     raise NotImplementedError
 
+
 class GenericExternInclusion(UnorderedScope):
   '''! Base for include and import defining shared behaviors '''
+
   def __init__(self, pos: int, lib: List[str]) -> None:
     '''! Constructor
     @param pos @b int The position of the node in the source file
@@ -219,8 +227,10 @@ class GenericExternInclusion(UnorderedScope):
   def scope_contents(self) -> List[Node]:
     return self.syms
 
+
 class Import(GenericExternInclusion):
   '''! Specialization of GenericExternInclusion for Ehlit imports. '''
+
   def import_dir(self, dir: str) -> List[Node]:
     '''! Import a whole directory.
     This recursively imports all Ehlit files in the specified directory.
@@ -259,8 +269,10 @@ class Import(GenericExternInclusion):
     self.error(self.pos, '%s: no such file or directory' % self.lib)
     return []
 
+
 class Include(GenericExternInclusion):
   '''! Specialization of GenericExternInclusion for C includes. '''
+
   def parse(self) -> List[Node]:
     '''! Parse the included file.
     @return @b List[Node] A list of the imported nodes.
@@ -268,8 +280,10 @@ class Include(GenericExternInclusion):
     from ehlit.parser import c_compat
     return c_compat.parse_header(self.lib)
 
+
 class Value(Node):
   '''! Base for all nodes representing a value. '''
+
   def __init__(self, pos: int =0) -> None:
     '''! Constructor
     @param pos @b int The position of the node in the source file
@@ -381,6 +395,7 @@ class Value(Node):
         target_ref_level += target.typ.ref_offset - target.ref_offset
       self.ref_offset = src.ref_offset - target_ref_level
 
+
 class DeclarationBase(Node):
   def build(self, parent: Node) -> 'Node':
     super().build(parent)
@@ -418,6 +433,7 @@ class DeclarationBase(Node):
   def name(self) -> str:
     raise NotImplementedError
 
+
 class Type(Node):
   def __init__(self, pos: int =0) -> None:
     super().__init__(pos)
@@ -446,6 +462,7 @@ class Type(Node):
   def ref_offset(self) -> int:
     return 0
 
+
 class Symbol(Value, Type):
   def build(self, parent: Node) -> 'Symbol':
     super().build(parent)
@@ -466,6 +483,7 @@ class Symbol(Value, Type):
   @abstractmethod
   def repr(self) -> str:
     raise NotImplementedError
+
 
 class BuiltinType(Type, DeclarationBase):
   def make(parent: Node, name: str) -> 'CompoundIdentifier':
@@ -519,6 +537,7 @@ class BuiltinType(Type, DeclarationBase):
       return self.name == rhs.name
     return False
 
+
 class Array(Type, DeclarationBase):
   def __init__(self, child: Type, length: Optional[Node]) -> None:
     super().__init__()
@@ -547,6 +566,7 @@ class Array(Type, DeclarationBase):
   @property
   def name(self) -> str:
     return '@array'
+
 
 class Reference(Value, Type):
   def __init__(self, child: Union[Value, Type]) -> None:
@@ -610,6 +630,7 @@ class Reference(Value, Type):
     assert isinstance(self.child, Type)
     return self.child.any_memory_offset
 
+
 class FunctionType(Type, DeclarationBase):
   def __init__(self, ret: Symbol, args: List['VariableDeclaration'],
                is_variadic: bool =False) -> None:
@@ -635,12 +656,14 @@ class FunctionType(Type, DeclarationBase):
   def name(self) -> str:
     return '@func'
 
+
 class Operator(Node):
   def __init__(self, op: str) -> None:
     self.op: str = op
 
   def auto_cast(self, target: Type) -> None:
     pass
+
 
 class VariableAssignment(Node):
   def __init__(self, var: Symbol, assign: 'Assignment') -> None:
@@ -654,6 +677,7 @@ class VariableAssignment(Node):
     self.assign.expr.auto_cast(self.var)
     return self
 
+
 class Assignment(Node):
   def __init__(self, expr: 'Expression') -> None:
     self.expr: 'Expression' = expr
@@ -663,6 +687,7 @@ class Assignment(Node):
     super().build(parent)
     self.expr = self.expr.build(self)
     return self
+
 
 class Declaration(DeclarationBase):
   def __init__(self, typ: Symbol, sym: Optional['Identifier']) -> None:
@@ -696,6 +721,7 @@ class Declaration(DeclarationBase):
       self._typ = self.typ_src.solve() if isinstance(self.typ_src, Symbol) else self.typ_src
     return self._typ
 
+
 class VariableDeclaration(Declaration):
   def __init__(self, typ: Symbol, sym: 'Identifier', assign: Optional[Assignment] =None) -> None:
     super().__init__(typ, sym)
@@ -708,8 +734,10 @@ class VariableDeclaration(Declaration):
       self.assign.expr.auto_cast(self.typ)
     return self
 
+
 class FunctionDeclaration(Declaration):
   pass
+
 
 class FunctionDefinition(FunctionDeclaration, Scope):
   def __init__(self, typ: 'TemplatedIdentifier', sym: 'Identifier', body_str: UnparsedContents
@@ -739,6 +767,7 @@ class FunctionDefinition(FunctionDeclaration, Scope):
   def fail(self, severity: int, pos: int, msg: str) -> None:
     super().fail(severity, pos + self.body_str.pos, msg)
 
+
 class Statement(Node):
   def __init__(self, expr: Node) -> None:
     self.expr: Node = expr
@@ -747,6 +776,7 @@ class Statement(Node):
     super().build(parent)
     self.expr = self.expr.build(self)
     return self
+
 
 class Expression(Node):
   def __init__(self, contents: List[Value], parenthesised: bool) -> None:
@@ -765,6 +795,7 @@ class Expression(Node):
   @property
   def is_parenthesised(self) -> bool:
     return self.parenthesised
+
 
 class FunctionCall(Value):
   def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
@@ -838,6 +869,7 @@ class FunctionCall(Value):
     if not self.is_cast:
       super().auto_cast(target)
 
+
 class ArrayAccess(Value):
   def __init__(self, child: Value, idx: Expression) -> None:
     super().__init__()
@@ -865,6 +897,7 @@ class ArrayAccess(Value):
   def from_any(self) -> Type:
     return self.child.typ.from_any()
 
+
 class ControlStructure(Scope):
   def __init__(self, name: str, cond: Optional[Expression], body: List[Statement]) -> None:
     super().__init__(0)
@@ -880,6 +913,7 @@ class ControlStructure(Scope):
     self.body = [s.build(self) for s in self.body]
     return self
 
+
 class Condition(Scope):
   def __init__(self, branches: List[ControlStructure]) -> None:
     super().__init__(0)
@@ -890,10 +924,12 @@ class Condition(Scope):
     self.branches = [b.build(self) for b in self.branches]
     return self
 
+
 class SwitchCase(Node):
   def __init__(self, cases: List['SwitchCaseTest'], body: 'SwitchCaseBody') -> None:
     self.cases: List['SwitchCaseTest'] = cases
     self.body: 'SwitchCaseBody' = body
+
 
 class SwitchCaseTest(Node):
   def __init__(self, test: Optional[Value]) -> None:
@@ -904,6 +940,7 @@ class SwitchCaseTest(Node):
     if self.test is not None:
       self.test = self.test.build(self)
     return self
+
 
 class SwitchCaseBody(Scope):
   def __init__(self, contents: List[Statement], block: bool, fallthrough: bool) -> None:
@@ -916,6 +953,7 @@ class SwitchCaseBody(Scope):
     super().build(parent)
     self.contents = [i.build(self) for i in self.contents]
     return self
+
 
 class Return(Node):
   def __init__(self, expr: Optional[Expression] =None) -> None:
@@ -931,6 +969,7 @@ class Return(Node):
       assert isinstance(decl.typ, FunctionType)
       self.expr.auto_cast(decl.typ.ret)
     return self
+
 
 class Identifier(Value):
   def __init__(self, pos: int, name: str) -> None:
@@ -964,6 +1003,7 @@ class Identifier(Value):
 
   def from_any(self) -> Type:
     return self.decl.from_any() if self.decl is not None else self
+
 
 class CompoundIdentifier(Symbol):
   def __init__(self, elems: List[Identifier]) -> None:
@@ -1025,10 +1065,11 @@ class CompoundIdentifier(Symbol):
     i: int = 0
     while i < len(self.elems):
       if identifier is self.elems[i]:
-        return self.parent.find_declaration([x.name for x in self.elems[:i+1]])
+        return self.parent.find_declaration([x.name for x in self.elems[:i + 1]])
       i += 1
     assert False, "This code may not be reached"
     return None, None
+
 
 class TemplatedIdentifier(Symbol):
   def __init__(self, name: str, types: List[Union[Symbol, Type]]) -> None:
@@ -1053,6 +1094,7 @@ class TemplatedIdentifier(Symbol):
   def repr(self) -> str:
     return '{}<>'.format(self.name)
 
+
 class String(Value):
   def __init__(self, string: str) -> None:
     super().__init__()
@@ -1064,6 +1106,7 @@ class String(Value):
 
   def auto_cast(self, target: Type) -> None:
     pass
+
 
 class Char(Value):
   def __init__(self, char: str) -> None:
@@ -1077,6 +1120,7 @@ class Char(Value):
   def auto_cast(self, target: Type) -> None:
     pass
 
+
 class Number(Value):
   def __init__(self, num: str) -> None:
     super().__init__()
@@ -1089,6 +1133,7 @@ class Number(Value):
   def auto_cast(self, target: Type) -> None:
     pass
 
+
 class NullValue(Value):
   def __init__(self) -> None:
     super().__init__()
@@ -1099,6 +1144,7 @@ class NullValue(Value):
 
   def auto_cast(self, target: Type) -> None:
     pass
+
 
 class BoolValue(Value):
   def __init__(self, val: bool) -> None:
@@ -1111,6 +1157,7 @@ class BoolValue(Value):
 
   def auto_cast(self, target: Type) -> None:
     pass
+
 
 class UnaryOperatorValue(Node):
   def __init__(self, op: str, val: Value) -> None:
@@ -1133,10 +1180,14 @@ class UnaryOperatorValue(Node):
   def auto_cast(self, target: Type) -> None:
     return self.val.auto_cast(target)
 
+
 class PrefixOperatorValue(UnaryOperatorValue):
   pass
+
+
 class SuffixOperatorValue(UnaryOperatorValue):
   pass
+
 
 class Sizeof(Value):
   def __init__(self, sz_typ: Type) -> None:
@@ -1151,6 +1202,7 @@ class Sizeof(Value):
   @property
   def typ(self) -> Type:
     return BuiltinType.make(self, 'size')
+
 
 class Alias(Symbol, DeclarationBase):
   def __init__(self, src: Union[Symbol, DeclarationBase], dst: Identifier) -> None:
@@ -1203,6 +1255,7 @@ class Alias(Symbol, DeclarationBase):
   def decl(self) -> Optional[DeclarationBase]:
     return self.src
 
+
 class ContainerStructure(Type, DeclarationBase, Scope):
   def __init__(self, pos: int, sym: Identifier,
                fields: Optional[List[VariableDeclaration]]) -> None:
@@ -1248,17 +1301,20 @@ class ContainerStructure(Type, DeclarationBase, Scope):
     res.build(self)  # Needs to be built to get the declaration
     return res
 
+
 class Struct(ContainerStructure):
   def __init__(self, pos: int, sym: Identifier,
                fields: Optional[List[VariableDeclaration]]) -> None:
     super().__init__(pos, sym, fields)
     self.display_name = 'struct'
 
+
 class EhUnion(ContainerStructure):
   def __init__(self, pos: int, sym: Identifier,
                fields: Optional[List[VariableDeclaration]]) -> None:
     super().__init__(pos, sym, fields)
     self.display_name = 'union'
+
 
 class AST(UnorderedScope):
   def __init__(self, nodes: List[Node]) -> None:

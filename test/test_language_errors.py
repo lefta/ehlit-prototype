@@ -22,8 +22,10 @@
 import os.path
 from common import EhlitTestCase
 
-""" Test non valid language usage """
+
 class TestLanguageErrors(EhlitTestCase):
+	""" Test non valid language usage """
+
 	def __init__(self, arg):
 		super().__init__(arg)
 		self.test_dir = "language_error"

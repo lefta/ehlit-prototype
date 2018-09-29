@@ -22,8 +22,10 @@
 import os.path
 from common import EhlitTestCase
 
-""" Test the AST dumps """
+
 class TestDump(EhlitTestCase):
+  """ Test the AST dumps """
+
   def __init__(self, arg):
     super().__init__(arg)
     self.test_dir = 'language'

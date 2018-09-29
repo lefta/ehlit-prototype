@@ -23,6 +23,7 @@ from unittest import TestCase
 import mypy.api
 from os import chdir, environ
 
+
 class TestTypings(TestCase):
   def setUp(self):
     self.maxDiff = None

@@ -21,8 +21,10 @@
 
 from common import EhlitTestCase
 
-""" Test Ehlit executable behavior """
+
 class TestCompiler(EhlitTestCase):
+	""" Test Ehlit executable behavior """
+
 	def test_file_not_ehlit_source(self):
 		self.assert_error("notehsrc.ext", "notehsrc.ext: not an ehlit source file")
 

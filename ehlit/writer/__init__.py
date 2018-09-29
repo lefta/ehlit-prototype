@@ -23,11 +23,14 @@ from ehlit.writer.import_file import ImportWriter
 from ehlit.writer.source import SourceWriter
 from ehlit.writer.dump import DumpWriter
 
+
 class WriteDump(DumpWriter):
   pass
 
+
 class WriteSource(SourceWriter):
   pass
+
 
 class WriteImport(ImportWriter):
   pass

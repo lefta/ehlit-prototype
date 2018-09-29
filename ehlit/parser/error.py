@@ -22,6 +22,7 @@
 from arpeggio import ParserPython
 from typing import List, Optional, Tuple
 
+
 class Failure(Exception):
   def __init__(self, severity: int, pos: int, msg: str, file: Optional[str]) -> None:
     self.severity: int = severity
@@ -33,6 +34,7 @@ class Failure(Exception):
   def __str__(self) -> str:
     assert self.linecol is not None and self.file is not None
     return self.file + ':' + str(self.linecol[0]) + ':' + str(self.linecol[1]) + ': ' + self.msg
+
 
 class ParseError(Exception):
   class Severity:
@@ -47,16 +49,22 @@ class ParseError(Exception):
     self.warnings: int = 0
     if parser is not None:
       for f in failures:
-        if f.severity > self.max_level: self.max_level = f.severity
-        if f.severity is ParseError.Severity.Warning: self.warnings += 1
-        else: self.errors += 1
+        if f.severity > self.max_level:
+          self.max_level = f.severity
+        if f.severity is ParseError.Severity.Warning:
+          self.warnings += 1
+        else:
+          self.errors += 1
         f.linecol = parser.pos_to_linecol(f.pos)
 
   @property
-    if self.warnings is 0: return 'build finished with %d errors' % self.errors
-    elif self.errors is 0: return 'build finished with %d warnings' % self.warnings
-    else: return 'build finished with %d errors and %d warnings' % (self.errors, self.warnings)
   def summary(self) -> str:
+    if self.warnings is 0:
+      return 'build finished with %d errors' % self.errors
+    elif self.errors is 0:
+      return 'build finished with %d warnings' % self.warnings
+    else:
+      return 'build finished with %d errors and %d warnings' % (self.errors, self.warnings)
 
   def __str__(self) -> str:
     res: List[str] = []

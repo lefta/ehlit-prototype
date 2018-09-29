@@ -22,8 +22,10 @@
 import os.path
 from common import EhlitTestCase
 
-""" Test valid language features """
+
 class TestLanguage(EhlitTestCase):
+	""" Test valid language features """
+
 	def __init__(self, arg):
 		super().__init__(arg)
 		self.test_dir = 'language'

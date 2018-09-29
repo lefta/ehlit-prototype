@@ -22,13 +22,16 @@
 from argparse import ArgumentParser
 from os import path, makedirs
 
+
 class OptionsStruct:
   output_import_file: str
   source: str
 
+
 class ArgError(Exception):
   def __init__(self, msg):
     self.msg = msg
+
 
 def check_arguments(args):
   src, ext = path.splitext(args.source)
@@ -56,20 +59,20 @@ def parse_arguments():
   # Generation options
   gen_args = parser.add_argument_group('Generation arguments')
   gen_args.add_argument("-o", "--gen-output", dest="output_file",
-    help="File where to write the output. You may use '-' for stdout")
+                        help="File where to write the output. You may use '-' for stdout")
   gen_args.add_argument("--gen-import-output", dest="output_import_file",
-    help="File where to write the import file. You may use '-' for stdout")
+                        help="File where to write the import file. You may use '-' for stdout")
 
   gen_args.add_argument("-v", "--gen-verbose", dest="verbose", action="store_true",
-    help="Print debug messages")
+                        help="Print debug messages")
   gen_args.add_argument("-q", "--gen-quiet", dest="verbose", action="store_false", default=False,
-    help="Do not print debug messages [default]")
+                        help="Do not print debug messages [default]")
 
   # Warning options
   warn_args = parser.add_argument_group('Warning behavior arguments')
   warn_args.add_argument("--warn-error", dest="warn_error", action="store_true", default=True,
-    help="Treat all warnings as errors")
+                         help="Treat all warnings as errors")
   warn_args.add_argument("--warn-no-error", dest="warn_error", action="store_false",
-    help="Do not treat any warning as error [default]")
+                         help="Do not treat any warning as error [default]")
 
   return parser.parse_args()

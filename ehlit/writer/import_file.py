@@ -22,14 +22,13 @@
 import sys
 from ehlit.writer.source import SourceWriter
 
+
 class ImportWriter:
   def __init__(self, ast, f):
     self.file = sys.stdout if f == '-' else open(f, 'w')
     self.indent = 0
-
     for node in ast:
       self.write(node)
-
     if f != '-':
       self.file.close()
 
@@ -43,13 +42,21 @@ class ImportWriter:
       self.file.write('    ')
       i += 1
 
-  def writeInclude(self, node): pass
-  def writeImport(self, node): pass
-  def write_type_prefix(self, node): pass
+  def writeInclude(self, node):
+    pass
 
-  def writeFunctionDefinition(self, node): self.writeFunctionDeclaration(node)
+  def writeImport(self, node):
+    pass
 
-  def writeFunctionDeclaration(self, node): SourceWriter.writeFunctionPrototype(self, node)
+  def write_type_prefix(self, node):
+    pass
+
+  def writeFunctionDefinition(self, node):
+    self.writeFunctionDeclaration(node)
+
+  def writeFunctionDeclaration(self, node):
+    SourceWriter.writeFunctionPrototype(self, node)
+
   def writeDeclaration(self, node):
     self.write(node.typ_src)
     if node.sym is not None:
