@@ -718,8 +718,8 @@ class Statement(Node):
     self.expr.build(self)
 
 class Expression(Node):
-  def __init__(self, contents: List[Node], parenthesised: bool) -> None:
-    self.contents: List[Node] = contents
+  def __init__(self, contents: List[Value], parenthesised: bool) -> None:
+    self.contents: List[Value] = contents
     self.parenthesised: bool = parenthesised
 
   def build(self, parent: Node) -> None:
