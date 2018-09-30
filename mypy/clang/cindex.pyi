@@ -1,5 +1,6 @@
 from typing import Iterator, List, Optional, Text
 
+
 class File(object):
     name: Text
 
@@ -156,11 +157,14 @@ class AccessSpecifier(object):
 
 class CursorKind(object):
     name: Text
+
     @staticmethod
     def get_all_kinds() -> List['CursorKind']:
         pass
+
     def is_expression(self) -> bool:
         pass
+
     def is_statement(self) -> bool:
         pass
 
