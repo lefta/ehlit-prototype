@@ -92,7 +92,7 @@ def bool_value():
 
 
 def referenced_value():
-  return 'ref', value
+  return 'ref', writable_value
 
 
 def function_call():
