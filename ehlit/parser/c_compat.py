@@ -23,15 +23,16 @@ import os
 import logging
 import subprocess
 from argparse import ArgumentParser
-from clang.cindex import Index, TranslationUnitLoadError, CursorKind, TypeKind
+from clang.cindex import (Index, TranslationUnitLoadError, CursorKind, TypeKind, Cursor, Type,
+                          TranslationUnit)
 from ehlit.parser.error import ParseError, Failure
 from ehlit.parser import ast
-from typing import List
+from typing import List, Optional, Set
 
 include_dirs: List[str] = []
 
 # Add CFLAGS environment variable include dirs
-parser = ArgumentParser()
+parser: ArgumentParser = ArgumentParser()
 parser.add_argument('-I', dest='dirs', default=[], action='append')
 try:
   args, unknown = parser.parse_known_args(os.environ['CFLAGS'].split())
@@ -52,15 +53,18 @@ try:
   #   combo out there
   # - They should be quite the same than the ones actually used
   # - Only differences should be minor / internal enough to not have consequences on ehlit code
-  proc = subprocess.run(['clang', '-E', '-v', '-'], stdin=subprocess.PIPE,
-                        stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding='utf-8')
+  proc: subprocess.CompletedProcess = subprocess.run(['clang', '-E', '-v', '-'],
+                                                     stdin=subprocess.PIPE,
+                                                     stderr=subprocess.PIPE, stdout=subprocess.PIPE,
+                                                     encoding='utf-8')
 
   if proc.returncode != 0:
     # Just to stop the execution of the try block
     raise Exception('')
 
-  i1 = i2 = None
-  lines = proc.stderr.split('\n')
+  i1: Optional[int] = None
+  i2: Optional[int] = None
+  lines: List[str] = proc.stderr.split('\n')
   for i, line in enumerate(lines):
     if line == '#include "..." search starts here:':
       i1 = i
@@ -81,7 +85,7 @@ except Exception:
 include_dirs.append('.')
 
 
-def cursor_to_ehlit(cursor):
+def cursor_to_ehlit(cursor: Cursor) -> Optional[ast.Node]:
   try:
     return globals()['parse_' + cursor.kind.name](cursor)
   except KeyError:
@@ -89,7 +93,7 @@ def cursor_to_ehlit(cursor):
   return None
 
 
-uint_types = {
+uint_types: Set[str] = {
   'UCHAR',
   'USHORT',
   'UINT',
@@ -97,7 +101,7 @@ uint_types = {
   'ULONGLONG',
 }
 
-int_types = {
+int_types: Set[str] = {
   'CHAR_S',
   'SCHAR',
   'SHORT',
@@ -107,7 +111,7 @@ int_types = {
 }
 
 
-def type_to_ehlit(typ):
+def type_to_ehlit(typ: Type) -> ast.Symbol:
   if typ.kind.name in uint_types:
     return ast.CompoundIdentifier([ast.Identifier(0, '@uint' + str(typ.get_size() * 8))])
   if typ.kind.name in int_types:
@@ -120,7 +124,7 @@ def type_to_ehlit(typ):
   return ast.CompoundIdentifier([ast.Identifier(0, 'any')])
 
 
-def value_to_ehlit(val, typ):
+def value_to_ehlit(val: str, typ: Type) -> Optional[ast.Node]:
   if typ.kind.name in uint_types or typ.kind.name in int_types:
     return ast.Number(val)
 
@@ -131,7 +135,7 @@ def value_to_ehlit(val, typ):
   return None
 
 
-def find_file_in_path(filename):
+def find_file_in_path(filename: str) -> str:
   for d in include_dirs:
     path = os.path.join(d, filename)
     if os.path.isfile(path):
@@ -140,28 +144,28 @@ def find_file_in_path(filename):
                     '%s: no such file or directory' % filename, None)])
 
 
-def parse_header(filename):
-  path = find_file_in_path(filename)
-  index = Index.create()
+def parse_header(filename: str) -> List[ast.Node]:
+  path: str = find_file_in_path(filename)
+  index: Index = Index.create()
   try:
-    tu = index.parse(path)
+    tu: TranslationUnit = index.parse(path)
   except TranslationUnitLoadError as err:
     raise ParseError([Failure(ParseError.Severity.Error, 0, '%s: parsing failed' % filename, None)])
-  ast = []
+  result: List[ast.Node] = []
   for c in tu.cursor.get_children():
-    node = cursor_to_ehlit(c)
+    node: Optional[ast.Node] = cursor_to_ehlit(c)
     if node is not None:
-      ast.append(cursor_to_ehlit(c))
+      result.append(node)
   del tu
   del index
-  return ast
+  return result
 
 
-def parse_VAR_DECL(cursor):
-  assign = cursor.get_definition()
-  value = None
+def parse_VAR_DECL(cursor: Cursor) -> ast.Node:
+  assign: Optional[Cursor] = cursor.get_definition()
+  value: Optional[ast.Node] = None
   if assign is not None:
-    got_eq = False
+    got_eq: bool = False
     for t in assign.get_tokens():
       if value is not None:
         logging.debug(
@@ -180,8 +184,8 @@ def parse_VAR_DECL(cursor):
   )
 
 
-def parse_FUNCTION_DECL(cursor):
-  args = []
+def parse_FUNCTION_DECL(cursor: Cursor) -> ast.Node:
+  args: List[ast.VariableDeclaration] = []
   for c in cursor.get_children():
     if c.kind == CursorKind.PARM_DECL:
       args.append(ast.VariableDeclaration(type_to_ehlit(c.type), ast.Identifier(0, c.spelling)))
@@ -196,17 +200,17 @@ def parse_FUNCTION_DECL(cursor):
   )
 
 
-def parse_TYPEDEF_DECL(cursor):
+def parse_TYPEDEF_DECL(cursor: Cursor) -> ast.Node:
   return ast.Alias(
     type_to_ehlit(cursor.underlying_typedef_type),
     ast.Identifier(0, cursor.spelling)
   )
 
 
-def parse_STRUCT_DECL(cursor):
+def parse_STRUCT_DECL(cursor: Cursor) -> ast.Node:
   if not cursor.is_definition():
     return ast.Struct(0, ast.Identifier(0, cursor.spelling), None)
-  fields = []
+  fields: List[ast.VariableDeclaration] = []
   for f in cursor.type.get_fields():
     fields.append(ast.VariableDeclaration(
       type_to_ehlit(f.type),
@@ -216,10 +220,10 @@ def parse_STRUCT_DECL(cursor):
   return ast.Struct(0, ast.Identifier(0, cursor.spelling), fields)
 
 
-def parse_UNION_DECL(cursor):
+def parse_UNION_DECL(cursor: Cursor) -> ast.Node:
   if not cursor.is_definition():
     return ast.EhUnion(0, ast.Identifier(0, cursor.spelling), None)
-  fields = []
+  fields: List[ast.VariableDeclaration] = []
   for f in cursor.type.get_fields():
     fields.append(ast.VariableDeclaration(
       type_to_ehlit(f.type),
@@ -229,13 +233,13 @@ def parse_UNION_DECL(cursor):
   return ast.EhUnion(0, ast.Identifier(0, cursor.spelling), fields)
 
 
-def type_VOID(typ):
+def type_VOID(typ: Type) -> ast.Symbol:
   return ast.CompoundIdentifier([ast.Identifier(0, '@void')])
 
 
-def type_POINTER(typ):
-  subtype = typ.get_pointee()
-  builtin_type = {
+def type_POINTER(typ: Type) -> ast.Symbol:
+  subtype: Type = typ.get_pointee()
+  builtin_type: Optional[ast.Symbol] = {
     TypeKind.CHAR_S: ast.CompoundIdentifier([ast.Identifier(0, '@str')]),
     TypeKind.SCHAR: ast.CompoundIdentifier([ast.Identifier(0, '@str')]),
     TypeKind.VOID: ast.CompoundIdentifier([ast.Identifier(0, '@any')])
@@ -243,27 +247,27 @@ def type_POINTER(typ):
   if builtin_type is not None:
     return builtin_type
   res = type_to_ehlit(subtype)
-  if type(res) is ast.TemplatedIdentifier and res.name == '@func':
+  if isinstance(res, ast.TemplatedIdentifier) and res.name == '@func':
     return res
   return ast.Reference(res)
 
 
-def type_TYPEDEF(typ):
+def type_TYPEDEF(typ: Type) -> ast.Symbol:
   return ast.CompoundIdentifier([ast.Identifier(0, typ.get_declaration().spelling)])
 
 
-def type_CONSTANTARRAY(typ):
+def type_CONSTANTARRAY(typ: Type) -> ast.Symbol:
   if typ.element_count == 1:
     return ast.Array(type_to_ehlit(typ.element_type), None)
   return ast.Array(type_to_ehlit(typ.element_type), ast.Number(str(typ.element_count)))
 
 
-def type_ELABORATED(typ):
-  decl = typ.get_canonical().get_declaration()
+def type_ELABORATED(typ: Type) -> ast.Symbol:
+  decl: Cursor = typ.get_canonical().get_declaration()
   # If the declaration do not have a name, it may not be referenced. In this case, we have to embed
   # the type definition in its usage. Otherwise, we reference it with its identifier.
   if decl.spelling == '':
-    res = cursor_to_ehlit(decl)
+    res: Optional[ast.Node] = cursor_to_ehlit(decl)
     if res is None:
       # The underlying type is not handled, so make this elaborated type unhandled too
       raise KeyError
@@ -271,25 +275,25 @@ def type_ELABORATED(typ):
   return ast.CompoundIdentifier([ast.Identifier(0, decl.spelling)])
 
 
-def type_RECORD(typ):
-  typ = typ.get_declaration()
+def type_RECORD(typ: Type) -> ast.Symbol:
+  decl: Cursor = typ.get_declaration()
   # If the type do not have a name, it may not be referenced. In the case, we have to embed
   # the type definition in its usage. Otherwise, we reference it with its identifier.
-  if typ.spelling == '':
-    res = cursor_to_ehlit(typ)
+  if decl.spelling == '':
+    res: Optional[ast.Node] = cursor_to_ehlit(decl)
     if res is None:
       # The underlying type is not handled, so make this elaborated type unhandled too
       raise KeyError
     return res
-  return ast.CompoundIdentifier([ast.Identifier(0, typ.spelling)])
+  return ast.CompoundIdentifier([ast.Identifier(0, decl.spelling)])
 
 
-def type_FUNCTIONPROTO(typ):
-  args = []
+def type_FUNCTIONPROTO(typ: Type) -> ast.Symbol:
+  args: List[ast.Symbol] = []
   for a in typ.argument_types():
     args.append(type_to_ehlit(a))
   return ast.TemplatedIdentifier('@func', [ast.FunctionType(type_to_ehlit(typ.get_result()), args)])
 
 
-def type_UNEXPOSED(typ):
+def type_UNEXPOSED(typ: Type) -> ast.Symbol:
   return type_to_ehlit(typ.get_canonical())

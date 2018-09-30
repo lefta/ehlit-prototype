@@ -1,22 +1,26 @@
-from typing import Callable, Generic, List, Tuple, TypeVar, Union
+from typing import Callable, Generic, Iterable, List, Tuple, TypeVar, Union
 import typing
 import re
 
 T = TypeVar('T')
-TokenType = Union['ParsingExpression', str, Callable[[], List[object]], List[object]]
+
+# These could be improved a lot once mypy supports recursive grammars
+TokenType = Union['ParsingExpression', str, Callable[[], object], List[object]]
+GrammarType = Union[TokenType, Iterable[TokenType], Iterable[object]]
 
 
-class ParseTree:
-    pass
-
-
-class NoMatch(Exception):
-    pass
+class ParseTreeNode:
+    position: int
 
 
 class ParsingExpression:
     def __init__(self, *elements: TokenType, **kwargs: Union[str, bool]) -> None:
         pass
+
+
+class NoMatch(Exception):
+    position: int
+    rules: List[ParsingExpression]
 
 
 class Repetition(ParsingExpression):
@@ -70,17 +74,17 @@ class And(ParsingExpression):
 
 
 class Parser:
-    def parse(self, text: str) -> ParseTree:
+    def parse(self, text: str) -> ParseTreeNode:
         pass
 
 
 class ParserPython(Parser):
     file_name: str
 
-    def __init__(self, fun: Callable[[], TokenType], debug: bool = True, **kwargs: bool) -> None:
+    def __init__(self, fun: Callable[[], GrammarType], debug: bool = True, **kwargs: bool) -> None:
         pass
 
-    def parse_file(self, file_name: str) -> ParseTree:
+    def parse_file(self, file_name: str) -> ParseTreeNode:
         pass
 
     def pos_to_linecol(self, pos: int) -> Tuple[int, int]:
@@ -91,5 +95,5 @@ class PTNodeVisitor(Generic[T]):
     pass
 
 
-def visit_parse_tree(parse_tree: ParseTree, visitor: PTNodeVisitor[T]) -> T:
+def visit_parse_tree(parse_tree: ParseTreeNode, visitor: PTNodeVisitor[T]) -> T:
     pass

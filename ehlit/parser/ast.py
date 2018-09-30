@@ -778,7 +778,7 @@ class Statement(Node):
     return self
 
 
-class Expression(Node):
+class Expression(Value):
   def __init__(self, contents: List[Value], parenthesised: bool) -> None:
     self.contents: List[Value] = contents
     self.parenthesised: bool = parenthesised
@@ -795,6 +795,10 @@ class Expression(Node):
   @property
   def is_parenthesised(self) -> bool:
     return self.parenthesised
+
+  @property
+  def typ(self) -> Type:
+    return self.contents[0].typ
 
 
 class Cast(Value):

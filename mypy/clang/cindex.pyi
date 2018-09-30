@@ -25,6 +25,7 @@ class TokenGroup(object):
 
 
 class TypeKind(object):
+    name: str
     INVALID: 'TypeKind'
     UNEXPOSED: 'TypeKind'
     VOID: 'TypeKind'
@@ -124,6 +125,8 @@ class Type(object):
     fully_qualified_name: Text
     kind: TypeKind
     spelling: Text
+    element_count: int
+    element_type: 'Type'
 
     def argument_types(self) -> Iterator['Type']:
         pass
@@ -141,6 +144,15 @@ class Type(object):
         pass
 
     def is_const_qualified(self) -> bool:
+        pass
+
+    def get_size(self) -> int:
+        pass
+
+    def is_function_variadic(self) -> bool:
+        pass
+
+    def get_fields(self) -> List['Cursor']:
         pass
 
 
@@ -217,6 +229,9 @@ class Cursor(object):
         pass
 
     def get_tokens(self) -> Iterator[Token]:
+        pass
+
+    def get_definition(self) -> Optional['Cursor']:
         pass
 
     def is_abstract_record(self) -> bool:

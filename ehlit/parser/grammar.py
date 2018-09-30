@@ -20,110 +20,118 @@
 # SOFTWARE.
 
 from arpeggio import RegExMatch, Optional, Sequence, ZeroOrMore, OneOrMore, Not, And, EOF
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+  from arpeggio import GrammarType
+else:
+  # Should fail passing if taken into account, set only to avoid an `undefined identifier
+  # "GrammarType"` error at runtime.
+  GrammarType = int
 
 
 class Context:
-  return_value = True
+  return_value: bool = True
 
 
 # Utilities
 ###########
 
-def trailing_comma():
+def trailing_comma() -> GrammarType:
   return Optional(',')
 
 
 # Comments
 ##########
 
-def block_comment():
+def block_comment() -> GrammarType:
   return ('/*', RegExMatch(r'[\s\S]*?(?=\*\/)'), '*/')
 
 
-def line_comment():
+def line_comment() -> GrammarType:
   return ('//', RegExMatch(r'.*$'))
 
 
-def comment():
+def comment() -> GrammarType:
   return [line_comment, block_comment]
 
 
 # Values
 ########
 
-def builtin_keyword():
+def builtin_keyword() -> GrammarType:
   return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', 'func', 'alias', 'switch', 'case',
           'fallthrough', 'default', 'struct', 'union', bool_value]
 
 
-def builtin_type():
+def builtin_type() -> GrammarType:
   return ['int', 'int8', 'int16', 'int32', 'int64', 'uint', 'uint8', 'uint16', 'uin32', 'uint64',
           'char', 'str', 'bool', 'void', 'any', 'size']
 
 
-def identifier():
+def identifier() -> GrammarType:
   return Not(builtin_keyword), [builtin_type,
                                 RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='identifier')]
 
 
-def compound_identifier():
+def compound_identifier() -> GrammarType:
   return identifier, ZeroOrMore('.', identifier)
 
 
-def char():
+def char() -> GrammarType:
   return ('\'', Sequence(RegExMatch(r'\\[abefnrtv0\\]|[^\']', str_repr='character'), skipws=False),
           '\'')
 
 
-def string():
+def string() -> GrammarType:
   return '"', RegExMatch(r'(\\"|[^"])*'), '"'
 
 
-def number():
+def number() -> GrammarType:
   return RegExMatch(r'-?[0-9]+', str_repr='number')
 
 
-def null_value():
+def null_value() -> GrammarType:
   return 'null'
 
 
-def bool_value():
+def bool_value() -> GrammarType:
   return ['true', 'false']
 
 
-def referenced_value():
+def referenced_value() -> GrammarType:
   return 'ref', writable_value
 
 
-def function_call():
+def function_call() -> GrammarType:
   return [full_type, compound_identifier], '(', ZeroOrMore(expression, sep=','), trailing_comma, ')'
 
 
-def writable_value():
+def writable_value() -> GrammarType:
   return [referenced_value, compound_identifier]
 
 
-def disambiguated_prefix_operator_value():
+def disambiguated_prefix_operator_value() -> GrammarType:
   return "", Sequence(['++', '--'], And(['ref', compound_identifier]), skipws=False)
 
 
-def prefix_operator_value():
+def prefix_operator_value() -> GrammarType:
   return [disambiguated_prefix_operator_value, '!'], writable_value
 
 
-def suffix_operator_value():
+def suffix_operator_value() -> GrammarType:
   return writable_value, Sequence(['++', '--'], skipws=False)
 
 
-def sizeof():
+def sizeof() -> GrammarType:
   return 'sizeof', '(', full_type, ')'
 
 
-def array_access():
+def array_access() -> GrammarType:
   return ZeroOrMore('[', expression, ']')
 
 
-def value():
+def value() -> GrammarType:
   return [null_value, bool_value, sizeof, function_call, prefix_operator_value,
           suffix_operator_value, writable_value, string, char, number], array_access
 
@@ -131,259 +139,259 @@ def value():
 # Operators & assigment
 #######################
 
-def equality_sequence():
+def equality_sequence() -> GrammarType:
   return value, '==', value, OneOrMore('==', value)
 
 
-def inequality_sequence():
+def inequality_sequence() -> GrammarType:
   return value, '!=', value, OneOrMore('!=', value)
 
 
-def lesser_than_sequence():
+def lesser_than_sequence() -> GrammarType:
   return value, ['<=', '<'], value, ['<=', '<'], value
 
 
-def greater_than_sequence():
+def greater_than_sequence() -> GrammarType:
   return value, ['>=', '>'], value, ['>=', '>'], value
 
 
-def operator_sequence():
+def operator_sequence() -> GrammarType:
   return [equality_sequence, inequality_sequence, lesser_than_sequence, greater_than_sequence]
 
 
-def mathematical_operator():
+def mathematical_operator() -> GrammarType:
   return ['+', '-', '*', '/', '%']
 
 
-def boolean_operator():
+def boolean_operator() -> GrammarType:
   return ['==', '!=', '>=', '<=', '>', '<', '||', '&&']
 
 
-def operator():
+def operator() -> GrammarType:
   return [mathematical_operator, boolean_operator]
 
 
-def parenthesised_expression():
+def parenthesised_expression() -> GrammarType:
   return '(', expression, ')'
 
 
-def expression():
+def expression() -> GrammarType:
   return [operator_sequence, value, parenthesised_expression], Optional(operator, expression)
 
 
-def assignment():
+def assignment() -> GrammarType:
   return '=', expression
 
 
-def operation_assignment():
+def operation_assignment() -> GrammarType:
   return Optional(mathematical_operator), assignment
 
 
 # Types
 #######
 
-def modifier():
+def modifier() -> GrammarType:
   return Optional('const')
 
 
-def array_element():
+def array_element() -> GrammarType:
   return '[', Optional(expression), ']'
 
 
-def array():
+def array() -> GrammarType:
   return ZeroOrMore(array_element)
 
 
-def reference():
+def reference() -> GrammarType:
   return 'ref', array, full_type
 
 
-def function_type_args():
+def function_type_args() -> GrammarType:
   return Optional(full_type), ZeroOrMore(',', full_type), trailing_comma
 
 
-def function_type():
+def function_type() -> GrammarType:
   return 'func', '<', full_type, '(', function_type_args, ')', '>'
 
 
-def full_type():
+def full_type() -> GrammarType:
   return [function_type, (modifier, [reference, compound_identifier], array)]
 
 
 # Statements
 ############
 
-def variable_declaration():
+def variable_declaration() -> GrammarType:
   return full_type, identifier
 
 
-def variable_declaration_assignable():
+def variable_declaration_assignable() -> GrammarType:
   return variable_declaration, Optional(assignment)
 
 
-def variable_assignment():
+def variable_assignment() -> GrammarType:
   return [referenced_value, compound_identifier], Optional(array_access), operation_assignment
 
 
-def return_instruction():
+def return_instruction() -> GrammarType:
   if Context.return_value:
     return 'return', expression
   return 'return'
 
 
-def statement():
+def statement() -> GrammarType:
   return [return_instruction, variable_assignment, variable_declaration_assignable, expression]
 
 
-def instruction():
+def instruction() -> GrammarType:
   return [comment, condition, while_loop, switch, alias, statement]
 
 
 # Control Structures
 ####################
 
-def control_structure_body():
+def control_structure_body() -> GrammarType:
   return '{', ZeroOrMore(instruction), '}'
 
 
-def control_structure():
+def control_structure() -> GrammarType:
   return expression, [instruction, control_structure_body]
 
 
-def if_condition():
+def if_condition() -> GrammarType:
   return 'if', control_structure
 
 
-def elif_condition():
+def elif_condition() -> GrammarType:
   return 'elif', control_structure
 
 
-def else_condition():
+def else_condition() -> GrammarType:
   return 'else', [instruction, control_structure_body]
 
 
-def condition():
+def condition() -> GrammarType:
   return if_condition, ZeroOrMore(elif_condition), Optional(else_condition)
 
 
-def while_loop():
+def while_loop() -> GrammarType:
   return 'while', control_structure
 
 
-def switch_case_test():
+def switch_case_test() -> GrammarType:
   return ['default', ('case', value)]
 
 
-def switch_case_body():
+def switch_case_body() -> GrammarType:
   return OneOrMore(instruction), Optional('fallthrough')
 
 
-def switch_case_body_block():
+def switch_case_body_block() -> GrammarType:
   return '{', OneOrMore(instruction), Optional('fallthrough'), '}'
 
 
-def switch_cases():
+def switch_cases() -> GrammarType:
   return OneOrMore(switch_case_test), [switch_case_body, switch_case_body_block]
 
 
-def switch():
+def switch() -> GrammarType:
   return 'switch', value, '{', ZeroOrMore(switch_cases), '}'
 
 
 # Control structures stub
 #########################
 
-def open_brace():
+def open_brace() -> GrammarType:
   return RegExMatch(r'\s*{')
 
 
-def close_brace():
+def close_brace() -> GrammarType:
   return RegExMatch(r'[^{}]*}')
 
 
-def control_structure_potential_closing_brace():
+def control_structure_potential_closing_brace() -> GrammarType:
   return [And(RegExMatch('[^{}]*}')), RegExMatch('[^{}]*')]
 
 
-def control_structure_body_stub_braces():
+def control_structure_body_stub_braces() -> GrammarType:
   return ZeroOrMore(RegExMatch('[^{}]*{[^{}]*'),
                     ZeroOrMore(control_structure_body_stub_inner, Optional(RegExMatch('[^{}]*'))),
                     close_brace, control_structure_potential_closing_brace)
 
 
-def control_structure_body_stub_inner():
+def control_structure_body_stub_inner() -> GrammarType:
   return (open_brace, [control_structure_body_stub_braces,
           control_structure_potential_closing_brace], close_brace)
 
 
-def control_structure_body_stub():
+def control_structure_body_stub() -> GrammarType:
   return Sequence(control_structure_body_stub_inner, skipws=False)
 
 
 # Functions
 ###########
 
-def function_prototype():
+def function_prototype() -> GrammarType:
   return (full_type, identifier, '(', ZeroOrMore(variable_declaration_assignable, sep=','),
           trailing_comma, ')')
 
 
-def function_declaration():
+def function_declaration() -> GrammarType:
   return function_prototype, Not('{')
 
 
-def function_definition():
+def function_definition() -> GrammarType:
   return function_prototype, control_structure_body_stub
 
 
-def function():
+def function() -> GrammarType:
   return [function_definition, function_declaration]
 
 
 # External includes
 ###################
 
-def include_part():
+def include_part() -> GrammarType:
   return RegExMatch(r'[^/ \n\t\r\f\v]+', str_repr='include path part')
 
 
-def include_instruction():
+def include_instruction() -> GrammarType:
   return 'include', OneOrMore(include_part, sep='/')
 
 
-def import_part():
+def import_part() -> GrammarType:
   return RegExMatch(r'[^/. \n\t\r\f\v]+', str_repr='import path part')
 
 
-def import_instruction():
+def import_instruction() -> GrammarType:
   return 'import', OneOrMore(import_part, sep='.')
 
 
 # Misc
 ######
 
-def alias():
+def alias() -> GrammarType:
   return 'alias', full_type, identifier
 
 
 # Container structures
 ######################
 
-def struct():
+def struct() -> GrammarType:
   return 'struct', identifier, Optional('{', ZeroOrMore(variable_declaration), '}')
 
 
-def union():
+def union() -> GrammarType:
   return 'union', identifier, Optional('{', ZeroOrMore(variable_declaration), '}')
 
 
 # Root grammars
 ###############
 
-def function_body_grammar():
+def function_body_grammar() -> GrammarType:
   return '{', ZeroOrMore(instruction), '}', EOF
 
 
-def grammar():
+def grammar() -> GrammarType:
   return ZeroOrMore([comment, import_instruction, include_instruction, struct, union, alias,
                      function]), EOF
