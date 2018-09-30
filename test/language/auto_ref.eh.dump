@@ -87,17 +87,17 @@
       │     │  └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
-      │           └─ FunctionCall
-      │              ├─ Reference
-      │              │  └─ CompoundIdentifier
-      │              │     └─ Identifier: fun
-      │              └─ Arguments
-      │                 ├─ Expression
-      │                 │  └─ CompoundIdentifier
-      │                 │     └─ Identifier: i
-      │                 └─ Expression
-      │                    └─ CompoundIdentifier
-      │                       └─ Identifier: j
+      │           └─ Reference
+      │              └─ FunctionCall
+      │                 ├─ CompoundIdentifier
+      │                 │  └─ Identifier: fun
+      │                 └─ Arguments
+      │                    ├─ Expression
+      │                    │  └─ CompoundIdentifier
+      │                    │     └─ Identifier: i
+      │                    └─ Expression
+      │                       └─ CompoundIdentifier
+      │                          └─ Identifier: j
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier

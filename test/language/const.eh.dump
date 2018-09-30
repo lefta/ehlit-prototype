@@ -51,15 +51,15 @@
       │     │  └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
-      │           └─ FunctionCall
-      │              ├─ Reference
-      │              │  └─ CompoundIdentifier
-      │              │     └─ Identifier: print_int
-      │              └─ Arguments
-      │                 └─ Expression
-      │                    └─ Reference
-      │                       └─ CompoundIdentifier
-      │                          └─ Identifier: i
+      │           └─ Reference
+      │              └─ FunctionCall
+      │                 ├─ CompoundIdentifier
+      │                 │  └─ Identifier: print_int
+      │                 └─ Arguments
+      │                    └─ Expression
+      │                       └─ Reference
+      │                          └─ CompoundIdentifier
+      │                             └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration

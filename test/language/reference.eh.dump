@@ -215,19 +215,19 @@
       │     │     └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
-      │           └─ FunctionCall
-      │              ├─ Reference
-      │              │  └─ CompoundIdentifier
-      │              │     └─ Identifier: set_int_to
-      │              └─ Arguments
-      │                 ├─ Expression
-      │                 │  └─ Reference
-      │                 │     └─ CompoundIdentifier
-      │                 │        └─ Identifier: i
-      │                 └─ Expression
-      │                    └─ Reference
-      │                       └─ CompoundIdentifier
-      │                          └─ Identifier: j
+      │           └─ Reference
+      │              └─ FunctionCall
+      │                 ├─ CompoundIdentifier
+      │                 │  └─ Identifier: set_int_to
+      │                 └─ Arguments
+      │                    ├─ Expression
+      │                    │  └─ Reference
+      │                    │     └─ CompoundIdentifier
+      │                    │        └─ Identifier: i
+      │                    └─ Expression
+      │                       └─ Reference
+      │                          └─ CompoundIdentifier
+      │                             └─ Identifier: j
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier

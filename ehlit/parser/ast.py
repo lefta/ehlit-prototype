@@ -829,41 +829,61 @@ class FunctionCall(Value):
     self.sym: Symbol = sym
     self.args: List[Expression] = args
 
-  def build(self, parent: Node) -> Union['FunctionCall', Cast]:
+  def build(self, parent: Node) -> Value:
     super().build(parent)
     self.sym = self.sym.build(self)
     if self.sym.is_type:
       cast: Cast = Cast(self.pos, self.sym, self.args)
       cast = cast.build(parent)
       return cast
+    self.args = [a.build(self) for a in self.args]
+    self._check()
+    return self._reorder()
+
+  def _check(self) -> None:
+    if self.sym.decl is None:
+      return
+    typ: Type = self.sym.decl.typ
+    if not isinstance(typ, FunctionType):
+      self.error(self.pos, "calling non function type {}".format(self.sym.repr))
+      return
+    diff = len(self.args) - len(typ.args)
+    i = 0
+    while i < len(typ.args):
+      if i >= len(self.args):
+        assign: Optional[Assignment] = typ.args[i].assign
+        if assign is not None:
+          self.args.append(assign.expr)
+          diff += 1
+        else:
+          break
+      i += 1
+    if diff < 0 or (diff > 0 and not typ.is_variadic):
+      self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(
+        'not enough' if diff < 0 else 'too many', self.sym.repr, len(typ.args),
+        len(self.args)))
+    i = 0
+    while i < len(self.args) and i < len(typ.args):
+      self.args[i].auto_cast(typ.args[i].typ)
+      i += 1
+
+  def _reorder(self) -> 'Value':
+    parent: Optional[Value] = None
+    while not isinstance(self.sym, CompoundIdentifier):
+      if parent is None:
+        parent = self.sym
+      sym = self.sym
+      self.sym = sym.child
+      sym.child = self
+      sym.parent = self.parent
+      self.parent = sym
+    if parent is None:
+      return self
     # Avoid symbol to write ref offsets, this will conflict with ours.
     self.sym.ref_offset = 0
-    self.args = [a.build(self) for a in self.args]
-    if self.sym.decl is not None:
-      typ = self.sym.decl.typ
-      if not isinstance(typ, FunctionType):
-        self.error(self.pos, "calling non function type {}".format(self.sym.repr))
-        return self
-      diff = len(self.args) - len(typ.args)
-      i = 0
-      while i < len(typ.args):
-        if i >= len(self.args):
-          assign: Optional[Assignment] = typ.args[i].assign
-          if assign is not None:
-            self.args.append(assign.expr)
-            diff += 1
-          else:
-            break
-        i += 1
-      if diff < 0 or (diff > 0 and not typ.is_variadic):
-        self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(
-          'not enough' if diff < 0 else 'too many', self.sym.repr, len(typ.args),
-          len(self.args)))
-      i = 0
-      while i < len(self.args) and i < len(typ.args):
-        self.args[i].auto_cast(typ.args[i].typ)
-        i += 1
-    return self
+    # Dirty trick to make Reference ref_offset applied to us again
+    parent.build(parent.parent)
+    return parent
 
   @property
   def typ(self) -> Type:
