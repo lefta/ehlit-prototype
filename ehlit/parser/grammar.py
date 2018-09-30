@@ -76,7 +76,7 @@ def char():
 
 
 def string():
-  return '"', RegExMatch(r'[^"]*'), '"'
+  return '"', RegExMatch(r'(\\"|[^"])*'), '"'
 
 
 def number():
