@@ -142,9 +142,12 @@ class EhlitTestCase(TestCase):
 			class args:
 				source = ''
 				output_import_file = '-'
-			ast = ehlit.parser.parse(src)
-			ast.build_ast(args)
-			ehlit.writer.WriteDump(ast)
+			try:
+				ast = ehlit.parser.parse(src)
+				ast.build_ast(args)
+				ehlit.writer.WriteDump(ast)
+			except ehlit.parser.ParseError:
+				raise AssertionError('Generation crashed')
 			self.logHandler.flush()
 			self.tearDown()
 			return re.sub(self.dump_repl, '', self.logStream.getvalue().replace('\n--- AST ---\n', ''))
