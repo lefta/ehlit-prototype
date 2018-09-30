@@ -7,12 +7,12 @@
       │     ├─ VariableDeclaration
       │     │  └─ Declaration
       │     │     ├─ CompoundIdentifier
-      │     │     │  └─ Identifier: int32
+      │     │     │  └─ Identifier: @int32
       │     │     └─ Identifier: field1
       │     └─ VariableDeclaration
       │        └─ Declaration
       │           ├─ CompoundIdentifier
-      │           │  └─ Identifier: str
+      │           │  └─ Identifier: @str
       │           └─ Identifier: field2
       ├─ Struct
       │  ├─ Identifier: 
@@ -20,7 +20,7 @@
       │     └─ VariableDeclaration
       │        └─ Declaration
       │           ├─ CompoundIdentifier
-      │           │  └─ Identifier: int32
+      │           │  └─ Identifier: @int32
       │           └─ Identifier: field1
       ├─ Alias
       │  ├─ From:
@@ -30,7 +30,7 @@
       │  │        └─ VariableDeclaration
       │  │           └─ Declaration
       │  │              ├─ CompoundIdentifier
-      │  │              │  └─ Identifier: int32
+      │  │              │  └─ Identifier: @int32
       │  │              └─ Identifier: field1
       │  └─ To:
       │     └─ Identifier: test_struct_t
@@ -40,7 +40,7 @@
             ├─ VariableDeclaration
             │  └─ Declaration
             │     ├─ CompoundIdentifier
-            │     │  └─ Identifier: any
+            │     │  └─ Identifier: @any
             │     └─ Identifier: contents
             └─ VariableDeclaration
                └─ Declaration

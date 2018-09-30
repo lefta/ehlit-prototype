@@ -1,1 +1,1 @@
-language_error/missing_func_decl_type.eh:1:5: expected '.' or '[' or identifier
+language_error/missing_func_decl_type.eh:1:5: expected '.' or '[' or int or int8 or int16 or int32 or int64 or uint or uint8 or uint16 or uin32 or uint64 or char or str or bool or void or any or size or identifier

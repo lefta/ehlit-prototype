@@ -5,4 +5,4 @@
          ├─ Identifier: fun
          └─ FunctionType
             └─ CompoundIdentifier
-               └─ Identifier: void
+               └─ Identifier: @void

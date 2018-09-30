@@ -3,12 +3,12 @@
 │  │  ├─ Identifier: take_char
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: char
+│  │              │  └─ Identifier: @char
 │  │              └─ Identifier: c
 │  └─ FunctionBody
 └─ FunctionDefinition
@@ -16,13 +16,13 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: char
+      │     │  │  └─ Identifier: @char
       │     │  └─ Identifier: c
       │     └─ Assignment
       │        └─ Expression
@@ -103,7 +103,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: char
+      │     │  │  └─ Identifier: @char
       │     │  └─ Identifier: space
       │     └─ Assignment
       │        └─ Expression

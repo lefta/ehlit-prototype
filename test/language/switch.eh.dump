@@ -3,25 +3,25 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     ├─ CompoundIdentifier
-   │     │  └─ Identifier: int
+   │     │  └─ Identifier: @int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
    │        │  └─ Declaration
    │        │     ├─ CompoundIdentifier
-   │        │     │  └─ Identifier: int
+   │        │     │  └─ Identifier: @int
    │        │     └─ Identifier: ac
    │        └─ VariableDeclaration
    │           └─ Declaration
    │              ├─ Array
    │              │  └─ CompoundIdentifier
-   │              │     └─ Identifier: str
+   │              │     └─ Identifier: @str
    │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
       │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: int
+      │        │  └─ Identifier: @int
       │        └─ Identifier: res
       ├─ ControlStructure: switch
       │  ├─ CompoundIdentifier

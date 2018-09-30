@@ -3,12 +3,12 @@
 │  │  ├─ Identifier: want_int
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: int
+│  │              │  └─ Identifier: @int
 │  │              └─ Identifier: n
 │  └─ FunctionBody
 └─ FunctionDefinition
@@ -16,18 +16,18 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     ├─ CompoundIdentifier
-   │     │  └─ Identifier: int
+   │     │  └─ Identifier: @int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
    │        │  └─ Declaration
    │        │     ├─ CompoundIdentifier
-   │        │     │  └─ Identifier: int
+   │        │     │  └─ Identifier: @int
    │        │     └─ Identifier: ac
    │        └─ VariableDeclaration
    │           └─ Declaration
    │              ├─ Array
    │              │  └─ CompoundIdentifier
-   │              │     └─ Identifier: str
+   │              │     └─ Identifier: @str
    │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
@@ -39,7 +39,7 @@
       │           └─ Expression
       │              └─ Cast
       │                 ├─ CompoundIdentifier
-      │                 │  └─ Identifier: int
+      │                 │  └─ Identifier: @int
       │                 └─ Expression
       │                    └─ Reference
       │                       └─ CompoundIdentifier
@@ -48,13 +48,13 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: any
+      │     │  │  └─ Identifier: @any
       │     │  └─ Identifier: test
       │     └─ Assignment
       │        └─ Expression
       │           └─ Cast
       │              ├─ CompoundIdentifier
-      │              │  └─ Identifier: str
+      │              │  └─ Identifier: @str
       │              └─ Expression
       │                 └─ CompoundIdentifier
       │                    └─ Identifier: ac
@@ -62,7 +62,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: size
+      │     │  │  └─ Identifier: @size
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
@@ -72,7 +72,7 @@
       │              └─ Cast
       │                 ├─ Array
       │                 │  └─ CompoundIdentifier
-      │                 │     └─ Identifier: size
+      │                 │     └─ Identifier: @size
       │                 └─ Expression
       │                    └─ CompoundIdentifier
       │                       └─ Identifier: av
@@ -80,7 +80,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: char
+      │     │  │  └─ Identifier: @char
       │     │  └─ Identifier: c
       │     └─ Assignment
       │        └─ Expression
@@ -89,7 +89,7 @@
       │              │  └─ Number: 0
       │              └─ Cast
       │                 ├─ CompoundIdentifier
-      │                 │  └─ Identifier: str
+      │                 │  └─ Identifier: @str
       │                 └─ Expression
       │                    └─ CompoundIdentifier
       │                       └─ Identifier: ac

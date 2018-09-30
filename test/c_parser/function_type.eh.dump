@@ -3,30 +3,30 @@
    └─ Symbols found
       ├─ Alias
       │  ├─ From:
-      │  │  └─ TemplatedIdentifier: func
+      │  │  └─ TemplatedIdentifier: @func
       │  │     └─ Types
       │  │        └─ FunctionType
       │  │           ├─ CompoundIdentifier
-      │  │           │  └─ Identifier: str
+      │  │           │  └─ Identifier: @str
       │  │           └─ Arguments:
       │  │              └─ CompoundIdentifier
-      │  │                 └─ Identifier: int32
+      │  │                 └─ Identifier: @int32
       │  └─ To:
       │     └─ Identifier: fun
       └─ FunctionDeclaration
          ├─ Identifier: fun2
          └─ FunctionType
             ├─ CompoundIdentifier
-            │  └─ Identifier: void
+            │  └─ Identifier: @void
             └─ Arguments:
                └─ VariableDeclaration
                   └─ Declaration
-                     ├─ TemplatedIdentifier: func
+                     ├─ TemplatedIdentifier: @func
                      │  └─ Types
                      │     └─ FunctionType
                      │        ├─ CompoundIdentifier
-                     │        │  └─ Identifier: str
+                     │        │  └─ Identifier: @str
                      │        └─ Arguments:
                      │           └─ CompoundIdentifier
-                     │              └─ Identifier: int32
+                     │              └─ Identifier: @int32
                      └─ Identifier: param

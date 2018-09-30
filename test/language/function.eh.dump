@@ -3,12 +3,12 @@
 │  │  ├─ Identifier: simple_fn
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: int
+│  │              │  └─ Identifier: @int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 ├─ FunctionDefinition
@@ -16,12 +16,12 @@
 │  │  ├─ Identifier: simple_fn_str
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: str
+│  │              │  └─ Identifier: @str
 │  │              └─ Identifier: s
 │  └─ FunctionBody
 ├─ FunctionDefinition
@@ -30,7 +30,7 @@
 │  │  └─ FunctionType
 │  │     └─ Reference
 │  │        └─ CompoundIdentifier
-│  │           └─ Identifier: int
+│  │           └─ Identifier: @int
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -41,13 +41,13 @@
 │  │  ├─ Identifier: inc
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: int
+│  │              │     └─ Identifier: @int
 │  │              └─ Identifier: nb
 │  └─ FunctionBody
 │     ├─ ConditionBranches
@@ -74,12 +74,12 @@
 │  │  ├─ Identifier: inner_parens
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: int
+│  │              │  └─ Identifier: @int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 │     ├─ ConditionBranches
@@ -149,17 +149,17 @@
 │  │  ├─ Identifier: func_with_default_params
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ CompoundIdentifier
-│  │        │     │  └─ Identifier: int
+│  │        │     │  └─ Identifier: @int
 │  │        │     └─ Identifier: par1
 │  │        └─ VariableDeclaration
 │  │           ├─ Declaration
 │  │           │  ├─ CompoundIdentifier
-│  │           │  │  └─ Identifier: int
+│  │           │  │  └─ Identifier: @int
 │  │           │  └─ Identifier: par2
 │  │           └─ Assignment
 │  │              └─ Expression
@@ -170,12 +170,12 @@
 │  │  ├─ Identifier: func_with_trailing_comma
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: int
+│  │              │  └─ Identifier: @int
 │  │              └─ Identifier: arg
 │  └─ FunctionBody
 ├─ FunctionDefinition
@@ -183,18 +183,18 @@
 │  │  ├─ Identifier: main
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: int
+│  │     │  └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ CompoundIdentifier
-│  │        │     │  └─ Identifier: int
+│  │        │     │  └─ Identifier: @int
 │  │        │     └─ Identifier: ac
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Array
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: str
+│  │              │     └─ Identifier: @str
 │  │              └─ Identifier: av
 │  └─ FunctionBody
 │     ├─ Statement
@@ -273,5 +273,5 @@
    │  ├─ Identifier: declared_later
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: void
+   │        └─ Identifier: @void
    └─ FunctionBody

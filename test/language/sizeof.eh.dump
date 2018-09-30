@@ -3,19 +3,19 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: int
+      │     │  │  └─ Identifier: @int
       │     │  └─ Identifier: sz
       │     └─ Assignment
       │        └─ Expression
       │           └─ Sizeof
       │              └─ CompoundIdentifier
-      │                 └─ Identifier: int
+      │                 └─ Identifier: @int
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier
@@ -25,7 +25,7 @@
       │           └─ Sizeof
       │              └─ Array
       │                 └─ CompoundIdentifier
-      │                    └─ Identifier: int
+      │                    └─ Identifier: @int
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier
@@ -35,7 +35,7 @@
       │           └─ Sizeof
       │              └─ Reference
       │                 └─ CompoundIdentifier
-      │                    └─ Identifier: int
+      │                    └─ Identifier: @int
       └─ Statement
          └─ Return
             └─ Expression

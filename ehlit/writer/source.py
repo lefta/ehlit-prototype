@@ -33,21 +33,21 @@ class SourceWriter:
     self.indent = 0
     self.in_import = 0
     self.types = {
-      'str': 'char*',
-      'any': 'void*',
-      'void': 'void',
-      'char': 'int8_t',
-      'int': 'int32_t',
-      'int8': 'int8_t',
-      'int16': 'int16_t',
-      'int32': 'int32_t',
-      'int64': 'int64_t',
-      'uint8': 'uint8_t',
-      'uint16': 'uint16_t',
-      'uint32': 'uint32_t',
-      'uint64': 'uint64_t',
-      'size': 'size_t',
-      'bool': 'uint8_t',
+      '@str': 'char*',
+      '@any': 'void*',
+      '@void': 'void',
+      '@char': 'int8_t',
+      '@int': 'int32_t',
+      '@int8': 'int8_t',
+      '@int16': 'int16_t',
+      '@int32': 'int32_t',
+      '@int64': 'int64_t',
+      '@uint8': 'uint8_t',
+      '@uint16': 'uint16_t',
+      '@uint32': 'uint32_t',
+      '@uint64': 'uint64_t',
+      '@size': 'size_t',
+      '@bool': 'uint8_t',
     }
 
     self.control_structures = {
@@ -140,7 +140,7 @@ class SourceWriter:
 
   def write_declaration_post(self, node):
     typ = type(node)
-    if typ is TemplatedIdentifier and node.name == 'func':
+    if typ is TemplatedIdentifier and node.name == '@func':
       self.file.write(')(')
       i = 0
       while i < len(node.typ.args):
@@ -299,7 +299,7 @@ class SourceWriter:
     self.write_value(arr)
     decl = arr.decl.typ
     sym = arr
-    while type(decl) is Array or type(decl) is Reference or BuiltinType('str') == decl:
+    while type(decl) is Array or type(decl) is Reference or BuiltinType('@str') == decl:
       if type(sym) is ArrayAccess:
         sym = sym.child
       if isinstance(decl, CompoundIdentifier):
@@ -307,7 +307,7 @@ class SourceWriter:
       decl = decl.child
     cur = sym.parent
     decl = decl.parent
-    while type(decl) is Array or type(decl) is Reference or BuiltinType('str') == decl:
+    while type(decl) is Array or type(decl) is Reference or BuiltinType('@str') == decl:
       if type(decl) is Reference:
         rdecl = decl
         while type(rdecl) is Reference:

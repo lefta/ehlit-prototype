@@ -3,12 +3,12 @@
 │  │  ├─ Identifier: printf
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: str
+│  │              │  └─ Identifier: @str
 │  │              └─ Identifier: s
 │  └─ FunctionBody
 └─ FunctionDefinition
@@ -16,18 +16,18 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     ├─ CompoundIdentifier
-   │     │  └─ Identifier: int
+   │     │  └─ Identifier: @int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
    │        │  └─ Declaration
    │        │     ├─ CompoundIdentifier
-   │        │     │  └─ Identifier: int
+   │        │     │  └─ Identifier: @int
    │        │     └─ Identifier: ac
    │        └─ VariableDeclaration
    │           └─ Declaration
    │              ├─ Array
    │              │  └─ CompoundIdentifier
-   │              │     └─ Identifier: str
+   │              │     └─ Identifier: @str
    │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement

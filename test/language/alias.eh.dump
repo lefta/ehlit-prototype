@@ -1,22 +1,22 @@
 ├─ Alias
 │  ├─ From:
 │  │  └─ CompoundIdentifier
-│  │     └─ Identifier: int
+│  │     └─ Identifier: @int
 │  └─ To:
 │     └─ Identifier: nb
 ├─ Alias
 │  ├─ From:
 │  │  └─ CompoundIdentifier
-│  │     └─ Identifier: void
+│  │     └─ Identifier: @void
 │  └─ To:
 │     └─ Identifier: nothing
 ├─ Alias
 │  ├─ From:
-│  │  └─ TemplatedIdentifier: func
+│  │  └─ TemplatedIdentifier: @func
 │  │     └─ Types
 │  │        └─ FunctionType
 │  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: void
+│  │           │  └─ Identifier: @void
 │  │           └─ Arguments:
 │  │              └─ Declaration
 │  │                 └─ CompoundIdentifier
@@ -34,7 +34,7 @@
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: int
+│  │              │     └─ Identifier: @int
 │  │              └─ Identifier: number
 │  └─ FunctionBody
 │     ├─ ConditionBranches
@@ -61,7 +61,7 @@
 │  │  ├─ Identifier: do_nothing
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration

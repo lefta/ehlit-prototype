@@ -3,18 +3,18 @@
 │  │  ├─ Identifier: fun
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: int
+│  │     │  └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ CompoundIdentifier
-│  │        │     │  └─ Identifier: int
+│  │        │     │  └─ Identifier: @int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: int
+│  │              │     └─ Identifier: @int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     └─ Statement
@@ -28,13 +28,13 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: int
+│  │     │     └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: int
+│  │              │     └─ Identifier: @int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 │     └─ Statement
@@ -47,20 +47,20 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
       │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: int
+      │        │  └─ Identifier: @int
       │        └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
       │        ├─ Reference
       │        │  └─ CompoundIdentifier
-      │        │     └─ Identifier: int
+      │        │     └─ Identifier: @int
       │        └─ Identifier: j
       ├─ Statement
       │  └─ VariableAssignment

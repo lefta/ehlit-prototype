@@ -3,19 +3,19 @@
 │  │  ├─ Identifier: fun1
 │  │  └─ FunctionType
 │  │     └─ CompoundIdentifier
-│  │        └─ Identifier: void
+│  │        └─ Identifier: @void
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun2
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: int
+│  │     │  └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: int
+│  │              │  └─ Identifier: @int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 ├─ FunctionDefinition
@@ -23,17 +23,17 @@
 │  │  ├─ Identifier: fun3
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: int
+│  │     │  └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ CompoundIdentifier
-│  │        │     │  └─ Identifier: int
+│  │        │     │  └─ Identifier: @int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: int
+│  │              │  └─ Identifier: @int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 ├─ FunctionDefinition
@@ -43,14 +43,14 @@
 │  │     ├─ Reference
 │  │     │  └─ Array
 │  │     │     └─ CompoundIdentifier
-│  │     │        └─ Identifier: int
+│  │     │        └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ Array
 │  │              │     └─ CompoundIdentifier
-│  │              │        └─ Identifier: int
+│  │              │        └─ Identifier: @int
 │  │              └─ Identifier: arr
 │  └─ FunctionBody
 ├─ FunctionDefinition
@@ -58,13 +58,13 @@
 │  │  ├─ Identifier: fun5
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: char
+│  │              │     └─ Identifier: @char
 │  │              └─ Identifier: c
 │  └─ FunctionBody
 └─ FunctionDefinition
@@ -72,16 +72,16 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ TemplatedIdentifier: func
+      │     │  ├─ TemplatedIdentifier: @func
       │     │  │  └─ Types
       │     │  │     └─ FunctionType
       │     │  │        └─ CompoundIdentifier
-      │     │  │           └─ Identifier: void
+      │     │  │           └─ Identifier: @void
       │     │  └─ Identifier: pfn1
       │     └─ Assignment
       │        └─ Expression
@@ -90,15 +90,15 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ TemplatedIdentifier: func
+      │     │  ├─ TemplatedIdentifier: @func
       │     │  │  └─ Types
       │     │  │     └─ FunctionType
       │     │  │        ├─ CompoundIdentifier
-      │     │  │        │  └─ Identifier: int
+      │     │  │        │  └─ Identifier: @int
       │     │  │        └─ Arguments:
       │     │  │           └─ Declaration
       │     │  │              └─ CompoundIdentifier
-      │     │  │                 └─ Identifier: int
+      │     │  │                 └─ Identifier: @int
       │     │  └─ Identifier: pfn2
       │     └─ Assignment
       │        └─ Expression
@@ -107,18 +107,18 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ TemplatedIdentifier: func
+      │     │  ├─ TemplatedIdentifier: @func
       │     │  │  └─ Types
       │     │  │     └─ FunctionType
       │     │  │        ├─ CompoundIdentifier
-      │     │  │        │  └─ Identifier: int
+      │     │  │        │  └─ Identifier: @int
       │     │  │        └─ Arguments:
       │     │  │           ├─ Declaration
       │     │  │           │  └─ CompoundIdentifier
-      │     │  │           │     └─ Identifier: int
+      │     │  │           │     └─ Identifier: @int
       │     │  │           └─ Declaration
       │     │  │              └─ CompoundIdentifier
-      │     │  │                 └─ Identifier: int
+      │     │  │                 └─ Identifier: @int
       │     │  └─ Identifier: pfn3
       │     └─ Assignment
       │        └─ Expression
@@ -127,19 +127,19 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ TemplatedIdentifier: func
+      │     │  ├─ TemplatedIdentifier: @func
       │     │  │  └─ Types
       │     │  │     └─ FunctionType
       │     │  │        ├─ Reference
       │     │  │        │  └─ Array
       │     │  │        │     └─ CompoundIdentifier
-      │     │  │        │        └─ Identifier: int
+      │     │  │        │        └─ Identifier: @int
       │     │  │        └─ Arguments:
       │     │  │           └─ Declaration
       │     │  │              └─ Reference
       │     │  │                 └─ Array
       │     │  │                    └─ CompoundIdentifier
-      │     │  │                       └─ Identifier: int
+      │     │  │                       └─ Identifier: @int
       │     │  └─ Identifier: pfn4
       │     └─ Assignment
       │        └─ Expression
@@ -148,16 +148,16 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ TemplatedIdentifier: func
+      │     │  ├─ TemplatedIdentifier: @func
       │     │  │  └─ Types
       │     │  │     └─ FunctionType
       │     │  │        ├─ CompoundIdentifier
-      │     │  │        │  └─ Identifier: void
+      │     │  │        │  └─ Identifier: @void
       │     │  │        └─ Arguments:
       │     │  │           └─ Declaration
       │     │  │              └─ Reference
       │     │  │                 └─ CompoundIdentifier
-      │     │  │                    └─ Identifier: char
+      │     │  │                    └─ Identifier: @char
       │     │  └─ Identifier: pfn5
       │     └─ Assignment
       │        └─ Expression
@@ -181,7 +181,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: int
+      │     │  │  └─ Identifier: @int
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
@@ -229,7 +229,7 @@
       │     │  ├─ Reference
       │     │  │  └─ Array
       │     │  │     └─ CompoundIdentifier
-      │     │  │        └─ Identifier: int
+      │     │  │        └─ Identifier: @int
       │     │  └─ Identifier: rai
       │     └─ Assignment
       │        └─ Expression
@@ -244,7 +244,7 @@
       │     ├─ Declaration
       │     │  ├─ Array
       │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: int
+      │     │  │     └─ Identifier: @int
       │     │  └─ Identifier: ai
       │     └─ Assignment
       │        └─ Expression
@@ -258,7 +258,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: str
+      │     │  │  └─ Identifier: @str
       │     │  └─ Identifier: s
       │     └─ Assignment
       │        └─ Expression

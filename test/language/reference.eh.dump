@@ -3,13 +3,13 @@
 │  │  ├─ Identifier: set_int
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: int
+│  │     │  └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: int
+│  │              │     └─ Identifier: @int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 │     ├─ Statement
@@ -30,19 +30,19 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: int
+│  │     │     └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
 │  │        │     │  └─ CompoundIdentifier
-│  │        │     │     └─ Identifier: int
+│  │        │     │     └─ Identifier: @int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: int
+│  │              │     └─ Identifier: @int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
@@ -65,19 +65,19 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: int
+│  │     │     └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
 │  │        │     │  └─ CompoundIdentifier
-│  │        │     │     └─ Identifier: int
+│  │        │     │     └─ Identifier: @int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: int
+│  │              │     └─ Identifier: @int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
@@ -103,21 +103,21 @@
 │  │     ├─ Reference
 │  │     │  └─ Reference
 │  │     │     └─ CompoundIdentifier
-│  │     │        └─ Identifier: int
+│  │     │        └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
 │  │        │     │  └─ Reference
 │  │        │     │     └─ CompoundIdentifier
-│  │        │     │        └─ Identifier: int
+│  │        │     │        └─ Identifier: @int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ Reference
 │  │              │     └─ CompoundIdentifier
-│  │              │        └─ Identifier: int
+│  │              │        └─ Identifier: @int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     ├─ Statement
@@ -144,21 +144,21 @@
 │  │  ├─ Identifier: set_int_ref_lv2
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
 │  │        │  └─ Declaration
 │  │        │     ├─ Reference
 │  │        │     │  └─ Reference
 │  │        │     │     └─ CompoundIdentifier
-│  │        │     │        └─ Identifier: int
+│  │        │     │        └─ Identifier: @int
 │  │        │     └─ Identifier: i
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ Reference
 │  │              │     └─ CompoundIdentifier
-│  │              │        └─ Identifier: int
+│  │              │        └─ Identifier: @int
 │  │              └─ Identifier: j
 │  └─ FunctionBody
 │     └─ Statement
@@ -176,20 +176,20 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
       │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: int
+      │        │  └─ Identifier: @int
       │        └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: int
+      │     │  │     └─ Identifier: @int
       │     │  └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
@@ -252,7 +252,7 @@
       │     │  ├─ Reference
       │     │  │  └─ Reference
       │     │  │     └─ CompoundIdentifier
-      │     │  │        └─ Identifier: int
+      │     │  │        └─ Identifier: @int
       │     │  └─ Identifier: k
       │     └─ Assignment
       │        └─ Expression

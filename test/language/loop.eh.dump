@@ -3,20 +3,20 @@
 │  │  ├─ Identifier: do_something
 │  │  └─ FunctionType
 │  │     └─ CompoundIdentifier
-│  │        └─ Identifier: void
+│  │        └─ Identifier: @void
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: int
+      │     │  │  └─ Identifier: @int
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression

@@ -6,7 +6,7 @@
 │  │     │  ├─ Modifiers: const
 │  │     │  └─ CompoundIdentifier
 │  │     │     ├─ Modifiers: const
-│  │     │     └─ Identifier: int
+│  │     │     └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
@@ -14,7 +14,7 @@
 │  │              │  ├─ Modifiers: const
 │  │              │  └─ CompoundIdentifier
 │  │              │     ├─ Modifiers: const
-│  │              │     └─ Identifier: int
+│  │              │     └─ Identifier: @int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 │     └─ Statement
@@ -28,14 +28,14 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
       │     │  │  ├─ Modifiers: const
-      │     │  │  └─ Identifier: int
+      │     │  │  └─ Identifier: @int
       │     │  └─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
@@ -47,7 +47,7 @@
       │     │  │  ├─ Modifiers: const
       │     │  │  └─ CompoundIdentifier
       │     │  │     ├─ Modifiers: const
-      │     │  │     └─ Identifier: int
+      │     │  │     └─ Identifier: @int
       │     │  └─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
@@ -66,7 +66,7 @@
       │     │  ├─ Reference
       │     │  │  └─ CompoundIdentifier
       │     │  │     ├─ Modifiers: const
-      │     │  │     └─ Identifier: int
+      │     │  │     └─ Identifier: @int
       │     │  └─ Identifier: k
       │     └─ Assignment
       │        └─ Expression
@@ -77,7 +77,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: int
+      │     │  │  └─ Identifier: @int
       │     │  └─ Identifier: l
       │     └─ Assignment
       │        └─ Expression
@@ -88,7 +88,7 @@
       │     │  ├─ Reference
       │     │  │  ├─ Modifiers: const
       │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: int
+      │     │  │     └─ Identifier: @int
       │     │  └─ Identifier: m
       │     └─ Assignment
       │        └─ Expression

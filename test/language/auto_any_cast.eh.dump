@@ -3,12 +3,12 @@
 │  │  ├─ Identifier: returning_any
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: any
+│  │     │  └─ Identifier: @any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: any
+│  │              │  └─ Identifier: @any
 │  │              └─ Identifier: data
 │  └─ FunctionBody
 │     └─ Statement
@@ -22,20 +22,20 @@
 │  │  └─ FunctionType
 │  │     ├─ Reference
 │  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: any
+│  │     │     └─ Identifier: @any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: any
+│  │              │     └─ Identifier: @any
 │  │              └─ Identifier: data
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableDeclaration
 │     │     ├─ Declaration
 │     │     │  ├─ CompoundIdentifier
-│     │     │  │  └─ Identifier: any
+│     │     │  │  └─ Identifier: @any
 │     │     │  └─ Identifier: dummy
 │     │     └─ Assignment
 │     │        └─ Expression
@@ -56,13 +56,13 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: int
+      │     │  │  └─ Identifier: @int
       │     │  └─ Identifier: number
       │     └─ Assignment
       │        └─ Expression
@@ -79,7 +79,7 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: int
+      │              │        └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
@@ -89,7 +89,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: int
+      │     │  │  └─ Identifier: @int
       │     │  └─ Identifier: number2
       │     └─ Assignment
       │        └─ Expression
@@ -99,7 +99,7 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: int
+      │              │        └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -108,7 +108,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: str
+      │     │  │  └─ Identifier: @str
       │     │  └─ Identifier: string
       │     └─ Assignment
       │        └─ Expression
@@ -124,7 +124,7 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ CompoundIdentifier
-      │              │     └─ Identifier: str
+      │              │     └─ Identifier: @str
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -133,7 +133,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: str
+      │     │  │  └─ Identifier: @str
       │     │  └─ Identifier: string2
       │     └─ Assignment
       │        └─ Expression
@@ -142,7 +142,7 @@
       │              │  └─ Identifier: returning_any
       │              ├─ Automatic cast
       │              │  └─ CompoundIdentifier
-      │              │     └─ Identifier: str
+      │              │     └─ Identifier: @str
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -152,7 +152,7 @@
       │     └─ Declaration
       │        ├─ Array
       │        │  └─ CompoundIdentifier
-      │        │     └─ Identifier: int
+      │        │     └─ Identifier: @int
       │        └─ Identifier: array
       ├─ Statement
       │  └─ VariableAssignment
@@ -166,7 +166,7 @@
       │              ├─ Automatic cast
       │              │  └─ Array
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: int
+      │              │        └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -176,7 +176,7 @@
       │     ├─ Declaration
       │     │  ├─ Array
       │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: int
+      │     │  │     └─ Identifier: @int
       │     │  └─ Identifier: array2
       │     └─ Assignment
       │        └─ Expression
@@ -186,7 +186,7 @@
       │              ├─ Automatic cast
       │              │  └─ Array
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: int
+      │              │        └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -206,7 +206,7 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: int
+      │              │        └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ ArrayAccess
@@ -218,7 +218,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: int
+      │     │  │  └─ Identifier: @int
       │     │  └─ Identifier: array0
       │     └─ Assignment
       │        └─ Expression
@@ -228,7 +228,7 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: int
+      │              │        └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ ArrayAccess
@@ -241,7 +241,7 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: int
+      │     │  │     └─ Identifier: @int
       │     │  └─ Identifier: rnb
       │     └─ Assignment
       │        └─ Expression
@@ -251,7 +251,7 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: int
+      │              │        └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
@@ -270,7 +270,7 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: int
+      │              │        └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -281,7 +281,7 @@
       │     │  ├─ Reference
       │     │  │  └─ Reference
       │     │  │     └─ CompoundIdentifier
-      │     │  │        └─ Identifier: int
+      │     │  │        └─ Identifier: @int
       │     │  └─ Identifier: rrnb
       │     └─ Assignment
       │        └─ Expression
@@ -292,7 +292,7 @@
       │              │  └─ Reference
       │              │     └─ Reference
       │              │        └─ CompoundIdentifier
-      │              │           └─ Identifier: int
+      │              │           └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
@@ -312,7 +312,7 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: int
+      │              │        └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -332,7 +332,7 @@
       │              │  └─ Reference
       │              │     └─ Reference
       │              │        └─ CompoundIdentifier
-      │              │           └─ Identifier: int
+      │              │           └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ Reference
@@ -353,7 +353,7 @@
       │              │  └─ Reference
       │              │     └─ Reference
       │              │        └─ CompoundIdentifier
-      │              │           └─ Identifier: int
+      │              │           └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -373,7 +373,7 @@
       │              │  └─ Reference
       │              │     └─ Reference
       │              │        └─ CompoundIdentifier
-      │              │           └─ Identifier: int
+      │              │           └─ Identifier: @int
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -383,7 +383,7 @@
       │     ├─ Declaration
       │     │  ├─ Reference
       │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: str
+      │     │  │     └─ Identifier: @str
       │     │  └─ Identifier: rstring
       │     └─ Assignment
       │        └─ Expression
@@ -393,7 +393,7 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: str
+      │              │        └─ Identifier: @str
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -410,7 +410,7 @@
       │              ├─ Automatic cast
       │              │  └─ Reference
       │              │     └─ CompoundIdentifier
-      │              │        └─ Identifier: str
+      │              │        └─ Identifier: @str
       │              └─ Arguments
       │                 └─ Expression
       │                    └─ CompoundIdentifier
@@ -419,13 +419,13 @@
       │  └─ VariableDeclaration
       │     └─ Declaration
       │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: any
+      │        │  └─ Identifier: @any
       │        └─ Identifier: a1
       ├─ Statement
       │  └─ VariableDeclaration
       │     └─ Declaration
       │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: any
+      │        │  └─ Identifier: @any
       │        └─ Identifier: a2
       ├─ Statement
       │  └─ VariableAssignment

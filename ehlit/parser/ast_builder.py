@@ -66,8 +66,11 @@ class ASTBuilder(PTNodeVisitor):
   # Values
   ########
 
+  def visit_builtin_type(self, node, children):
+    return '@' + str(node)
+
   def visit_identifier(self, node, children):
-    return ast.Identifier(node.position, str(node))
+    return ast.Identifier(node.position, str(children[0]))
 
   def visit_compound_identifier(self, node, children):
     return ast.CompoundIdentifier(children)
@@ -207,7 +210,7 @@ class ASTBuilder(PTNodeVisitor):
     return res
 
   def visit_function_type(self, node, children):
-    return ast.TemplatedIdentifier('func', [ast.FunctionType(
+    return ast.TemplatedIdentifier('@func', [ast.FunctionType(
       children[1],
       [] if len(children) is 2 else children[2]
     )])
@@ -327,7 +330,7 @@ class ASTBuilder(PTNodeVisitor):
     while i < len(children):
       args.append(children[i])
       i += 2
-    return ast.TemplatedIdentifier('func', [ast.FunctionType(children[0], args)]), children[1]
+    return ast.TemplatedIdentifier('@func', [ast.FunctionType(children[0], args)]), children[1]
 
   def visit_function_declaration(self, node, children):
     return ast.FunctionDeclaration(*children[0])

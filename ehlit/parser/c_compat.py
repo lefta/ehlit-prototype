@@ -109,9 +109,9 @@ int_types = {
 
 def type_to_ehlit(typ):
   if typ.kind.name in uint_types:
-    return ast.CompoundIdentifier([ast.Identifier(0, 'uint' + str(typ.get_size() * 8))])
+    return ast.CompoundIdentifier([ast.Identifier(0, '@uint' + str(typ.get_size() * 8))])
   if typ.kind.name in int_types:
-    return ast.CompoundIdentifier([ast.Identifier(0, 'int' + str(typ.get_size() * 8))])
+    return ast.CompoundIdentifier([ast.Identifier(0, '@int' + str(typ.get_size() * 8))])
 
   try:
     return globals()['type_' + typ.kind.name](typ)
@@ -187,7 +187,7 @@ def parse_FUNCTION_DECL(cursor):
       args.append(ast.VariableDeclaration(type_to_ehlit(c.type), ast.Identifier(0, c.spelling)))
 
   return ast.FunctionDeclaration(
-    ast.TemplatedIdentifier('func', [ast.FunctionType(
+    ast.TemplatedIdentifier('@func', [ast.FunctionType(
       type_to_ehlit(cursor.type.get_result()),
       args,
       cursor.type.is_function_variadic()
@@ -230,20 +230,20 @@ def parse_UNION_DECL(cursor):
 
 
 def type_VOID(typ):
-  return ast.CompoundIdentifier([ast.Identifier(0, 'void')])
+  return ast.CompoundIdentifier([ast.Identifier(0, '@void')])
 
 
 def type_POINTER(typ):
   subtype = typ.get_pointee()
   builtin_type = {
-    TypeKind.CHAR_S: ast.CompoundIdentifier([ast.Identifier(0, 'str')]),
-    TypeKind.SCHAR: ast.CompoundIdentifier([ast.Identifier(0, 'str')]),
-    TypeKind.VOID: ast.CompoundIdentifier([ast.Identifier(0, 'any')])
+    TypeKind.CHAR_S: ast.CompoundIdentifier([ast.Identifier(0, '@str')]),
+    TypeKind.SCHAR: ast.CompoundIdentifier([ast.Identifier(0, '@str')]),
+    TypeKind.VOID: ast.CompoundIdentifier([ast.Identifier(0, '@any')])
   }.get(subtype.kind)
   if builtin_type is not None:
     return builtin_type
   res = type_to_ehlit(subtype)
-  if type(res) is ast.TemplatedIdentifier and res.name == 'func':
+  if type(res) is ast.TemplatedIdentifier and res.name == '@func':
     return res
   return ast.Reference(res)
 
@@ -288,7 +288,7 @@ def type_FUNCTIONPROTO(typ):
   args = []
   for a in typ.argument_types():
     args.append(type_to_ehlit(a))
-  return ast.TemplatedIdentifier('func', [ast.FunctionType(type_to_ehlit(typ.get_result()), args)])
+  return ast.TemplatedIdentifier('@func', [ast.FunctionType(type_to_ehlit(typ.get_result()), args)])
 
 
 def type_UNEXPOSED(typ):

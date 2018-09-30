@@ -375,10 +375,10 @@ class Value(Node):
     if isinstance(target_typ, Symbol):
       target_typ = target_typ.typ
     if self_typ != target_typ:
-      if self_typ == BuiltinType('any'):
+      if self_typ == BuiltinType('@any'):
         src = Value._from_any_aligned(target, self.typ, True)
         self.cast = src
-      elif target_typ == BuiltinType('any'):
+      elif target_typ == BuiltinType('@any'):
         target = Value._from_any_aligned(self, target, False)
         parent = self.parent
         if type(parent) is CompoundIdentifier:
@@ -487,7 +487,7 @@ class Symbol(Value, Type):
 
 class BuiltinType(Type, DeclarationBase):
   def make(parent: Node, name: str) -> 'CompoundIdentifier':
-    res = CompoundIdentifier([Identifier(parent.pos, name)])
+    res = CompoundIdentifier([Identifier(parent.pos, '@' + name)])
     res.build(parent)
     return res
 
@@ -505,7 +505,7 @@ class BuiltinType(Type, DeclarationBase):
 
   @property
   def child(self) -> Optional[Type]:
-    if self.name == 'str':
+    if self.name == '@str':
       return BuiltinType.make(self, 'char')
     return None
 
@@ -518,13 +518,13 @@ class BuiltinType(Type, DeclarationBase):
     return self
 
   def from_any(self) -> Type:
-    if self.name == 'str':
+    if self.name == '@str':
       return BuiltinType.make(self, 'str')
-    return Reference(BuiltinType.make(self, self.name))
+    return Reference(BuiltinType.make(self, self.name[1:]))
 
   @property
   def any_memory_offset(self) -> int:
-    return 0 if self.name == 'str' else 1
+    return 0 if self.name == '@str' else 1
 
   @property
   def name(self) -> str:
@@ -756,7 +756,7 @@ class FunctionDefinition(FunctionDeclaration, Scope):
       typ: Type = self.typ.ret
       if isinstance(typ, Symbol):
         typ = typ.solve()
-      self.body = parse_function(self.body_str.contents, not typ == BuiltinType('void'))
+      self.body = parse_function(self.body_str.contents, not typ == BuiltinType('@void'))
       for s in self.body:
         s.build(self)
     except ParseError as err:
@@ -1338,11 +1338,11 @@ class AST(UnorderedScope):
   def build_ast(self, args: OptionsStruct) -> None:
     super().build(Node(0))
     self.builtins: List[Type] = [
-      FunctionType(CompoundIdentifier([Identifier(0, 'any')]), []),
-      BuiltinType('int'), BuiltinType('int8'), BuiltinType('int16'), BuiltinType('int32'),
-      BuiltinType('int64'), BuiltinType('uint'), BuiltinType('uint8'), BuiltinType('uint16'),
-      BuiltinType('uint32'), BuiltinType('uint64'), BuiltinType('void'), BuiltinType('bool'),
-      BuiltinType('char'), BuiltinType('size'), BuiltinType('str'), BuiltinType('any'),
+      FunctionType(CompoundIdentifier([Identifier(0, '@any')]), []),
+      BuiltinType('@int'), BuiltinType('@int8'), BuiltinType('@int16'), BuiltinType('@int32'),
+      BuiltinType('@int64'), BuiltinType('@uint'), BuiltinType('@uint8'), BuiltinType('@uint16'),
+      BuiltinType('@uint32'), BuiltinType('@uint64'), BuiltinType('@void'), BuiltinType('@bool'),
+      BuiltinType('@char'), BuiltinType('@size'), BuiltinType('@str'), BuiltinType('@any'),
     ]
     self.builtins = [decl.build(self) for decl in self.builtins]
     self._import_paths = [

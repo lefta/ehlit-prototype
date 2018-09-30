@@ -3,12 +3,12 @@
 │  │  ├─ Identifier: puts
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: str
+│  │              │  └─ Identifier: @str
 │  │              └─ Identifier: s
 │  └─ FunctionBody
 └─ FunctionDefinition
@@ -16,18 +16,18 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     ├─ CompoundIdentifier
-   │     │  └─ Identifier: int
+   │     │  └─ Identifier: @int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
    │        │  └─ Declaration
    │        │     ├─ CompoundIdentifier
-   │        │     │  └─ Identifier: int
+   │        │     │  └─ Identifier: @int
    │        │     └─ Identifier: ac
    │        └─ VariableDeclaration
    │           └─ Declaration
    │              ├─ Array
    │              │  └─ CompoundIdentifier
-   │              │     └─ Identifier: str
+   │              │     └─ Identifier: @str
    │              └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
@@ -35,7 +35,7 @@
       │     ├─ Declaration
       │     │  ├─ Array
       │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: str
+      │     │  │     └─ Identifier: @str
       │     │  └─ Identifier: av2
       │     └─ Assignment
       │        └─ Expression
@@ -96,7 +96,7 @@
       │        ├─ Array
       │        │  └─ Array
       │        │     └─ CompoundIdentifier
-      │        │        └─ Identifier: int
+      │        │        └─ Identifier: @int
       │        └─ Identifier: sarr1
       ├─ Statement
       │  └─ VariableDeclaration
@@ -106,7 +106,7 @@
       │        │  │  └─ Array
       │        │  │     ├─ Sub-type:
       │        │  │     │  └─ CompoundIdentifier
-      │        │  │     │     └─ Identifier: int
+      │        │  │     │     └─ Identifier: @int
       │        │  │     └─ Length:
       │        │  │        └─ Expression
       │        │  │           └─ Number: 5
@@ -134,7 +134,7 @@
       │        │  ├─ Sub-type:
       │        │  │  └─ Array
       │        │  │     └─ CompoundIdentifier
-      │        │  │        └─ Identifier: int
+      │        │  │        └─ Identifier: @int
       │        │  └─ Length:
       │        │     └─ Expression
       │        │        └─ Number: 20
@@ -146,7 +146,7 @@
       │        │  └─ Array
       │        │     ├─ Sub-type:
       │        │     │  └─ CompoundIdentifier
-      │        │     │     └─ Identifier: int
+      │        │     │     └─ Identifier: @int
       │        │     └─ Length:
       │        │        └─ Expression
       │        │           └─ Number: 20
@@ -160,7 +160,7 @@
       │        │  │     └─ Array
       │        │  │        ├─ Sub-type:
       │        │  │        │  └─ CompoundIdentifier
-      │        │  │        │     └─ Identifier: int
+      │        │  │        │     └─ Identifier: @int
       │        │  │        └─ Length:
       │        │  │           └─ Expression
       │        │  │              └─ Number: 20
@@ -176,7 +176,7 @@
       │        │     ├─ Sub-type:
       │        │     │  └─ Array
       │        │     │     └─ CompoundIdentifier
-      │        │     │        └─ Identifier: int
+      │        │     │        └─ Identifier: @int
       │        │     └─ Length:
       │        │        └─ Expression
       │        │           └─ Number: 12
@@ -191,7 +191,7 @@
       │        │     │     └─ Array
       │        │     │        ├─ Sub-type:
       │        │     │        │  └─ CompoundIdentifier
-      │        │     │        │     └─ Identifier: int
+      │        │     │        │     └─ Identifier: @int
       │        │     │        └─ Length:
       │        │     │           └─ Expression
       │        │     │              └─ Number: 20
@@ -209,7 +209,7 @@
       │        │  │        ├─ Sub-type:
       │        │  │        │  └─ Array
       │        │  │        │     └─ CompoundIdentifier
-      │        │  │        │        └─ Identifier: int
+      │        │  │        │        └─ Identifier: @int
       │        │  │        └─ Length:
       │        │  │           └─ Expression
       │        │  │              └─ Number: 12
@@ -227,7 +227,7 @@
       │        │  │     │  └─ Array
       │        │  │     │     └─ Array
       │        │  │     │        └─ CompoundIdentifier
-      │        │  │     │           └─ Identifier: int
+      │        │  │     │           └─ Identifier: @int
       │        │  │     └─ Length:
       │        │  │        └─ Expression
       │        │  │           └─ Number: 12
@@ -245,7 +245,7 @@
       │        │        │  └─ Array
       │        │        │     ├─ Sub-type:
       │        │        │     │  └─ CompoundIdentifier
-      │        │        │     │     └─ Identifier: int
+      │        │        │     │     └─ Identifier: @int
       │        │        │     └─ Length:
       │        │        │        └─ Expression
       │        │        │           └─ Number: 20
@@ -263,7 +263,7 @@
       │        │     │     ├─ Sub-type:
       │        │     │     │  └─ Array
       │        │     │     │     └─ CompoundIdentifier
-      │        │     │     │        └─ Identifier: int
+      │        │     │     │        └─ Identifier: @int
       │        │     │     └─ Length:
       │        │     │        └─ Expression
       │        │     │           └─ Number: 12
@@ -278,7 +278,7 @@
       │        │  ├─ Sub-type:
       │        │  │  └─ Reference
       │        │  │     └─ CompoundIdentifier
-      │        │  │        └─ Identifier: int
+      │        │  │        └─ Identifier: @int
       │        │  └─ Length:
       │        │     └─ Expression
       │        │        └─ Number: 20
@@ -300,7 +300,7 @@
       │        │  └─ Array
       │        │     ├─ Sub-type:
       │        │     │  └─ CompoundIdentifier
-      │        │     │     └─ Identifier: int
+      │        │     │     └─ Identifier: @int
       │        │     └─ Length:
       │        │        └─ Expression
       │        │           └─ Number: 20
@@ -324,7 +324,7 @@
       │        │  │     └─ Array
       │        │  │        ├─ Sub-type:
       │        │  │        │  └─ CompoundIdentifier
-      │        │  │        │     └─ Identifier: int
+      │        │  │        │     └─ Identifier: @int
       │        │  │        └─ Length:
       │        │  │           └─ Expression
       │        │  │              └─ Number: 20
@@ -353,7 +353,7 @@
       │        │     ├─ Sub-type:
       │        │     │  └─ Reference
       │        │     │     └─ CompoundIdentifier
-      │        │     │        └─ Identifier: int
+      │        │     │        └─ Identifier: @int
       │        │     └─ Length:
       │        │        └─ Expression
       │        │           └─ Number: 12
@@ -378,7 +378,7 @@
       │        │     │     └─ Array
       │        │     │        ├─ Sub-type:
       │        │     │        │  └─ CompoundIdentifier
-      │        │     │        │     └─ Identifier: int
+      │        │     │        │     └─ Identifier: @int
       │        │     │        └─ Length:
       │        │     │           └─ Expression
       │        │     │              └─ Number: 20
@@ -409,7 +409,7 @@
       │        │  │        ├─ Sub-type:
       │        │  │        │  └─ Reference
       │        │  │        │     └─ CompoundIdentifier
-      │        │  │        │        └─ Identifier: int
+      │        │  │        │        └─ Identifier: @int
       │        │  │        └─ Length:
       │        │  │           └─ Expression
       │        │  │              └─ Number: 12
@@ -440,7 +440,7 @@
       │        │  │     │  └─ Reference
       │        │  │     │     └─ Reference
       │        │  │     │        └─ CompoundIdentifier
-      │        │  │     │           └─ Identifier: int
+      │        │  │     │           └─ Identifier: @int
       │        │  │     └─ Length:
       │        │  │        └─ Expression
       │        │  │           └─ Number: 12
@@ -471,7 +471,7 @@
       │        │        │  └─ Array
       │        │        │     ├─ Sub-type:
       │        │        │     │  └─ CompoundIdentifier
-      │        │        │     │     └─ Identifier: int
+      │        │        │     │     └─ Identifier: @int
       │        │        │     └─ Length:
       │        │        │        └─ Expression
       │        │        │           └─ Number: 20
@@ -502,7 +502,7 @@
       │        │     │     ├─ Sub-type:
       │        │     │     │  └─ Reference
       │        │     │     │     └─ CompoundIdentifier
-      │        │     │     │        └─ Identifier: int
+      │        │     │     │        └─ Identifier: @int
       │        │     │     └─ Length:
       │        │     │        └─ Expression
       │        │     │           └─ Number: 12

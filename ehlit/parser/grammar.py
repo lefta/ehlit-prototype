@@ -56,8 +56,14 @@ def builtin_keyword():
           'fallthrough', 'default', 'struct', 'union', bool_value]
 
 
+def builtin_type():
+  return ['int', 'int8', 'int16', 'int32', 'int64', 'uint', 'uint8', 'uint16', 'uin32', 'uint64',
+          'char', 'str', 'bool', 'void', 'any', 'size']
+
+
 def identifier():
-  return Not(builtin_keyword), RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='identifier')
+  return Not(builtin_keyword), [builtin_type,
+                                RegExMatch(r'[A-Za-z_][A-Za-z0-9_]*', str_repr='identifier')]
 
 
 def compound_identifier():

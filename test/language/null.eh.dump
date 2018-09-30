@@ -3,7 +3,7 @@
 │  │  ├─ Identifier: function
 │  │  └─ FunctionType
 │  │     └─ CompoundIdentifier
-│  │        └─ Identifier: any
+│  │        └─ Identifier: @any
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -14,12 +14,12 @@
 │  │  ├─ Identifier: get_null
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: any
+│  │              │  └─ Identifier: @any
 │  │              └─ Identifier: p
 │  └─ FunctionBody
 └─ FunctionDefinition
@@ -27,13 +27,13 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: str
+      │     │  │  └─ Identifier: @str
       │     │  └─ Identifier: s
       │     └─ Assignment
       │        └─ Expression

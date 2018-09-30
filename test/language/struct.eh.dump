@@ -4,19 +4,19 @@
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
 │     │     ├─ CompoundIdentifier
-│     │     │  └─ Identifier: int
+│     │     │  └─ Identifier: @int
 │     │     └─ Identifier: field1
 │     ├─ VariableDeclaration
 │     │  └─ Declaration
 │     │     ├─ CompoundIdentifier
-│     │     │  └─ Identifier: str
+│     │     │  └─ Identifier: @str
 │     │     └─ Identifier: field2
 │     └─ VariableDeclaration
 │        └─ Declaration
 │           ├─ Reference
 │           │  └─ Array
 │           │     └─ CompoundIdentifier
-│           │        └─ Identifier: int
+│           │        └─ Identifier: @int
 │           └─ Identifier: field3
 ├─ Struct
 │  ├─ Identifier: forward_decl
@@ -26,13 +26,13 @@
 │  │  ├─ Identifier: fun
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: void
+│  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ Reference
 │  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: int
+│  │              │     └─ Identifier: @int
 │  │              └─ Identifier: i
 │  └─ FunctionBody
 ├─ FunctionDefinition
@@ -60,12 +60,12 @@
 │  │  ├─ Identifier: any_fun
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: any
+│  │     │  └─ Identifier: @any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: any
+│  │              │  └─ Identifier: @any
 │  │              └─ Identifier: p
 │  └─ FunctionBody
 │     └─ Statement
@@ -78,7 +78,7 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
@@ -185,7 +185,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: size
+      │     │  │  └─ Identifier: @size
       │     │  └─ Identifier: ss
       │     └─ Assignment
       │        └─ Expression
@@ -205,7 +205,7 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
-      │     │  ├─ TemplatedIdentifier: func
+      │     │  ├─ TemplatedIdentifier: @func
       │     │  │  └─ Types
       │     │  │     └─ FunctionType
       │     │  │        ├─ Reference

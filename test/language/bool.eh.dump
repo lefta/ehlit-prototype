@@ -3,12 +3,12 @@
 │  │  ├─ Identifier: not_true
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: bool
+│  │     │  └─ Identifier: @bool
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
 │  │           └─ Declaration
 │  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: bool
+│  │              │  └─ Identifier: @bool
 │  │              └─ Identifier: v
 │  └─ FunctionBody
 │     └─ Statement
@@ -23,13 +23,13 @@
    │  ├─ Identifier: main
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: int
+   │        └─ Identifier: @int
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: bool
+      │     │  │  └─ Identifier: @bool
       │     │  └─ Identifier: b1
       │     └─ Assignment
       │        └─ Expression
@@ -38,7 +38,7 @@
       │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: bool
+      │     │  │  └─ Identifier: @bool
       │     │  └─ Identifier: b2
       │     └─ Assignment
       │        └─ Expression

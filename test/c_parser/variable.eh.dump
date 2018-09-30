@@ -4,12 +4,12 @@
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: int32
+      │     │  └─ Identifier: @int32
       │     └─ Identifier: var
       └─ VariableDeclaration
          ├─ Declaration
          │  ├─ CompoundIdentifier
-         │  │  └─ Identifier: int32
+         │  │  └─ Identifier: @int32
          │  └─ Identifier: assigned_var
          └─ Assignment
             └─ Number: 2
