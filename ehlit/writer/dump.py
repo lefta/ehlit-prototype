@@ -133,20 +133,21 @@ class DumpWriter:
     self.print_node_list('Expression', expr.contents, is_next)
 
   @indent
+  def dumpCast(self, node):
+    self.dump('Cast')
+    self.print_node(node.sym)
+    self.print_node(node.args[0], False)
+
+  @indent
   def dumpFunctionCall(self, call):
-    if call.is_cast:
-      self.dump('Cast')
-      self.print_node(call.sym)
-      self.print_node(call.args[0], False)
-    else:
-      self.dump('FunctionCall')
-      self.print_node(call.sym)
-      if call.cast:
-        self.increment_prefix(True)
-        self.dump('Automatic cast')
-        self.print_node(call.cast, False)
-        self.decrement_prefix()
-      self.print_node_list('Arguments', call.args, False)
+    self.dump('FunctionCall')
+    self.print_node(call.sym)
+    if call.cast:
+      self.increment_prefix(True)
+      self.dump('Automatic cast')
+      self.print_node(call.cast, False)
+      self.decrement_prefix()
+    self.print_node_list('Arguments', call.args, False)
 
   @indent
   def dumpArrayAccess(self, arr):

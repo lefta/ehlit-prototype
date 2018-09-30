@@ -274,26 +274,26 @@ class SourceWriter:
     self.write(assign.var)
     self.write(assign.assign)
 
+  def writeCast(self, node):
+    self.file.write('((')
+    self.write_type_prefix(node.sym)
+    self.write(node.sym)
+    self.file.write(')')
+    self.write(node.args[0])
+    self.file.write(')')
+
   def writeFunctionCall(self, call):
-    if call.is_cast:
-      self.file.write('((')
-      self.write_type_prefix(call.sym)
-      self.write(call.sym)
-      self.file.write(')')
-      self.write(call.args[0])
-      self.file.write(')')
-    else:
-      self.write_value(call)
-      self.write(call.sym)
-      self.file.write('(')
-      i = 0
-      count = len(call.args)
-      while i < count:
-        self.write(call.args[i])
-        i += 1
-        if i < count:
-          self.file.write(', ')
-      self.file.write(')')
+    self.write_value(call)
+    self.write(call.sym)
+    self.file.write('(')
+    i = 0
+    count = len(call.args)
+    while i < count:
+      self.write(call.args[i])
+      i += 1
+      if i < count:
+        self.file.write(', ')
+    self.file.write(')')
 
   def writeArrayAccess(self, arr):
     self.write_value(arr)

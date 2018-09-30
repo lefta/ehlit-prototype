@@ -797,26 +797,49 @@ class Expression(Node):
     return self.parenthesised
 
 
+class Cast(Value):
+  def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
+    super().__init__(pos)
+    self.sym: Symbol = sym
+    self._typ: Type = sym.solve() if isinstance(sym, Symbol) else sym
+    self.args: List[Expression] = args
+
+  def build(self, parent: Node) -> 'Cast':
+    super().build(parent)
+    if len(self.args) < 1:
+      self.error(self.pos, 'cast requires a value')
+    elif len(self.args) > 1:
+      self.error(self.pos, 'too many values for cast expression')
+    else:
+      self.args[0].build(self)
+    return self
+
+  @property
+  def typ(self) -> Type:
+    return self._typ
+
+  @property
+  def decl(self) -> Type:
+    return self._typ
+
+
 class FunctionCall(Value):
   def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
     super().__init__(pos)
     self.sym: Symbol = sym
     self.args: List[Expression] = args
 
-  def build(self, parent: Node) -> 'FunctionCall':
+  def build(self, parent: Node) -> Union['FunctionCall', Cast]:
     super().build(parent)
     self.sym = self.sym.build(self)
-    if not self.is_cast:
-      # Avoid symbol to write ref offsets, this will conflict with ours.
-      self.sym.ref_offset = 0
+    if self.sym.is_type:
+      cast: Cast = Cast(self.pos, self.sym, self.args)
+      cast = cast.build(parent)
+      return cast
+    # Avoid symbol to write ref offsets, this will conflict with ours.
+    self.sym.ref_offset = 0
     self.args = [a.build(self) for a in self.args]
-
-    if self.is_cast:
-      if len(self.args) < 1:
-        self.error(self.pos, 'cast requires a value')
-      elif len(self.args) > 1:
-        self.error(self.pos, 'too many values for cast expression')
-    elif self.sym.decl is not None:
+    if self.sym.decl is not None:
       typ = self.sym.decl.typ
       if not isinstance(typ, FunctionType):
         self.error(self.pos, "calling non function type {}".format(self.sym.repr))
@@ -843,13 +866,7 @@ class FunctionCall(Value):
     return self
 
   @property
-  def is_cast(self) -> bool:
-    return self.sym.is_type
-
-  @property
   def typ(self) -> Type:
-    if self.is_cast:
-      return self.sym
     if self.sym.decl is None:
       return BuiltinType.make(self, 'any')
     assert isinstance(self.sym.decl, Declaration)
@@ -859,15 +876,11 @@ class FunctionCall(Value):
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
-    return self.sym if self.is_cast else self.sym.decl
+    return self.sym.decl
 
   @property
   def is_type(self) -> bool:
     return False
-
-  def auto_cast(self, target: Type) -> None:
-    if not self.is_cast:
-      super().auto_cast(target)
 
 
 class ArrayAccess(Value):
