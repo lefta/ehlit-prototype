@@ -20,9 +20,12 @@
 # SOFTWARE.
 
 import logging
+from typing import Optional
+from ehlit.options import OptionsStruct
+from ehlit.parser.ast import AST
 
 
-def build(args):
+def build(args: OptionsStruct) -> None:
   # Avoid importing submodules in global scope, otherwise they may use the logger before it is
   # initialized
   from ehlit.parser import parse, ParseError
@@ -32,8 +35,8 @@ def build(args):
   check_arguments(args)
   logging.debug('building %s to %s\n', args.source, args.output_file)
 
-  failure = None
-  ast = None
+  failure: Optional[ParseError] = None
+  ast: Optional[AST] = None
   try:
     ast = parse(args.source)
     ast.build_ast(args)
