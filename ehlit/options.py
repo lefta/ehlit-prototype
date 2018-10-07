@@ -21,19 +21,22 @@
 
 from argparse import ArgumentParser
 from os import path, makedirs
+from typing import cast
 
 
 class OptionsStruct:
   output_import_file: str
+  output_file: str
   source: str
+  verbose: bool
 
 
 class ArgError(Exception):
-  def __init__(self, msg):
-    self.msg = msg
+  def __init__(self, msg: str) -> None:
+    self.msg: str = msg
 
 
-def check_arguments(args):
+def check_arguments(args: OptionsStruct) -> None:
   src, ext = path.splitext(args.source)
   if ext != ".eh":
     raise ArgError("%s: not an ehlit source file" % args.source)
@@ -51,8 +54,8 @@ def check_arguments(args):
     makedirs(path.dirname(args.output_import_file), exist_ok=True)
 
 
-def parse_arguments():
-  parser = ArgumentParser(description="Compile Ehlit source files")
+def parse_arguments() -> OptionsStruct:
+  parser: ArgumentParser = ArgumentParser(description="Compile Ehlit source files")
 
   parser.add_argument('source', help="Source files to build")
 
@@ -75,4 +78,4 @@ def parse_arguments():
   warn_args.add_argument("--warn-no-error", dest="warn_error", action="store_false",
                          help="Do not treat any warning as error [default]")
 
-  return parser.parse_args()
+  return cast(OptionsStruct, parser.parse_args())
