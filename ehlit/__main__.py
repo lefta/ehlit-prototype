@@ -22,7 +22,7 @@
 import logging
 from ehlit import options
 
-opts = options.parse_arguments()
+opts: options.OptionsStruct = options.parse_arguments()
 
 logging.addLevelName(logging.ERROR, '\033[1;31mError\033[m: ')
 logging.addLevelName(logging.WARNING, '\033[1;35mWarning\033[m: ')
