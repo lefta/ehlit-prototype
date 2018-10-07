@@ -337,14 +337,14 @@ class Value(Node):
       if not target.is_type:
         target_ref_offset: int = target.ref_offset
         while target_ref_offset > 0:
-          assert isinstance(res, Reference), "Attempt to dereference a non Reference"
+          assert isinstance(res, TypeReference)
           tmp = res.child
           res = tmp if isinstance(tmp, Type) else tmp.typ
           target_ref_offset -= 1
     else:
       # We reduce the result to the minimal Referencing needed for the conversion.
-      if isinstance(res, Reference):
-        while isinstance(res.child, Reference):
+      if isinstance(res, TypeReference):
+        while isinstance(res.child, TypeReference):
           tmp = res.child
           res = tmp if isinstance(tmp, Type) else tmp.typ
         if res.any_memory_offset is 0:
@@ -354,7 +354,7 @@ class Value(Node):
       # The developper asked for some referencing
       target_ref_count -= res.ref_offset - res.any_memory_offset
       while target_ref_count > 0:
-        res = Reference(res)
+        res = TypeReference(res)
         target_ref_count -= 1
     return res
 
@@ -365,12 +365,12 @@ class Value(Node):
     src: 'Type' = self.typ
     target_ref_level: int = 0
     self_typ: 'Type' = self.typ
-    if isinstance(self_typ, Reference):
+    if isinstance(self_typ, TypeReference):
       self_typ = self_typ.inner_child
     if isinstance(self_typ, Symbol):
       self_typ = self_typ.typ
     target_typ: 'Type' = target
-    if isinstance(target_typ, Reference):
+    if isinstance(target_typ, TypeReference):
       target_typ = target_typ.inner_child
     if isinstance(target_typ, Symbol):
       target_typ = target_typ.typ
@@ -383,7 +383,7 @@ class Value(Node):
         parent = self.parent
         if type(parent) is CompoundIdentifier:
           parent = parent.parent
-        while type(parent) is Reference:
+        while type(parent) is SymbolReference:
           target_ref_level += 1
           parent = parent.parent
         if target_ref_level is not 0:
@@ -520,7 +520,8 @@ class BuiltinType(Type, DeclarationBase):
   def from_any(self) -> Type:
     if self.name == '@str':
       return BuiltinType.make(self, 'str')
-    return Reference(BuiltinType.make(self, self.name[1:]))
+    res = TypeReference(BuiltinType.make(self, self.name[1:]))
+    return res.build(self)
 
   @property
   def any_memory_offset(self) -> int:
@@ -568,67 +569,100 @@ class Array(Type, DeclarationBase):
     return '@array'
 
 
-class Reference(Value, Type):
-  def __init__(self, child: Union[Value, Type]) -> None:
-    self.child: Union[Value, Type] = child
+class SymbolReference(Value):
+  def __init__(self, child: Value) -> None:
+    self.child: Value = child
     super().__init__()
 
-  def build(self, parent: Node) -> 'Reference':
+  def build(self, parent: Node) -> 'SymbolReference':
     super().build(parent)
-    self.child = self.child.build(self)
-    if not isinstance(self.child, Type) or not self.child.is_type:
-      assert isinstance(self.child, Value)
-      self.child.ref_offset -= 1
+    self.child.ref_offset -= 1
     return self
 
   @property
-  def is_type(self) -> bool:
-    return isinstance(self.child, Type) and self.child.is_type
-
-  @property
-  def decl(self) -> Optional['DeclarationBase']:
-    assert isinstance(self.child, Value)
-    return self.child.decl
+  def typ(self) -> Type:
+    if self.child.decl is not None:
+      assert isinstance(self.child.decl, Declaration)
+      return self.child.decl.typ
+    return BuiltinType.make(self, 'any')
 
   @property
   def ref_offset(self) -> int:
-    if isinstance(self.child, Type) and self.child.is_type:
-      return self.child.ref_offset + 1
     return self.child.ref_offset
 
   @ref_offset.setter
   def ref_offset(self, val: int) -> None:
-    if not self.is_type:
-      assert isinstance(self.child, Value)
-      self.child.ref_offset = val
-
-  @property
-  def typ(self) -> Type:
-    if self.is_type:
-      return self
-    if self.decl is not None:
-      assert isinstance(self.decl, Declaration)
-      return self.decl.typ
-    return BuiltinType.make(self, 'any')
-
-  @property
-  def inner_child(self) -> Type:
-    if isinstance(self.child, Reference):
-      return self.child.inner_child
-    assert isinstance(self.child, Type)
-    return self.child
+    self.child.ref_offset = val
 
   def auto_cast(self, target: Type) -> None:
-    assert isinstance(self.child, Value)
     self.child.auto_cast(target)
+
+  @property
+  def is_type(self) -> bool:
+    return False
+
+  @property
+  def decl(self) -> Optional[DeclarationBase]:
+    return self.child.decl
+
+
+class TypeReference(Type):
+  def __init__(self, child: Type, mods: int =0) -> None:
+    super().__init__()
+    self.child: Type = child
+    self.mods: int = mods
+
+  def build(self, parent: Node) -> 'TypeReference':
+    super().build(parent)
+    return self
+
+  @property
+  def ref_offset(self) -> int:
+    return self.child.ref_offset + 1
+
+  @property
+  def any_memory_offset(self) -> int:
+    return self.child.any_memory_offset
 
   def from_any(self) -> Type:
     return self
 
   @property
-  def any_memory_offset(self) -> int:
+  def typ(self) -> Type:
+    return self
+
+  @property
+  def decl(self) -> Optional[DeclarationBase]:
+    return self.child.decl
+
+  @property
+  def inner_child(self) -> Type:
+    if isinstance(self.child, TypeReference) or isinstance(self.child, SymbolReference):
+      return self.child.inner_child
     assert isinstance(self.child, Type)
-    return self.child.any_memory_offset
+    return self.child
+
+
+class Reference(Type):
+  def __init__(self, child: Union[Value, Type]) -> None:
+    self.child: Union[Value, Type] = child
+    super().__init__()
+
+  def build(self, parent: Node) -> Union[Type, Value]:
+    super().build(parent)
+    self.child = self.child.build(self)
+    if isinstance(self.child, Type) and self.child.is_type:
+      tres: TypeReference = TypeReference(self.child, self.mods)
+      tres.child.parent = tres
+      return tres.build(parent)
+    assert isinstance(self.child, Value)
+    sres = SymbolReference(self.child)
+    sres.child.parent = sres
+    return sres.build(parent)
+
+  @property
+  def is_type(self) -> bool:
+    return isinstance(self.child, Type) and self.child.is_type
 
 
 class FunctionType(Type, DeclarationBase):
@@ -878,6 +912,7 @@ class FunctionCall(Value):
         parent = self.sym
       sym = self.sym
       self.sym = sym.child
+      self.sym.parent = self
       sym.child = self
       sym.parent = self.parent
       self.parent = sym
@@ -885,8 +920,6 @@ class FunctionCall(Value):
       return self
     # Avoid symbol to write ref offsets, this will conflict with ours.
     self.sym.ref_offset = 0
-    # Dirty trick to make Reference ref_offset applied to us again
-    parent.build(parent.parent)
     return parent
 
   @property
@@ -1335,8 +1368,7 @@ class ContainerStructure(Type, DeclarationBase, Scope):
 
   def from_any(self) -> Type:
     res = Reference(CompoundIdentifier([Identifier(0, self.sym.name)]))
-    res.build(self)  # Needs to be built to get the declaration
-    return res
+    return res.build(self)  # Needs to be built to get the declaration
 
 
 class Struct(ContainerStructure):
