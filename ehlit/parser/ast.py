@@ -539,15 +539,31 @@ class BuiltinType(Type, DeclarationBase):
     return False
 
 
-class Array(Type, DeclarationBase):
+class Container(Node):
+  def __init__(self, child: Node) -> None:
+    super().__init__(0)
+    self.child: Node = child
+
+  def build(self, parent: Node) -> Node:
+    super().build(parent)
+    self.child = self.child.build(self)
+    return self
+
+  @property
+  def inner_child(self) -> Node:
+    if isinstance(self.child, Container):
+      return self.child.inner_child
+    return self.child
+
+
+class Array(Type, DeclarationBase, Container):
   def __init__(self, child: Type, length: Optional[Node]) -> None:
     super().__init__()
-    self.child: Type = child
+    Container.__init__(self, child)
     self.length: Optional[Node] = length
 
   def build(self, parent: Node) -> 'Array':
     super().build(parent)
-    self.child = self.child.build(self)
     return self
 
   @property
@@ -569,10 +585,11 @@ class Array(Type, DeclarationBase):
     return '@array'
 
 
-class SymbolReference(Value):
+class SymbolReference(Value, Container):
   def __init__(self, child: Value) -> None:
-    self.child: Value = child
+    self.child: Value
     super().__init__()
+    Container.__init__(self, child)
 
   def build(self, parent: Node) -> 'SymbolReference':
     super().build(parent)
@@ -606,10 +623,11 @@ class SymbolReference(Value):
     return self.child.decl
 
 
-class TypeReference(Type):
+class TypeReference(Type, Container):
   def __init__(self, child: Type, mods: int =0) -> None:
+    self.child: Type
     super().__init__()
-    self.child: Type = child
+    Container.__init__(self, child)
     self.mods: int = mods
 
   def build(self, parent: Node) -> 'TypeReference':
@@ -643,14 +661,13 @@ class TypeReference(Type):
     return self.child
 
 
-class Reference(Type):
+class Reference(Type, Container):
   def __init__(self, child: Union[Value, Type]) -> None:
-    self.child: Union[Value, Type] = child
     super().__init__()
+    Container.__init__(self, child)
 
   def build(self, parent: Node) -> Union[Type, Value]:
     super().build(parent)
-    self.child = self.child.build(self)
     if isinstance(self.child, Type) and self.child.is_type:
       tres: TypeReference = TypeReference(self.child, self.mods)
       tres.child.parent = tres
@@ -907,7 +924,7 @@ class FunctionCall(Value):
 
   def _reorder(self) -> 'Value':
     parent: Optional[Value] = None
-    while not isinstance(self.sym, CompoundIdentifier):
+    while isinstance(self.sym, Container):
       if parent is None:
         parent = self.sym
       sym = self.sym
@@ -940,15 +957,15 @@ class FunctionCall(Value):
     return False
 
 
-class ArrayAccess(Value):
+class ArrayAccess(Value, Container):
   def __init__(self, child: Value, idx: Expression) -> None:
+    self.child: Value
     super().__init__()
-    self.child: Value = child
+    Container.__init__(self, child)
     self.idx: Expression = idx
 
   def build(self, parent: Node) -> 'ArrayAccess':
     super().build(parent)
-    self.child = self.child.build(self)
     self.idx = self.idx.build(self)
     return self
 
