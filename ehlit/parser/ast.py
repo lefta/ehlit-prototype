@@ -400,7 +400,6 @@ class Value(Node):
 class DeclarationBase(Node):
   def build(self, parent: Node) -> 'Node':
     super().build(parent)
-    parent.declare(self)
     return self
 
   def get_declaration(self, sym: List[str]) -> DeclarationLookup:
@@ -435,11 +434,7 @@ class DeclarationBase(Node):
     raise NotImplementedError
 
 
-class Type(Node):
-  def build(self, parent: Node) -> 'Type':
-    super().build(parent)
-    return self
-
+class Type(DeclarationBase):
   @property
   def is_type(self) -> bool:
     return True
@@ -453,7 +448,7 @@ class Type(Node):
     return 0
 
 
-class Symbol(Value, Type):
+class Symbol(Value):
   def __init__(self, pos: int =0) -> None:
     super().__init__(pos)
     self.mods: int = MOD_NONE
@@ -486,7 +481,7 @@ class Symbol(Value, Type):
     raise NotImplementedError
 
 
-class BuiltinType(Type, DeclarationBase):
+class BuiltinType(Type):
   def make(parent: Node, name: str) -> 'CompoundIdentifier':
     res = CompoundIdentifier([Identifier(parent.pos, '@' + name)])
     res.build(parent)
@@ -604,7 +599,7 @@ class Array(SymbolContainer):
     return ArrayType(self.child.decl).build(self)
 
 
-class ArrayType(Type, DeclarationBase, Container):
+class ArrayType(Type, Container):
   def __init__(self, child: Type) -> None:
     self.child: Type
     super().__init__(child)
@@ -651,7 +646,7 @@ class Reference(SymbolContainer, Type):
 
   @property
   def is_type(self) -> bool:
-    return isinstance(self.child, Type) and self.child.is_type
+    return self.child.is_type
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
@@ -664,6 +659,10 @@ class Reference(SymbolContainer, Type):
   @property
   def repr(self) -> str:
     return 'ref {}'.format(self.child)
+
+  @property
+  def name(self) -> str:
+    return '@ref'
 
 
 class ReferenceToValue(Reference):
@@ -714,7 +713,7 @@ class ReferenceToType(Reference):
     return self.child.any_memory_offset
 
 
-class ReferenceType(Type, DeclarationBase, Container):
+class ReferenceType(Type, Container):
   def __init__(self, child: Type, mods: int =0) -> None:
     self.child: Type
     super().__init__(child)
@@ -760,7 +759,7 @@ class ReferenceType(Type, DeclarationBase, Container):
     return ReferenceType(self.child.dup())
 
 
-class FunctionType(Type, DeclarationBase):
+class FunctionType(Type):
   def __init__(self, ret: Symbol, args: List['VariableDeclaration'],
                is_variadic: bool =False) -> None:
     super().__init__()
@@ -830,6 +829,7 @@ class Declaration(DeclarationBase):
 
   def build(self, parent: Node) -> 'Declaration':
     super().build(parent)
+    parent.declare(self)
     self.typ_src = self.typ_src.build(self)
     self._typ = self.typ_src.solve() if isinstance(self.typ_src, Symbol) else self.typ_src
     if self.sym is not None:
@@ -1244,7 +1244,7 @@ class CompoundIdentifier(Symbol):
 
 class TemplatedIdentifier(Symbol):
   def __init__(self, name: str, types: List[Union[Symbol, Type]]) -> None:
-    self.name: str = name
+    self._name: str = name
     self.types: List[Union[Symbol, Type]] = types
     super().__init__()
 
@@ -1264,6 +1264,10 @@ class TemplatedIdentifier(Symbol):
   @property
   def repr(self) -> str:
     return '{}<>'.format(self.name)
+
+  @property
+  def name(self) -> str:
+    return self._name
 
 
 class String(Value):
@@ -1383,6 +1387,7 @@ class Alias(Symbol, DeclarationBase):
 
   def build(self, parent: Node) -> 'Alias':
     super().build(parent)
+    parent.declare(self)
     self.src_sym = self.src_sym.build(self)
     if isinstance(self.src_sym, Symbol):
       self.src = self.src_sym.solve()
@@ -1427,7 +1432,7 @@ class Alias(Symbol, DeclarationBase):
     return self.src
 
 
-class ContainerStructure(Type, DeclarationBase, Scope):
+class ContainerStructure(Type, Scope):
   def __init__(self, pos: int, sym: Identifier,
                fields: Optional[List[VariableDeclaration]]) -> None:
     super().__init__(pos)
@@ -1439,6 +1444,7 @@ class ContainerStructure(Type, DeclarationBase, Scope):
     if self.built:
       return self
     super().build(parent)
+    parent.declare(self)
     self.sym.build(self)
     if self.fields is not None:
       self.fields = [f.build(self) for f in self.fields]
