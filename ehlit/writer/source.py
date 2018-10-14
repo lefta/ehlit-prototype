@@ -21,9 +21,9 @@
 
 import sys
 from ehlit.parser.ast import (
-    Alias, Array, ArrayAccess, BuiltinType, CompoundIdentifier, EhUnion, FunctionCall,
-    FunctionDeclaration, FunctionDefinition, TypeReference, SymbolReference, Struct, Symbol,
-    TemplatedIdentifier,
+    Alias, Array, ArrayType, ArrayAccess, BuiltinType, CompoundIdentifier, Container, EhUnion,
+    FunctionCall, FunctionDeclaration, FunctionDefinition, ReferenceToType, ReferenceToValue,
+    ReferenceType, Struct, Symbol, TemplatedIdentifier
 )
 
 
@@ -83,7 +83,7 @@ class SourceWriter:
       decl = decl.solve()
     if isinstance(decl, FunctionDeclaration) and not isinstance(node, FunctionCall):
       parent = node.parent
-      while (type(parent) is SymbolReference or type(parent) is CompoundIdentifier):
+      while (type(parent) is ReferenceToValue or type(parent) is CompoundIdentifier):
         parent = parent.parent
       if type(parent) is not FunctionCall:
         self.file.write('&')
@@ -113,13 +113,13 @@ class SourceWriter:
       self.write(sym)
     self.in_import -= 1
 
-  def writeTypeReference(self, ref):
+  def writeReferenceToType(self, ref):
     self.write(ref.child)
     self.file.write('*')
     if ref.is_const:
       self.file.write(' const')
 
-  def writeSymbolReference(self, ref):
+  def writeReferenceToValue(self, ref):
     self.write(ref.child)
 
   def writeArray(self, arr):
@@ -131,19 +131,17 @@ class SourceWriter:
 
   def is_dynamic_array(self, node):
     typ = type(node)
-    return (typ is Array and node.length is None) or typ is TypeReference
+    return (typ is Array and node.length is None) or typ is ReferenceToType
 
   def array_needs_parens(self, node):
     if self.is_dynamic_array(node):
       return False
-    typ = type(node.parent)
-    if typ is not Array and typ is not TypeReference:
+    if not isinstance(node.parent, Container):
       return False
     return self.is_dynamic_array(node.parent)
 
   def write_declaration_post(self, node):
-    typ = type(node)
-    if typ is TemplatedIdentifier and node.name == '@func':
+    if type(node) is TemplatedIdentifier and node.name == '@func':
       self.file.write(')(')
       i = 0
       while i < len(node.typ.args):
@@ -152,10 +150,10 @@ class SourceWriter:
         self.write(node.typ.args[i])
         i += 1
       self.file.write(')')
-    elif typ is Array or typ is TypeReference:
+    elif isinstance(node, Container):
       if self.array_needs_parens(node):
         self.file.write(')')
-      if typ is Array and node.length is not None:
+      if isinstance(node, Array) and node.length is not None:
         self.file.write('[')
         self.write(node.length)
         self.file.write(']')
@@ -167,8 +165,8 @@ class SourceWriter:
     self.file.write('(*')
 
   def write_type_prefix(self, typ):
-    while type(typ) is TypeReference:
-      typ = typ.child
+    if isinstance(typ, Container):
+      typ = typ.inner_child
     if type(typ) is CompoundIdentifier:
       typ = typ.decl
     prefix = {
@@ -302,33 +300,31 @@ class SourceWriter:
     self.write_value(arr)
     decl = arr.decl.typ
     sym = arr
-    while type(decl) is Array or type(decl) is TypeReference or BuiltinType('@str') == decl:
+    while type(decl) is ArrayType or type(decl) is ReferenceType or BuiltinType('@str') == decl:
       if type(sym) is ArrayAccess:
         sym = sym.child
-      if isinstance(decl, CompoundIdentifier):
-        decl = decl.typ
       decl = decl.child
     cur = sym.parent
     decl = decl.parent
-    while type(decl) is Array or type(decl) is TypeReference or BuiltinType('@str') == decl:
-      if type(decl) is TypeReference:
+    while type(decl) is ArrayType or type(decl) is ReferenceType or BuiltinType('@str') == decl:
+      if type(decl) is ReferenceType:
         rdecl = decl
-        while type(rdecl) is TypeReference:
+        while type(rdecl) is ReferenceType:
           rdecl = rdecl.parent
-        if type(rdecl) is Array:
+        if type(rdecl) is ArrayType:
           self.file.write('*')
       elif type(cur) is ArrayAccess:
-        if type(decl.parent) is TypeReference:
+        if type(decl.parent) is ReferenceType:
           self.file.write('(')
         cur = cur.parent
       decl = decl.parent
     self.write(sym)
     decl = arr.decl.typ
-    while type(decl) is TypeReference:
+    while type(decl) is ReferenceType:
       decl = decl.child
-    while type(arr) is ArrayAccess or type(decl) is TypeReference:
-      if type(decl) is not TypeReference and type(arr) is ArrayAccess:
-        if type(decl.parent) is TypeReference:
+    while type(arr) is ArrayAccess or type(decl) is ReferenceType:
+      if type(decl) is not ReferenceType and type(arr) is ArrayAccess:
+        if type(decl.parent) is ReferenceType:
           self.file.write(')')
         self.file.write('[')
         self.write(arr.idx)

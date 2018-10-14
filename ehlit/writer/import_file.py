@@ -93,7 +93,7 @@ class ImportWriter:
     self.file.write('ref ')
     self.write(node.child)
 
-  def writeSymbolReference(self, node):
+  def writeReferenceToType(self, node):
     self.file.write('ref ')
     self.write(node.child)
 

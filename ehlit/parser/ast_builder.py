@@ -26,12 +26,12 @@ from ehlit.parser import ast
 
 
 class ArrayBuilder:
-  def __init__(self, child: Optional[Union[ast.Node, 'ArrayBuilder']],
+  def __init__(self, child: Optional[Union[ast.Symbol, 'ArrayBuilder']],
                param: Optional[ast.Node]) -> None:
-    self.child: Optional[Union[ast.Node, ArrayBuilder]] = child
+    self.child: Optional[Union[ast.Symbol, ArrayBuilder]] = child
     self.param: Optional[ast.Node] = param
 
-  def set_child(self, child: ast.Node) -> None:
+  def set_child(self, child: ast.Symbol) -> None:
     if self.child is None:
       self.child = child
     else:
@@ -41,7 +41,7 @@ class ArrayBuilder:
   def to_array(self) -> ast.Array:
     if isinstance(self.child, ArrayBuilder):
       self.child = self.child.to_array()
-    assert isinstance(self.child, ast.Type)
+    assert self.child is not None
     return ast.Array(self.child, self.param)
 
   def to_array_access(self) -> ast.ArrayAccess:
@@ -49,11 +49,9 @@ class ArrayBuilder:
       self.child = self.child.to_array_access()
     assert self.child is not None
     assert isinstance(self.param, ast.Expression)
-    assert isinstance(self.child, ast.Value)
     return ast.ArrayAccess(self.child, self.param)
 
 
-WritableValue = Union[ast.Reference, ast.CompoundIdentifier]
 OperatorSequence = List[Union[ast.Value, ast.Operator]]
 ComparisonSequence = Tuple[ast.Value, StrMatch, ast.Value, StrMatch, ast.Value]
 ControlStructureArgs = Tuple[ast.Expression, List[ast.Statement]]
@@ -98,7 +96,7 @@ class ASTBuilder(PTNodeVisitor):
   def visit_bool_value(self, node: ParseTreeNode, children: Tuple[StrMatch]) -> ast.BoolValue:
     return ast.BoolValue(children[0] == 'true')
 
-  def visit_referenced_value(self, node: ParseTreeNode, children: Tuple[StrMatch, WritableValue]
+  def visit_referenced_value(self, node: ParseTreeNode, children: Tuple[StrMatch, ast.Symbol]
                              ) -> ast.Reference:
     return ast.Reference(children[1])
 
@@ -115,12 +113,12 @@ class ASTBuilder(PTNodeVisitor):
     return ast.FunctionCall(node.position, children[0], args)
 
   def visit_prefix_operator_value(self, node: ParseTreeNode,
-                                  children: Tuple[StrMatch, WritableValue]
+                                  children: Tuple[StrMatch, ast.Symbol]
                                   ) -> ast.PrefixOperatorValue:
     return ast.PrefixOperatorValue(str(children[0]), children[1])
 
   def visit_suffix_operator_value(self, node: ParseTreeNode,
-                                  children: Tuple[WritableValue, StrMatch]
+                                  children: Tuple[ast.Symbol, StrMatch]
                                   ) -> ast.SuffixOperatorValue:
     return ast.SuffixOperatorValue(str(children[1]), children[0])
 
@@ -136,8 +134,8 @@ class ASTBuilder(PTNodeVisitor):
       i -= 1
     return res
 
-  def visit_value(self, node: ParseTreeNode, children: Tuple[ast.Value, ArrayBuilder]
-                  ) -> ast.Value:
+  def visit_value(self, node: ParseTreeNode, children: Tuple[ast.Symbol, ArrayBuilder]
+                  ) -> ast.Symbol:
     if len(children) == 1:
       return children[0]
     children[1].set_child(children[0])
@@ -256,7 +254,7 @@ class ASTBuilder(PTNodeVisitor):
     )])
 
   def visit_full_type(self, node: ParseTreeNode,
-                      children: Tuple[Optional[int], ast.Type, ast.Symbol, Optional[ArrayBuilder]]
+                      children: Tuple[Optional[int], ast.Symbol, ast.Symbol, Optional[ArrayBuilder]]
                       ) -> ast.Type:
     mods: int = 0
     i: int = 0
@@ -264,7 +262,7 @@ class ASTBuilder(PTNodeVisitor):
       mods = children[0]
       i = 1
     typ = children[i]
-    assert isinstance(typ, ast.Type)
+    assert isinstance(typ, ast.Symbol)
     typ.set_modifiers(mods)
     if len(children) == i + 2:
       array = children[i + 1]

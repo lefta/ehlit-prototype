@@ -202,14 +202,14 @@ class DumpWriter:
       self.print_node(ret.expr, False)
 
   @indent
-  def dumpTypeReference(self, ref):
+  def dumpReferenceToType(self, ref):
     self.dump('Reference')
     if ref.is_const:
       self.print_str('Modifiers: const')
     self.print_node(ref.child, False)
 
   @indent
-  def dumpSymbolReference(self, ref):
+  def dumpReferenceToValue(self, ref):
     self.dump('Reference')
     self.print_node(ref.child, False)
 
