@@ -55,7 +55,7 @@ class Node:
   Base class for all AST node types. It defines some default behaviors.
   '''
 
-  def __init__(self, pos: int) -> None:
+  def __init__(self, pos: int =0) -> None:
     '''! Constructor
     @param pos @b int The position of the node in the source file
     '''
@@ -436,20 +436,9 @@ class DeclarationBase(Node):
 
 
 class Type(Node):
-  def __init__(self, pos: int =0) -> None:
-    super().__init__(pos)
-    self.mods: int = MOD_NONE
-
   def build(self, parent: Node) -> 'Type':
     super().build(parent)
     return self
-
-  def set_modifiers(self, mods: int) -> None:
-    self.mods = mods
-
-  @property
-  def is_const(self) -> bool:
-    return self.mods & MOD_CONST is not 0
 
   @property
   def is_type(self) -> bool:
@@ -465,6 +454,10 @@ class Type(Node):
 
 
 class Symbol(Value, Type):
+  def __init__(self, pos: int =0) -> None:
+    super().__init__(pos)
+    self.mods: int = MOD_NONE
+
   def build(self, parent: Node) -> 'Symbol':
     super().build(parent)
     return self
@@ -474,6 +467,13 @@ class Symbol(Value, Type):
     while decl is not None and isinstance(decl, Symbol):
       decl = decl.decl
     return decl
+
+  def set_modifiers(self, mods: int) -> None:
+    self.mods = mods
+
+  @property
+  def is_const(self) -> bool:
+    return self.mods & MOD_CONST is not 0
 
   @property
   @abstractmethod
@@ -607,8 +607,7 @@ class Array(SymbolContainer):
 class ArrayType(Type, DeclarationBase, Container):
   def __init__(self, child: Type) -> None:
     self.child: Type
-    super().__init__()
-    Container.__init__(self, child)
+    super().__init__(child)
 
   def build(self, parent: Node) -> 'ArrayType':
     super().build(parent)
@@ -718,8 +717,7 @@ class ReferenceToType(Reference):
 class ReferenceType(Type, DeclarationBase, Container):
   def __init__(self, child: Type, mods: int =0) -> None:
     self.child: Type
-    super().__init__()
-    Container.__init__(self, child)
+    super().__init__(child)
     self.mods: int = mods
 
   def build(self, parent: Node) -> 'ReferenceType':
