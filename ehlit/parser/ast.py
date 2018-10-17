@@ -339,7 +339,7 @@ class Value(Node):
         while target_ref_offset > 0:
           assert isinstance(res, ReferenceToType)
           tmp = res.child
-          res = tmp if isinstance(tmp, Type) else tmp.typ
+          res = tmp if isinstance(tmp, Type) or isinstance(tmp, Reference) else tmp.typ
           target_ref_offset -= 1
     else:
       # We reduce the result to the minimal Referencing needed for the conversion.
@@ -630,9 +630,8 @@ class ArrayType(Type, Container):
     return ArrayType(self.child.dup())
 
 
-class Reference(SymbolContainer, Type):
+class Reference(SymbolContainer):
   def __init__(self, child: Symbol) -> None:
-    Type.__init__(self)
     SymbolContainer.__init__(self, child)
     self.child: Symbol
 
