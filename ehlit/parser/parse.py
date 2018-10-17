@@ -22,7 +22,7 @@
 from arpeggio import ParserPython, ParseTreeNode, visit_parse_tree, NoMatch, StrMatch
 from typing import List
 
-from ehlit.parser.ast import AST
+from ehlit.parser.ast import AST, Statement
 from ehlit.parser.grammar import grammar, function_body_grammar, Context
 from ehlit.parser.ast_builder import ASTBuilder
 from ehlit.parser.error import ParseError, Failure
@@ -49,12 +49,12 @@ def parse(source: str) -> AST:
   return ast
 
 
-def parse_function(source: str, have_return_value: bool) -> AST:
+def parse_function(source: str, have_return_value: bool) -> List[Statement]:
   Context.return_value = have_return_value
   parser: ParserPython = ParserPython(function_body_grammar, autokwd=True, memoization=True)
   try:
     parsed: ParseTreeNode = parser.parse(source)
-    body: AST = visit_parse_tree(parsed, ASTBuilder())
+    body: List[Statement] = visit_parse_tree(parsed, ASTBuilder())
   except NoMatch as err:
     handle_parse_error(err, parser)
   return body

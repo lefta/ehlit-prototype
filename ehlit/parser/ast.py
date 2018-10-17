@@ -22,7 +22,7 @@
 from abc import abstractmethod
 from arpeggio import ParserPython
 from os import path, getcwd, listdir
-from typing import Iterable, List, Optional, Tuple, Union
+from typing import Iterable, List, Optional, Tuple, Union, cast
 import typing
 import ehlit.parser.parse
 from ehlit.parser.error import ParseError, Failure
@@ -365,16 +365,15 @@ class Value(Node):
     src: 'Type' = self.typ
     target_ref_level: int = 0
     self_typ: 'Type' = self.typ
-    if isinstance(self_typ, ReferenceToType) or isinstance(self_typ, ReferenceType):
-      self_typ = self_typ.inner_child
     if isinstance(self_typ, Symbol):
       self_typ = self_typ.typ
+    if isinstance(self_typ, ReferenceType):
+      self_typ = self_typ.inner_child
     target_typ: 'Type' = target
-    if (isinstance(target_typ, ReferenceToType) or isinstance(target_typ, ReferenceToValue) or
-            isinstance(target_typ, ReferenceType)):
-      target_typ = target_typ.inner_child
     if isinstance(target_typ, Symbol):
       target_typ = target_typ.typ
+    if isinstance(target_typ, ReferenceType):
+      target_typ = target_typ.inner_child
     if self_typ != target_typ:
       if self_typ == BuiltinType('@any'):
         src = self._from_any_aligned(target, self.typ, True)
@@ -435,6 +434,10 @@ class DeclarationBase(Node):
 
 
 class Type(DeclarationBase):
+  def build(self, parent: Node) -> 'Type':
+    super().build(parent)
+    return self
+
   @property
   def is_type(self) -> bool:
     return True
@@ -446,6 +449,18 @@ class Type(DeclarationBase):
   @property
   def ref_offset(self) -> int:
     return 0
+
+  @property
+  def typ(self) -> 'Type':
+    return self
+
+  @abstractmethod
+  def from_any(self) -> 'Type':
+    raise NotImplementedError
+
+  @abstractmethod
+  def dup(self) -> 'Type':
+    raise NotImplementedError
 
 
 class Symbol(Value):
@@ -469,6 +484,10 @@ class Symbol(Value):
   @property
   def is_const(self) -> bool:
     return self.mods & MOD_CONST is not 0
+
+  @property
+  def is_type(self) -> bool:
+    return isinstance(self.decl, Type)
 
   @property
   @abstractmethod
@@ -498,7 +517,7 @@ class BuiltinType(Type):
   @property
   def child(self) -> Optional[Type]:
     if self.name == '@str':
-      return BuiltinType.make(self, 'char')
+      return BuiltinType('@char').build(self)
     return None
 
   @property
@@ -553,6 +572,7 @@ class Container(Node):
 class SymbolContainer(Symbol, Container):
   def __init__(self, child: Symbol) -> None:
     self.child: Symbol
+    self.inner_child: Symbol
     super().__init__()
     Container.__init__(self, child)
 
@@ -596,7 +616,7 @@ class Array(SymbolContainer):
   def decl(self) -> DeclarationBase:
     child_decl: Optional[DeclarationBase] = self.child.decl
     assert isinstance(child_decl, Type)
-    return ArrayType(self.child.decl).build(self)
+    return ArrayType(child_decl).build(self)
 
 
 class ArrayType(Type, Container):
@@ -626,7 +646,7 @@ class ArrayType(Type, Container):
   def typ(self) -> Type:
     return self.dup().build(self.parent)
 
-  def dup(self):
+  def dup(self) -> Type:
     return ArrayType(self.child.dup())
 
 
@@ -642,10 +662,6 @@ class Reference(SymbolContainer):
     ref.child.parent = ref
     ref.parent = parent
     return ref.build(parent)
-
-  @property
-  def is_type(self) -> bool:
-    return self.child.is_type
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
@@ -677,7 +693,7 @@ class ReferenceToValue(Reference):
     if self.child.decl is not None:
       assert isinstance(self.inner_child.decl, Declaration)
       return self.inner_child.decl.typ
-    return BuiltinType.make(self, 'any')
+    return BuiltinType('@any').build(self)
 
   @property
   def ref_offset(self) -> int:
@@ -736,10 +752,6 @@ class ReferenceType(Type, Container):
     return Reference(self.child.from_any()).build(self)
 
   @property
-  def typ(self) -> Type:
-    return self
-
-  @property
   def decl(self) -> Optional[DeclarationBase]:
     return self.child.decl
 
@@ -754,7 +766,7 @@ class ReferenceType(Type, Container):
   def name(self) -> str:
     return '@ref'
 
-  def dup(self):
+  def dup(self) -> Type:
     return ReferenceType(self.child.dup())
 
 
@@ -776,15 +788,14 @@ class FunctionType(Type):
     return self
 
   @property
-  def typ(self) -> Type:
-    return self
-
-  @property
   def name(self) -> str:
     return '@func'
 
   def dup(self) -> 'FunctionType':
     return FunctionType(self.ret, self.args, self.is_variadic)
+
+  def from_any(self) -> Type:
+    return self
 
 
 class Operator(Node):
@@ -1023,19 +1034,15 @@ class FunctionCall(Value):
   @property
   def typ(self) -> Type:
     if self.sym.decl is None:
-      return BuiltinType.make(self, 'any')
+      return BuiltinType('@any').build(self)
     assert isinstance(self.sym.decl, Declaration)
     if not isinstance(self.sym.decl.typ, FunctionType):
       return self.sym.decl.typ
-    return self.sym.decl.typ.ret
+    return self.sym.decl.typ.ret.typ
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
     return self.sym.decl
-
-  @property
-  def is_type(self) -> bool:
-    return False
 
 
 class ArrayAccess(SymbolContainer):
@@ -1050,11 +1057,8 @@ class ArrayAccess(SymbolContainer):
 
   @property
   def typ(self) -> Type:
-    return self.child.typ.child
-
-  @property
-  def is_type(self) -> bool:
-    return False
+    child_typ = cast(ArrayType, self.child.typ)
+    return child_typ.child
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
@@ -1164,12 +1168,8 @@ class Identifier(Value):
     return self
 
   @property
-  def is_type(self) -> bool:
-    return False if self.decl is None else self.decl.is_type
-
-  @property
   def typ(self) -> Type:
-    return self.decl.typ if self.decl is not None else BuiltinType.make(self, 'any')
+    return self.decl.typ if self.decl is not None else BuiltinType('@any').build(self)
 
   def from_any(self) -> Type:
     return self.decl.from_any() if self.decl is not None else self
@@ -1198,10 +1198,6 @@ class CompoundIdentifier(Symbol):
     return self.elems[-1].typ
 
   @property
-  def is_type(self) -> bool:
-    return self.elems[-1].is_type
-
-  @property
   def decl(self) -> Optional[DeclarationBase]:
     return self.elems[-1].decl
 
@@ -1227,10 +1223,6 @@ class CompoundIdentifier(Symbol):
   def any_memory_offset(self) -> int:
     return self.elems[-1].typ.any_memory_offset
 
-  @property
-  def child(self) -> Type:
-    return self.typ.child
-
   def find_declaration_for(self, identifier: Identifier) -> DeclarationLookup:
     i: int = 0
     while i < len(self.elems):
@@ -1254,10 +1246,12 @@ class TemplatedIdentifier(Symbol):
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
+    assert isinstance(self.types[0], Type)
     return self.types[0]
 
   @property
   def typ(self) -> Type:
+    assert isinstance(self.types[0], Type)
     return self.types[0]
 
   @property
@@ -1276,7 +1270,7 @@ class String(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType.make(self, 'str')
+    return BuiltinType('@str').build(self)
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -1289,7 +1283,7 @@ class Char(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType.make(self, 'char')
+    return BuiltinType('@char').build(self)
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -1302,7 +1296,7 @@ class Number(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType.make(self, 'int')
+    return BuiltinType('@int').build(self)
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -1314,7 +1308,7 @@ class NullValue(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType.make(self, 'any')
+    return BuiltinType('@any').build(self)
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -1327,7 +1321,7 @@ class BoolValue(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType.make(self, 'bool')
+    return BuiltinType('@bool').build(self)
 
   def auto_cast(self, target: Type) -> None:
     pass
@@ -1364,9 +1358,9 @@ class SuffixOperatorValue(UnaryOperatorValue):
 
 
 class Sizeof(Value):
-  def __init__(self, sz_typ: Type) -> None:
+  def __init__(self, sz_typ: Symbol) -> None:
     super().__init__()
-    self.sz_typ: Type = sz_typ
+    self.sz_typ: Symbol = sz_typ
 
   def build(self, parent: Node) -> 'Sizeof':
     super().build(parent)
@@ -1375,12 +1369,12 @@ class Sizeof(Value):
 
   @property
   def typ(self) -> Type:
-    return BuiltinType.make(self, 'size')
+    return BuiltinType('@size').build(self)
 
 
 class Alias(Symbol, DeclarationBase):
-  def __init__(self, src: Union[Symbol, DeclarationBase], dst: Identifier) -> None:
-    self.src_sym: Union[Symbol, DeclarationBase] = src
+  def __init__(self, src: Symbol, dst: Identifier) -> None:
+    self.src_sym: Symbol = src
     self.src: Optional[DeclarationBase] = None
     self.dst: Identifier = dst
 
@@ -1397,7 +1391,10 @@ class Alias(Symbol, DeclarationBase):
   @property
   def typ(self) -> Type:
     if self.src is None:
-      return BuiltinType.make(self, 'any')
+      return BuiltinType('@any')
+    if isinstance(self.src, Type):
+      return self.src
+    assert isinstance(self.src, Declaration)
     return self.src.typ
 
   @property
@@ -1414,9 +1411,7 @@ class Alias(Symbol, DeclarationBase):
 
   @property
   def is_type(self) -> bool:
-    if self.src is None:
-      return False
-    return self.src.is_type
+    return isinstance(self.src, Type)
 
   @property
   def ref_offset(self) -> int:
@@ -1454,14 +1449,6 @@ class ContainerStructure(Type, Scope):
     return self
 
   @property
-  def typ(self) -> Node:
-    return self
-
-  @property
-  def is_type(self) -> bool:
-    return True
-
-  @property
   def name(self) -> str:
     return self.sym.name
 
@@ -1476,6 +1463,9 @@ class ContainerStructure(Type, Scope):
 
   def from_any(self) -> Type:
     return Reference(CompoundIdentifier([Identifier(0, self.sym.name)])).build(self)
+
+  def dup(self) -> Type:
+    return self
 
 
 class Struct(ContainerStructure):
@@ -1547,7 +1537,7 @@ class AST(UnorderedScope):
     for decl in self.builtins:
       res, err = decl.get_declaration(sym)
       if res is not None:
-        return res.dup().build(self), err
+        return cast(Type, res).dup().build(self), err
       if err is not None:
         return res, err
     return None, None

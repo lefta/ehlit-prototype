@@ -255,7 +255,7 @@ class ASTBuilder(PTNodeVisitor):
 
   def visit_full_type(self, node: ParseTreeNode,
                       children: Tuple[Optional[int], ast.Symbol, ast.Symbol, Optional[ArrayBuilder]]
-                      ) -> ast.Type:
+                      ) -> ast.Symbol:
     mods: int = 0
     i: int = 0
     if len(children) > 0 and isinstance(children[0], int):
