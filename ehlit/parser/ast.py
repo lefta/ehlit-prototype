@@ -292,7 +292,7 @@ class Value(Node):
     ## @b int Referencing offset to be applied when writing this value.
     self._ref_offset: int = 0
     ## @b Type Cast to apply to this value when writing it, if relevant.
-    self._cast: Optional['Type'] = None
+    self._cast: Optional[Symbol] = None
 
   def build(self, parent: Node) -> 'Value':
     super().build(parent)
@@ -307,11 +307,11 @@ class Value(Node):
     self._ref_offset = v
 
   @property
-  def cast(self) -> Optional['Type']:
+  def cast(self) -> Optional['Symbol']:
     return self._cast
 
   @cast.setter
-  def cast(self, v: Optional['Type']) -> None:
+  def cast(self, v: Optional['Symbol']) -> None:
     self._cast = v
 
   @property
@@ -319,7 +319,7 @@ class Value(Node):
   def typ(self) -> 'Type':
     raise NotImplementedError
 
-  def _from_any_aligned(self, target: Node, source: 'Type', is_casting: bool) -> 'Type':
+  def _from_any_aligned(self, target: 'Symbol', source: 'Symbol', is_casting: bool) -> 'Symbol':
     '''! Compute the conversion needed to transform an any into target.
     This function computes the referencing offset and / or the cast to make an @b any, or a
     container of @b any, binary compatible with target. It also takes into account the will of the
@@ -331,7 +331,7 @@ class Value(Node):
     @return @b Type The cast needed for a successful conversion.
     '''
     target_ref_count: int = source.ref_offset
-    res: 'Type' = target.typ.from_any()
+    res: Symbol = target.typ.from_any()
     if is_casting:
       # We align the result to match the ref offset of the target
       if not target.is_type:
@@ -358,26 +358,22 @@ class Value(Node):
         target_ref_count -= 1
     return res
 
-  def auto_cast(self, target: 'Type') -> None:
+  def auto_cast(self, target: 'Symbol') -> None:
     '''! Make this value binary compatible with target.
     @param target @b Node The node that this value shall be made compatible with.
     '''
     src: 'Type' = self.typ
     target_ref_level: int = 0
     self_typ: 'Type' = self.typ
-    if isinstance(self_typ, Symbol):
-      self_typ = self_typ.typ
     if isinstance(self_typ, ReferenceType):
       self_typ = self_typ.inner_child
-    target_typ: 'Type' = target
-    if isinstance(target_typ, Symbol):
-      target_typ = target_typ.typ
+    target_typ: 'Type' = target.typ
     if isinstance(target_typ, ReferenceType):
       target_typ = target_typ.inner_child
     if self_typ != target_typ:
       if self_typ == BuiltinType('@any'):
-        src = self._from_any_aligned(target, self.typ, True)
-        self.cast = src
+        self.cast = self._from_any_aligned(target, self.typ, True)
+        src = self.cast.typ
       elif target_typ == BuiltinType('@any'):
         target = self._from_any_aligned(self, target, False)
         parent = self.parent
@@ -455,7 +451,7 @@ class Type(DeclarationBase):
     return self
 
   @abstractmethod
-  def from_any(self) -> 'Type':
+  def from_any(self) -> 'Symbol':
     raise NotImplementedError
 
   @abstractmethod
@@ -528,7 +524,7 @@ class BuiltinType(Type):
   def decl(self) -> Optional['DeclarationBase']:
     return self.dup().build(self.parent)
 
-  def from_any(self) -> Type:
+  def from_any(self) -> Symbol:
     if self.name == '@str':
       return BuiltinType.make(self, 'str')
     return Reference(BuiltinType.make(self, self.name[1:])).build(self)
@@ -633,7 +629,7 @@ class ArrayType(Type, Container):
   def any_memory_offset(self) -> int:
     return self.child.any_memory_offset
 
-  def from_any(self) -> Type:
+  def from_any(self) -> Symbol:
     if isinstance(self.child, Container):
       return Array(self.child.from_any(), None).build(self)
     return Array(CompoundIdentifier([Identifier(0, self.child.name)]), None).build(self)
@@ -665,11 +661,17 @@ class Reference(SymbolContainer):
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
-    return ReferenceType(self.child.decl.typ).build(self)
+    child_decl: Optional[DeclarationBase] = self.child.decl
+    if child_decl is None:
+      return None
+    return ReferenceType(child_decl.typ).build(self)
 
   @property
   def typ(self) -> Type:
-    return ReferenceType(self.child.decl.typ).build(self)
+    child_decl: Optional[DeclarationBase] = self.child.decl
+    if child_decl is None:
+      return BuiltinType('@any')
+    return ReferenceType(child_decl.typ).build(self)
 
   @property
   def repr(self) -> str:
@@ -703,7 +705,7 @@ class ReferenceToValue(Reference):
   def ref_offset(self, val: int) -> None:
     self.child.ref_offset = val - 1
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     self.child.auto_cast(target)
 
 
@@ -725,7 +727,7 @@ class ReferenceToType(Reference):
 
   @property
   def any_memory_offset(self) -> int:
-    return self.child.any_memory_offset
+    return self.child.typ.any_memory_offset
 
 
 class ReferenceType(Type, Container):
@@ -746,7 +748,7 @@ class ReferenceType(Type, Container):
   def any_memory_offset(self) -> int:
     return self.child.any_memory_offset
 
-  def from_any(self) -> Type:
+  def from_any(self) -> Symbol:
     if self.child.any_memory_offset == 1 and not type(self.child) is ReferenceType:
       return self.child.from_any()
     return Reference(self.child.from_any()).build(self)
@@ -794,15 +796,15 @@ class FunctionType(Type):
   def dup(self) -> 'FunctionType':
     return FunctionType(self.ret, self.args, self.is_variadic)
 
-  def from_any(self) -> Type:
-    return self
+  def from_any(self) -> Symbol:
+    return TemplatedIdentifier('func', [self])
 
 
 class Operator(Node):
   def __init__(self, op: str) -> None:
     self.op: str = op
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     pass
 
 
@@ -833,7 +835,7 @@ class Assignment(Node):
 class Declaration(DeclarationBase):
   def __init__(self, typ: Symbol, sym: Optional['Identifier']) -> None:
     super().__init__(0)
-    self._typ: Type = typ
+    self._typ: Optional[Type] = None
     self.typ_src: Symbol = typ
     self.sym: Optional['Identifier'] = sym
 
@@ -841,7 +843,7 @@ class Declaration(DeclarationBase):
     super().build(parent)
     parent.declare(self)
     self.typ_src = self.typ_src.build(self)
-    self._typ = self.typ_src.solve() if isinstance(self.typ_src, Symbol) else self.typ_src
+    self._make_type()
     if self.sym is not None:
       self.sym.build(self)
     return self
@@ -860,8 +862,16 @@ class Declaration(DeclarationBase):
   @property
   def typ(self) -> Type:
     if not self.built:
-      self._typ = self.typ_src.solve() if isinstance(self.typ_src, Symbol) else self.typ_src
+      self._make_type()
+    if self._typ is None:
+      return BuiltinType('@any')
     return self._typ
+
+  def _make_type(self) -> None:
+    tmp: Optional[DeclarationBase] = self.typ_src.solve()
+    if tmp is not None:
+      assert isinstance(tmp, Type)
+      self._typ = tmp
 
 
 class VariableDeclaration(Declaration):
@@ -895,9 +905,7 @@ class FunctionDefinition(FunctionDeclaration, Scope):
       return self
     try:
       assert isinstance(self.typ, FunctionType)
-      typ: Type = self.typ.ret
-      if isinstance(typ, Symbol):
-        typ = typ.solve()
+      typ: Optional[DeclarationBase] = self.typ.ret.solve()
       self.body = parse_function(self.body_str.contents, not typ == BuiltinType('@void'))
       for s in self.body:
         s.build(self)
@@ -930,7 +938,7 @@ class Expression(Value):
     self.contents = [e.build(self) for e in self.contents]
     return self
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     for e in self.contents:
       e.auto_cast(target)
 
@@ -947,7 +955,9 @@ class Cast(Value):
   def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
     super().__init__(pos)
     self.sym: Symbol = sym
-    self._typ: Type = sym.solve() if isinstance(sym, Symbol) else sym
+    tmp: Optional[DeclarationBase] = sym.solve()
+    assert isinstance(tmp, Type)
+    self._typ: Type = tmp
     self.args: List[Expression] = args
 
   def build(self, parent: Node) -> 'Cast':
@@ -988,9 +998,11 @@ class FunctionCall(Value):
     return res
 
   def _check(self) -> None:
-    if self.sym.decl is None:
+    sym_decl: Optional[DeclarationBase] = self.sym.solve()
+    if sym_decl is None:
       return
-    typ: Type = self.sym.decl.typ
+    assert isinstance(sym_decl, Declaration)
+    typ: Type = sym_decl.typ
     if not isinstance(typ, FunctionType):
       self.error(self.pos, "calling non function type {}".format(self.sym.repr))
       return
@@ -1064,7 +1076,7 @@ class ArrayAccess(SymbolContainer):
   def decl(self) -> Optional[DeclarationBase]:
     return self.child.decl
 
-  def from_any(self) -> Type:
+  def from_any(self) -> Symbol:
     return self.child.typ.from_any()
 
   @property
@@ -1164,15 +1176,17 @@ class Identifier(Value):
           err = "use of undeclared identifier {}".format(self.name)
         self.error(self.pos, err)
       else:
-        self.ref_offset = self.decl.typ.ref_offset
+        self.ref_offset = self.typ.ref_offset
     return self
 
   @property
   def typ(self) -> Type:
-    return self.decl.typ if self.decl is not None else BuiltinType('@any').build(self)
-
-  def from_any(self) -> Type:
-    return self.decl.from_any() if self.decl is not None else self
+    if self.decl is None:
+      return BuiltinType('@any').build(self)
+    if isinstance(self.decl, Type):
+      return self.decl.dup().build(self)
+    assert isinstance(self.decl, Declaration) or isinstance(self.decl, Alias)
+    return self.decl.typ
 
 
 class CompoundIdentifier(Symbol):
@@ -1206,18 +1220,15 @@ class CompoundIdentifier(Symbol):
     return '.'.join([x.name for x in self.elems])
 
   @property
-  def cast(self) -> Union[Type, None]:
+  def cast(self) -> Optional[Symbol]:
     return self.elems[-1].cast
 
   @cast.setter
-  def cast(self, value: Type) -> None:
+  def cast(self, value: Symbol) -> None:
     self.elems[-1].cast = value
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     return self.elems[-1].auto_cast(target)
-
-  def from_any(self) -> Type:
-    return self.elems[-1].from_any()
 
   @property
   def any_memory_offset(self) -> int:
@@ -1272,7 +1283,7 @@ class String(Value):
   def typ(self) -> Type:
     return BuiltinType('@str').build(self)
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     pass
 
 
@@ -1285,7 +1296,7 @@ class Char(Value):
   def typ(self) -> Type:
     return BuiltinType('@char').build(self)
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     pass
 
 
@@ -1298,7 +1309,7 @@ class Number(Value):
   def typ(self) -> Type:
     return BuiltinType('@int').build(self)
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     pass
 
 
@@ -1310,7 +1321,7 @@ class NullValue(Value):
   def typ(self) -> Type:
     return BuiltinType('@any').build(self)
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     pass
 
 
@@ -1323,7 +1334,7 @@ class BoolValue(Value):
   def typ(self) -> Type:
     return BuiltinType('@bool').build(self)
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     pass
 
 
@@ -1345,7 +1356,7 @@ class UnaryOperatorValue(Node):
   def decl(self) -> Optional[DeclarationBase]:
     return self.val.decl
 
-  def auto_cast(self, target: Type) -> None:
+  def auto_cast(self, target: Symbol) -> None:
     return self.val.auto_cast(target)
 
 
@@ -1461,7 +1472,7 @@ class ContainerStructure(Type, Scope):
         return decl, err
     return None, None
 
-  def from_any(self) -> Type:
+  def from_any(self) -> Symbol:
     return Reference(CompoundIdentifier([Identifier(0, self.sym.name)])).build(self)
 
   def dup(self) -> Type:
