@@ -111,7 +111,7 @@ int_types: Set[str] = {
 }
 
 
-def type_to_ehlit(typ: Type) -> ast.Symbol:
+def type_to_ehlit(typ: Type) -> ast.Node:
   if typ.kind.name in uint_types:
     return ast.CompoundIdentifier([ast.Identifier(0, '@uint' + str(typ.get_size() * 8))])
   if typ.kind.name in int_types:
@@ -124,9 +124,9 @@ def type_to_ehlit(typ: Type) -> ast.Symbol:
   return ast.CompoundIdentifier([ast.Identifier(0, 'any')])
 
 
-def value_to_ehlit(val: str, typ: Type) -> Optional[ast.Node]:
+def value_to_ehlit(val: str, typ: Type) -> Optional[ast.Expression]:
   if typ.kind.name in uint_types or typ.kind.name in int_types:
-    return ast.Number(val)
+    return ast.Expression([ast.Number(val)], False)
 
   try:
     return globals()['value_' + typ.kind.name](val)
@@ -163,7 +163,7 @@ def parse_header(filename: str) -> List[ast.Node]:
 
 def parse_VAR_DECL(cursor: Cursor) -> ast.Node:
   assign: Optional[Cursor] = cursor.get_definition()
-  value: Optional[ast.Node] = None
+  value: Optional[ast.Expression] = None
   if assign is not None:
     got_eq: bool = False
     for t in assign.get_tokens():
@@ -177,8 +177,10 @@ def parse_VAR_DECL(cursor: Cursor) -> ast.Node:
         got_eq = True
     if got_eq is False:
       logging.debug('c_compat: error: unhandled assignment')
+  typ: ast.Node = type_to_ehlit(cursor.type)
+  assert isinstance(typ, ast.Symbol)
   return ast.VariableDeclaration(
-    type_to_ehlit(cursor.type),
+    typ,
     ast.Identifier(0, cursor.spelling),
     ast.Assignment(value) if value is not None else None
   )
@@ -188,11 +190,15 @@ def parse_FUNCTION_DECL(cursor: Cursor) -> ast.Node:
   args: List[ast.VariableDeclaration] = []
   for c in cursor.get_children():
     if c.kind == CursorKind.PARM_DECL:
-      args.append(ast.VariableDeclaration(type_to_ehlit(c.type), ast.Identifier(0, c.spelling)))
+      typ = type_to_ehlit(c.type)
+      assert isinstance(typ, ast.Symbol)
+      args.append(ast.VariableDeclaration(typ, ast.Identifier(0, c.spelling)))
 
+  ret_type = type_to_ehlit(cursor.type.get_result())
+  assert isinstance(ret_type, ast.Symbol)
   return ast.FunctionDeclaration(
     ast.TemplatedIdentifier('@func', [ast.FunctionType(
-      type_to_ehlit(cursor.type.get_result()),
+      ret_type,
       args,
       cursor.type.is_function_variadic()
     )]),
@@ -201,43 +207,45 @@ def parse_FUNCTION_DECL(cursor: Cursor) -> ast.Node:
 
 
 def parse_TYPEDEF_DECL(cursor: Cursor) -> ast.Node:
-  return ast.Alias(
-    type_to_ehlit(cursor.underlying_typedef_type),
-    ast.Identifier(0, cursor.spelling)
-  )
+  typ: ast.Node = type_to_ehlit(cursor.underlying_typedef_type)
+  assert isinstance(typ, ast.Type) or isinstance(typ, ast.Symbol)
+  return ast.Alias(typ, ast.Identifier(0, cursor.spelling))
+
+
+def _parse_container_structure_fields(cursor: Cursor) -> List[ast.VariableDeclaration]:
+  fields: List[ast.VariableDeclaration] = []
+  for f in cursor.type.get_fields():
+    typ: ast.Node = type_to_ehlit(f.type)
+    assert isinstance(typ, ast.Symbol)
+    fields.append(ast.VariableDeclaration(typ, ast.Identifier(0, f.spelling), None))
+  return fields
 
 
 def parse_STRUCT_DECL(cursor: Cursor) -> ast.Node:
   if not cursor.is_definition():
     return ast.Struct(0, ast.Identifier(0, cursor.spelling), None)
-  fields: List[ast.VariableDeclaration] = []
-  for f in cursor.type.get_fields():
-    fields.append(ast.VariableDeclaration(
-      type_to_ehlit(f.type),
-      ast.Identifier(0, f.spelling),
-      None
-    ))
-  return ast.Struct(0, ast.Identifier(0, cursor.spelling), fields)
+  return ast.Struct(
+    0,
+    ast.Identifier(0, cursor.spelling),
+    _parse_container_structure_fields(cursor)
+  )
 
 
 def parse_UNION_DECL(cursor: Cursor) -> ast.Node:
   if not cursor.is_definition():
     return ast.EhUnion(0, ast.Identifier(0, cursor.spelling), None)
-  fields: List[ast.VariableDeclaration] = []
-  for f in cursor.type.get_fields():
-    fields.append(ast.VariableDeclaration(
-      type_to_ehlit(f.type),
-      ast.Identifier(0, f.spelling),
-      None
-    ))
-  return ast.EhUnion(0, ast.Identifier(0, cursor.spelling), fields)
+  return ast.EhUnion(
+    0,
+    ast.Identifier(0, cursor.spelling),
+    _parse_container_structure_fields(cursor)
+  )
 
 
 def type_VOID(typ: Type) -> ast.Symbol:
   return ast.CompoundIdentifier([ast.Identifier(0, '@void')])
 
 
-def type_POINTER(typ: Type) -> ast.Symbol:
+def type_POINTER(typ: Type) -> ast.Node:
   subtype: Type = typ.get_pointee()
   builtin_type: Optional[ast.Symbol] = {
     TypeKind.CHAR_S: ast.CompoundIdentifier([ast.Identifier(0, '@str')]),
@@ -249,20 +257,23 @@ def type_POINTER(typ: Type) -> ast.Symbol:
   res = type_to_ehlit(subtype)
   if isinstance(res, ast.TemplatedIdentifier) and res.name == '@func':
     return res
+  assert isinstance(res, ast.Symbol)
   return ast.Reference(res)
 
 
-def type_TYPEDEF(typ: Type) -> ast.Symbol:
+def type_TYPEDEF(typ: Type) -> ast.Node:
   return ast.CompoundIdentifier([ast.Identifier(0, typ.get_declaration().spelling)])
 
 
-def type_CONSTANTARRAY(typ: Type) -> ast.Symbol:
+def type_CONSTANTARRAY(typ: Type) -> ast.Node:
+  elem: ast.Node = type_to_ehlit(typ.element_type)
+  assert isinstance(elem, ast.Symbol)
   if typ.element_count == 1:
-    return ast.Array(type_to_ehlit(typ.element_type), None)
-  return ast.Array(type_to_ehlit(typ.element_type), ast.Number(str(typ.element_count)))
+    return ast.Array(elem, None)
+  return ast.Array(elem, ast.Number(str(typ.element_count)))
 
 
-def type_ELABORATED(typ: Type) -> ast.Symbol:
+def type_ELABORATED(typ: Type) -> ast.Node:
   decl: Cursor = typ.get_canonical().get_declaration()
   # If the declaration do not have a name, it may not be referenced. In this case, we have to embed
   # the type definition in its usage. Otherwise, we reference it with its identifier.
@@ -275,7 +286,7 @@ def type_ELABORATED(typ: Type) -> ast.Symbol:
   return ast.CompoundIdentifier([ast.Identifier(0, decl.spelling)])
 
 
-def type_RECORD(typ: Type) -> ast.Symbol:
+def type_RECORD(typ: Type) -> ast.Node:
   decl: Cursor = typ.get_declaration()
   # If the type do not have a name, it may not be referenced. In the case, we have to embed
   # the type definition in its usage. Otherwise, we reference it with its identifier.
@@ -288,12 +299,16 @@ def type_RECORD(typ: Type) -> ast.Symbol:
   return ast.CompoundIdentifier([ast.Identifier(0, decl.spelling)])
 
 
-def type_FUNCTIONPROTO(typ: Type) -> ast.Symbol:
-  args: List[ast.Symbol] = []
+def type_FUNCTIONPROTO(typ: Type) -> ast.Node:
+  args: List[ast.VariableDeclaration] = []
   for a in typ.argument_types():
-    args.append(type_to_ehlit(a))
-  return ast.TemplatedIdentifier('@func', [ast.FunctionType(type_to_ehlit(typ.get_result()), args)])
+    res: ast.Node = type_to_ehlit(a)
+    assert isinstance(res, ast.Symbol)
+    args.append(ast.VariableDeclaration(res, None))
+  ret_type: ast.Node = type_to_ehlit(typ.get_result())
+  assert isinstance(ret_type, ast.Symbol)
+  return ast.TemplatedIdentifier('@func', [ast.FunctionType(ret_type, args)])
 
 
-def type_UNEXPOSED(typ: Type) -> ast.Symbol:
+def type_UNEXPOSED(typ: Type) -> ast.Node:
   return type_to_ehlit(typ.get_canonical())

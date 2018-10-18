@@ -12,4 +12,5 @@
          │  │  └─ Identifier: @int32
          │  └─ Identifier: assigned_var
          └─ Assignment
-            └─ Number: 2
+            └─ Expression
+               └─ Number: 2

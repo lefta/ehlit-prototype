@@ -9,8 +9,10 @@
       │  │           ├─ CompoundIdentifier
       │  │           │  └─ Identifier: @str
       │  │           └─ Arguments:
-      │  │              └─ CompoundIdentifier
-      │  │                 └─ Identifier: @int32
+      │  │              └─ VariableDeclaration
+      │  │                 └─ Declaration
+      │  │                    └─ CompoundIdentifier
+      │  │                       └─ Identifier: @int32
       │  └─ To:
       │     └─ Identifier: fun
       └─ FunctionDeclaration
@@ -27,6 +29,8 @@
                      │        ├─ CompoundIdentifier
                      │        │  └─ Identifier: @str
                      │        └─ Arguments:
-                     │           └─ CompoundIdentifier
-                     │              └─ Identifier: @int32
+                     │           └─ VariableDeclaration
+                     │              └─ Declaration
+                     │                 └─ CompoundIdentifier
+                     │                    └─ Identifier: @int32
                      └─ Identifier: param

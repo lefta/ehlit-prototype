@@ -875,7 +875,8 @@ class Declaration(DeclarationBase):
 
 
 class VariableDeclaration(Declaration):
-  def __init__(self, typ: Symbol, sym: 'Identifier', assign: Optional[Assignment] =None) -> None:
+  def __init__(self, typ: Symbol, sym: Optional['Identifier'], assign: Optional[Assignment] =None
+               ) -> None:
     super().__init__(typ, sym)
     self.assign: Optional[Assignment] = assign
 
@@ -1384,8 +1385,8 @@ class Sizeof(Value):
 
 
 class Alias(Symbol, DeclarationBase):
-  def __init__(self, src: Symbol, dst: Identifier) -> None:
-    self.src_sym: Symbol = src
+  def __init__(self, src: Union[Type, Symbol], dst: Identifier) -> None:
+    self.src_sym: Union[Type, Symbol] = src
     self.src: Optional[DeclarationBase] = None
     self.dst: Identifier = dst
 
