@@ -331,7 +331,7 @@ class Value(Node):
     @return @b Type The cast needed for a successful conversion.
     '''
     target_ref_count: int = source.ref_offset
-    res: Symbol = target.typ.from_any()
+    res: Symbol = target.from_any() if isinstance(target, Type) else target.typ.from_any()
     if is_casting:
       # We align the result to match the ref offset of the target
       if not target.is_type:
@@ -364,7 +364,7 @@ class Value(Node):
     self_typ: 'Type' = self.typ
     if isinstance(self_typ, ReferenceType):
       self_typ = self_typ.inner_child
-    target_typ: 'Type' = target.typ
+    target_typ: 'Type' = target if isinstance(target, Type) else target.typ
     if isinstance(target_typ, ReferenceType):
       target_typ = target_typ.inner_child
     if self_typ != target_typ:
@@ -443,10 +443,6 @@ class Type(DeclarationBase):
   def ref_offset(self) -> int:
     return 0
 
-  @property
-  def typ(self) -> 'Type':
-    return self
-
   @abstractmethod
   def from_any(self) -> 'Symbol':
     raise NotImplementedError
@@ -512,10 +508,6 @@ class BuiltinType(Type):
     if self.name == '@str':
       return BuiltinType('@char').build(self)
     return None
-
-  @property
-  def typ(self) -> Type:
-    return self.dup().build(self.parent)
 
   @property
   def decl(self) -> Optional['DeclarationBase']:
@@ -635,10 +627,6 @@ class ArrayType(Type, Container):
   def name(self) -> str:
     return '@array'
 
-  @property
-  def typ(self) -> Type:
-    return self.dup().build(self.parent)
-
   def dup(self) -> Type:
     return ArrayType(self.child.dup())
 
@@ -658,17 +646,11 @@ class Reference(SymbolContainer):
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
-    child_decl: Optional[DeclarationBase] = self.child.decl
-    if child_decl is None:
-      return None
-    return ReferenceType(child_decl.typ).build(self)
+    return ReferenceType(self.child.typ).build(self)
 
   @property
   def typ(self) -> Type:
-    child_decl: Optional[DeclarationBase] = self.child.decl
-    if child_decl is None:
-      return BuiltinType('@any')
-    return ReferenceType(child_decl.typ).build(self)
+    return ReferenceType(self.child.typ).build(self)
 
   @property
   def repr(self) -> str:

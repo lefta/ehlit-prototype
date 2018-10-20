@@ -23,7 +23,7 @@ import sys
 from ehlit.parser.ast import (
     Alias, Array, ArrayType, ArrayAccess, BuiltinType, CompoundIdentifier, Container, EhUnion,
     FunctionCall, FunctionDeclaration, FunctionDefinition, ReferenceToType, ReferenceToValue,
-    ReferenceType, Struct, Symbol, TemplatedIdentifier
+    ReferenceType, Struct, Symbol, TemplatedIdentifier, Type
 )
 
 
@@ -298,7 +298,7 @@ class SourceWriter:
 
   def writeArrayAccess(self, arr):
     self.write_value(arr)
-    decl = arr.decl.typ
+    decl = arr.decl if isinstance(arr.decl, Type) else arr.decl.typ
     sym = arr
     while type(decl) is ArrayType or type(decl) is ReferenceType or BuiltinType('@str') == decl:
       if type(sym) is ArrayAccess:
@@ -319,7 +319,7 @@ class SourceWriter:
         cur = cur.parent
       decl = decl.parent
     self.write(sym)
-    decl = arr.decl.typ
+    decl = arr.decl if isinstance(arr.decl, Type) else arr.decl.typ
     while type(decl) is ReferenceType:
       decl = decl.child
     while type(arr) is ArrayAccess or type(decl) is ReferenceType:
