@@ -734,7 +734,7 @@ class ReferenceType(Type, Container):
 
   @property
   def decl(self) -> Optional[DeclarationBase]:
-    return self.child.decl
+    return self.child
 
   @property
   def inner_child(self) -> Type:
