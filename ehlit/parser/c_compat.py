@@ -121,7 +121,7 @@ def type_to_ehlit(typ: Type) -> ast.Node:
     return globals()['type_' + typ.kind.name](typ)
   except KeyError:
     logging.debug('c_compat: unimplemented: type_%s' % typ.kind.name)
-  return ast.CompoundIdentifier([ast.Identifier(0, 'any')])
+  return ast.CompoundIdentifier([ast.Identifier(0, '@any')])
 
 
 def value_to_ehlit(val: str, typ: Type) -> Optional[ast.Expression]:
