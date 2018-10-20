@@ -1318,7 +1318,7 @@ class BoolValue(Value):
     pass
 
 
-class UnaryOperatorValue(Node):
+class UnaryOperatorValue(Value):
   def __init__(self, op: str, val: Value) -> None:
     self.op: str = op
     self.val: Value = val
