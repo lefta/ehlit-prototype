@@ -34,6 +34,7 @@ MOD_NONE = 0
 MOD_CONST = 1
 
 imported: List[str] = []
+included: List[str] = []
 
 
 class UnparsedContents:
@@ -278,6 +279,9 @@ class Include(GenericExternInclusion):
     @return @b List[Node] A list of the imported nodes.
     '''
     from ehlit.parser import c_compat
+    if self.lib in included:
+      return []
+    included.append(self.lib)
     return c_compat.parse_header(self.lib)
 
 
