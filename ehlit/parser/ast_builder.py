@@ -96,9 +96,14 @@ class ASTBuilder(PTNodeVisitor):
   def visit_bool_value(self, node: ParseTreeNode, children: Tuple[StrMatch]) -> ast.BoolValue:
     return ast.BoolValue(children[0] == 'true')
 
-  def visit_referenced_value(self, node: ParseTreeNode, children: Tuple[StrMatch, ast.Symbol]
+  def visit_referenced_value(self, node: ParseTreeNode,
+                             children: Union[Tuple[StrMatch, ast.Symbol],
+                                             Tuple[StrMatch, ast.Symbol, ArrayBuilder]]
                              ) -> ast.Reference:
-    return ast.Reference(children[1])
+    if len(children) == 2:
+      return ast.Reference(children[1])
+    children[2].set_child(children[1])
+    return ast.Reference(children[2].to_array_access())
 
   # children is variable length here, but typings do not allow to show it
   def visit_function_call(self, node: ParseTreeNode,

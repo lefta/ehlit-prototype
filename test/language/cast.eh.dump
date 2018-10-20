@@ -93,6 +93,33 @@
       │                 └─ Expression
       │                    └─ CompoundIdentifier
       │                       └─ Identifier: ac
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: @str
+      │     │  └─ Identifier: s
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ String: YOLO
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: @str
+      │     │  └─ Identifier: string
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Cast
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: @str
+      │              └─ Expression
+      │                 └─ Reference
+      │                    └─ ArrayAccess
+      │                       ├─ Expression
+      │                       │  └─ Number: 1
+      │                       └─ CompoundIdentifier
+      │                          └─ Identifier: s
       └─ Statement
          └─ Return
             └─ Expression

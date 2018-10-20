@@ -6,5 +6,7 @@ int main(int ac, str[] av)
 	any test = str(ac)
 	size i = size[](av)[0]
 	char c = str(ac)[0]
+	str s = "YOLO"
+	str string = str(ref s[1])
 	return 0
 }

@@ -100,7 +100,7 @@ def bool_value() -> GrammarType:
 
 
 def referenced_value() -> GrammarType:
-  return 'ref', writable_value
+  return 'ref', writable_value, array_access
 
 
 def function_call() -> GrammarType:
