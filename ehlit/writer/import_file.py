@@ -20,7 +20,6 @@
 # SOFTWARE.
 
 import sys
-from ehlit.writer.source import SourceWriter
 
 
 class ImportWriter:
@@ -55,7 +54,12 @@ class ImportWriter:
     self.writeFunctionDeclaration(node)
 
   def writeFunctionDeclaration(self, node):
-    SourceWriter.writeFunctionPrototype(self, node)
+    self.write(node.typ.ret)
+    self.file.write(' ')
+    self.write(node.sym)
+    self.file.write('(')
+    self.writeArgumentDefinitionList(node.typ.args)
+    self.file.write(")")
 
   def writeDeclaration(self, node):
     self.write(node.typ_src)
@@ -65,7 +69,13 @@ class ImportWriter:
 
   def writeArgumentDefinitionList(self, node):
     if len(node) != 0:
-      SourceWriter.writeArgumentDefinitionList(self, node)
+      i = 0
+      count = len(node)
+      while i < count:
+        self.writeDeclaration(node[i])
+        i += 1
+        if i < count:
+          self.file.write(', ')
 
   def writeExpression(self, node):
     if node.is_parenthesised:
