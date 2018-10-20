@@ -97,13 +97,9 @@ class ImportWriter:
       self.write(node.length)
     self.file.write(']')
 
-  def writeTypeReference(self, node):
+  def writeReferenceToType(self, node):
     if node.is_const:
       self.file.write('const ')
-    self.file.write('ref ')
-    self.write(node.child)
-
-  def writeReferenceToType(self, node):
     self.file.write('ref ')
     self.write(node.child)
 
