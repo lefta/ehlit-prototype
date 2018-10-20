@@ -20,7 +20,8 @@
 # SOFTWARE.
 
 import sys
-from typing import Dict, Optional, Sequence, TextIO
+from typing import cast, Dict, Optional, Sequence, TextIO
+import typing
 from ehlit.parser.ast import (
     Alias, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType, Cast, Char,
     CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container, Declaration,
@@ -28,7 +29,7 @@ from ehlit.parser.ast import (
     FunctionType, Identifier, Import, Include, Node, NullValue, Number, Operator,
     PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return, Sizeof,
     Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest,
-    Symbol, TemplatedIdentifier, Type, Value, VariableAssignment, VariableDeclaration
+    Symbol, TemplatedIdentifier, Type, VariableAssignment, VariableDeclaration, Value
 )
 
 
@@ -83,8 +84,8 @@ class SourceWriter:
       i += 1
 
   def write_value(self, node: Value) -> None:
-    decl: Declaration = node.decl
-    if type(node.decl) is Alias:
+    decl: Optional[DeclarationBase] = node.decl
+    if isinstance(decl, Alias):
       decl = decl.solve()
     if isinstance(decl, FunctionDeclaration) and not isinstance(node, FunctionCall):
       parent: Node = node.parent
@@ -169,15 +170,15 @@ class SourceWriter:
     self.write(node.ret)
     self.file.write('(*')
 
-  def write_type_prefix(self, typ: Symbol) -> None:
-    if isinstance(typ, Container):
-      typ = typ.inner_child
-    if isinstance(typ, CompoundIdentifier):
-      typ = typ.decl
-    prefix: Optional[str] = {
+  def write_type_prefix(self, node: Symbol) -> None:
+    if isinstance(node, Container):
+      node = node.inner_child
+    typ: Type = node.typ
+    prefix_mapping: Dict[typing.Type[Type], str] = {
       Struct: 'struct',
       EhUnion: 'union',
-    }.get(type(typ))
+    }
+    prefix = prefix_mapping.get(type(typ))
     if prefix is not None:
       self.file.write(prefix + ' ')
 
@@ -305,17 +306,19 @@ class SourceWriter:
 
   def writeArrayAccess(self, arr: ArrayAccess) -> None:
     self.write_value(arr)
-    decl = arr.decl if isinstance(arr.decl, Type) else arr.decl.typ
-    sym = arr
+    assert isinstance(arr.decl, Type) or isinstance(arr.decl, Declaration)
+    decl: Node = arr.decl if isinstance(arr.decl, Type) else arr.decl.typ
+    sym: Symbol = arr
     while type(decl) is ArrayType or type(decl) is ReferenceType or BuiltinType('@str') == decl:
-      if type(sym) is ArrayAccess:
+      if isinstance(sym, ArrayAccess):
         sym = sym.child
-      decl = decl.child
+      decl = cast(Type, cast(Container, decl).child)
     cur = sym.parent
+    assert isinstance(decl.parent, Type)
     decl = decl.parent
     while type(decl) is ArrayType or type(decl) is ReferenceType or BuiltinType('@str') == decl:
       if type(decl) is ReferenceType:
-        rdecl = decl
+        rdecl: Node = decl
         while type(rdecl) is ReferenceType:
           rdecl = rdecl.parent
         if type(rdecl) is ArrayType:
@@ -327,17 +330,18 @@ class SourceWriter:
       decl = decl.parent
     self.write(sym)
     decl = arr.decl if isinstance(arr.decl, Type) else arr.decl.typ
-    while type(decl) is ReferenceType:
+    while isinstance(decl, ReferenceType):
       decl = decl.child
-    while type(arr) is ArrayAccess or type(decl) is ReferenceType:
-      if type(decl) is not ReferenceType and type(arr) is ArrayAccess:
+    sym = arr
+    while isinstance(sym, ArrayAccess) or isinstance(decl, ReferenceType):
+      if type(decl) is not ReferenceType and isinstance(sym, ArrayAccess):
         if type(decl.parent) is ReferenceType:
           self.file.write(')')
         self.file.write('[')
-        self.write(arr.idx)
+        self.write(sym.idx)
         self.file.write(']')
-        arr = arr.child
-      decl = decl.child
+        sym = sym.child
+      decl = cast(Container, decl).child
 
   def writeControlStructure(self, struct: ControlStructure) -> None:
     self.write_indent()
@@ -485,7 +489,7 @@ class SourceWriter:
     self.file.write(')')
 
   def writeAlias(self, node: Alias) -> None:
-    if node.src.is_type:
+    if isinstance(node.src, Type):
       self.file.write('typedef ')
       self.write(node.src_sym)
       self.file.write(' ')
