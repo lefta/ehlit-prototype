@@ -20,20 +20,25 @@
 # SOFTWARE.
 
 import sys
+from typing import Dict, Optional, Sequence, TextIO
 from ehlit.parser.ast import (
-    Alias, Array, ArrayType, ArrayAccess, BuiltinType, CompoundIdentifier, Container, EhUnion,
-    FunctionCall, FunctionDeclaration, FunctionDefinition, ReferenceToType, ReferenceToValue,
-    ReferenceType, Struct, Symbol, TemplatedIdentifier, Type
+    Alias, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType, Cast, Char,
+    CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container, Declaration,
+    DeclarationBase, EhUnion, Expression, FunctionCall, FunctionDeclaration, FunctionDefinition,
+    FunctionType, Identifier, Import, Include, Node, NullValue, Number, Operator,
+    PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return, Sizeof,
+    Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest,
+    Symbol, TemplatedIdentifier, Type, Value, VariableAssignment, VariableDeclaration
 )
 
 
 class SourceWriter:
-  def __init__(self, ast, f):
-    self.file = sys.stdout if f == '-' else open(f, 'w')
+  def __init__(self, ast: AST, f: str) -> None:
+    self.file: TextIO = sys.stdout if f == '-' else open(f, 'w')
 
-    self.indent = 0
-    self.in_import = 0
-    self.types = {
+    self.indent: int = 0
+    self.in_import: int = 0
+    self.types: Dict[str, str] = {
       '@str': 'char*',
       '@any': 'void*',
       '@void': 'void',
@@ -51,7 +56,7 @@ class SourceWriter:
       '@bool': 'uint8_t',
     }
 
-    self.control_structures = {
+    self.control_structures: Dict[str, str] = {
       'if': 'if',
       'elif': 'else if',
       'else': 'else',
@@ -67,22 +72,22 @@ class SourceWriter:
     if f != '-':
       self.file.close()
 
-  def write(self, node):
+  def write(self, node: Node) -> None:
     func = getattr(self, 'write' + type(node).__name__)
     func(node)
 
-  def write_indent(self):
-    i = 0
+  def write_indent(self) -> None:
+    i: int = 0
     while i < self.indent:
       self.file.write('    ')
       i += 1
 
-  def write_value(self, node):
-    decl = node.decl
+  def write_value(self, node: Value) -> None:
+    decl: Declaration = node.decl
     if type(node.decl) is Alias:
       decl = decl.solve()
     if isinstance(decl, FunctionDeclaration) and not isinstance(node, FunctionCall):
-      parent = node.parent
+      parent: Node = node.parent
       while (type(parent) is ReferenceToValue or type(parent) is CompoundIdentifier):
         parent = parent.parent
       if type(parent) is not FunctionCall:
@@ -91,7 +96,7 @@ class SourceWriter:
     if node.ref_offset == -1:
       self.file.write('&')
     else:
-      i = node.ref_offset
+      i: int = node.ref_offset
       while i > 0:
         self.file.write('*')
         i -= 1
@@ -101,49 +106,49 @@ class SourceWriter:
       self.write(node.cast)
       self.file.write(')')
 
-  def writeInclude(self, inc):
+  def writeInclude(self, inc: Include) -> None:
     self.write_indent()
     self.file.write('#include <')
     self.file.write(inc.lib)
     self.file.write('>\n')
 
-  def writeImport(self, node):
+  def writeImport(self, node: Import) -> None:
     self.in_import += 1
     for sym in node.syms:
       self.write(sym)
     self.in_import -= 1
 
-  def writeReferenceToType(self, ref):
+  def writeReferenceToType(self, ref: ReferenceToType) -> None:
     self.write(ref.child)
     self.file.write('*')
     if ref.is_const:
       self.file.write(' const')
 
-  def writeReferenceToValue(self, ref):
+  def writeReferenceToValue(self, ref: ReferenceToValue) -> None:
     self.write(ref.child)
 
-  def writeArray(self, arr):
+  def writeArray(self, arr: Array) -> None:
     self.write(arr.child)
     if arr.length is None:
       self.file.write('*')
     if self.array_needs_parens(arr):
       self.file.write('(')
 
-  def is_dynamic_array(self, node):
-    typ = type(node)
-    return (typ is Array and node.length is None) or typ is ReferenceToType
+  def is_dynamic_array(self, node: Node) -> bool:
+    return (isinstance(node, Array) and node.length is None) or isinstance(node, ReferenceToType)
 
-  def array_needs_parens(self, node):
+  def array_needs_parens(self, node: Node) -> bool:
     if self.is_dynamic_array(node):
       return False
     if not isinstance(node.parent, Container):
       return False
     return self.is_dynamic_array(node.parent)
 
-  def write_declaration_post(self, node):
-    if type(node) is TemplatedIdentifier and node.name == '@func':
+  def write_declaration_post(self, node: Symbol) -> None:
+    if isinstance(node, TemplatedIdentifier) and node.name == '@func':
       self.file.write(')(')
-      i = 0
+      i: int = 0
+      assert isinstance(node.typ, FunctionType)
       while i < len(node.typ.args):
         if i is not 0:
           self.file.write(', ')
@@ -159,28 +164,28 @@ class SourceWriter:
         self.file.write(']')
       self.write_declaration_post(node.child)
 
-  def writeFunctionType(self, node):
+  def writeFunctionType(self, node: FunctionType) -> None:
     self.write_type_prefix(node.ret)
     self.write(node.ret)
     self.file.write('(*')
 
-  def write_type_prefix(self, typ):
+  def write_type_prefix(self, typ: Symbol) -> None:
     if isinstance(typ, Container):
       typ = typ.inner_child
-    if type(typ) is CompoundIdentifier:
+    if isinstance(typ, CompoundIdentifier):
       typ = typ.decl
-    prefix = {
+    prefix: Optional[str] = {
       Struct: 'struct',
       EhUnion: 'union',
     }.get(type(typ))
     if prefix is not None:
       self.file.write(prefix + ' ')
 
-  def write_type_suffix(self, node):
+  def write_type_suffix(self, node: Symbol) -> None:
     if node.is_const:
       self.file.write(' const')
 
-  def writeDeclaration(self, decl):
+  def writeDeclaration(self, decl: Declaration) -> None:
     self.write_type_prefix(decl.typ_src)
     self.write(decl.typ_src)
     if decl.sym is not None:
@@ -188,38 +193,40 @@ class SourceWriter:
       self.write(decl.sym)
     self.write_declaration_post(decl.typ_src)
 
-  def writeVariableDeclaration(self, decl):
+  def writeVariableDeclaration(self, decl: VariableDeclaration) -> None:
     self.writeDeclaration(decl)
     if decl.assign is not None:
       self.write(decl.assign)
 
-  def writeArgumentDefinitionList(self, args):
+  def writeArgumentDefinitionList(self, args: Sequence[VariableDeclaration]) -> None:
     if len(args) == 0:
       self.file.write('void')
     else:
-      i = 0
-      count = len(args)
+      i: int = 0
+      count: int = len(args)
       while i < count:
         self.writeDeclaration(args[i])
         i += 1
         if i < count:
           self.file.write(', ')
 
-  def writeFunctionPrototype(self, proto):
+  def writeFunctionPrototype(self, proto: FunctionDeclaration) -> None:
+    assert isinstance(proto.typ, FunctionType)
     self.write_type_prefix(proto.typ.ret)
     self.write(proto.typ.ret)
     self.file.write(' ')
-    self.write(proto.sym)
+    if proto.sym is not None:
+      self.write(proto.sym)
     self.file.write('(')
     self.writeArgumentDefinitionList(proto.typ.args)
     self.file.write(")")
 
-  def writeFunctionDeclaration(self, fun):
+  def writeFunctionDeclaration(self, fun: FunctionDeclaration) -> None:
     self.write_indent()
     self.writeFunctionPrototype(fun)
     self.file.write(';\n')
 
-  def writeFunctionDefinition(self, fun):
+  def writeFunctionDefinition(self, fun: FunctionDefinition) -> None:
     if self.in_import > 0:
       self.writeFunctionDeclaration(fun)
       return
@@ -229,7 +236,7 @@ class SourceWriter:
     for decl in fun.predeclarations:
       # It is possible that we get the definition of the function, but we only want to write
       # its prototype. For all other declaration types, we can write it as is.
-      if type(decl) is FunctionDefinition:
+      if isinstance(decl, FunctionDefinition):
         self.writeFunctionDeclaration(decl)
       else:
         self.write(decl)
@@ -246,16 +253,16 @@ class SourceWriter:
 
     self.file.write("}\n")
 
-  def writeStatement(self, stmt):
+  def writeStatement(self, stmt: Statement) -> None:
     self.write_indent()
     self.write(stmt.expr)
     self.file.write(';\n')
 
-  def writeExpression(self, expr):
+  def writeExpression(self, expr: Expression) -> None:
     if expr.is_parenthesised:
       self.file.write('(')
-    i = 0
-    count = len(expr.contents)
+    i: int = 0
+    count: int = len(expr.contents)
     while i < count:
       self.write(expr.contents[i])
       i += 1
@@ -264,18 +271,18 @@ class SourceWriter:
     if expr.is_parenthesised:
       self.file.write(')')
 
-  def writeAssignment(self, assign):
+  def writeAssignment(self, assign: Assignment) -> None:
     self.file.write(' ')
     if assign.operator is not None:
       self.write(assign.operator)
     self.file.write('= ')
     self.write(assign.expr)
 
-  def writeVariableAssignment(self, assign):
+  def writeVariableAssignment(self, assign: VariableAssignment) -> None:
     self.write(assign.var)
     self.write(assign.assign)
 
-  def writeCast(self, node):
+  def writeCast(self, node: Cast) -> None:
     self.file.write('((')
     self.write_type_prefix(node.sym)
     self.write(node.sym)
@@ -283,12 +290,12 @@ class SourceWriter:
     self.write(node.args[0])
     self.file.write(')')
 
-  def writeFunctionCall(self, call):
+  def writeFunctionCall(self, call: FunctionCall) -> None:
     self.write_value(call)
     self.write(call.sym)
     self.file.write('(')
-    i = 0
-    count = len(call.args)
+    i: int = 0
+    count: int = len(call.args)
     while i < count:
       self.write(call.args[i])
       i += 1
@@ -296,7 +303,7 @@ class SourceWriter:
         self.file.write(', ')
     self.file.write(')')
 
-  def writeArrayAccess(self, arr):
+  def writeArrayAccess(self, arr: ArrayAccess) -> None:
     self.write_value(arr)
     decl = arr.decl if isinstance(arr.decl, Type) else arr.decl.typ
     sym = arr
@@ -332,7 +339,7 @@ class SourceWriter:
         arr = arr.child
       decl = decl.child
 
-  def writeControlStructure(self, struct):
+  def writeControlStructure(self, struct: ControlStructure) -> None:
     self.write_indent()
     self.file.write(self.control_structures[struct.name])
     if struct.cond is not None:
@@ -351,18 +358,18 @@ class SourceWriter:
     self.write_indent()
     self.file.write('}\n')
 
-  def writeCondition(self, cond):
+  def writeCondition(self, cond: Condition) -> None:
     for branch in cond.branches:
       self.write(branch)
 
-  def writeSwitchCase(self, node):
+  def writeSwitchCase(self, node: SwitchCase) -> None:
     self.indent -= 1
     for c in node.cases:
       self.write(c)
     self.write(node.body)
     self.indent += 1
 
-  def writeSwitchCaseTest(self, node):
+  def writeSwitchCaseTest(self, node: SwitchCaseTest) -> None:
     self.write_indent()
     if node.test is None:
       self.file.write('default:\n')
@@ -371,7 +378,7 @@ class SourceWriter:
       self.write(node.test)
       self.file.write(':\n')
 
-  def writeSwitchCaseBody(self, node):
+  def writeSwitchCaseBody(self, node: SwitchCaseBody) -> None:
     if node.block:
       self.write_indent()
       self.file.write('{\n')
@@ -386,22 +393,22 @@ class SourceWriter:
       self.write_indent()
       self.file.write('}\n')
 
-  def writeReturn(self, ret):
+  def writeReturn(self, ret: Return) -> None:
     self.file.write('return')
     if ret.expr is not None:
       self.file.write(' (')
       self.write(ret.expr)
       self.file.write(')')
 
-  def writeOperator(self, op):
+  def writeOperator(self, op: Operator) -> None:
     self.file.write(op.op)
 
-  def writeCompoundIdentifier(self, node):
+  def writeCompoundIdentifier(self, node: CompoundIdentifier) -> None:
     self.write_value(node)
-    i = 0
+    i: int = 0
     while i < len(node.elems):
       if i < len(node.elems) - 1:
-        ref_offset = node.elems[i].ref_offset
+        ref_offset: int = node.elems[i].ref_offset
         if ref_offset is 0:
           self.write(node.elems[i])
           self.file.write('.')
@@ -421,12 +428,12 @@ class SourceWriter:
     if node.is_type:
       self.write_type_suffix(node)
 
-  def writeIdentifier(self, node):
+  def writeIdentifier(self, node: Identifier) -> None:
     if isinstance(node.decl, Alias) and node.decl.is_type:
       self.file.write(node.decl.dst.name)
       return
 
-    decl = node.decl
+    decl: Optional[DeclarationBase] = node.decl
     if isinstance(decl, Symbol):
       decl = decl.solve()
     if decl is not None:
@@ -437,33 +444,33 @@ class SourceWriter:
     else:
       self.file.write(node.name)
 
-  def writeTemplatedIdentifier(self, node):
+  def writeTemplatedIdentifier(self, node: TemplatedIdentifier) -> None:
     self.write(node.typ)
 
-  def writeChar(self, c):
+  def writeChar(self, c: Char) -> None:
     self.file.write('\'')
     self.file.write(c.char)
     self.file.write('\'')
 
-  def writeString(self, s):
+  def writeString(self, s: String) -> None:
     self.file.write('"')
     self.file.write(s.string)
     self.file.write('"')
 
-  def writeNumber(self, num):
+  def writeNumber(self, num: Number) -> None:
     self.file.write(num.num)
 
-  def writeNullValue(self, stmt):
+  def writeNullValue(self, stmt: NullValue) -> None:
     self.file.write('NULL')
 
-  def writeBoolValue(self, node):
+  def writeBoolValue(self, node: BoolValue) -> None:
     self.file.write('0' if node.val is False else '!0')
 
-  def writePrefixOperatorValue(self, val):
+  def writePrefixOperatorValue(self, val: PrefixOperatorValue) -> None:
     self.file.write(val.op)
     self.write(val.val)
 
-  def writeSuffixOperatorValue(self, val):
+  def writeSuffixOperatorValue(self, val: SuffixOperatorValue) -> None:
     if val.val.ref_offset is not 0:
       self.file.write('(')
     self.write(val.val)
@@ -471,22 +478,23 @@ class SourceWriter:
       self.file.write(')')
     self.file.write(val.op)
 
-  def writeSizeof(self, node):
+  def writeSizeof(self, node: Sizeof) -> None:
     self.file.write('sizeof(')
     self.write_type_prefix(node.sz_typ)
     self.write(node.sz_typ)
     self.file.write(')')
 
-  def writeAlias(self, node):
+  def writeAlias(self, node: Alias) -> None:
     if node.src.is_type:
       self.file.write('typedef ')
       self.write(node.src_sym)
       self.file.write(' ')
       self.write(node.dst)
-      self.write_declaration_post(node.src_sym)
+      if isinstance(node.src_sym, Symbol):
+        self.write_declaration_post(node.src_sym)
       self.file.write(';\n')
 
-  def writeContainerStructure(self, node):
+  def writeContainerStructure(self, node: ContainerStructure) -> None:
     self.write(node.sym)
     if node.fields is not None:
       self.file.write('\n{\n')
@@ -499,10 +507,10 @@ class SourceWriter:
       self.file.write('}')
     self.file.write(';\n')
 
-  def writeStruct(self, node):
+  def writeStruct(self, node: Struct) -> None:
     self.file.write('\nstruct ')
     self.writeContainerStructure(node)
 
-  def writeEhUnion(self, node):
+  def writeEhUnion(self, node: EhUnion) -> None:
     self.file.write('\nunion ')
     self.writeContainerStructure(node)
