@@ -43,12 +43,13 @@ def build(args: OptionsStruct) -> None:
   except ParseError as err:
     failure = err
 
-  if ast and args.verbose:
+  if ast is not None and args.verbose:
     WriteDump(ast)
 
   if failure is not None and failure.max_level > ParseError.Severity.Warning:
     raise failure
 
+  assert ast is not None
   WriteSource(ast, args.output_file)
   WriteImport(ast, args.output_import_file)
 
