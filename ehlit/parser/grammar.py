@@ -65,7 +65,7 @@ def builtin_keyword() -> GrammarType:
 
 
 def builtin_type() -> GrammarType:
-  return ['int', 'int8', 'int16', 'int32', 'int64', 'uint', 'uint8', 'uint16', 'uin32', 'uint64',
+  return ['int', 'int8', 'int16', 'int32', 'int64', 'uint', 'uint8', 'uint16', 'uint32', 'uint64',
           'char', 'str', 'bool', 'void', 'any', 'size']
 
 
