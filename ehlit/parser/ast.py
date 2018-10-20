@@ -338,21 +338,18 @@ class Value(Node):
         target_ref_offset: int = target.ref_offset
         while target_ref_offset > 0:
           assert isinstance(res, ReferenceToType)
-          tmp = res.child
-          res = tmp if isinstance(tmp, Type) or isinstance(tmp, Reference) else tmp.typ
+          res = res.child
           target_ref_offset -= 1
     else:
       # We reduce the result to the minimal Referencing needed for the conversion.
       if isinstance(res, ReferenceToType):
         while isinstance(res.child, ReferenceToType):
-          tmp = res.child
-          res = tmp if isinstance(tmp, Type) else tmp.typ
+          res = res.child
         if res.any_memory_offset is 0:
-          tmp = res.child
-          res = tmp if isinstance(tmp, Type) else tmp.typ
+          res = res.child
     if target_ref_count is not 0:
       # The developper asked for some referencing
-      target_ref_count -= res.ref_offset - res.any_memory_offset
+      target_ref_count -= res.ref_offset - res.typ.any_memory_offset
       while target_ref_count > 0:
         res = Reference(res).build(self)
         target_ref_count -= 1
