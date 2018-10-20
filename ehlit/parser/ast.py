@@ -319,7 +319,12 @@ class Value(Node):
   def typ(self) -> 'Type':
     raise NotImplementedError
 
-  def _from_any_aligned(self, target: 'Symbol', source: 'Symbol', is_casting: bool) -> 'Symbol':
+  @property
+  def decl(self) -> Optional['DeclarationBase']:
+    return None
+
+  def _from_any_aligned(self, target: Union['Symbol', 'Type', 'Value'],
+                        source: Union['Symbol', 'Type', 'Value'], is_casting: bool) -> 'Symbol':
     '''! Compute the conversion needed to transform an any into target.
     This function computes the referencing offset and / or the cast to make an @b any, or a
     container of @b any, binary compatible with target. It also takes into account the will of the
@@ -334,7 +339,7 @@ class Value(Node):
     res: Symbol = target.from_any() if isinstance(target, Type) else target.typ.from_any()
     if is_casting:
       # We align the result to match the ref offset of the target
-      if not target.is_type:
+      if not isinstance(target, Type):
         target_ref_offset: int = target.ref_offset
         while target_ref_offset > 0:
           assert isinstance(res, ReferenceToType)
@@ -355,7 +360,7 @@ class Value(Node):
         target_ref_count -= 1
     return res
 
-  def auto_cast(self, target: 'Symbol') -> None:
+  def auto_cast(self, target: Union['Symbol', 'Type']) -> None:
     '''! Make this value binary compatible with target.
     @param target @b Node The node that this value shall be made compatible with.
     '''
@@ -382,7 +387,7 @@ class Value(Node):
         if target_ref_level is not 0:
           target_ref_level -= target.ref_offset
     if src:
-      if target.is_type:
+      if (isinstance(target, Symbol) and target.is_type) or isinstance(target, Type):
         target_ref_level += target.ref_offset
       else:
         target_ref_level += target.typ.ref_offset - target.ref_offset
@@ -684,7 +689,7 @@ class ReferenceToValue(Reference):
   def ref_offset(self, val: int) -> None:
     self.child.ref_offset = val - 1
 
-  def auto_cast(self, target: Symbol) -> None:
+  def auto_cast(self, target: Union[Symbol, Type]) -> None:
     self.child.auto_cast(target)
 
 
@@ -749,6 +754,9 @@ class ReferenceType(Type, Container):
 
   def dup(self) -> Type:
     return ReferenceType(self.child.dup())
+
+  def get_inner_declaration(self, sym: List['str']) -> DeclarationLookup:
+    return self.child.get_inner_declaration(sym)
 
 
 class FunctionType(Type):
@@ -828,7 +836,7 @@ class Declaration(DeclarationBase):
     return self
 
   def get_inner_declaration(self, sym: List[str]) -> DeclarationLookup:
-    return (None, None) if self.typ.decl is None else self.typ.decl.get_inner_declaration(sym)
+    return self.typ.get_inner_declaration(sym)
 
   @property
   def is_type(self) -> bool:
@@ -918,7 +926,7 @@ class Expression(Value):
     self.contents = [e.build(self) for e in self.contents]
     return self
 
-  def auto_cast(self, target: Symbol) -> None:
+  def auto_cast(self, target: Union[Symbol, Type]) -> None:
     for e in self.contents:
       e.auto_cast(target)
 
@@ -1141,7 +1149,7 @@ class Identifier(Value):
   def __init__(self, pos: int, name: str) -> None:
     super().__init__(pos)
     self.name: str = name
-    self.decl: Optional[DeclarationBase] = None
+    self._decl: Optional[DeclarationBase] = None
 
   def build(self, parent: Node) -> 'Identifier':
     super().build(parent)
@@ -1150,7 +1158,7 @@ class Identifier(Value):
       # CompoundIdentifier
       assert isinstance(parent, CompoundIdentifier), (
         'Only declarations may use an identifier directly')
-      self.decl, err = parent.find_declaration_for(self)
+      self._decl, err = parent.find_declaration_for(self)
       if self.decl is None:
         if err is None:
           err = "use of undeclared identifier {}".format(self.name)
@@ -1167,6 +1175,10 @@ class Identifier(Value):
       return self.decl.dup().build(self)
     assert isinstance(self.decl, Declaration) or isinstance(self.decl, Alias)
     return self.decl.typ
+
+  @property
+  def decl(self) -> Optional[DeclarationBase]:
+    return self._decl
 
 
 class CompoundIdentifier(Symbol):
@@ -1207,7 +1219,7 @@ class CompoundIdentifier(Symbol):
   def cast(self, value: Symbol) -> None:
     self.elems[-1].cast = value
 
-  def auto_cast(self, target: Symbol) -> None:
+  def auto_cast(self, target: Union[Symbol, Type]) -> None:
     return self.elems[-1].auto_cast(target)
 
   @property
@@ -1263,7 +1275,7 @@ class String(Value):
   def typ(self) -> Type:
     return BuiltinType('@str').build(self)
 
-  def auto_cast(self, target: Symbol) -> None:
+  def auto_cast(self, target: Union[Symbol, Type]) -> None:
     pass
 
 
@@ -1276,7 +1288,7 @@ class Char(Value):
   def typ(self) -> Type:
     return BuiltinType('@char').build(self)
 
-  def auto_cast(self, target: Symbol) -> None:
+  def auto_cast(self, target: Union[Symbol, Type]) -> None:
     pass
 
 
@@ -1289,7 +1301,7 @@ class Number(Value):
   def typ(self) -> Type:
     return BuiltinType('@int').build(self)
 
-  def auto_cast(self, target: Symbol) -> None:
+  def auto_cast(self, target: Union[Symbol, Type]) -> None:
     pass
 
 
@@ -1301,7 +1313,7 @@ class NullValue(Value):
   def typ(self) -> Type:
     return BuiltinType('@any').build(self)
 
-  def auto_cast(self, target: Symbol) -> None:
+  def auto_cast(self, target: Union[Symbol, Type]) -> None:
     pass
 
 
@@ -1314,7 +1326,7 @@ class BoolValue(Value):
   def typ(self) -> Type:
     return BuiltinType('@bool').build(self)
 
-  def auto_cast(self, target: Symbol) -> None:
+  def auto_cast(self, target: Union[Symbol, Type]) -> None:
     pass
 
 
@@ -1336,7 +1348,7 @@ class UnaryOperatorValue(Value):
   def decl(self) -> Optional[DeclarationBase]:
     return self.val.decl
 
-  def auto_cast(self, target: Symbol) -> None:
+  def auto_cast(self, target: Union[Symbol, Type]) -> None:
     return self.val.auto_cast(target)
 
 
