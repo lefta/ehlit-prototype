@@ -22,7 +22,7 @@
 from abc import abstractmethod
 from arpeggio import ParserPython
 from os import path, getcwd, listdir
-from typing import Iterable, List, Optional, Tuple, Union, cast
+from typing import Iterator, List, Optional, Tuple, Union, cast
 import typing
 import ehlit.parser.parse
 from ehlit.parser.error import ParseError, Failure
@@ -803,7 +803,7 @@ class VariableAssignment(Node):
 class Assignment(Node):
   def __init__(self, expr: 'Expression') -> None:
     self.expr: 'Expression' = expr
-    self.operator: Optional[str] = None
+    self.operator: Optional[Operator] = None
 
   def build(self, parent: Node) -> 'Assignment':
     super().build(parent)
@@ -1480,7 +1480,7 @@ class AST(UnorderedScope):
     self.failures: List[Failure] = []
     self.parser: Optional[ParserPython] = None
 
-  def __iter__(self) -> Iterable[Node]:
+  def __iter__(self) -> Iterator[Node]:
     return self.nodes.__iter__()
 
   def __getitem__(self, key: int) -> Node:
