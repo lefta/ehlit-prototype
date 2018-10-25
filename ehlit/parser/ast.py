@@ -465,9 +465,11 @@ class Symbol(Value):
   def __init__(self, pos: int =0) -> None:
     super().__init__(pos)
     self.mods: int = MOD_NONE
+    self._canonical: Optional[DeclarationBase] = None
 
   def build(self, parent: Node) -> 'Symbol':
     super().build(parent)
+    self._canonical = self.solve()
     return self
 
   def solve(self) -> Optional[DeclarationBase]:
@@ -496,6 +498,12 @@ class Symbol(Value):
   @abstractmethod
   def repr(self) -> str:
     raise NotImplementedError
+
+  @property
+  def canonical(self) -> Optional[DeclarationBase]:
+    if not self.built and self._canonical is None:
+      self._canonical = self.solve()
+    return self._canonical
 
 
 class BuiltinType(Type):
@@ -598,7 +606,7 @@ class Array(SymbolContainer):
     return 0
 
   def solve(self) -> DeclarationBase:
-    child: Optional[DeclarationBase] = self.child.solve()
+    child: Optional[DeclarationBase] = self.child.canonical
     assert isinstance(child, Type)
     return ArrayType(child).build(self)
 
@@ -859,7 +867,7 @@ class Declaration(DeclarationBase):
     return self._typ
 
   def _make_type(self) -> None:
-    tmp: Optional[DeclarationBase] = self.typ_src.solve()
+    tmp: Optional[DeclarationBase] = self.typ_src.canonical
     if tmp is not None:
       assert isinstance(tmp, Type)
       self._typ = tmp
@@ -897,7 +905,7 @@ class FunctionDefinition(FunctionDeclaration, Scope):
       return self
     try:
       assert isinstance(self.typ, FunctionType)
-      typ: Optional[DeclarationBase] = self.typ.ret.solve()
+      typ: Optional[DeclarationBase] = self.typ.ret.canonical
       self.body = parse_function(self.body_str.contents, not typ == BuiltinType('@void'))
       for s in self.body:
         s.build(self)
@@ -947,9 +955,8 @@ class Cast(Value):
   def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
     super().__init__(pos)
     self.sym: Symbol = sym
-    tmp: Optional[DeclarationBase] = sym.solve()
-    assert isinstance(tmp, Type)
-    self._typ: Type = tmp
+    assert isinstance(sym.canonical, Type)
+    self._typ: Type = sym.canonical
     self.args: List[Expression] = args
 
   def build(self, parent: Node) -> 'Cast':
@@ -990,11 +997,10 @@ class FunctionCall(Value):
     return res
 
   def _check(self) -> None:
-    sym_decl: Optional[DeclarationBase] = self.sym.solve()
-    if sym_decl is None:
+    if self.sym.canonical is None:
       return
-    assert isinstance(sym_decl, Declaration)
-    typ: Type = sym_decl.typ
+    assert isinstance(self.sym.canonical, Declaration)
+    typ: Type = self.sym.canonical.typ
     if not isinstance(typ, FunctionType):
       self.error(self.pos, "calling non function type {}".format(self.sym.repr))
       return
@@ -1385,13 +1391,14 @@ class Alias(Symbol, DeclarationBase):
     self.dst: Identifier = dst
 
   def build(self, parent: Node) -> 'Alias':
-    super().build(parent)
+    self.parent = parent
     parent.declare(self)
     self.src_sym = self.src_sym.build(self)
     if isinstance(self.src_sym, Symbol):
-      self.src = self.src_sym.solve()
+      self.src = self.src_sym.canonical
     else:
       self.src = self.src_sym
+    super().build(parent)
     return self
 
   @property
