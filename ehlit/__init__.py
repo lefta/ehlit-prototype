@@ -26,32 +26,32 @@ from ehlit.parser.ast import AST
 
 
 def build(args: OptionsStruct) -> None:
-  # Avoid importing submodules in global scope, otherwise they may use the logger before it is
-  # initialized
-  from ehlit.parser import parse, ParseError
-  from ehlit.writer import WriteSource, WriteDump, WriteImport
-  from ehlit.options import check_arguments
+    # Avoid importing submodules in global scope, otherwise they may use the logger before it is
+    # initialized
+    from ehlit.parser import parse, ParseError
+    from ehlit.writer import WriteSource, WriteDump, WriteImport
+    from ehlit.options import check_arguments
 
-  check_arguments(args)
-  logging.debug('building %s to %s\n', args.source, args.output_file)
+    check_arguments(args)
+    logging.debug('building %s to %s\n', args.source, args.output_file)
 
-  failure: Optional[ParseError] = None
-  ast: Optional[AST] = None
-  try:
-    ast = parse(args.source)
-    ast.build_ast(args)
-  except ParseError as err:
-    failure = err
+    failure: Optional[ParseError] = None
+    ast: Optional[AST] = None
+    try:
+        ast = parse(args.source)
+        ast.build_ast(args)
+    except ParseError as err:
+        failure = err
 
-  if ast is not None and args.verbose:
-    WriteDump(ast)
+    if ast is not None and args.verbose:
+        WriteDump(ast)
 
-  if failure is not None and failure.max_level > ParseError.Severity.Warning:
-    raise failure
+    if failure is not None and failure.max_level > ParseError.Severity.Warning:
+        raise failure
 
-  assert ast is not None
-  WriteSource(ast, args.output_file)
-  WriteImport(ast, args.output_import_file)
+    assert ast is not None
+    WriteSource(ast, args.output_file)
+    WriteImport(ast, args.output_import_file)
 
-  if failure is not None:
-    raise failure
+    if failure is not None:
+        raise failure

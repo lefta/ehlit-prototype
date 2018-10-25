@@ -25,12 +25,12 @@ from os import chdir
 
 
 class TestTypings(TestCase):
-  def setUp(self):
-    self.maxDiff = None
-    chdir('..')
+    def setUp(self):
+        self.maxDiff = None
+        chdir('..')
 
-  def test_typings(self):
-    out, errs, res = mypy.api.run(['ehlit'])
-    self.assertEqual(errs, '')
-    self.assertEqual(out, '')
-    self.assertEqual(res, 0)
+    def test_typings(self):
+        out, errs, res = mypy.api.run(['ehlit'])
+        self.assertEqual(errs, '')
+        self.assertEqual(out, '')
+        self.assertEqual(res, 0)

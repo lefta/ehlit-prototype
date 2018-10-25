@@ -36,19 +36,19 @@ from ehlit.parser import ParseError
 from ehlit import build
 
 try:
-  build(opts)
+    build(opts)
 
 except ParseError as err:
-  for f in err.failures:
-    if f.severity < ParseError.Severity.Error:
-      logging.warning(str(f))
-    else:
-      logging.error(str(f))
+    for f in err.failures:
+        if f.severity < ParseError.Severity.Error:
+            logging.warning(str(f))
+        else:
+            logging.error(str(f))
 
-  logging.info(err.summary)
-  if err.max_level > ParseError.Severity.Warning:
-    exit(-1)
+    logging.info(err.summary)
+    if err.max_level > ParseError.Severity.Warning:
+        exit(-1)
 
 except options.ArgError as err:
-  logging.error(str(err))
-  exit(-1)
+    logging.error(str(err))
+    exit(-1)

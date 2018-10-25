@@ -29,154 +29,154 @@ from ehlit.parser.ast import (
 
 
 class ImportWriter:
-  def __init__(self, ast: AST, f: str) -> None:
-    self.file: TextIO = sys.stdout if f == '-' else open(f, 'w')
-    self.indent: int = 0
-    for node in ast:
-      self.write(node)
-    if f != '-':
-      self.file.close()
+    def __init__(self, ast: AST, f: str) -> None:
+        self.file: TextIO = sys.stdout if f == '-' else open(f, 'w')
+        self.indent: int = 0
+        for node in ast:
+            self.write(node)
+        if f != '-':
+            self.file.close()
 
-  def write(self, node: Node) -> None:
-    func = getattr(self, 'write' + type(node).__name__)
-    func(node)
+    def write(self, node: Node) -> None:
+        func = getattr(self, 'write' + type(node).__name__)
+        func(node)
 
-  def write_indent(self) -> None:
-    i: int = 0
-    while i < self.indent:
-      self.file.write('    ')
-      i += 1
+    def write_indent(self) -> None:
+        i: int = 0
+        while i < self.indent:
+            self.file.write('    ')
+            i += 1
 
-  def writeInclude(self, node: Include) -> None:
-    pass
+    def writeInclude(self, node: Include) -> None:
+        pass
 
-  def writeImport(self, node: Import) -> None:
-    pass
+    def writeImport(self, node: Import) -> None:
+        pass
 
-  def writeFunctionDefinition(self, node: FunctionDefinition) -> None:
-    self.writeFunctionDeclaration(node)
+    def writeFunctionDefinition(self, node: FunctionDefinition) -> None:
+        self.writeFunctionDeclaration(node)
 
-  def writeFunctionDeclaration(self, node: FunctionDeclaration) -> None:
-    assert isinstance(node.typ, FunctionType)
-    self.write(node.typ.ret)
-    self.file.write(' ')
-    if node.sym is not None:
-      self.write(node.sym)
-    self.file.write('(')
-    self.writeArgumentDefinitionList(node.typ.args)
-    self.file.write(")")
-
-  def writeDeclaration(self, node: Declaration) -> None:
-    self.write(node.typ_src)
-    if node.sym is not None:
-      self.file.write(' ')
-      self.write(node.sym)
-
-  def writeArgumentDefinitionList(self, node: List[VariableDeclaration]) -> None:
-    if len(node) != 0:
-      i: int = 0
-      count: int = len(node)
-      while i < count:
-        self.writeDeclaration(node[i])
-        i += 1
-        if i < count:
-          self.file.write(', ')
-
-  def writeExpression(self, node: Expression) -> None:
-    if node.is_parenthesised:
-      self.file.write('(')
-    i: int = 0
-    count: int = len(node.contents)
-    while i < count:
-      self.write(node.contents[i])
-      i += 1
-      if i < count:
+    def writeFunctionDeclaration(self, node: FunctionDeclaration) -> None:
+        assert isinstance(node.typ, FunctionType)
+        self.write(node.typ.ret)
         self.file.write(' ')
-    if node.is_parenthesised:
-      self.file.write(')')
+        if node.sym is not None:
+            self.write(node.sym)
+        self.file.write('(')
+        self.writeArgumentDefinitionList(node.typ.args)
+        self.file.write(")")
 
-  def writeArray(self, node: Array) -> None:
-    self.write(node.child)
-    self.file.write('[')
-    if node.length is not None:
-      self.write(node.length)
-    self.file.write(']')
+    def writeDeclaration(self, node: Declaration) -> None:
+        self.write(node.typ_src)
+        if node.sym is not None:
+            self.file.write(' ')
+            self.write(node.sym)
 
-  def writeReferenceToType(self, node: ReferenceToType) -> None:
-    if node.is_const:
-      self.file.write('const ')
-    self.file.write('ref ')
-    self.write(node.child)
+    def writeArgumentDefinitionList(self, node: List[VariableDeclaration]) -> None:
+        if len(node) != 0:
+            i: int = 0
+            count: int = len(node)
+            while i < count:
+                self.writeDeclaration(node[i])
+                i += 1
+                if i < count:
+                    self.file.write(', ')
 
-  def writeFunctionType(self, node: FunctionType) -> None:
-    self.write(node.ret)
-    self.file.write('(')
-    i: int = 0
-    while i < len(node.args):
-      if i is not 0:
-        self.file.write(', ')
-      self.write(node.args[i])
-      i += 1
-    self.file.write(')')
+    def writeExpression(self, node: Expression) -> None:
+        if node.is_parenthesised:
+            self.file.write('(')
+        i: int = 0
+        count: int = len(node.contents)
+        while i < count:
+            self.write(node.contents[i])
+            i += 1
+            if i < count:
+                self.file.write(' ')
+        if node.is_parenthesised:
+            self.file.write(')')
 
-  def writeAssignment(self, node: Assignment) -> None:
-    self.file.write(' ')
-    if node.operator is not None:
-      self.write(node.operator)
-    self.file.write('= ')
-    self.write(node.expr)
+    def writeArray(self, node: Array) -> None:
+        self.write(node.child)
+        self.file.write('[')
+        if node.length is not None:
+            self.write(node.length)
+        self.file.write(']')
 
-  def writeCompoundIdentifier(self, node: CompoundIdentifier) -> None:
-    is_first: bool = True
-    for e in node.elems:
-      if not is_first:
-        self.file.write('.')
-      self.write(e)
-      is_first = False
+    def writeReferenceToType(self, node: ReferenceToType) -> None:
+        if node.is_const:
+            self.file.write('const ')
+        self.file.write('ref ')
+        self.write(node.child)
 
-  def writeIdentifier(self, node: Identifier) -> None:
-    self.file.write(node.name)
+    def writeFunctionType(self, node: FunctionType) -> None:
+        self.write(node.ret)
+        self.file.write('(')
+        i: int = 0
+        while i < len(node.args):
+            if i is not 0:
+                self.file.write(', ')
+            self.write(node.args[i])
+            i += 1
+        self.file.write(')')
 
-  def writeTemplatedIdentifier(self, node: TemplatedIdentifier) -> None:
-    self.file.write(node.name)
-    self.file.write('<')
-    for t in node.types:
-      self.write(t)
-      if t is not node.types[-1]:
-        self.file.write(', ')
-    self.file.write('>')
+    def writeAssignment(self, node: Assignment) -> None:
+        self.file.write(' ')
+        if node.operator is not None:
+            self.write(node.operator)
+        self.file.write('= ')
+        self.write(node.expr)
 
-  def writeNumber(self, node: Number) -> None:
-    self.file.write(node.num)
+    def writeCompoundIdentifier(self, node: CompoundIdentifier) -> None:
+        is_first: bool = True
+        for e in node.elems:
+            if not is_first:
+                self.file.write('.')
+            self.write(e)
+            is_first = False
 
-  def writeAlias(self, node: Alias) -> None:
-    self.file.write('alias ')
-    self.write(node.src_sym)
-    self.file.write(' ')
-    self.write(node.dst)
-    self.file.write('\n')
+    def writeIdentifier(self, node: Identifier) -> None:
+        self.file.write(node.name)
 
-  def writeVariableDeclaration(self, node: VariableDeclaration) -> None:
-    self.writeDeclaration(node)
-    if node.assign is not None:
-      self.file.write(' = ')
-      self.write(node.assign)
+    def writeTemplatedIdentifier(self, node: TemplatedIdentifier) -> None:
+        self.file.write(node.name)
+        self.file.write('<')
+        for t in node.types:
+            self.write(t)
+            if t is not node.types[-1]:
+                self.file.write(', ')
+        self.file.write('>')
 
-  def writeContainerStructure(self, node: ContainerStructure) -> None:
-    self.file.write('\n{} '.format(node.display_name))
-    self.write(node.sym)
-    if node.fields is not None:
-      self.file.write(' {\n')
-      self.indent += 1
-      for f in node.fields:
-        self.write_indent()
-        self.write(f)
+    def writeNumber(self, node: Number) -> None:
+        self.file.write(node.num)
+
+    def writeAlias(self, node: Alias) -> None:
+        self.file.write('alias ')
+        self.write(node.src_sym)
+        self.file.write(' ')
+        self.write(node.dst)
         self.file.write('\n')
-      self.indent -= 1
-      self.file.write('}\n')
 
-  def writeStruct(self, node: Struct) -> None:
-    self.writeContainerStructure(node)
+    def writeVariableDeclaration(self, node: VariableDeclaration) -> None:
+        self.writeDeclaration(node)
+        if node.assign is not None:
+            self.file.write(' = ')
+            self.write(node.assign)
 
-  def writeEhUnion(self, node: EhUnion) -> None:
-    self.writeContainerStructure(node)
+    def writeContainerStructure(self, node: ContainerStructure) -> None:
+        self.file.write('\n{} '.format(node.display_name))
+        self.write(node.sym)
+        if node.fields is not None:
+            self.file.write(' {\n')
+            self.indent += 1
+            for f in node.fields:
+                self.write_indent()
+                self.write(f)
+                self.file.write('\n')
+            self.indent -= 1
+            self.file.write('}\n')
+
+    def writeStruct(self, node: Struct) -> None:
+        self.writeContainerStructure(node)
+
+    def writeEhUnion(self, node: EhUnion) -> None:
+        self.writeContainerStructure(node)

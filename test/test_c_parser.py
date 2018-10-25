@@ -24,15 +24,15 @@ from common import EhlitTestCase
 
 
 class TestCParser(EhlitTestCase):
-  """ Test the interfacing with C """
+    """ Test the interfacing with C """
 
-  def __init__(self, arg):
-    super().__init__(arg)
-    self.test_dir = 'c_parser'
-    self.cases = self.discover_tests(self.test_dir)
+    def __init__(self, arg):
+        super().__init__(arg)
+        self.test_dir = 'c_parser'
+        self.cases = self.discover_tests(self.test_dir)
 
-  def test_c_parser(self):
-    for c in self.cases:
-      with self.subTest(case=c):
-        f = os.path.join(self.test_dir, c)
-        self.assert_dumps_to(f)
+    def test_c_parser(self):
+        for c in self.cases:
+            with self.subTest(case=c):
+                f = os.path.join(self.test_dir, c)
+                self.assert_dumps_to(f)

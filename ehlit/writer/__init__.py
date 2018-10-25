@@ -25,12 +25,12 @@ from ehlit.writer.dump import DumpWriter
 
 
 class WriteDump(DumpWriter):
-  pass
+    pass
 
 
 class WriteSource(SourceWriter):
-  pass
+    pass
 
 
 class WriteImport(ImportWriter):
-  pass
+    pass
