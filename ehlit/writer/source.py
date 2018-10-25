@@ -86,7 +86,7 @@ class SourceWriter:
   def write_value(self, node: Value) -> None:
     decl: Optional[DeclarationBase] = node.decl
     if isinstance(decl, Alias):
-      decl = decl.solve()
+      decl = decl.canonical
     if isinstance(decl, FunctionDeclaration) and not isinstance(node, FunctionCall):
       parent: Node = node.parent
       while (type(parent) is ReferenceToValue or type(parent) is CompoundIdentifier):
@@ -439,7 +439,7 @@ class SourceWriter:
 
     decl: Optional[DeclarationBase] = node.decl
     if isinstance(decl, Symbol):
-      decl = decl.solve()
+      decl = decl.canonical
     if decl is not None:
       if isinstance(decl, BuiltinType):
         self.file.write(self.types[decl.name])
