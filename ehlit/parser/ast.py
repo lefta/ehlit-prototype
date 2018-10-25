@@ -1157,18 +1157,7 @@ class Identifier(Value):
 
   def build(self, parent: Node) -> 'Identifier':
     super().build(parent)
-    if not parent.is_declaration():
-      # Only declarations may use an Identifier directly, all other node types must use
-      # CompoundIdentifier
-      assert isinstance(parent, CompoundIdentifier), (
-        'Only declarations may use an identifier directly')
-      self._decl, err = parent.find_declaration_for(self)
-      if self.decl is None:
-        if err is None:
-          err = "use of undeclared identifier {}".format(self.name)
-        self.error(self.pos, err)
-      else:
-        self.ref_offset = self.typ.ref_offset
+    self.ref_offset = self.typ.ref_offset
     return self
 
   @property
@@ -1184,6 +1173,10 @@ class Identifier(Value):
   def decl(self) -> Optional[DeclarationBase]:
     return self._decl
 
+  @decl.setter
+  def decl(self, value: Optional[DeclarationBase]) -> None:
+    self._decl = value
+
 
 class CompoundIdentifier(Symbol):
   def __init__(self, elems: List[Identifier]) -> None:
@@ -1191,9 +1184,24 @@ class CompoundIdentifier(Symbol):
     super().__init__()
 
   def build(self, parent: Node) -> 'CompoundIdentifier':
+    self.find_children_declarations(parent)
     super().build(parent)
     self.elems = [e.build(self) for e in self.elems]
     return self
+
+  def find_children_declarations(self, parent: Node) -> None:
+    cur_decl = None
+    for e in self.elems:
+      if cur_decl is None:
+        cur_decl, err = parent.find_declaration([e.name])
+      else:
+        cur_decl, err = cur_decl.get_inner_declaration([e.name])
+      e.decl = cur_decl
+      if cur_decl is None:
+        if err is None:
+          err = "use of undeclared identifier {}".format(e.name)
+        parent.error(e.pos, err)
+        return
 
   @property
   def ref_offset(self) -> int:
@@ -1229,15 +1237,6 @@ class CompoundIdentifier(Symbol):
   @property
   def any_memory_offset(self) -> int:
     return self.elems[-1].typ.any_memory_offset
-
-  def find_declaration_for(self, identifier: Identifier) -> DeclarationLookup:
-    i: int = 0
-    while i < len(self.elems):
-      if identifier is self.elems[i]:
-        return self.parent.find_declaration([x.name for x in self.elems[:i + 1]])
-      i += 1
-    assert False, "This code may not be reached"
-    return None, None
 
 
 class TemplatedIdentifier(Symbol):
