@@ -24,15 +24,15 @@ from common import EhlitTestCase
 
 
 class TestLanguageErrors(EhlitTestCase):
-	""" Test non valid language usage """
+    """ Test non valid language usage """
 
-	def __init__(self, arg):
-		super().__init__(arg)
-		self.test_dir = "language_error"
-		self.cases = self.discover_tests(self.test_dir)
+    def __init__(self, arg):
+        super().__init__(arg)
+        self.test_dir = "language_error"
+        self.cases = self.discover_tests(self.test_dir)
 
-	def test_language_errors(self):
-		for c in self.cases:
-			with self.subTest(case=c):
-				f = os.path.join(self.test_dir, c)
-				self.assert_error_file(f, f + '.err')
+    def test_language_errors(self):
+        for c in self.cases:
+            with self.subTest(case=c):
+                f = os.path.join(self.test_dir, c)
+                self.assert_error_file(f, f + '.err')

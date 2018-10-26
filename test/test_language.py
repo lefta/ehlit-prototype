@@ -24,15 +24,15 @@ from common import EhlitTestCase
 
 
 class TestLanguage(EhlitTestCase):
-	""" Test valid language features """
+    """ Test valid language features """
 
-	def __init__(self, arg):
-		super().__init__(arg)
-		self.test_dir = 'language'
-		self.cases = self.discover_tests(self.test_dir)
+    def __init__(self, arg):
+        super().__init__(arg)
+        self.test_dir = 'language'
+        self.cases = self.discover_tests(self.test_dir)
 
-	def test_language(self):
-		for c in self.cases:
-			with self.subTest(case=c):
-				f = os.path.join(self.test_dir, c)
-				self.assert_compiles(f)
+    def test_language(self):
+        for c in self.cases:
+            with self.subTest(case=c):
+                f = os.path.join(self.test_dir, c)
+                self.assert_compiles(f)

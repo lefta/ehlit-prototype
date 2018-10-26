@@ -23,10 +23,10 @@ from common import EhlitTestCase
 
 
 class TestCompiler(EhlitTestCase):
-	""" Test Ehlit executable behavior """
+    """ Test Ehlit executable behavior """
 
-	def test_file_not_ehlit_source(self):
-		self.assert_error("notehsrc.ext", "notehsrc.ext: not an ehlit source file")
+    def test_file_not_ehlit_source(self):
+        self.assert_error("notehsrc.ext", "notehsrc.ext: not an ehlit source file")
 
-	def test_file_no_ent(self):
-		self.assert_error("doesnotexist.eh", "doesnotexist.eh: no such file or directory")
+    def test_file_no_ent(self):
+        self.assert_error("doesnotexist.eh", "doesnotexist.eh: no such file or directory")
