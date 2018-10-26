@@ -28,7 +28,6 @@ This module contains a class with tools to help Ehlit test writing
 import io
 import logging
 import os.path
-import re
 import sys
 from inspect import getsourcefile
 from unittest import TestCase
@@ -127,9 +126,6 @@ class EhlitTestCase(TestCase):
             verbose = False
         return self.run_compiler(opts)
 
-    # TODO This is only temporary waiting for C compatibility to be fully implemented
-    dump_repl = re.compile(r'(c_compat: unimplemented: [a-zA-Z_]+\n)', flags=re.MULTILINE)
-
     def dump(self, src):
         """
         Dump the AST resulting from parsing a file
@@ -150,8 +146,7 @@ class EhlitTestCase(TestCase):
                 raise AssertionError('Generation crashed')
             self.logHandler.flush()
             self.tearDown()
-            return re.sub(self.dump_repl, '',
-                          self.logStream.getvalue().replace('\n--- AST ---\n', ''))
+            return self.logStream.getvalue().replace('\n--- AST ---\n', '')
 
     def assert_error(self, src, error):
         """
