@@ -15,5 +15,8 @@ int main() {
   double d
   decimal ld
 
+  float k = 42.59
+  float l = -42.59
+
   return 0
 }

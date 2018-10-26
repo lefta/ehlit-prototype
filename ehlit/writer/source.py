@@ -24,10 +24,10 @@ from typing import cast, Dict, Optional, Sequence, TextIO
 import typing
 from ehlit.parser.ast import (
     Alias, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType, Cast, Char,
-    CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container, Declaration,
-    DeclarationBase, EhUnion, Expression, FunctionCall, FunctionDeclaration, FunctionDefinition,
-    FunctionType, Identifier, Import, Include, Node, NullValue, Number, Operator,
-    PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return, Sizeof,
+    CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container, DecimalNumber,
+    Declaration, DeclarationBase, EhUnion, Expression, FunctionCall, FunctionDeclaration,
+    FunctionDefinition, FunctionType, Identifier, Import, Include, Node, NullValue, Number,
+    Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return, Sizeof,
     Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest,
     Symbol, TemplatedIdentifier, Type, VariableAssignment, VariableDeclaration, Value
 )
@@ -465,6 +465,9 @@ class SourceWriter:
 
     def writeNumber(self, num: Number) -> None:
         self.file.write(num.num)
+
+    def writeDecimalNumber(self, node: DecimalNumber) -> None:
+        self.file.write(node.num)
 
     def writeNullValue(self, stmt: NullValue) -> None:
         self.file.write('NULL')

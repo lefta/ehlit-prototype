@@ -22,9 +22,10 @@
 import sys
 from typing import List, TextIO
 from ehlit.parser.ast import (
-    Alias, Array, Assignment, AST, CompoundIdentifier, ContainerStructure, Declaration, EhUnion,
-    Expression, FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Import, Include,
-    Node, Number, ReferenceToType, Struct, TemplatedIdentifier, VariableDeclaration
+    Alias, Array, Assignment, AST, CompoundIdentifier, ContainerStructure, Declaration,
+    DecimalNumber, EhUnion, Expression, FunctionDeclaration, FunctionDefinition, FunctionType,
+    Identifier, Import, Include, Node, Number, ReferenceToType, Struct, TemplatedIdentifier,
+    VariableDeclaration
 )
 
 
@@ -147,6 +148,9 @@ class ImportWriter:
         self.file.write('>')
 
     def writeNumber(self, node: Number) -> None:
+        self.file.write(node.num)
+
+    def writeDecimalNumber(self, node: DecimalNumber) -> None:
         self.file.write(node.num)
 
     def writeAlias(self, node: Alias) -> None:

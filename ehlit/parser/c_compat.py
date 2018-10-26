@@ -136,6 +136,8 @@ def type_to_ehlit(typ: Type) -> ast.Node:
 def value_to_ehlit(val: str, typ: Type) -> Optional[ast.Expression]:
     if typ.kind in uint_types or typ.kind in int_types:
         return ast.Expression([ast.Number(val)], False)
+    if typ.kind in decimal_types:
+        return ast.Expression([ast.DecimalNumber(val)], False)
 
     try:
         return globals()['value_' + typ.kind.name](val)

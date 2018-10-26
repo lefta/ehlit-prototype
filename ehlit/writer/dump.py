@@ -23,7 +23,7 @@ import logging
 from typing import Callable, cast, Sequence, Union
 from ehlit.parser.ast import (
     Alias, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char, CompoundIdentifier,
-    Condition, ControlStructure, Declaration, EhUnion, Expression, FunctionCall,
+    Condition, ControlStructure, DecimalNumber, Declaration, EhUnion, Expression, FunctionCall,
     FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Include, Import, Node,
     NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return,
     Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
@@ -303,6 +303,11 @@ class DumpWriter:
     def dumpNumber(self, num: Union[Node, str]) -> None:
         num = cast(Number, num)
         self.dump('Number: ' + num.num)
+
+    @indent
+    def dumpDecimalNumber(self, node: Union[Node, str]) -> None:
+        node = cast(DecimalNumber, node)
+        self.dump('DecimalNumber: ' + node.num)
 
     @indent
     def dumpChar(self, char: Union[Node, str]) -> None:

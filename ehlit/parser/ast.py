@@ -1314,6 +1314,19 @@ class Number(Value):
         pass
 
 
+class DecimalNumber(Value):
+    def __init__(self, num: str) -> None:
+        super().__init__()
+        self.num: str = num
+
+    @property
+    def typ(self) -> Type:
+        return BuiltinType('@float').build(self)
+
+    def auto_cast(self, target: Union[Symbol, Type]) -> None:
+        pass
+
+
 class NullValue(Value):
     def __init__(self) -> None:
         super().__init__()

@@ -90,6 +90,10 @@ class ASTBuilder(PTNodeVisitor):
     def visit_number(self, node: ParseTreeNode, children: Tuple[RegExMatch]) -> ast.Number:
         return ast.Number(str(node))
 
+    def visit_decimal_number(self, node: ParseTreeNode, children: Tuple[RegExMatch]
+                             ) -> ast.DecimalNumber:
+        return ast.DecimalNumber(str(node))
+
     def visit_null_value(self, node: ParseTreeNode, children: Tuple[StrMatch]) -> ast.NullValue:
         return ast.NullValue()
 

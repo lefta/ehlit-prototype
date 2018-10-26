@@ -6,11 +6,19 @@
       │     ├─ CompoundIdentifier
       │     │  └─ Identifier: @int32
       │     └─ Identifier: var
+      ├─ VariableDeclaration
+      │  ├─ Declaration
+      │  │  ├─ CompoundIdentifier
+      │  │  │  └─ Identifier: @int32
+      │  │  └─ Identifier: assigned_var
+      │  └─ Assignment
+      │     └─ Expression
+      │        └─ Number: 2
       └─ VariableDeclaration
          ├─ Declaration
          │  ├─ CompoundIdentifier
-         │  │  └─ Identifier: @int32
-         │  └─ Identifier: assigned_var
+         │  │  └─ Identifier: @float
+         │  └─ Identifier: float_var
          └─ Assignment
             └─ Expression
-               └─ Number: 2
+               └─ DecimalNumber: 2.4

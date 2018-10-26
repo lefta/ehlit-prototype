@@ -92,6 +92,10 @@ def number() -> GrammarType:
     return RegExMatch(r'-?[0-9]+', str_repr='number')
 
 
+def decimal_number() -> GrammarType:
+    return RegExMatch(r'-?[0-9]+\.[0-9]+', str_repr='decimal number')
+
+
 def null_value() -> GrammarType:
     return 'null'
 
@@ -135,7 +139,8 @@ def array_access() -> GrammarType:
 
 def value() -> GrammarType:
     return [null_value, bool_value, sizeof, function_call, prefix_operator_value,
-            suffix_operator_value, writable_value, string, char, number], array_access
+            suffix_operator_value, writable_value, string, char, decimal_number, number
+            ], array_access
 
 
 # Operators & assigment

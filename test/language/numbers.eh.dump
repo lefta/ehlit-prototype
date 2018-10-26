@@ -89,6 +89,24 @@
       │        ├─ CompoundIdentifier
       │        │  └─ Identifier: @decimal
       │        └─ Identifier: ld
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: @float
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ DecimalNumber: 42.59
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: @float
+      │     │  └─ Identifier: l
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ DecimalNumber: -42.59
       └─ Statement
          └─ Return
             └─ Expression
