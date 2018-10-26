@@ -355,10 +355,10 @@ class ASTBuilder(PTNodeVisitor):
 
     def visit_switch_case_test(self, node: ParseTreeNode,
                                children: Tuple[StrMatch, Optional[ast.Value]]
-                               ) -> ast.SwitchCaseTest:
+                               ) -> List[ast.SwitchCaseTest]:
         if children[0] == 'default':
-            return ast.SwitchCaseTest(None)
-        return ast.SwitchCaseTest(children[1])
+            return [ast.SwitchCaseTest(None)]
+        return [ast.SwitchCaseTest(test) for test in children[1::2]]
 
     def visit_switch_case_body(self, node: ParseTreeNode,
                                children: Union[Tuple[ast.Statement, StrMatch],
@@ -371,9 +371,9 @@ class ASTBuilder(PTNodeVisitor):
         return ast.SwitchCaseBody(blocks, False)
 
     def visit_switch_cases(self, node: ParseTreeNode,
-                           children: Tuple[ast.SwitchCaseTest, ast.SwitchCaseBody]
+                           children: Tuple[List[ast.SwitchCaseTest], ast.SwitchCaseBody]
                            ) -> ast.SwitchCase:
-        return ast.SwitchCase(list(children[:-1]), children[-1])
+        return ast.SwitchCase(children[0], children[1])
 
     def visit_switch(self, node: ParseTreeNode,
                      children: Tuple[StrMatch, ast.Expression, ast.Statement]

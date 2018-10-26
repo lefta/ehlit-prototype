@@ -281,7 +281,7 @@ def while_loop() -> GrammarType:
 
 
 def switch_case_test() -> GrammarType:
-    return ['default', ('case', value)]
+    return ['default', ('case', OneOrMore(value, sep=','))]
 
 
 def switch_case_body() -> GrammarType:
@@ -289,7 +289,7 @@ def switch_case_body() -> GrammarType:
 
 
 def switch_cases() -> GrammarType:
-    return OneOrMore(switch_case_test), switch_case_body
+    return switch_case_test, switch_case_body
 
 
 def switch() -> GrammarType:

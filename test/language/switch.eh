@@ -3,8 +3,7 @@ int main(int ac, str[] av) {
   switch ac {
   case 1
     res = 0
-  case 2
-  case 3
+  case 2, 3
     res = 1
   case 7
     res = 4
