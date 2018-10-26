@@ -83,20 +83,20 @@ class Node:
         '''
         return False
 
-    def find_declaration(self, sym: List[str]) -> DeclarationLookup:
+    def find_declaration(self, sym: str) -> DeclarationLookup:
         '''! Find a declaration when coming from downsides.
         Scoping structures (like functions) would want to search symbols in this function. The
-        default is to try get_declaration on self, then to try with parent.
-        @param sym @b List[str] The symbol to find.
+        default is to pass the lookup to the parent.
+        @param sym @b str The symbol to find.
         @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
         '''
         return self.parent.find_declaration(sym)
 
-    def get_declaration(self, sym: List[str]) -> DeclarationLookup:
+    def get_declaration(self, sym: str) -> DeclarationLookup:
         '''! Find a declaration when coming from upsides.
         Structures exposing symbols to their parent (like Import) would want to search symbols in
         this function.
-        @param sym @b List[str] The symbol to find
+        @param sym @b str The symbol to find
         @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
         '''
         return None, None
@@ -152,7 +152,7 @@ class Scope(Node):
     def declare(self, decl: 'DeclarationBase') -> None:
         self.declarations.append(decl)
 
-    def find_declaration(self, sym: List[str]) -> DeclarationLookup:
+    def find_declaration(self, sym: str) -> DeclarationLookup:
         for decl in self.declarations:
             res, err = decl.get_declaration(sym)
             if res is not None or err is not None:
@@ -164,7 +164,7 @@ class Scope(Node):
 
 
 class UnorderedScope(Scope):
-    def find_declaration(self, sym: List[str]) -> DeclarationLookup:
+    def find_declaration(self, sym: str) -> DeclarationLookup:
         for node in self.scope_contents:
             res, err = node.get_declaration(sym)
             if res is not None or err is not None:
@@ -213,7 +213,7 @@ class GenericExternInclusion(UnorderedScope):
         '''
         raise NotImplementedError
 
-    def get_declaration(self, sym: List[str]) -> DeclarationLookup:
+    def get_declaration(self, sym: str) -> DeclarationLookup:
         '''! Look for a declaration from the imported file
         @param sym @b List[str] The symbol to look for
         @return @b Declaration|FunctionDeclaration The declaration if found, @c None otherwise
@@ -404,22 +404,12 @@ class DeclarationBase(Node):
         super().build(parent)
         return self
 
-    def get_declaration(self, sym: List[str]) -> DeclarationLookup:
-        if self.name == sym[0]:
-            return self.declaration_match(sym)
+    def get_declaration(self, sym: str) -> DeclarationLookup:
+        if self.name == sym:
+            return self, None
         return None, None
 
-    def declaration_match(self, sym: List[str]) -> DeclarationLookup:
-        '''! Scoping nodes should call this function when they get a match in their respective
-        `find_declaration` to automatically handle scope access (`foo.bar`).
-        @param sym @b List[str] The symbol looked for.
-        @return @b Declaration|FunctionDeclaration The deepest declaration if found, None otherwise.
-        '''
-        if len(sym) is 1:
-            return self, None
-        return self.get_inner_declaration(sym[1:])
-
-    def get_inner_declaration(self, sym: List[str]) -> DeclarationLookup:
+    def get_inner_declaration(self, sym: str) -> DeclarationLookup:
         '''! Find a declaration strictly in children.
         Container types (like structs) would want to search symbols in this function.
         @param sym @b List[str] The symbol to find.
@@ -768,7 +758,7 @@ class ReferenceType(Type, Container):
     def dup(self) -> Type:
         return ReferenceType(self.child.dup())
 
-    def get_inner_declaration(self, sym: List['str']) -> DeclarationLookup:
+    def get_inner_declaration(self, sym: str) -> DeclarationLookup:
         return self.child.get_inner_declaration(sym)
 
 
@@ -848,7 +838,7 @@ class Declaration(DeclarationBase):
             self.sym.build(self)
         return self
 
-    def get_inner_declaration(self, sym: List[str]) -> DeclarationLookup:
+    def get_inner_declaration(self, sym: str) -> DeclarationLookup:
         return self.typ.get_inner_declaration(sym)
 
     @property
@@ -1199,9 +1189,9 @@ class CompoundIdentifier(Symbol):
         cur_decl = None
         for e in self.elems:
             if cur_decl is None:
-                cur_decl, err = parent.find_declaration([e.name])
+                cur_decl, err = parent.find_declaration(e.name)
             else:
-                cur_decl, err = cur_decl.get_inner_declaration([e.name])
+                cur_decl, err = cur_decl.get_inner_declaration(e.name)
             e.decl = cur_decl
             if cur_decl is None:
                 if err is None:
@@ -1478,7 +1468,7 @@ class ContainerStructure(Type, Scope):
     def name(self) -> str:
         return self.sym.name
 
-    def get_inner_declaration(self, sym: List[str]) -> DeclarationLookup:
+    def get_inner_declaration(self, sym: str) -> DeclarationLookup:
         if self.fields is None:
             return None, 'accessing incomplete {} {}'.format(self.display_name, self.sym.name)
         for f in self.fields:
@@ -1557,7 +1547,7 @@ class AST(UnorderedScope):
     def scope_contents(self) -> List[Node]:
         return self.nodes
 
-    def find_declaration(self, sym: List[str]) -> DeclarationLookup:
+    def find_declaration(self, sym: str) -> DeclarationLookup:
         for n in self.nodes:
             res, err = n.get_declaration(sym)
             if res is not None or err is not None:
