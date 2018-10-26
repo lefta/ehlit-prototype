@@ -94,21 +94,21 @@ def cursor_to_ehlit(cursor: Cursor) -> Optional[ast.Node]:
     return None
 
 
-uint_types: Set[str] = {
-    'UCHAR',
-    'USHORT',
-    'UINT',
-    'ULONG',
-    'ULONGLONG',
+uint_types: Set[TypeKind] = {
+    TypeKind.UCHAR,
+    TypeKind.USHORT,
+    TypeKind.UINT,
+    TypeKind.ULONG,
+    TypeKind.ULONGLONG,
 }
 
-int_types: Set[str] = {
-    'CHAR_S',
-    'SCHAR',
-    'SHORT',
-    'INT',
-    'LONG',
-    'LONGLONG',
+int_types: Set[TypeKind] = {
+    TypeKind.CHAR_S,
+    TypeKind.SCHAR,
+    TypeKind.SHORT,
+    TypeKind.INT,
+    TypeKind.LONG,
+    TypeKind.LONGLONG,
 }
 
 decimal_types: Dict[TypeKind, str] = {
@@ -119,9 +119,9 @@ decimal_types: Dict[TypeKind, str] = {
 
 
 def type_to_ehlit(typ: Type) -> ast.Node:
-    if typ.kind.name in uint_types:
+    if typ.kind in uint_types:
         return ast.CompoundIdentifier([ast.Identifier(0, '@uint' + str(typ.get_size() * 8))])
-    if typ.kind.name in int_types:
+    if typ.kind in int_types:
         return ast.CompoundIdentifier([ast.Identifier(0, '@int' + str(typ.get_size() * 8))])
     if typ.kind in decimal_types:
         return ast.CompoundIdentifier([ast.Identifier(0, decimal_types[typ.kind])])
@@ -134,7 +134,7 @@ def type_to_ehlit(typ: Type) -> ast.Node:
 
 
 def value_to_ehlit(val: str, typ: Type) -> Optional[ast.Expression]:
-    if typ.kind.name in uint_types or typ.kind.name in int_types:
+    if typ.kind in uint_types or typ.kind in int_types:
         return ast.Expression([ast.Number(val)], False)
 
     try:
