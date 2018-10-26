@@ -1,1 +1,1 @@
-language_error/reference_hardcoded_value.eh:4:7: expected '[' or func or const or ref or int or int8 or int16 or int32 or int64 or uint or uint8 or uint16 or uint32 or uint64 or float or double or decimal or char or str or bool or void or any or size or identifier
+language_error/reference_hardcoded_value.eh:4:7: expected identifier
