@@ -79,6 +79,21 @@
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @float
+      │     └─ Identifier: f
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @double
+      │     └─ Identifier: d
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @decimal
+      │     └─ Identifier: ld
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ CompoundIdentifier
       │     │  └─ Identifier: @str
       │     └─ Identifier: cstr
       ├─ VariableDeclaration
@@ -164,6 +179,24 @@
       │     │  └─ CompoundIdentifier
       │     │     └─ Identifier: @int64
       │     └─ Identifier: psll
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @float
+      │     └─ Identifier: pf
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @double
+      │     └─ Identifier: pd
+      ├─ VariableDeclaration
+      │  └─ Declaration
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @decimal
+      │     └─ Identifier: pld
       ├─ VariableDeclaration
       │  └─ Declaration
       │     ├─ Array

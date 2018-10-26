@@ -13,5 +13,8 @@ int32_t main(void)
     uint64_t ui64;
     int32_t i = 42;
     int32_t j = -42;
+    float f;
+    double d;
+    long double ld;
     return (0);
 }

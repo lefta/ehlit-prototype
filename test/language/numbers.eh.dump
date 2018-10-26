@@ -71,6 +71,24 @@
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: -42
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @float
+      │        └─ Identifier: f
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @double
+      │        └─ Identifier: d
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     └─ Declaration
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @decimal
+      │        └─ Identifier: ld
       └─ Statement
          └─ Return
             └─ Expression

@@ -11,5 +11,9 @@ int main() {
   int i = 42
   int j = -42
 
+  float f
+  double d
+  decimal ld
+
   return 0
 }

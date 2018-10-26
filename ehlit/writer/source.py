@@ -53,6 +53,9 @@ class SourceWriter:
             '@uint16': 'uint16_t',
             '@uint32': 'uint32_t',
             '@uint64': 'uint64_t',
+            '@float': 'float',
+            '@double': 'double',
+            '@decimal': 'long double',
             '@size': 'size_t',
             '@bool': 'uint8_t',
         }

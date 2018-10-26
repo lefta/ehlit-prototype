@@ -27,7 +27,7 @@ from clang.cindex import (Index, TranslationUnitLoadError, CursorKind, TypeKind,
                           TranslationUnit)
 from ehlit.parser.error import ParseError, Failure
 from ehlit.parser import ast
-from typing import List, Optional, Set
+from typing import Dict, List, Optional, Set
 
 include_dirs: List[str] = []
 
@@ -111,12 +111,20 @@ int_types: Set[str] = {
     'LONGLONG',
 }
 
+decimal_types: Dict[TypeKind, str] = {
+    TypeKind.FLOAT: '@float',
+    TypeKind.DOUBLE: '@double',
+    TypeKind.LONGDOUBLE: '@decimal'
+}
+
 
 def type_to_ehlit(typ: Type) -> ast.Node:
     if typ.kind.name in uint_types:
         return ast.CompoundIdentifier([ast.Identifier(0, '@uint' + str(typ.get_size() * 8))])
     if typ.kind.name in int_types:
         return ast.CompoundIdentifier([ast.Identifier(0, '@int' + str(typ.get_size() * 8))])
+    if typ.kind in decimal_types:
+        return ast.CompoundIdentifier([ast.Identifier(0, decimal_types[typ.kind])])
 
     try:
         return globals()['type_' + typ.kind.name](typ)

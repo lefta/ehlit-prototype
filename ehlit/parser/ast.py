@@ -1521,6 +1521,7 @@ class AST(UnorderedScope):
             BuiltinType('@int'), BuiltinType('@int8'), BuiltinType('@int16'), BuiltinType('@int32'),
             BuiltinType('@int64'), BuiltinType('@uint'), BuiltinType('@uint8'),
             BuiltinType('@uint16'), BuiltinType('@uint32'), BuiltinType('@uint64'),
+            BuiltinType('@float'), BuiltinType('@double'), BuiltinType('@decimal'),
             BuiltinType('@void'), BuiltinType('@bool'), BuiltinType('@char'), BuiltinType('@size'),
             BuiltinType('@str'), BuiltinType('@any'),
         ]

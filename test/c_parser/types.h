@@ -13,6 +13,9 @@ signed long sl;
 long long ll;
 unsigned long long ull;
 signed long long sll;
+float f;
+double d;
+long double ld;
 
 char* cstr;
 unsigned char* ustr;
@@ -29,6 +32,10 @@ signed long* spl;
 long long* pll;
 unsigned long long* pull;
 signed long long* psll;
+
+float* pf;
+double* pd;
+long double* pld;
 
 char ac[];
 unsigned char uac[];
