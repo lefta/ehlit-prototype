@@ -384,9 +384,8 @@ class SourceWriter:
             self.file.write(':\n')
 
     def writeSwitchCaseBody(self, node: SwitchCaseBody) -> None:
-        if node.block:
-            self.write_indent()
-            self.file.write('{\n')
+        self.write_indent()
+        self.file.write('{\n')
         self.indent += 1
         for i in node.contents:
             self.write(i)
@@ -394,9 +393,8 @@ class SourceWriter:
             self.write_indent()
             self.file.write('break;\n')
         self.indent -= 1
-        if node.block:
-            self.write_indent()
-            self.file.write('}\n')
+        self.write_indent()
+        self.file.write('}\n')
 
     def writeReturn(self, ret: Return) -> None:
         self.file.write('return')

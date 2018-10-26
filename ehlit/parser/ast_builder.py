@@ -365,20 +365,10 @@ class ASTBuilder(PTNodeVisitor):
                                                Tuple[ast.Statement, ...]]
                                ) -> ast.SwitchCaseBody:
         if children[-1] == 'fallthrough':
-            return ast.SwitchCaseBody(list(children[:-1]), False, True)
+            return ast.SwitchCaseBody(list(children[:-1]), True)
         # Ignore type because we can't check which variant of Tuple
         blocks: List[ast.Statement] = list(children)  # type: ignore
-        return ast.SwitchCaseBody(blocks, False, False)
-
-    def visit_switch_case_body_block(self, node: ParseTreeNode,
-                                     children: Union[Tuple[ast.Statement, StrMatch],
-                                                     Tuple[ast.Statement, ...]]
-                                     ) -> ast.SwitchCaseBody:
-        if children[-1] == 'fallthrough':
-            return ast.SwitchCaseBody(list(children[:-1]), True, True)
-        # Ignore type because we can't check which variant of Tuple
-        blocks: List[ast.Statement] = list(children)  # type: ignore
-        return ast.SwitchCaseBody(blocks, True, False)
+        return ast.SwitchCaseBody(blocks, False)
 
     def visit_switch_cases(self, node: ParseTreeNode,
                            children: Tuple[ast.SwitchCaseTest, ast.SwitchCaseBody]

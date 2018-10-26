@@ -30,7 +30,6 @@
       │     ├─ Case
       │     │  ├─ Tests
       │     │  │  └─ Number: 1
-      │     │  ├─ Block: no
       │     │  ├─ Falls through: no
       │     │  └─ Body
       │     │     └─ Statement
@@ -44,7 +43,6 @@
       │     │  ├─ Tests
       │     │  │  ├─ Number: 2
       │     │  │  └─ Number: 3
-      │     │  ├─ Block: no
       │     │  ├─ Falls through: no
       │     │  └─ Body
       │     │     └─ Statement
@@ -56,35 +54,7 @@
       │     │                 └─ Number: 1
       │     ├─ Case
       │     │  ├─ Tests
-      │     │  │  └─ Number: 4
-      │     │  ├─ Block: yes
-      │     │  ├─ Falls through: no
-      │     │  └─ Body
-      │     │     └─ Statement
-      │     │        └─ VariableAssignment
-      │     │           ├─ CompoundIdentifier
-      │     │           │  └─ Identifier: res
-      │     │           └─ Assignment
-      │     │              └─ Expression
-      │     │                 └─ Number: 2
-      │     ├─ Case
-      │     │  ├─ Tests
-      │     │  │  ├─ Number: 5
-      │     │  │  └─ Number: 6
-      │     │  ├─ Block: yes
-      │     │  ├─ Falls through: no
-      │     │  └─ Body
-      │     │     └─ Statement
-      │     │        └─ VariableAssignment
-      │     │           ├─ CompoundIdentifier
-      │     │           │  └─ Identifier: res
-      │     │           └─ Assignment
-      │     │              └─ Expression
-      │     │                 └─ Number: 3
-      │     ├─ Case
-      │     │  ├─ Tests
       │     │  │  └─ Number: 7
-      │     │  ├─ Block: no
       │     │  ├─ Falls through: yes
       │     │  └─ Body
       │     │     └─ Statement
@@ -94,23 +64,9 @@
       │     │           └─ Assignment
       │     │              └─ Expression
       │     │                 └─ Number: 4
-      │     ├─ Case
-      │     │  ├─ Tests
-      │     │  │  └─ Number: 8
-      │     │  ├─ Block: yes
-      │     │  ├─ Falls through: yes
-      │     │  └─ Body
-      │     │     └─ Statement
-      │     │        └─ VariableAssignment
-      │     │           ├─ CompoundIdentifier
-      │     │           │  └─ Identifier: res
-      │     │           └─ Assignment
-      │     │              └─ Expression
-      │     │                 └─ Number: 5
       │     └─ Case
       │        ├─ Tests
       │        │  └─ default
-      │        ├─ Block: no
       │        ├─ Falls through: no
       │        └─ Body
       │           └─ Statement

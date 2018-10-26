@@ -1128,10 +1128,9 @@ class SwitchCaseTest(Node):
 
 
 class SwitchCaseBody(Scope):
-    def __init__(self, contents: List[Statement], block: bool, fallthrough: bool) -> None:
+    def __init__(self, contents: List[Statement], fallthrough: bool) -> None:
         super().__init__(0)
         self.contents: List[Statement] = contents
-        self.block: bool = block
         self.fallthrough: bool = fallthrough
 
     def build(self, parent: Node) -> 'SwitchCaseBody':

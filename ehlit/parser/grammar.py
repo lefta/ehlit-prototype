@@ -288,12 +288,8 @@ def switch_case_body() -> GrammarType:
     return OneOrMore(instruction), Optional('fallthrough')
 
 
-def switch_case_body_block() -> GrammarType:
-    return '{', OneOrMore(instruction), Optional('fallthrough'), '}'
-
-
 def switch_cases() -> GrammarType:
-    return OneOrMore(switch_case_test), [switch_case_body, switch_case_body_block]
+    return OneOrMore(switch_case_test), switch_case_body
 
 
 def switch() -> GrammarType:
@@ -323,7 +319,7 @@ def control_structure_body_stub_braces() -> GrammarType:
 
 def control_structure_body_stub_inner() -> GrammarType:
     return (open_brace, [control_structure_body_stub_braces,
-            control_structure_potential_closing_brace], close_brace)
+                         control_structure_potential_closing_brace], close_brace)
 
 
 def control_structure_body_stub() -> GrammarType:
