@@ -108,7 +108,7 @@ class Node:
         '''
         return None, None
 
-    def fail(self, severity: int, pos: int, msg: str) -> None:
+    def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
         '''! Report a failure to the parent, up to the AST where it will be handled.
         There is no reason to override it, except maybe intercepting it for whatever reason.
         @param severity @b ParseError.Severity Severity of the failure
@@ -895,7 +895,7 @@ class FunctionDefinition(FunctionDeclaration, Scope):
                 self.fail(f.severity, f.pos + self.body_str.pos, f.msg)
         return self
 
-    def fail(self, severity: int, pos: int, msg: str) -> None:
+    def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
         super().fail(severity, pos + self.body_str.pos, msg)
 
 
@@ -1525,7 +1525,7 @@ class AST(UnorderedScope):
         if len(self.failures) != 0:
             raise ParseError(self.failures, self.parser)
 
-    def fail(self, severity: int, pos: int, msg: str) -> None:
+    def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
         assert self.parser is not None
         self.failures.append(Failure(severity, pos, msg, self.parser.file_name))
 

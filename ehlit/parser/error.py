@@ -20,12 +20,14 @@
 # SOFTWARE.
 
 from arpeggio import ParserPython
+from enum import IntEnum
 from typing import List, Optional, Tuple
 
 
 class Failure(Exception):
-    def __init__(self, severity: int, pos: int, msg: str, file: Optional[str]) -> None:
-        self.severity: int = severity
+    def __init__(self, severity: 'ParseError.Severity', pos: int, msg: str, file: Optional[str]
+                 ) -> None:
+        self.severity: ParseError.Severity = severity
         self.pos: int = pos
         self.msg: str = msg
         self.file: Optional[str] = file
@@ -37,14 +39,15 @@ class Failure(Exception):
 
 
 class ParseError(Exception):
-    class Severity:
+    class Severity(IntEnum):
+        Unset = -1
         Warning = 1
         Error = 2
         Fatal = 3
 
     def __init__(self, failures: List[Failure], parser: Optional[ParserPython] = None) -> None:
         self.failures: List[Failure] = failures
-        self.max_level: int = -1
+        self.max_level: ParseError.Severity = ParseError.Severity.Unset
         self.errors: int = 0
         self.warnings: int = 0
         if parser is not None:
