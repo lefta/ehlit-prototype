@@ -56,7 +56,7 @@ class Node:
     Base class for all AST node types. It defines some default behaviors.
     '''
 
-    def __init__(self, pos: int =0) -> None:
+    def __init__(self, pos: int = 0) -> None:
         '''! Constructor
         @param pos @b int The position of the node in the source file
         '''
@@ -288,7 +288,7 @@ class Include(GenericExternInclusion):
 class Value(Node):
     '''! Base for all nodes representing a value. '''
 
-    def __init__(self, pos: int =0) -> None:
+    def __init__(self, pos: int = 0) -> None:
         '''! Constructor
         @param pos @b int The position of the node in the source file
         '''
@@ -453,7 +453,7 @@ class Type(DeclarationBase):
 
 
 class Symbol(Value):
-    def __init__(self, pos: int =0) -> None:
+    def __init__(self, pos: int = 0) -> None:
         super().__init__(pos)
         self.mods: int = MOD_NONE
         self._canonical: Optional[DeclarationBase] = None
@@ -697,7 +697,7 @@ class ReferenceToValue(Reference):
 
 
 class ReferenceToType(Reference):
-    def __init__(self, child: Symbol, mods: int =0) -> None:
+    def __init__(self, child: Symbol, mods: int = 0) -> None:
         super().__init__(child)
         self.mods: int = mods
 
@@ -718,7 +718,7 @@ class ReferenceToType(Reference):
 
 
 class ReferenceType(Type, Container):
-    def __init__(self, child: Type, mods: int =0) -> None:
+    def __init__(self, child: Type, mods: int = 0) -> None:
         self.child: Type
         super().__init__(child)
         self.mods: int = mods
@@ -764,7 +764,7 @@ class ReferenceType(Type, Container):
 
 class FunctionType(Type):
     def __init__(self, ret: Symbol, args: List['VariableDeclaration'],
-                 is_variadic: bool =False) -> None:
+                 is_variadic: bool = False) -> None:
         super().__init__()
         self.args: List['VariableDeclaration'] = args
         self.ret: Symbol = ret
@@ -865,7 +865,7 @@ class Declaration(DeclarationBase):
 
 
 class VariableDeclaration(Declaration):
-    def __init__(self, typ: Symbol, sym: Optional['Identifier'], assign: Optional[Assignment] =None
+    def __init__(self, typ: Symbol, sym: Optional['Identifier'], assign: Optional[Assignment] = None
                  ) -> None:
         super().__init__(typ, sym)
         self.assign: Optional[Assignment] = assign
@@ -1130,7 +1130,7 @@ class SwitchCaseBody(Scope):
 
 
 class Return(Node):
-    def __init__(self, expr: Optional[Expression] =None) -> None:
+    def __init__(self, expr: Optional[Expression] = None) -> None:
         self.expr: Optional[Expression] = expr
 
     def build(self, parent: Node) -> 'Return':

@@ -139,8 +139,8 @@ class SourceWriter:
             self.file.write('(')
 
     def is_dynamic_array(self, node: Node) -> bool:
-        return ((isinstance(node, Array) and node.length is None) or
-                isinstance(node, ReferenceToType))
+        return ((isinstance(node, Array) and node.length is None
+                 ) or isinstance(node, ReferenceToType))
 
     def array_needs_parens(self, node: Node) -> bool:
         if self.is_dynamic_array(node):

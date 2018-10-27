@@ -34,7 +34,7 @@ IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
 
 
 def indent(fn: IndentedFnType) -> Callable[..., None]:
-    def fn_wrapper(cls: 'DumpWriter', node: Union[Node, str], is_next: bool =True) -> None:
+    def fn_wrapper(cls: 'DumpWriter', node: Union[Node, str], is_next: bool = True) -> None:
         cls.increment_prefix(is_next)
         fn(cls, node)
         cls.decrement_prefix()
@@ -77,11 +77,11 @@ class DumpWriter:
             self.prefix += '\u2514' + '\u2500 '
         self.upd_prefix = True
 
-    def print_node(self, node: Node, is_next: bool =True) -> None:
+    def print_node(self, node: Node, is_next: bool = True) -> None:
         func = getattr(self, 'dump' + type(node).__name__)
         func(node, is_next)
 
-    def print_node_list(self, string: str, lst: Sequence[Node], is_next: bool =True) -> None:
+    def print_node_list(self, string: str, lst: Sequence[Node], is_next: bool = True) -> None:
         self.increment_prefix(is_next)
         self.dump(string)
         i: int = 0

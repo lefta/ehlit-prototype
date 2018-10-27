@@ -160,7 +160,7 @@ def parse_header(filename: str) -> List[ast.Node]:
     index: Index = Index.create()
     try:
         tu: TranslationUnit = index.parse(path)
-    except TranslationUnitLoadError as err:
+    except TranslationUnitLoadError:
         raise ParseError([Failure(ParseError.Severity.Error, 0, '%s: parsing failed' % filename,
                                   None)])
     result: List[ast.Node] = []

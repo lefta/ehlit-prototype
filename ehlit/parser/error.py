@@ -42,7 +42,7 @@ class ParseError(Exception):
         Error = 2
         Fatal = 3
 
-    def __init__(self, failures: List[Failure], parser: Optional[ParserPython] =None) -> None:
+    def __init__(self, failures: List[Failure], parser: Optional[ParserPython] = None) -> None:
         self.failures: List[Failure] = failures
         self.max_level: int = -1
         self.errors: int = 0
