@@ -334,9 +334,16 @@ def control_structure_body_stub() -> GrammarType:
 # Functions
 ###########
 
+def function_variadic_dots() -> GrammarType:
+    return '...'
+
+
 def function_prototype() -> GrammarType:
-    return (full_type, identifier, '(', ZeroOrMore(variable_declaration_assignable, sep=','),
-            trailing_comma, ')')
+    return (full_type, identifier, '(', Optional([
+        Sequence(OneOrMore(variable_declaration_assignable, sep=','),
+                 Optional(',', Optional(full_type), function_variadic_dots)),
+        Sequence(Optional(full_type), function_variadic_dots)
+    ]), trailing_comma, ')')
 
 
 def function_declaration() -> GrammarType:

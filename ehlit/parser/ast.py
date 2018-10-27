@@ -752,11 +752,12 @@ class ReferenceType(Type, Container):
 
 class FunctionType(Type):
     def __init__(self, ret: Symbol, args: List['VariableDeclaration'],
-                 is_variadic: bool = False) -> None:
+                 is_variadic: bool = False, variadic_type: Optional[Symbol] = None) -> None:
         super().__init__()
         self.args: List['VariableDeclaration'] = args
         self.ret: Symbol = ret
         self.is_variadic: bool = is_variadic
+        self.variadic_type: Optional[Symbol] = variadic_type
 
     def build(self, parent: Node) -> 'FunctionType':
         super().build(parent)
@@ -765,6 +766,8 @@ class FunctionType(Type):
         while i < len(self.args):
             self.args[i].build(self)
             i += 1
+        if self.variadic_type is not None:
+            self.variadic_type = self.variadic_type.build(self)
         return self
 
     @property

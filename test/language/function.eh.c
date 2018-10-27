@@ -71,3 +71,35 @@ int32_t main(int32_t ac, char** av)
 void declared_later(void)
 {
 }
+
+void vargs_any_implicit(int32_t vargs_len, ...)
+{
+}
+
+void vargs_any_explicit(int32_t vargs_len, ...)
+{
+}
+
+void vargs_type(int32_t vargs_len, ...)
+{
+}
+
+void vargs_complex_type(int32_t vargs_len, ...)
+{
+}
+
+void args1_vargs_implicit(int32_t* i, int32_t vargs_len, ...)
+{
+}
+
+void args1_vargs_explicit(int32_t* i, int32_t vargs_len, ...)
+{
+}
+
+void args3_vargs_implicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, ...)
+{
+}
+
+void args3_vargs_explicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, ...)
+{
+}

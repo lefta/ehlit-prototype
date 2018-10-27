@@ -203,10 +203,11 @@ class SourceWriter:
         if decl.assign is not None:
             self.write(decl.assign)
 
-    def writeArgumentDefinitionList(self, args: Sequence[VariableDeclaration]) -> None:
-        if len(args) == 0:
+    def writeArgumentDefinitionList(self, args: Sequence[VariableDeclaration], variadic: bool,
+                                    c_variadic: bool) -> None:
+        if len(args) == 0 and not variadic:
             self.file.write('void')
-        else:
+        if len(args) > 0:
             i: int = 0
             count: int = len(args)
             while i < count:
@@ -214,6 +215,13 @@ class SourceWriter:
                 i += 1
                 if i < count:
                     self.file.write(', ')
+        if variadic:
+            if len(args) > 0:
+                self.file.write(', ')
+            if c_variadic:
+                self.file.write('...')
+            else:
+                self.file.write('int32_t vargs_len, ...')
 
     def writeFunctionPrototype(self, proto: FunctionDeclaration) -> None:
         assert isinstance(proto.typ, FunctionType)
@@ -223,7 +231,8 @@ class SourceWriter:
         if proto.sym is not None:
             self.write(proto.sym)
         self.file.write('(')
-        self.writeArgumentDefinitionList(proto.typ.args)
+        self.writeArgumentDefinitionList(proto.typ.args, proto.typ.is_variadic,
+                                         proto.typ.variadic_type is None)
         self.file.write(")")
 
     def writeFunctionDeclaration(self, fun: FunctionDeclaration) -> None:

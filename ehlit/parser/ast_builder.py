@@ -408,18 +408,32 @@ class ASTBuilder(PTNodeVisitor):
     # Functions
     ###########
 
+    def visit_function_variadic_dots(self, node: ParseTreeNode, children: None) -> str:
+        return '...'
+
     def visit_function_prototype(self, node: ParseTreeNode,
                                  children: Tuple[ast.Symbol, ast.Identifier,
                                                  ast.VariableDeclaration]
                                  ) -> Tuple[ast.TemplatedIdentifier, ast.Identifier]:
         args: List[ast.VariableDeclaration] = []
+        variadic: bool = False
+        variadic_type: Optional[ast.Symbol] = ast.CompoundIdentifier([ast.Identifier(0, '@any')])
         i = 2
         while i < len(children):
             arg = children[i]
-            assert isinstance(arg, ast.VariableDeclaration)
-            args.append(arg)
+            if isinstance(arg, ast.VariableDeclaration):
+                args.append(arg)
+            else:
+                if arg != '...':
+                    assert isinstance(arg, ast.Symbol)
+                    variadic_type = arg
+                variadic = True
+                break
             i += 2
-        return ast.TemplatedIdentifier('@func', [ast.FunctionType(children[0], args)]), children[1]
+        return ast.TemplatedIdentifier(
+            '@func',
+            [ast.FunctionType(children[0], args, variadic, variadic_type)]
+        ), children[1]
 
     def visit_function_declaration(self, node: ParseTreeNode,
                                    children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier]]

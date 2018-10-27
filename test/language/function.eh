@@ -46,3 +46,12 @@ int main(int ac, str[] av)
 }
 
 void declared_later() {}
+
+void vargs_any_implicit(...) {}
+void vargs_any_explicit(any...) {}
+void vargs_type(int...) {}
+void vargs_complex_type(ref int...) {}
+void args1_vargs_implicit(ref int i, ...) {}
+void args1_vargs_explicit(ref int i, int...) {}
+void args3_vargs_implicit(str s, int i, ref int ri, ...) {}
+void args3_vargs_explicit(str s, int i, ref int ri, int...) {}

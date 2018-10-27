@@ -268,10 +268,139 @@
 │        └─ Return
 │           └─ Expression
 │              └─ Number: 0
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: declared_later
+│  │  └─ FunctionType
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @void
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: vargs_any_implicit
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     └─ Variadic:
+│  │        └─ CompoundIdentifier
+│  │           └─ Identifier: @any
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: vargs_any_explicit
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     └─ Variadic:
+│  │        └─ CompoundIdentifier
+│  │           └─ Identifier: @any
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: vargs_type
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     └─ Variadic:
+│  │        └─ CompoundIdentifier
+│  │           └─ Identifier: @int
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: vargs_complex_type
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     └─ Variadic:
+│  │        └─ Reference
+│  │           └─ CompoundIdentifier
+│  │              └─ Identifier: @int
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: args1_vargs_implicit
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     ├─ Arguments:
+│  │     │  └─ VariableDeclaration
+│  │     │     └─ Declaration
+│  │     │        ├─ Reference
+│  │     │        │  └─ CompoundIdentifier
+│  │     │        │     └─ Identifier: @int
+│  │     │        └─ Identifier: i
+│  │     └─ Variadic:
+│  │        └─ CompoundIdentifier
+│  │           └─ Identifier: @any
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: args1_vargs_explicit
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     ├─ Arguments:
+│  │     │  └─ VariableDeclaration
+│  │     │     └─ Declaration
+│  │     │        ├─ Reference
+│  │     │        │  └─ CompoundIdentifier
+│  │     │        │     └─ Identifier: @int
+│  │     │        └─ Identifier: i
+│  │     └─ Variadic:
+│  │        └─ CompoundIdentifier
+│  │           └─ Identifier: @int
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: args3_vargs_implicit
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     ├─ Arguments:
+│  │     │  ├─ VariableDeclaration
+│  │     │  │  └─ Declaration
+│  │     │  │     ├─ CompoundIdentifier
+│  │     │  │     │  └─ Identifier: @str
+│  │     │  │     └─ Identifier: s
+│  │     │  ├─ VariableDeclaration
+│  │     │  │  └─ Declaration
+│  │     │  │     ├─ CompoundIdentifier
+│  │     │  │     │  └─ Identifier: @int
+│  │     │  │     └─ Identifier: i
+│  │     │  └─ VariableDeclaration
+│  │     │     └─ Declaration
+│  │     │        ├─ Reference
+│  │     │        │  └─ CompoundIdentifier
+│  │     │        │     └─ Identifier: @int
+│  │     │        └─ Identifier: ri
+│  │     └─ Variadic:
+│  │        └─ CompoundIdentifier
+│  │           └─ Identifier: @any
+│  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ Identifier: declared_later
+   │  ├─ Identifier: args3_vargs_explicit
    │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @void
+   │     ├─ CompoundIdentifier
+   │     │  └─ Identifier: @void
+   │     ├─ Arguments:
+   │     │  ├─ VariableDeclaration
+   │     │  │  └─ Declaration
+   │     │  │     ├─ CompoundIdentifier
+   │     │  │     │  └─ Identifier: @str
+   │     │  │     └─ Identifier: s
+   │     │  ├─ VariableDeclaration
+   │     │  │  └─ Declaration
+   │     │  │     ├─ CompoundIdentifier
+   │     │  │     │  └─ Identifier: @int
+   │     │  │     └─ Identifier: i
+   │     │  └─ VariableDeclaration
+   │     │     └─ Declaration
+   │     │        ├─ Reference
+   │     │        │  └─ CompoundIdentifier
+   │     │        │     └─ Identifier: @int
+   │     │        └─ Identifier: ri
+   │     └─ Variadic:
+   │        └─ CompoundIdentifier
+   │           └─ Identifier: @int
    └─ FunctionBody

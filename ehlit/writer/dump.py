@@ -270,9 +270,17 @@ class DumpWriter:
     def dumpFunctionType(self, node: Union[Node, str]) -> None:
         node = cast(FunctionType, node)
         self.dump('FunctionType')
-        self.print_node(node.ret, len(node.args) is not 0)
+        self.print_node(node.ret, len(node.args) is not 0 or node.is_variadic)
         if len(node.args) is not 0:
-            self.print_node_list('Arguments:', node.args, False)
+            self.print_node_list('Arguments:', node.args, node.is_variadic)
+        if node.is_variadic:
+            if node.variadic_type is None:
+                self.print_str('Variadic (C)', False)
+            else:
+                self.print_str('Variadic:', False)
+                self.increment_prefix(False)
+                self.print_node(node.variadic_type, False)
+                self.decrement_prefix()
 
     def dumpCompoundIdentifier(self, node: Union[Node, str], is_next: bool) -> None:
         node = cast(CompoundIdentifier, node)
