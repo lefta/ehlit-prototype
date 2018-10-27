@@ -197,7 +197,7 @@ def operation_assignment() -> GrammarType:
 # Types
 #######
 
-def modifier() -> GrammarType:
+def qualifier() -> GrammarType:
     return Optional('const')
 
 
@@ -222,7 +222,7 @@ def function_type() -> GrammarType:
 
 
 def full_type() -> GrammarType:
-    return [function_type, (modifier, [reference, compound_identifier], array)]
+    return [function_type, (qualifier, [reference, compound_identifier], array)]
 
 
 # Statements

@@ -21,6 +21,7 @@
 
 from abc import abstractmethod
 from arpeggio import ParserPython
+from enum import IntFlag
 from os import path, getcwd, listdir
 from typing import Iterator, List, Optional, Tuple, Union, cast
 import typing
@@ -30,11 +31,17 @@ from ehlit.options import OptionsStruct
 
 DeclarationLookup = Tuple[Optional['DeclarationBase'], Optional[str]]
 
-MOD_NONE = 0
-MOD_CONST = 1
-
 imported: List[str] = []
 included: List[str] = []
+
+
+class TypeQualifier(IntFlag):
+    NONE = 0
+    CONST = 1
+
+    @property
+    def is_const(self) -> bool:
+        return bool(self & TypeQualifier.CONST)
 
 
 class UnparsedContents:
@@ -451,7 +458,7 @@ class Type(DeclarationBase):
 class Symbol(Value):
     def __init__(self, pos: int = 0) -> None:
         super().__init__(pos)
-        self.mods: int = MOD_NONE
+        self.qualifiers: TypeQualifier = TypeQualifier.NONE
         self._canonical: Optional[DeclarationBase] = None
 
     def build(self, parent: Node) -> 'Symbol':
@@ -465,12 +472,8 @@ class Symbol(Value):
             decl = decl.decl
         return decl
 
-    def set_modifiers(self, mods: int) -> None:
-        self.mods = mods
-
-    @property
-    def is_const(self) -> bool:
-        return self.mods & MOD_CONST is not 0
+    def set_qualifiers(self, qualifiers: TypeQualifier) -> None:
+        self.qualifiers = qualifiers
 
     @property
     def is_type(self) -> bool:
@@ -638,7 +641,7 @@ class Reference(SymbolContainer):
 
     def build(self, parent: Node) -> SymbolContainer:
         super().build(parent)
-        ref: Reference = (ReferenceToType(self.child, self.mods) if self.child.is_type else
+        ref: Reference = (ReferenceToType(self.child, self.qualifiers) if self.child.is_type else
                           ReferenceToValue(self.child))
         ref.child.parent = ref
         ref.parent = parent
@@ -689,9 +692,9 @@ class ReferenceToValue(Reference):
 
 
 class ReferenceToType(Reference):
-    def __init__(self, child: Symbol, mods: int = 0) -> None:
+    def __init__(self, child: Symbol, qualifiers: TypeQualifier = TypeQualifier.NONE) -> None:
         super().__init__(child)
-        self.mods: int = mods
+        self.qualifiers: TypeQualifier = qualifiers
 
     def build(self, parent: Node) -> 'ReferenceToType':
         return self
@@ -710,10 +713,10 @@ class ReferenceToType(Reference):
 
 
 class ReferenceType(Type, Container):
-    def __init__(self, child: Type, mods: int = 0) -> None:
+    def __init__(self, child: Type, qualifiers: TypeQualifier = TypeQualifier.NONE) -> None:
         self.child: Type
         super().__init__(child)
-        self.mods: int = mods
+        self.qualifiers: TypeQualifier = qualifiers
 
     def build(self, parent: Node) -> 'ReferenceType':
         super().build(parent)

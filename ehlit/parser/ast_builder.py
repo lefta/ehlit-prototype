@@ -219,8 +219,8 @@ class ASTBuilder(PTNodeVisitor):
     # Types
     #######
 
-    def visit_modifier(self, node: ParseTreeNode, children: Tuple[StrMatch, ...]) -> int:
-        return ast.MOD_CONST
+    def visit_qualifier(self, node: ParseTreeNode, children: Tuple[StrMatch, ...]) -> int:
+        return ast.TypeQualifier.CONST
 
     def visit_array_element(self, node: ParseTreeNode, children: Tuple[Union[None, ast.Expression]]
                             ) -> ArrayBuilder:
@@ -264,17 +264,17 @@ class ASTBuilder(PTNodeVisitor):
         )])
 
     def visit_full_type(self, node: ParseTreeNode,
-                        children: Tuple[Optional[int], ast.Symbol, ast.Symbol,
+                        children: Tuple[Optional[ast.TypeQualifier], ast.Symbol, ast.Symbol,
                                         Optional[ArrayBuilder]]
                         ) -> ast.Symbol:
-        mods: int = 0
+        qualifiers: ast.TypeQualifier = ast.TypeQualifier.NONE
         i: int = 0
         if len(children) > 0 and isinstance(children[0], int):
-            mods = children[0]
+            qualifiers = children[0]
             i = 1
         typ = children[i]
         assert isinstance(typ, ast.Symbol)
-        typ.set_modifiers(mods)
+        typ.set_qualifiers(qualifiers)
         if len(children) == i + 2:
             array = children[i + 1]
             assert isinstance(array, ArrayBuilder)

@@ -236,7 +236,7 @@ class DumpWriter:
     def dumpReferenceToType(self, ref: Union[Node, str]) -> None:
         ref = cast(ReferenceToType, ref)
         self.dump('Reference')
-        if ref.is_const:
+        if ref.qualifiers.is_const:
             self.print_str('Modifiers: const')
         self.print_node(ref.child, False)
 
@@ -284,7 +284,7 @@ class DumpWriter:
 
     def dumpCompoundIdentifier(self, node: Union[Node, str], is_next: bool) -> None:
         node = cast(CompoundIdentifier, node)
-        if node.is_type and node.is_const:
+        if node.is_type and node.qualifiers.is_const:
             self.increment_prefix(is_next)
             self.dump('CompoundIdentifier')
             self.print_str('Modifiers: const')
