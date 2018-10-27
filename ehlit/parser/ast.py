@@ -432,10 +432,6 @@ class Type(DeclarationBase):
         return self
 
     @property
-    def is_type(self) -> bool:
-        return True
-
-    @property
     def any_memory_offset(self) -> int:
         return 1
 
@@ -840,10 +836,6 @@ class Declaration(DeclarationBase):
 
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
         return self.typ.get_inner_declaration(sym)
-
-    @property
-    def is_type(self) -> bool:
-        return False
 
     @property
     def name(self) -> str:
