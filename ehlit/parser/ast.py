@@ -513,10 +513,6 @@ class BuiltinType(Type):
             return BuiltinType('@char').build(self)
         return None
 
-    @property
-    def decl(self) -> Optional['DeclarationBase']:
-        return self.dup().build(self.parent)
-
     def from_any(self) -> Symbol:
         if self.name == '@str':
             return BuiltinType.make(self, 'str')
@@ -735,10 +731,6 @@ class ReferenceType(Type, Container):
         if self.child.any_memory_offset == 1 and not type(self.child) is ReferenceType:
             return self.child.from_any()
         return Reference(self.child.from_any()).build(self)
-
-    @property
-    def decl(self) -> Optional[DeclarationBase]:
-        return self.child
 
     @property
     def inner_child(self) -> Type:
@@ -1450,10 +1442,6 @@ class ContainerStructure(Type, Scope):
         self.sym.build(self)
         if self.fields is not None:
             self.fields = [f.build(self) for f in self.fields]
-        return self
-
-    @property
-    def decl(self) -> Optional[DeclarationBase]:
         return self
 
     @property
