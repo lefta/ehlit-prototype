@@ -220,7 +220,15 @@ class ASTBuilder(PTNodeVisitor):
     #######
 
     def visit_qualifier(self, node: ParseTreeNode, children: Tuple[StrMatch, ...]) -> int:
-        return ast.TypeQualifier.CONST
+        qualifier = ast.TypeQualifier.NONE
+        for q in children:
+            if q == 'const':
+                qualifier = qualifier | ast.TypeQualifier.CONST
+            elif q == 'restrict':
+                qualifier = qualifier | ast.TypeQualifier.RESTRICT
+            elif q == 'volatile':
+                qualifier = qualifier | ast.TypeQualifier.VOLATILE
+        return qualifier
 
     def visit_array_element(self, node: ParseTreeNode, children: Tuple[Union[None, ast.Expression]]
                             ) -> ArrayBuilder:

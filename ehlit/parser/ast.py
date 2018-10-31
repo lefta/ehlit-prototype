@@ -38,10 +38,20 @@ included: List[str] = []
 class TypeQualifier(IntFlag):
     NONE = 0
     CONST = 1
+    RESTRICT = 2
+    VOLATILE = 4
 
     @property
     def is_const(self) -> bool:
         return bool(self & TypeQualifier.CONST)
+
+    @property
+    def is_restricted(self) -> bool:
+        return bool(self & TypeQualifier.RESTRICT)
+
+    @property
+    def is_volatile(self) -> bool:
+        return bool(self & TypeQualifier.VOLATILE)
 
 
 class UnparsedContents:

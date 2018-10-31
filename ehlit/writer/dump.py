@@ -20,14 +20,14 @@
 # SOFTWARE.
 
 import logging
-from typing import Callable, cast, Sequence, Union
+from typing import Callable, cast, List, Sequence, Union
 from ehlit.parser.ast import (
     Alias, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char, CompoundIdentifier,
     Condition, ControlStructure, DecimalNumber, Declaration, EhUnion, Expression, FunctionCall,
     FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Include, Import, Node,
     NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return,
     Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
-    SwitchCaseTest, TemplatedIdentifier, VariableAssignment, VariableDeclaration
+    SwitchCaseTest, Symbol, TemplatedIdentifier, VariableAssignment, VariableDeclaration
 )
 
 IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
@@ -232,12 +232,22 @@ class DumpWriter:
         if ret.expr is not None:
             self.print_node(ret.expr, False)
 
+    def dump_qualifiers(self, node: Symbol) -> None:
+        qualifiers: List[str] = []
+        if node.qualifiers.is_const:
+            qualifiers.append('const')
+        if node.qualifiers.is_volatile:
+            qualifiers.append('volatile')
+        if node.qualifiers.is_restricted:
+            qualifiers.append('restrict')
+        if len(qualifiers) is not 0:
+            self.print_str('Modifiers: {}'.format(', '.join(qualifiers)))
+
     @indent
     def dumpReferenceToType(self, ref: Union[Node, str]) -> None:
         ref = cast(ReferenceToType, ref)
         self.dump('Reference')
-        if ref.qualifiers.is_const:
-            self.print_str('Modifiers: const')
+        self.dump_qualifiers(ref)
         self.print_node(ref.child, False)
 
     @indent
@@ -284,17 +294,14 @@ class DumpWriter:
 
     def dumpCompoundIdentifier(self, node: Union[Node, str], is_next: bool) -> None:
         node = cast(CompoundIdentifier, node)
-        if node.is_type and node.qualifiers.is_const:
-            self.increment_prefix(is_next)
-            self.dump('CompoundIdentifier')
-            self.print_str('Modifiers: const')
-            i = 0
-            while i < len(node.elems):
-                self.print_node(node.elems[i], i < len(node.elems) - 1)
-                i += 1
-            self.decrement_prefix()
-        else:
-            self.print_node_list('CompoundIdentifier', node.elems, is_next)
+        self.increment_prefix(is_next)
+        self.dump('CompoundIdentifier')
+        self.dump_qualifiers(node)
+        i = 0
+        while i < len(node.elems):
+            self.print_node(node.elems[i], i < len(node.elems) - 1)
+            i += 1
+        self.decrement_prefix()
 
     @indent
     def dumpIdentifier(self, node: Union[Node, str]) -> None:

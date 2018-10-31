@@ -198,7 +198,7 @@ def operation_assignment() -> GrammarType:
 #######
 
 def qualifier() -> GrammarType:
-    return Optional('const')
+    return ZeroOrMore(['const', 'restrict', 'volatile'])
 
 
 def array_element() -> GrammarType:

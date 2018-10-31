@@ -125,8 +125,7 @@ class SourceWriter:
     def writeReferenceToType(self, ref: ReferenceToType) -> None:
         self.write(ref.child)
         self.file.write('*')
-        if ref.qualifiers.is_const:
-            self.file.write(' const')
+        self.write_type_suffix(ref)
 
     def writeReferenceToValue(self, ref: ReferenceToValue) -> None:
         self.write(ref.child)
@@ -189,6 +188,10 @@ class SourceWriter:
     def write_type_suffix(self, node: Symbol) -> None:
         if node.qualifiers.is_const:
             self.file.write(' const')
+        if node.qualifiers.is_volatile:
+            self.file.write(' volatile')
+        if node.qualifiers.is_restricted:
+            self.file.write(' restrict')
 
     def writeDeclaration(self, decl: Declaration) -> None:
         self.write_type_prefix(decl.typ_src)

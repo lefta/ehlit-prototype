@@ -56,6 +56,8 @@ excluded_tokens: Set[str] = {
     # Part of a type, so they belong to an identifier too
     'ref',
     'const',
+    'volatile',
+    'restrict',
 }
 
 

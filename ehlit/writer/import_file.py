@@ -106,6 +106,10 @@ class ImportWriter:
     def writeReferenceToType(self, node: ReferenceToType) -> None:
         if node.qualifiers.is_const:
             self.file.write('const ')
+        if node.qualifiers.is_volatile:
+            self.file.write('volatile ')
+        if node.qualifiers.is_restricted:
+            self.file.write('restrict ')
         self.file.write('ref ')
         self.write(node.child)
 
