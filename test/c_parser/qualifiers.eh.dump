@@ -1,0 +1,87 @@
+└─ Include
+   ├─ Path: c_parser/qualifiers.h
+   └─ Symbols found
+      ├─ FunctionDeclaration
+      │  ├─ Identifier: print_int
+      │  └─ FunctionType
+      │     ├─ Reference
+      │     │  ├─ Modifiers: const
+      │     │  └─ CompoundIdentifier
+      │     │     ├─ Modifiers: const
+      │     │     └─ Identifier: @int32
+      │     └─ Arguments:
+      │        └─ VariableDeclaration
+      │           └─ Declaration
+      │              ├─ Reference
+      │              │  ├─ Modifiers: const
+      │              │  └─ CompoundIdentifier
+      │              │     ├─ Modifiers: const
+      │              │     └─ Identifier: @int32
+      │              └─ Identifier: i
+      ├─ FunctionDeclaration
+      │  ├─ Identifier: update_ptrs
+      │  └─ FunctionType
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @void
+      │     └─ Arguments:
+      │        ├─ VariableDeclaration
+      │        │  └─ Declaration
+      │        │     ├─ Reference
+      │        │     │  ├─ Modifiers: restrict
+      │        │     │  └─ CompoundIdentifier
+      │        │     │     └─ Identifier: @int32
+      │        │     └─ Identifier: i
+      │        └─ VariableDeclaration
+      │           └─ Declaration
+      │              ├─ Reference
+      │              │  ├─ Modifiers: restrict
+      │              │  └─ CompoundIdentifier
+      │              │     └─ Identifier: @int32
+      │              └─ Identifier: j
+      ├─ FunctionDeclaration
+      │  ├─ Identifier: strcpy
+      │  └─ FunctionType
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @void
+      │     └─ Arguments:
+      │        ├─ VariableDeclaration
+      │        │  └─ Declaration
+      │        │     ├─ CompoundIdentifier
+      │        │     │  ├─ Modifiers: restrict
+      │        │     │  └─ Identifier: @str
+      │        │     └─ Identifier: s1
+      │        └─ VariableDeclaration
+      │           └─ Declaration
+      │              ├─ CompoundIdentifier
+      │              │  ├─ Modifiers: const, restrict
+      │              │  └─ Identifier: @str
+      │              └─ Identifier: s2
+      ├─ FunctionDeclaration
+      │  ├─ Identifier: strncpy
+      │  └─ FunctionType
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @void
+      │     └─ Arguments:
+      │        ├─ VariableDeclaration
+      │        │  └─ Declaration
+      │        │     ├─ CompoundIdentifier
+      │        │     │  ├─ Modifiers: restrict
+      │        │     │  └─ Identifier: @str
+      │        │     └─ Identifier: s1
+      │        ├─ VariableDeclaration
+      │        │  └─ Declaration
+      │        │     ├─ CompoundIdentifier
+      │        │     │  ├─ Modifiers: const, restrict
+      │        │     │  └─ Identifier: @str
+      │        │     └─ Identifier: s2
+      │        └─ VariableDeclaration
+      │           └─ Declaration
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: @int32
+      │              └─ Identifier: n
+      └─ VariableDeclaration
+         └─ Declaration
+            ├─ CompoundIdentifier
+            │  ├─ Modifiers: volatile
+            │  └─ Identifier: @int32
+            └─ Identifier: some_register

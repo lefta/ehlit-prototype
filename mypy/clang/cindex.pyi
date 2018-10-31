@@ -146,6 +146,12 @@ class Type(object):
     def is_const_qualified(self) -> bool:
         pass
 
+    def is_volatile_qualified(self) -> bool:
+        pass
+
+    def is_restrict_qualified(self) -> bool:
+        pass
+
     def get_size(self) -> int:
         pass
 

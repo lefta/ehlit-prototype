@@ -119,18 +119,29 @@ decimal_types: Dict[TypeKind, str] = {
 
 
 def type_to_ehlit(typ: Type) -> ast.Node:
+    res: Optional[ast.Node] = None
     if typ.kind in uint_types:
-        return ast.CompoundIdentifier([ast.Identifier(0, '@uint' + str(typ.get_size() * 8))])
-    if typ.kind in int_types:
-        return ast.CompoundIdentifier([ast.Identifier(0, '@int' + str(typ.get_size() * 8))])
-    if typ.kind in decimal_types:
-        return ast.CompoundIdentifier([ast.Identifier(0, decimal_types[typ.kind])])
-
-    try:
-        return globals()['type_' + typ.kind.name](typ)
-    except KeyError:
-        logging.debug('c_compat: unimplemented: type_%s' % typ.kind.name)
-    return ast.CompoundIdentifier([ast.Identifier(0, '@any')])
+        res = ast.CompoundIdentifier([ast.Identifier(0, '@uint' + str(typ.get_size() * 8))])
+    elif typ.kind in int_types:
+        res = ast.CompoundIdentifier([ast.Identifier(0, '@int' + str(typ.get_size() * 8))])
+    elif typ.kind in decimal_types:
+        res = ast.CompoundIdentifier([ast.Identifier(0, decimal_types[typ.kind])])
+    else:
+        try:
+            res = globals()['type_' + typ.kind.name](typ)
+        except KeyError:
+            logging.debug('c_compat: unimplemented: type_%s' % typ.kind.name)
+    if res is None:
+        return ast.CompoundIdentifier([ast.Identifier(0, '@any')])
+    elif not isinstance(res, ast.Symbol):
+        return res
+    if typ.is_const_qualified():
+        res.qualifiers = res.qualifiers | ast.TypeQualifier.CONST
+    if typ.is_volatile_qualified():
+        res.qualifiers = res.qualifiers | ast.TypeQualifier.VOLATILE
+    if typ.is_restrict_qualified():
+        res.qualifiers = res.qualifiers | ast.TypeQualifier.RESTRICT
+    return res
 
 
 def value_to_ehlit(val: str, typ: Type) -> Optional[ast.Expression]:
