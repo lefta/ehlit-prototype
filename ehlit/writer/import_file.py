@@ -144,10 +144,16 @@ class ImportWriter:
             is_first = False
 
     def writeIdentifier(self, node: Identifier) -> None:
-        self.file.write(node.name)
+        if node.name[0] == '@':
+            self.file.write(node.name[1:])
+        else:
+            self.file.write(node.name)
 
     def writeTemplatedIdentifier(self, node: TemplatedIdentifier) -> None:
-        self.file.write(node.name)
+        if node.name[0] == '@':
+            self.file.write(node.name[1:])
+        else:
+            self.file.write(node.name)
         self.file.write('<')
         for t in node.types:
             self.write(t)
