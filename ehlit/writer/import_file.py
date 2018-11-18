@@ -177,7 +177,6 @@ class ImportWriter:
     def writeVariableDeclaration(self, node: VariableDeclaration) -> None:
         self.writeDeclaration(node)
         if node.assign is not None:
-            self.file.write(' = ')
             self.write(node.assign)
 
     def writeCast(self, node: Cast) -> None:
