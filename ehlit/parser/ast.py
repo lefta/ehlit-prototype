@@ -21,7 +21,7 @@
 
 from abc import abstractmethod
 from arpeggio import ParserPython
-from enum import IntFlag
+from enum import IntEnum, IntFlag
 from os import path, getcwd, listdir
 from typing import Iterator, List, Optional, Tuple, Union, cast
 import typing
@@ -52,6 +52,11 @@ class TypeQualifier(IntFlag):
     @property
     def is_volatile(self) -> bool:
         return bool(self & TypeQualifier.VOLATILE)
+
+
+class DeclarationType(IntEnum):
+    EHLIT = 0
+    C = 1
 
 
 class UnparsedContents:
@@ -301,6 +306,10 @@ class Include(GenericExternInclusion):
         included.append(self.lib)
         return c_compat.parse_header(self.lib)
 
+    def declare(self, decl: 'DeclarationBase') -> None:
+        decl.declaration_type = DeclarationType.C
+        self.declarations.append(decl)
+
 
 class Value(Node):
     '''! Base for all nodes representing a value. '''
@@ -417,6 +426,10 @@ class Value(Node):
 
 
 class DeclarationBase(Node):
+    def __init__(self, pos: int = 0) -> None:
+        Node.__init__(self, pos)
+        self.declaration_type: DeclarationType = DeclarationType.EHLIT
+
     def build(self, parent: Node) -> 'Node':
         super().build(parent)
         return self
@@ -620,7 +633,8 @@ class Array(SymbolContainer):
 class ArrayType(Type, Container):
     def __init__(self, child: Type) -> None:
         self.child: Type
-        super().__init__(child)
+        Type.__init__(self)
+        Container.__init__(self, child)
 
     def build(self, parent: Node) -> 'ArrayType':
         super().build(parent)
@@ -725,7 +739,8 @@ class ReferenceToType(Reference):
 class ReferenceType(Type, Container):
     def __init__(self, child: Type, qualifiers: TypeQualifier = TypeQualifier.NONE) -> None:
         self.child: Type
-        super().__init__(child)
+        Container.__init__(self, child)
+        Type.__init__(self)
         self.qualifiers: TypeQualifier = qualifiers
 
     def build(self, parent: Node) -> 'ReferenceType':
@@ -886,6 +901,7 @@ class FunctionDefinition(FunctionDeclaration, Scope):
     def __init__(self, typ: 'TemplatedIdentifier', sym: 'Identifier', body_str: UnparsedContents
                  ) -> None:
         super().__init__(typ, sym)
+        Scope.__init__(self, 0)
         self.body: List[Statement] = []
         self.body_str: UnparsedContents = body_str
 
@@ -1446,6 +1462,7 @@ class ContainerStructure(Type, Scope):
     def __init__(self, pos: int, sym: Identifier,
                  fields: Optional[List[VariableDeclaration]]) -> None:
         super().__init__(pos)
+        Scope.__init__(self, pos)
         self.sym: Identifier = sym
         self.fields: Optional[List[VariableDeclaration]] = fields
         self.display_name = ''
