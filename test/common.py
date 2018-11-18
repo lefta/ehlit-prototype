@@ -188,6 +188,16 @@ class EhlitTestCase(TestCase):
         self.assertEqual(result.stderr, "")
         self.assert_equal_to_file(result.stdout, "%s.c" % src)
 
+    def assert_files_equal(self, file1, file2):
+        """
+        Check that 2 files have the exact same content
+
+        @param file1 The first file to check
+        @param file2 The second file to check
+        """
+        with open(file1, 'r') as f:
+            self.assert_equal_to_file(f.read(), file2)
+
     def assert_equal_to_file(self, string, filename):
         """
         Check that a string is equal to a file contents
