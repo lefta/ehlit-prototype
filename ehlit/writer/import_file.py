@@ -22,10 +22,10 @@
 import sys
 from typing import List, TextIO
 from ehlit.parser.ast import (
-    Alias, Array, Assignment, AST, CompoundIdentifier, ContainerStructure, Declaration,
+    Alias, Array, Assignment, AST, Cast, CompoundIdentifier, ContainerStructure, Declaration,
     DecimalNumber, EhUnion, Expression, FunctionDeclaration, FunctionDefinition, FunctionType,
-    Identifier, Import, Include, Node, Number, ReferenceToType, Struct, TemplatedIdentifier,
-    VariableDeclaration
+    Identifier, Import, Include, Node, Number, ReferenceToType, Statement, Struct,
+    TemplatedIdentifier, VariableDeclaration
 )
 
 
@@ -82,6 +82,10 @@ class ImportWriter:
                 i += 1
                 if i < count:
                     self.file.write(', ')
+
+    def writeStatement(self, node: Statement) -> None:
+        self.write(node.expr)
+        self.file.write('\n')
 
     def writeExpression(self, node: Expression) -> None:
         if node.is_parenthesised:
@@ -169,6 +173,12 @@ class ImportWriter:
         if node.assign is not None:
             self.file.write(' = ')
             self.write(node.assign)
+
+    def writeCast(self, node: Cast) -> None:
+        self.write(node.sym)
+        self.file.write('(')
+        self.write(node.args[0])
+        self.file.write(')')
 
     def writeContainerStructure(self, node: ContainerStructure) -> None:
         self.file.write('\n{} '.format(node.display_name))
