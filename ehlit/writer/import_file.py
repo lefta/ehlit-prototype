@@ -65,7 +65,7 @@ class ImportWriter:
             self.write(node.sym)
         self.file.write('(')
         self.writeArgumentDefinitionList(node.typ.args)
-        self.file.write(")")
+        self.file.write(")\n")
 
     def writeDeclaration(self, node: Declaration) -> None:
         self.write(node.typ_src)
