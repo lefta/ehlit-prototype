@@ -17,10 +17,11 @@ void strcpy(char* restrict s1, char* const restrict s2)
 void strncpy(char* restrict s1, char* const restrict s2, size_t n)
 {
 }
+int32_t volatile some_register;
+int32_t volatile some_other_register = *((int32_t*)42);
 
 int32_t main(void)
 {
-    int32_t volatile some_register;
     int32_t const i = 42;
     int32_t const* const j = print_int(&i);
     int32_t const* k = &i;

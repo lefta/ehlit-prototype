@@ -250,6 +250,10 @@ def statement() -> GrammarType:
     return [return_instruction, variable_assignment, variable_declaration_assignable, expression]
 
 
+def global_statement() -> GrammarType:
+    return variable_declaration_assignable
+
+
 def instruction() -> GrammarType:
     return [comment, condition, while_loop, switch, alias, statement]
 
@@ -404,4 +408,4 @@ def function_body_grammar() -> GrammarType:
 
 def grammar() -> GrammarType:
     return ZeroOrMore([comment, import_instruction, include_instruction, struct, union, alias,
-                       function]), EOF
+                       function, global_statement]), EOF

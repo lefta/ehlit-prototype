@@ -90,6 +90,28 @@
 │  │              │  └─ Identifier: @size
 │  │              └─ Identifier: n
 │  └─ FunctionBody
+├─ Statement
+│  └─ VariableDeclaration
+│     └─ Declaration
+│        ├─ CompoundIdentifier
+│        │  ├─ Modifiers: volatile
+│        │  └─ Identifier: @int
+│        └─ Identifier: some_register
+├─ Statement
+│  └─ VariableDeclaration
+│     ├─ Declaration
+│     │  ├─ CompoundIdentifier
+│     │  │  ├─ Modifiers: volatile
+│     │  │  └─ Identifier: @int
+│     │  └─ Identifier: some_other_register
+│     └─ Assignment
+│        └─ Expression
+│           └─ Cast
+│              ├─ Reference
+│              │  └─ CompoundIdentifier
+│              │     └─ Identifier: @int
+│              └─ Expression
+│                 └─ Number: 42
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
@@ -97,13 +119,6 @@
    │     └─ CompoundIdentifier
    │        └─ Identifier: @int
    └─ FunctionBody
-      ├─ Statement
-      │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  ├─ Modifiers: volatile
-      │        │  └─ Identifier: @int
-      │        └─ Identifier: some_register
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Declaration

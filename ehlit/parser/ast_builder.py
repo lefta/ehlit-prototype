@@ -324,6 +324,13 @@ class ASTBuilder(PTNodeVisitor):
     def visit_statement(self, node: ParseTreeNode, children: Tuple[ast.Node]) -> ast.Statement:
         return ast.Statement(children[0])
 
+    def visit_global_statement(self, node: ParseTreeNode, children: Tuple[ast.VariableDeclaration,
+                                                                          Optional[ast.Assignment]]
+                               ) -> ast.Statement:
+        if len(children) == 2:
+            children[0].assign = children[1]
+        return ast.Statement(children[0])
+
     # Control Structures
     ####################
 
