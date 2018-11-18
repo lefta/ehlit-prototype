@@ -22,5 +22,8 @@ int main() {
   j = ref_fun(j)
   ref j = ref_fun(ref j)
 
+  i = ref int(42)
+  ref j = ref int(42)
+
   return ref j
 }

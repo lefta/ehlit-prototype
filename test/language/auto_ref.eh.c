@@ -23,5 +23,7 @@ int32_t main(void)
     i = *ref_fun(&i);
     *j = *ref_fun(j);
     j = ref_fun(j);
+    i = *((int32_t*)42);
+    j = ((int32_t*)42);
     return (*j);
 }

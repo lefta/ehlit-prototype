@@ -729,7 +729,7 @@ class ReferenceToType(Reference):
 
     @ref_offset.setter
     def ref_offset(self, val: int) -> None:
-        self.child.ref_offset = val
+        self.child.ref_offset = val - 1
 
     @property
     def any_memory_offset(self) -> int:
@@ -983,6 +983,12 @@ class Cast(Value):
     @property
     def decl(self) -> Type:
         return self._typ
+
+    def auto_cast(self, target: Union[Symbol, Type]) -> None:
+        sym_ref_offset: int = self.sym.ref_offset
+        self.sym.auto_cast(target)
+        self.ref_offset = self.sym.ref_offset
+        self.sym.ref_offset = sym_ref_offset
 
 
 class FunctionCall(Value):

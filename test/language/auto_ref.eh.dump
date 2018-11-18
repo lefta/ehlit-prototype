@@ -168,6 +168,31 @@
       │                    └─ Reference
       │                       └─ CompoundIdentifier
       │                          └─ Identifier: j
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Cast
+      │              ├─ Reference
+      │              │  └─ CompoundIdentifier
+      │              │     └─ Identifier: @int
+      │              └─ Expression
+      │                 └─ Number: 42
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: j
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Cast
+      │              ├─ Reference
+      │              │  └─ CompoundIdentifier
+      │              │     └─ Identifier: @int
+      │              └─ Expression
+      │                 └─ Number: 42
       └─ Statement
          └─ Return
             └─ Expression

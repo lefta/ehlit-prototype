@@ -300,6 +300,7 @@ class SourceWriter:
         self.write(assign.assign)
 
     def writeCast(self, node: Cast) -> None:
+        self.write_value(node)
         self.file.write('((')
         self.write_type_prefix(node.sym)
         self.write(node.sym)
