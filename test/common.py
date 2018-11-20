@@ -138,12 +138,15 @@ class EhlitTestCase(TestCase):
             class args:
                 source = ''
                 output_import_file = '-'
+            failure = None
             try:
                 ast = ehlit.parser.parse(src)
                 ast.build_ast(args)
                 ehlit.writer.WriteDump(ast)
-            except ehlit.parser.ParseError:
-                raise AssertionError('Generation crashed')
+            except ehlit.parser.ParseError as err:
+                failure = '\n' + str(err)
+            if failure is not None:
+                self.fail(failure)
             self.logHandler.flush()
             self.tearDown()
             return self.logStream.getvalue().replace('\n--- AST ---\n', '')
@@ -179,12 +182,15 @@ class EhlitTestCase(TestCase):
         @param src The file to compile
         """
         result = None
+        failure = None
         try:
             result = self.compile(src)
         except Exception as err:
-            raise AssertionError(str(err))
+            failure = '\n' + str(err)
+        if failure is not None:
+            self.fail(failure)
         if result is None:
-            raise AssertionError(str('No output have been generated'))
+            self.fail('No output have been generated')
         self.assertEqual(result.stderr, "")
         self.assert_equal_to_file(result.stdout, "%s.c" % src)
 
