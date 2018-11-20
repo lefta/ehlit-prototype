@@ -134,6 +134,7 @@ class DumpWriter:
         self.dump('FunctionDeclaration')
         if fun.sym is not None:
             self.print_node(fun.sym)
+        self.dump_qualifiers(fun)
         self.print_node(fun.typ, False)
 
     @indent
@@ -232,7 +233,7 @@ class DumpWriter:
         if ret.expr is not None:
             self.print_node(ret.expr, False)
 
-    def dump_qualifiers(self, node: Symbol) -> None:
+    def dump_qualifiers(self, node: Union[Symbol, FunctionDeclaration]) -> None:
         qualifiers: List[str] = []
         if node.qualifiers.is_const:
             qualifiers.append('const')
@@ -240,6 +241,10 @@ class DumpWriter:
             qualifiers.append('volatile')
         if node.qualifiers.is_restricted:
             qualifiers.append('restrict')
+        if node.qualifiers.is_inline:
+            qualifiers.append('inline')
+        if node.qualifiers.is_private:
+            qualifiers.append('private')
         if len(qualifiers) is not 0:
             self.print_str('Modifiers: {}'.format(', '.join(qualifiers)))
 

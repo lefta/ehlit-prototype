@@ -354,8 +354,12 @@ def function_declaration() -> GrammarType:
     return function_prototype, Not('{')
 
 
+def function_qualifiers() -> GrammarType:
+    return ZeroOrMore(['priv', 'inline'])
+
+
 def function_definition() -> GrammarType:
-    return function_prototype, control_structure_body_stub
+    return function_qualifiers, function_prototype, control_structure_body_stub
 
 
 def function() -> GrammarType:

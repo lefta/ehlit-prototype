@@ -244,8 +244,9 @@ class SourceWriter:
         self.file.write(';\n')
 
     def writeFunctionDefinition(self, fun: FunctionDefinition) -> None:
-        if self.in_import > 0:
-            self.writeFunctionDeclaration(fun)
+        if self.in_import > 0 and not fun.qualifiers.is_inline:
+            if not fun.qualifiers.is_private:
+                self.writeFunctionDeclaration(fun)
             return
 
         if len(fun.predeclarations) is not 0:
@@ -260,6 +261,10 @@ class SourceWriter:
 
         self.write_indent()
         self.file.write("\n")
+        if fun.qualifiers.is_inline:
+            self.file.write('inline ')
+        if fun.qualifiers.is_private:
+            self.file.write('static ')
         self.writeFunctionPrototype(fun)
         self.file.write("\n{\n")
 

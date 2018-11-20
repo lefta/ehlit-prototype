@@ -40,6 +40,8 @@ class TypeQualifier(IntFlag):
     CONST = 1
     RESTRICT = 2
     VOLATILE = 4
+    INLINE = 8
+    PRIVATE = 16
 
     @property
     def is_const(self) -> bool:
@@ -52,6 +54,14 @@ class TypeQualifier(IntFlag):
     @property
     def is_volatile(self) -> bool:
         return bool(self & TypeQualifier.VOLATILE)
+
+    @property
+    def is_inline(self) -> bool:
+        return bool(self & TypeQualifier.INLINE)
+
+    @property
+    def is_private(self) -> bool:
+        return bool(self & TypeQualifier.PRIVATE)
 
 
 class DeclarationType(IntEnum):
@@ -842,8 +852,8 @@ class Assignment(Node):
 
 
 class Declaration(DeclarationBase):
-    def __init__(self, typ: Symbol, sym: Optional['Identifier']) -> None:
-        super().__init__(0)
+    def __init__(self, pos: int, typ: Symbol, sym: Optional['Identifier']) -> None:
+        super().__init__(pos)
         self._typ: Optional[Type] = None
         self.typ_src: Symbol = typ
         self.sym: Optional['Identifier'] = sym
@@ -882,7 +892,7 @@ class Declaration(DeclarationBase):
 class VariableDeclaration(Declaration):
     def __init__(self, typ: Symbol, sym: Optional['Identifier'], assign: Optional[Assignment] = None
                  ) -> None:
-        super().__init__(typ, sym)
+        super().__init__(0, typ, sym)
         self.assign: Optional[Assignment] = assign
 
     def build(self, parent: Node) -> 'VariableDeclaration':
@@ -894,14 +904,21 @@ class VariableDeclaration(Declaration):
 
 
 class FunctionDeclaration(Declaration):
-    pass
+    def __init__(self, pos: int, qualifiers: TypeQualifier, typ: 'TemplatedIdentifier',
+                 sym: 'Identifier') -> None:
+        super().__init__(0, typ, sym)
+        self._qualifiers: TypeQualifier = qualifiers
+
+    @property
+    def qualifiers(self) -> TypeQualifier:
+        return self._qualifiers
 
 
 class FunctionDefinition(FunctionDeclaration, Scope):
-    def __init__(self, typ: 'TemplatedIdentifier', sym: 'Identifier', body_str: UnparsedContents
-                 ) -> None:
-        super().__init__(typ, sym)
-        Scope.__init__(self, 0)
+    def __init__(self, pos: int, qualifiers: TypeQualifier, typ: 'TemplatedIdentifier',
+                 sym: 'Identifier', body_str: UnparsedContents) -> None:
+        super().__init__(pos, qualifiers, typ, sym)
+        Scope.__init__(self, pos)
         self.body: List[Statement] = []
         self.body_str: UnparsedContents = body_str
 

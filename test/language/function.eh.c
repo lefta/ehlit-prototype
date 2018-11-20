@@ -72,6 +72,19 @@ void declared_later(void)
 {
 }
 
+static void private_function(void)
+{
+}
+
+inline void inline_function(void)
+{
+}
+
+inline static int32_t inline_and_private_function(int32_t a, int32_t b)
+{
+    return (a + b);
+}
+
 void vargs_any_implicit(int32_t vargs_len, ...)
 {
 }

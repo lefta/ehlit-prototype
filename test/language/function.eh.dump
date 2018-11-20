@@ -277,6 +277,50 @@
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
+│  │  ├─ Identifier: private_function
+│  │  ├─ Modifiers: private
+│  │  └─ FunctionType
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @void
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: inline_function
+│  │  ├─ Modifiers: inline
+│  │  └─ FunctionType
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @void
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: inline_and_private_function
+│  │  ├─ Modifiers: inline, private
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @int
+│  │     └─ Arguments:
+│  │        ├─ VariableDeclaration
+│  │        │  └─ Declaration
+│  │        │     ├─ CompoundIdentifier
+│  │        │     │  └─ Identifier: @int
+│  │        │     └─ Identifier: a
+│  │        └─ VariableDeclaration
+│  │           └─ Declaration
+│  │              ├─ CompoundIdentifier
+│  │              │  └─ Identifier: @int
+│  │              └─ Identifier: b
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              ├─ CompoundIdentifier
+│              │  └─ Identifier: a
+│              ├─ Operator: +
+│              └─ Expression
+│                 └─ CompoundIdentifier
+│                    └─ Identifier: b
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
 │  │  ├─ Identifier: vargs_any_implicit
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier

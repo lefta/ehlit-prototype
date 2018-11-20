@@ -47,6 +47,12 @@ int main(int ac, str[] av)
 
 void declared_later() {}
 
+priv void private_function() {}
+inline void inline_function() {}
+inline priv int inline_and_private_function(int a, int b) {
+	return a + b
+}
+
 void vargs_any_implicit(...) {}
 void vargs_any_explicit(any...) {}
 void vargs_type(int...) {}

@@ -259,7 +259,7 @@ class ASTBuilder(PTNodeVisitor):
                                  ) -> List[ast.Declaration]:
         res: List[ast.Declaration] = []
         for c in children:
-            res.append(ast.Declaration(c, None))
+            res.append(ast.Declaration(c.pos, c, None))
         return res
 
     def visit_function_type(self, node: ParseTreeNode,
@@ -453,13 +453,30 @@ class ASTBuilder(PTNodeVisitor):
     def visit_function_declaration(self, node: ParseTreeNode,
                                    children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier]]
                                    ) -> ast.FunctionDeclaration:
-        return ast.FunctionDeclaration(*children[0])
+        return ast.FunctionDeclaration(node.position, ast.TypeQualifier.NONE, *children[0])
+
+    def visit_function_qualifiers(self, node: ParseTreeNode, children: Tuple[str, ...]
+                                  ) -> ast.TypeQualifier:
+        res: ast.TypeQualifier = ast.TypeQualifier.NONE
+        for qualifier in children:
+            if qualifier == 'inline':
+                res |= ast.TypeQualifier.INLINE
+            elif qualifier == 'priv':
+                res |= ast.TypeQualifier.PRIVATE
+        return res
 
     def visit_function_definition(self, node: ParseTreeNode,
                                   children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier],
                                                   ast.UnparsedContents]
                                   ) -> ast.FunctionDefinition:
-        return ast.FunctionDefinition(children[0][0], children[0][1], children[1])
+        qualifiers: ast.TypeQualifier = ast.TypeQualifier.NONE
+        i: int = 0
+        if isinstance(children[0], ast.TypeQualifier):
+            qualifiers = children[0]
+            i = 1
+        # Ignore type because of Tuple
+        return ast.FunctionDefinition(node.position, qualifiers, children[i][0],  # type: ignore
+                                      children[i][1], children[i + 1])  # type: ignore
 
     def visit_function(self, node: ParseTreeNode, children: Tuple[ast.FunctionDeclaration]
                        ) -> ast.FunctionDeclaration:
