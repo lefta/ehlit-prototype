@@ -28,3 +28,15 @@ alias int nb
 func<nb()> fun_proto_ref = fun_proto
 
 nb main() {}
+
+inline int inlined_function(int a, int b) {
+	return a + b
+}
+
+priv int mul(int a, int b) {
+	return a * b
+}
+
+priv inline int div(int a, int b) {
+	return a / b
+}

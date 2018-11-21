@@ -17,3 +17,6 @@ int fun_proto_args(int i, str s)
 alias int nb
 func<nb()> fun_proto_ref = fun_proto
 nb main()
+inline int inlined_function(int a, int b) {
+    return a + b
+}

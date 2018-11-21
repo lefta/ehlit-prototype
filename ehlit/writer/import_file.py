@@ -55,9 +55,25 @@ class ImportWriter:
         pass
 
     def writeFunctionDefinition(self, node: FunctionDefinition) -> None:
-        self.writeFunctionDeclaration(node)
+        if node.qualifiers.is_private:
+            return
+        if node.qualifiers.is_inline:
+            self.file.write('inline ')
+        self.write_function_prototype(node)
+        if node.qualifiers.is_inline:
+            self.file.write(' {\n')
+            self.indent += 1
+            for stmt in node.body:
+                self.write(stmt)
+            self.file.write('}')
+            self.indent -= 1
+        self.file.write('\n')
 
     def writeFunctionDeclaration(self, node: FunctionDeclaration) -> None:
+        self.write_function_prototype(node)
+        self.file.write('\n')
+
+    def write_function_prototype(self, node: FunctionDeclaration) -> None:
         assert isinstance(node.typ, FunctionType)
         self.write(node.typ.ret)
         self.file.write(' ')
@@ -65,7 +81,7 @@ class ImportWriter:
             self.write(node.sym)
         self.file.write('(')
         self.writeArgumentDefinitionList(node.typ.args)
-        self.file.write(")\n")
+        self.file.write(")")
 
     def writeDeclaration(self, node: Declaration) -> None:
         self.write(node.typ_src)
@@ -84,6 +100,7 @@ class ImportWriter:
                     self.file.write(', ')
 
     def writeStatement(self, node: Statement) -> None:
+        self.write_indent()
         self.write(node.expr)
         self.file.write('\n')
 
