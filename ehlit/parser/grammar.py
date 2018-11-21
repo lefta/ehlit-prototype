@@ -250,8 +250,12 @@ def statement() -> GrammarType:
     return [return_instruction, variable_assignment, variable_declaration_assignable, expression]
 
 
+def global_variable() -> GrammarType:
+    return Optional('priv'), variable_declaration_assignable
+
+
 def global_statement() -> GrammarType:
-    return variable_declaration_assignable
+    return global_variable
 
 
 def instruction() -> GrammarType:

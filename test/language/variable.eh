@@ -1,3 +1,6 @@
+bool global = true
+priv int universal_answer = 42
+
 int main()
 {
 	int i = 42
@@ -8,5 +11,9 @@ int main()
 		int k
 		k = 1
 	}
+
+	global = false
+	universal_answer = 12
+
 	return 0
 }

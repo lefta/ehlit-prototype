@@ -122,6 +122,8 @@ class DumpWriter:
     def dumpVariableDeclaration(self, decl: Union[Node, str]) -> None:
         decl = cast(VariableDeclaration, decl)
         self.dump('VariableDeclaration')
+        if decl.private:
+            self.print_str('Modifiers: private')
         if decl.assign is not None:
             self.dumpDeclaration(decl)
             self.print_node(decl.assign, False)

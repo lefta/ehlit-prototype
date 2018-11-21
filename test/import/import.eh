@@ -27,6 +27,9 @@ int fun_proto_args(int i, str s) {
 alias int nb
 func<nb()> fun_proto_ref = fun_proto
 
+bool global = true
+priv bool this_var_exported = false
+
 nb main() {}
 
 inline int inlined_function(int a, int b) {

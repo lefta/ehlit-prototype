@@ -1,3 +1,22 @@
+├─ Statement
+│  └─ VariableDeclaration
+│     ├─ Declaration
+│     │  ├─ CompoundIdentifier
+│     │  │  └─ Identifier: @bool
+│     │  └─ Identifier: global
+│     └─ Assignment
+│        └─ Expression
+│           └─ BoolValue: true
+├─ Statement
+│  └─ VariableDeclaration
+│     ├─ Modifiers: private
+│     ├─ Declaration
+│     │  ├─ CompoundIdentifier
+│     │  │  └─ Identifier: @int
+│     │  └─ Identifier: universal_answer
+│     └─ Assignment
+│        └─ Expression
+│           └─ Number: 42
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
@@ -53,6 +72,20 @@
       │              └─ Assignment
       │                 └─ Expression
       │                    └─ Number: 1
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: global
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ false
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: universal_answer
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 12
       └─ Statement
          └─ Return
             └─ Expression

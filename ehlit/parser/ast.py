@@ -894,6 +894,7 @@ class VariableDeclaration(Declaration):
                  ) -> None:
         super().__init__(0, typ, sym)
         self.assign: Optional[Assignment] = assign
+        self._qualifiers: TypeQualifier = TypeQualifier.NONE
 
     def build(self, parent: Node) -> 'VariableDeclaration':
         super().build(parent)
@@ -901,6 +902,14 @@ class VariableDeclaration(Declaration):
             self.assign = self.assign.build(self)
             self.assign.expr.auto_cast(self.typ)
         return self
+
+    @property
+    def private(self) -> bool:
+        return self._qualifiers.is_private
+
+    @private.setter
+    def private(self, value: bool) -> None:
+        self._qualifiers = TypeQualifier.PRIVATE if value is True else TypeQualifier.NONE
 
 
 class FunctionDeclaration(Declaration):

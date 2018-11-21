@@ -207,6 +207,8 @@ class ImportWriter:
         self.file.write('\n')
 
     def writeVariableDeclaration(self, node: VariableDeclaration) -> None:
+        if node.private:
+            return
         self.writeDeclaration(node)
         if node.assign is not None:
             self.write(node.assign)
