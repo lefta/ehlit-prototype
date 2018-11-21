@@ -1555,7 +1555,7 @@ class AST(UnorderedScope):
 
     def build_ast(self, args: OptionsStruct) -> None:
         super().build(Node(0))
-        self.builtins: List[Type] = [
+        self.declarations: List[DeclarationBase] = [
             FunctionType(CompoundIdentifier([Identifier(0, '@any')]), []),
             BuiltinType('@int'), BuiltinType('@int8'), BuiltinType('@int16'), BuiltinType('@int32'),
             BuiltinType('@int64'), BuiltinType('@uint'), BuiltinType('@uint8'),
@@ -1564,7 +1564,7 @@ class AST(UnorderedScope):
             BuiltinType('@void'), BuiltinType('@bool'), BuiltinType('@char'), BuiltinType('@size'),
             BuiltinType('@str'), BuiltinType('@any'),
         ]
-        self.builtins = [decl.build(self) for decl in self.builtins]
+        self.declarations = [cast(DeclarationBase, decl.build(self)) for decl in self.declarations]
         self._import_paths = [
             path.dirname(args.source),
             getcwd(),
@@ -1588,10 +1588,12 @@ class AST(UnorderedScope):
             res, err = n.get_declaration(sym)
             if res is not None or err is not None:
                 return res, err
-        for decl in self.builtins:
+        for decl in self.declarations:
             res, err = decl.get_declaration(sym)
             if res is not None:
-                return cast(Type, res).dup().build(self), err
+                if isinstance(res, Type):
+                    return res.dup().build(self), err
+                return res, err
             if err is not None:
                 return res, err
         return None, None
