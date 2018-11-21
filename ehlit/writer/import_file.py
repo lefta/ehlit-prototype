@@ -22,10 +22,10 @@
 import sys
 from typing import List, TextIO
 from ehlit.parser.ast import (
-    Alias, Array, Assignment, AST, Cast, CompoundIdentifier, ContainerStructure, Declaration,
-    DecimalNumber, EhUnion, Expression, FunctionDeclaration, FunctionDefinition, FunctionType,
-    Identifier, Import, Include, Node, Number, ReferenceToType, Statement, Struct,
-    TemplatedIdentifier, VariableDeclaration
+    Alias, Array, Assignment, AST, BoolValue, Cast, CompoundIdentifier, ContainerStructure,
+    Declaration, DecimalNumber, EhUnion, Expression, FunctionDeclaration, FunctionDefinition,
+    FunctionType, Identifier, Import, Include, Node, Number, Operator, ReferenceToType, Return,
+    Statement, Struct, TemplatedIdentifier, VariableDeclaration
 )
 
 
@@ -86,6 +86,12 @@ class ImportWriter:
     def writeStatement(self, node: Statement) -> None:
         self.write(node.expr)
         self.file.write('\n')
+
+    def writeReturn(self, node: Return) -> None:
+        self.file.write('return')
+        if node.expr is not None:
+            self.file.write(' ')
+            self.write(node.expr)
 
     def writeExpression(self, node: Expression) -> None:
         if node.is_parenthesised:
@@ -161,11 +167,20 @@ class ImportWriter:
                 self.file.write(', ')
         self.file.write('>')
 
+    def writeOperator(self, node: Operator) -> None:
+        self.file.write(node.op)
+
     def writeNumber(self, node: Number) -> None:
         self.file.write(node.num)
 
     def writeDecimalNumber(self, node: DecimalNumber) -> None:
         self.file.write(node.num)
+
+    def writeBoolValue(self, node: BoolValue) -> None:
+        if node.val:
+            self.file.write('true')
+        else:
+            self.file.write('false')
 
     def writeAlias(self, node: Alias) -> None:
         self.file.write('alias ')
