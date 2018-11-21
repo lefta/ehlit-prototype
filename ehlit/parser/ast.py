@@ -25,7 +25,6 @@ from enum import IntEnum, IntFlag
 from os import path, getcwd, listdir
 from typing import Iterator, List, Optional, Tuple, Union, cast
 import typing
-import ehlit.parser.parse
 from ehlit.parser.error import ParseError, Failure
 from ehlit.options import OptionsStruct
 
@@ -279,7 +278,7 @@ class Import(GenericExternInclusion):
             if path.isdir(full_path):
                 res += self.import_dir(full_path)
             elif path.isfile(full_path):
-                res += ehlit.parser.parse(full_path).nodes
+                res += source.parse(full_path).nodes
         return res
 
     def parse(self) -> List[Node]:
@@ -298,7 +297,7 @@ class Import(GenericExternInclusion):
             if full_path in imported:
                 return []
             imported.append(full_path)
-            return ehlit.parser.parse(full_path).nodes
+            return source.parse(full_path).nodes
         self.error(self.pos, '%s: no such file or directory' % self.lib)
         return []
 
@@ -310,11 +309,10 @@ class Include(GenericExternInclusion):
         '''! Parse the included file.
         @return @b List[Node] A list of the imported nodes.
         '''
-        from ehlit.parser import c_compat
         if self.lib in included:
             return []
         included.append(self.lib)
-        return c_compat.parse_header(self.lib)
+        return c_header.parse(self.lib)
 
     def declare(self, decl: 'DeclarationBase') -> None:
         decl.declaration_type = DeclarationType.C
@@ -932,14 +930,13 @@ class FunctionDefinition(FunctionDeclaration, Scope):
         self.body_str: UnparsedContents = body_str
 
     def build(self, parent: Node) -> 'FunctionDefinition':
-        from ehlit.parser.parse import parse_function
         super().build(parent)
         if self.is_child_of(Import):
             return self
         try:
             assert isinstance(self.typ, FunctionType)
             typ: Optional[DeclarationBase] = self.typ.ret.canonical
-            self.body = parse_function(self.body_str.contents, not typ == BuiltinType('@void'))
+            self.body = function.parse(self.body_str.contents, not typ == BuiltinType('@void'))
             for s in self.body:
                 s.build(self)
         except ParseError as err:
@@ -1613,3 +1610,8 @@ class AST(UnorderedScope):
 
     def is_child_of(self, cls: typing.Type[Node]) -> bool:
         return False
+
+
+from ehlit.parser import source
+from ehlit.parser import function
+from ehlit.parser import c_header

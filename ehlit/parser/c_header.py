@@ -166,7 +166,7 @@ def find_file_in_path(filename: str) -> str:
                               '%s: no such file or directory' % filename, None)])
 
 
-def parse_header(filename: str) -> List[ast.Node]:
+def parse(filename: str) -> List[ast.Node]:
     path: str = find_file_in_path(filename)
     index: Index = Index.create()
     try:

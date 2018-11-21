@@ -19,9 +19,52 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from arpeggio import ParserPython
+from arpeggio import ParserPython, NoMatch, StrMatch
 from enum import IntEnum
-from typing import List, Optional, Tuple
+from typing import List, Optional, Set, Tuple
+
+
+excluded_tokens: Set[str] = {
+    # These are not relevant to display
+    "'['",
+    "'.'",
+    # Builtin types are identifiers
+    'bool',
+    'int',
+    'int8',
+    'int16',
+    'int32',
+    'int64',
+    'uint',
+    'uint8',
+    'uint16',
+    'uint32',
+    'uint64',
+    'size',
+    'float',
+    'double',
+    'decimal',
+    'char',
+    'str',
+    'void',
+    'any',
+    'func',
+    # Part of a type, so they belong to an identifier too
+    'ref',
+    'const',
+    'volatile',
+    'restrict',
+}
+
+
+def handle_parse_error(err: NoMatch, parser: ParserPython) -> None:
+    exp: List[str] = []
+    for r in err.rules:
+        repr: str = "'%s'" % str(r) if type(r) is StrMatch else str(r)
+        if repr not in excluded_tokens and repr not in exp:
+            exp.append(repr)
+    raise ParseError([Failure(ParseError.Severity.Fatal, err.position,
+                              'expected %s' % (' or '.join(exp)), parser.file_name)], parser)
 
 
 class Failure(Exception):

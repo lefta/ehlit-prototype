@@ -19,5 +19,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from ehlit.parser.source import parse      # noqa
-from ehlit.parser.error import ParseError  # noqa
+from arpeggio import ParserPython, ParseTreeNode, visit_parse_tree, NoMatch
+from typing import List
+
+from ehlit.parser.ast import Statement
+from ehlit.parser.ast_builder import ASTBuilder
+from ehlit.parser.grammar import function_body_grammar, Context
+from ehlit.parser.error import handle_parse_error
+
+
+def parse(source: str, have_return_value: bool) -> List[Statement]:
+    Context.return_value = have_return_value
+    parser: ParserPython = ParserPython(function_body_grammar, autokwd=True, memoization=True)
+    try:
+        parsed: ParseTreeNode = parser.parse(source)
+        body: List[Statement] = visit_parse_tree(parsed, ASTBuilder())
+    except NoMatch as err:
+        handle_parse_error(err, parser)
+    return body
