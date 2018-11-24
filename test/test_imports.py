@@ -20,16 +20,35 @@
 # SOFTWARE.
 
 from common import EhlitTestCase
+from ehlit.parser import parse, ParseError
 
 
-class TestImportGeneration(EhlitTestCase):
-    """ Test generation of import files """
+class TestImports(EhlitTestCase):
+    """ Test import files behavior """
 
     def __init__(self, arg):
         super().__init__(arg)
-        self.test_dir = 'import'
 
     def test_import_generation(self):
-        output = self.compile('import/import.eh')
+        output = self.compile('import_tests/source.eh')
         self.assertEqual(output.stderr, '')
-        self.assert_files_equal('import/import.eh.inc', 'out/include/import/import.eh')
+        self.assert_files_equal('import_tests/source.inc.eh',
+                                'out/include/import_tests/source.eh')
+
+    def test_importing_file(self):
+        ast = None
+        failure = None
+
+        class opts:
+            output_file = '-'
+            output_import_file = 'out/include/import_tests/importing.eh'
+            source = 'import_tests/importing.eh'
+            verbose = False
+        try:
+            ast = parse(opts.source)
+            ast.build_ast(opts)
+        except ParseError as err:
+            failure = err
+        self.assertEqual(None, failure)
+        self.assert_declares(ast.nodes[0], 'global')
+        self.assert_declares(ast.nodes[0], 'fun_proto_args')

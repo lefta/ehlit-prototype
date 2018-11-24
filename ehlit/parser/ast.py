@@ -290,14 +290,14 @@ class Import(GenericExternInclusion):
             if path.isdir(full_path):
                 if full_path in imported:
                     return []
-            imported.append(full_path)
-            return self.import_dir(full_path)
-        full_path += '.eh'
-        if path.isfile(full_path):
-            if full_path in imported:
-                return []
-            imported.append(full_path)
-            return source.parse(full_path).nodes
+                imported.append(full_path)
+                return self.import_dir(full_path)
+            full_path += '.eh'
+            if path.isfile(full_path):
+                if full_path in imported:
+                    return []
+                imported.append(full_path)
+                return source.parse(full_path).nodes
         self.error(self.pos, '%s: no such file or directory' % self.lib)
         return []
 

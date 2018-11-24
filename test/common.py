@@ -225,3 +225,8 @@ class EhlitTestCase(TestCase):
         self.assertNotEqual(dump, '', 'No dump have been generated.')
         with open('{}.dump'.format(src), 'r') as f:
             self.assertEqual(dump, f.read())
+
+    def assert_declares(self, node, sym):
+        decl, err = node.find_declaration(sym)
+        self.assertEqual(None, err)
+        self.assertNotEqual(None, decl)
