@@ -6,10 +6,9 @@
 │  │     │  └─ Identifier: @bool
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @bool
-│  │              └─ Identifier: v
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @bool
+│  │           └─ Identifier: v
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -27,19 +26,17 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @bool
-      │     │  └─ Identifier: b1
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @bool
+      │     ├─ Identifier: b1
       │     └─ Assignment
       │        └─ Expression
       │           └─ BoolValue: true
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @bool
-      │     │  └─ Identifier: b2
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @bool
+      │     ├─ Identifier: b2
       │     └─ Assignment
       │        └─ Expression
       │           └─ false

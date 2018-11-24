@@ -6,23 +6,20 @@
    │     │  └─ Identifier: @int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
-   │        │  └─ Declaration
-   │        │     ├─ CompoundIdentifier
-   │        │     │  └─ Identifier: @int
-   │        │     └─ Identifier: ac
+   │        │  ├─ CompoundIdentifier
+   │        │  │  └─ Identifier: @int
+   │        │  └─ Identifier: ac
    │        └─ VariableDeclaration
-   │           └─ Declaration
-   │              ├─ Array
-   │              │  └─ CompoundIdentifier
-   │              │     └─ Identifier: @str
-   │              └─ Identifier: av
+   │           ├─ Array
+   │           │  └─ CompoundIdentifier
+   │           │     └─ Identifier: @str
+   │           └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @int
-      │        └─ Identifier: res
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     └─ Identifier: res
       ├─ ControlStructure: switch
       │  ├─ CompoundIdentifier
       │  │  └─ Identifier: ac

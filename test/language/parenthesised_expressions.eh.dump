@@ -7,10 +7,9 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: i
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           ├─ Number: 42

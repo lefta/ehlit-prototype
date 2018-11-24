@@ -6,10 +6,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @int
-│  │              └─ Identifier: i
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @int
+│  │           └─ Identifier: i
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
@@ -19,10 +18,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @str
-│  │              └─ Identifier: s
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @str
+│  │           └─ Identifier: s
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
@@ -44,11 +42,10 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Reference
-│  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: @int
-│  │              └─ Identifier: nb
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: @int
+│  │           └─ Identifier: nb
 │  └─ FunctionBody
 │     ├─ ConditionBranches
 │     │  └─ ControlStructure: if
@@ -77,10 +74,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @int
-│  │              └─ Identifier: i
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @int
+│  │           └─ Identifier: i
 │  └─ FunctionBody
 │     ├─ ConditionBranches
 │     │  └─ ControlStructure: if
@@ -152,15 +148,13 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
-│  │        │  └─ Declaration
-│  │        │     ├─ CompoundIdentifier
-│  │        │     │  └─ Identifier: @int
-│  │        │     └─ Identifier: par1
+│  │        │  ├─ CompoundIdentifier
+│  │        │  │  └─ Identifier: @int
+│  │        │  └─ Identifier: par1
 │  │        └─ VariableDeclaration
-│  │           ├─ Declaration
-│  │           │  ├─ CompoundIdentifier
-│  │           │  │  └─ Identifier: @int
-│  │           │  └─ Identifier: par2
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @int
+│  │           ├─ Identifier: par2
 │  │           └─ Assignment
 │  │              └─ Expression
 │  │                 └─ Number: 0
@@ -173,10 +167,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @int
-│  │              └─ Identifier: arg
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @int
+│  │           └─ Identifier: arg
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
@@ -186,16 +179,14 @@
 │  │     │  └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
-│  │        │  └─ Declaration
-│  │        │     ├─ CompoundIdentifier
-│  │        │     │  └─ Identifier: @int
-│  │        │     └─ Identifier: ac
+│  │        │  ├─ CompoundIdentifier
+│  │        │  │  └─ Identifier: @int
+│  │        │  └─ Identifier: ac
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Array
-│  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: @str
-│  │              └─ Identifier: av
+│  │           ├─ Array
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: @str
+│  │           └─ Identifier: av
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ Expression
@@ -300,15 +291,13 @@
 │  │     │  └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
-│  │        │  └─ Declaration
-│  │        │     ├─ CompoundIdentifier
-│  │        │     │  └─ Identifier: @int
-│  │        │     └─ Identifier: a
+│  │        │  ├─ CompoundIdentifier
+│  │        │  │  └─ Identifier: @int
+│  │        │  └─ Identifier: a
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @int
-│  │              └─ Identifier: b
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @int
+│  │           └─ Identifier: b
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -368,11 +357,10 @@
 │  │     │  └─ Identifier: @void
 │  │     ├─ Arguments:
 │  │     │  └─ VariableDeclaration
-│  │     │     └─ Declaration
-│  │     │        ├─ Reference
-│  │     │        │  └─ CompoundIdentifier
-│  │     │        │     └─ Identifier: @int
-│  │     │        └─ Identifier: i
+│  │     │     ├─ Reference
+│  │     │     │  └─ CompoundIdentifier
+│  │     │     │     └─ Identifier: @int
+│  │     │     └─ Identifier: i
 │  │     └─ Variadic:
 │  │        └─ CompoundIdentifier
 │  │           └─ Identifier: @any
@@ -385,11 +373,10 @@
 │  │     │  └─ Identifier: @void
 │  │     ├─ Arguments:
 │  │     │  └─ VariableDeclaration
-│  │     │     └─ Declaration
-│  │     │        ├─ Reference
-│  │     │        │  └─ CompoundIdentifier
-│  │     │        │     └─ Identifier: @int
-│  │     │        └─ Identifier: i
+│  │     │     ├─ Reference
+│  │     │     │  └─ CompoundIdentifier
+│  │     │     │     └─ Identifier: @int
+│  │     │     └─ Identifier: i
 │  │     └─ Variadic:
 │  │        └─ CompoundIdentifier
 │  │           └─ Identifier: @int
@@ -402,21 +389,18 @@
 │  │     │  └─ Identifier: @void
 │  │     ├─ Arguments:
 │  │     │  ├─ VariableDeclaration
-│  │     │  │  └─ Declaration
-│  │     │  │     ├─ CompoundIdentifier
-│  │     │  │     │  └─ Identifier: @str
-│  │     │  │     └─ Identifier: s
+│  │     │  │  ├─ CompoundIdentifier
+│  │     │  │  │  └─ Identifier: @str
+│  │     │  │  └─ Identifier: s
 │  │     │  ├─ VariableDeclaration
-│  │     │  │  └─ Declaration
-│  │     │  │     ├─ CompoundIdentifier
-│  │     │  │     │  └─ Identifier: @int
-│  │     │  │     └─ Identifier: i
+│  │     │  │  ├─ CompoundIdentifier
+│  │     │  │  │  └─ Identifier: @int
+│  │     │  │  └─ Identifier: i
 │  │     │  └─ VariableDeclaration
-│  │     │     └─ Declaration
-│  │     │        ├─ Reference
-│  │     │        │  └─ CompoundIdentifier
-│  │     │        │     └─ Identifier: @int
-│  │     │        └─ Identifier: ri
+│  │     │     ├─ Reference
+│  │     │     │  └─ CompoundIdentifier
+│  │     │     │     └─ Identifier: @int
+│  │     │     └─ Identifier: ri
 │  │     └─ Variadic:
 │  │        └─ CompoundIdentifier
 │  │           └─ Identifier: @any
@@ -429,21 +413,18 @@
    │     │  └─ Identifier: @void
    │     ├─ Arguments:
    │     │  ├─ VariableDeclaration
-   │     │  │  └─ Declaration
-   │     │  │     ├─ CompoundIdentifier
-   │     │  │     │  └─ Identifier: @str
-   │     │  │     └─ Identifier: s
+   │     │  │  ├─ CompoundIdentifier
+   │     │  │  │  └─ Identifier: @str
+   │     │  │  └─ Identifier: s
    │     │  ├─ VariableDeclaration
-   │     │  │  └─ Declaration
-   │     │  │     ├─ CompoundIdentifier
-   │     │  │     │  └─ Identifier: @int
-   │     │  │     └─ Identifier: i
+   │     │  │  ├─ CompoundIdentifier
+   │     │  │  │  └─ Identifier: @int
+   │     │  │  └─ Identifier: i
    │     │  └─ VariableDeclaration
-   │     │     └─ Declaration
-   │     │        ├─ Reference
-   │     │        │  └─ CompoundIdentifier
-   │     │        │     └─ Identifier: @int
-   │     │        └─ Identifier: ri
+   │     │     ├─ Reference
+   │     │     │  └─ CompoundIdentifier
+   │     │     │     └─ Identifier: @int
+   │     │     └─ Identifier: ri
    │     └─ Variadic:
    │        └─ CompoundIdentifier
    │           └─ Identifier: @int

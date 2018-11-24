@@ -6,10 +6,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @char
-│  │              └─ Identifier: c
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @char
+│  │           └─ Identifier: c
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
@@ -20,10 +19,9 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @char
-      │     │  └─ Identifier: c
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @char
+      │     ├─ Identifier: c
       │     └─ Assignment
       │        └─ Expression
       │           └─ Character: c
@@ -101,10 +99,9 @@
       │              └─ Character: \\
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @char
-      │     │  └─ Identifier: space
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @char
+      │     ├─ Identifier: space
       │     └─ Assignment
       │        └─ Expression
       │           └─ Character:  

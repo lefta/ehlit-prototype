@@ -1,19 +1,17 @@
 ├─ Statement
 │  └─ VariableDeclaration
-│     ├─ Declaration
-│     │  ├─ CompoundIdentifier
-│     │  │  └─ Identifier: @bool
-│     │  └─ Identifier: global
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @bool
+│     ├─ Identifier: global
 │     └─ Assignment
 │        └─ Expression
 │           └─ BoolValue: true
 ├─ Statement
 │  └─ VariableDeclaration
 │     ├─ Modifiers: private
-│     ├─ Declaration
-│     │  ├─ CompoundIdentifier
-│     │  │  └─ Identifier: @int
-│     │  └─ Identifier: universal_answer
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @int
+│     ├─ Identifier: universal_answer
 │     └─ Assignment
 │        └─ Expression
 │           └─ Number: 42
@@ -27,28 +25,25 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Modifiers: static
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: globint
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: globint
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: i
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @int
-      │        └─ Identifier: j
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     └─ Identifier: j
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier
@@ -71,10 +66,9 @@
       │     └─ ControlStructureBody
       │        ├─ Statement
       │        │  └─ VariableDeclaration
-      │        │     └─ Declaration
-      │        │        ├─ CompoundIdentifier
-      │        │        │  └─ Identifier: @int
-      │        │        └─ Identifier: k
+      │        │     ├─ CompoundIdentifier
+      │        │     │  └─ Identifier: @int
+      │        │     └─ Identifier: k
       │        └─ Statement
       │           └─ VariableAssignment
       │              ├─ CompoundIdentifier

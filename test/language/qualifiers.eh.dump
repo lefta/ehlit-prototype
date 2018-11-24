@@ -9,13 +9,12 @@
 │  │     │     └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Reference
-│  │              │  ├─ Modifiers: const
-│  │              │  └─ CompoundIdentifier
-│  │              │     ├─ Modifiers: const
-│  │              │     └─ Identifier: @int
-│  │              └─ Identifier: i
+│  │           ├─ Reference
+│  │           │  ├─ Modifiers: const
+│  │           │  └─ CompoundIdentifier
+│  │           │     ├─ Modifiers: const
+│  │           │     └─ Identifier: @int
+│  │           └─ Identifier: i
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -31,19 +30,17 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
-│  │        │  └─ Declaration
-│  │        │     ├─ Reference
-│  │        │     │  ├─ Modifiers: restrict
-│  │        │     │  └─ CompoundIdentifier
-│  │        │     │     └─ Identifier: @int32
-│  │        │     └─ Identifier: i
+│  │        │  ├─ Reference
+│  │        │  │  ├─ Modifiers: restrict
+│  │        │  │  └─ CompoundIdentifier
+│  │        │  │     └─ Identifier: @int32
+│  │        │  └─ Identifier: i
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Reference
-│  │              │  ├─ Modifiers: restrict
-│  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: @int
-│  │              └─ Identifier: j
+│  │           ├─ Reference
+│  │           │  ├─ Modifiers: restrict
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: @int
+│  │           └─ Identifier: j
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
@@ -53,17 +50,15 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
-│  │        │  └─ Declaration
-│  │        │     ├─ CompoundIdentifier
-│  │        │     │  ├─ Modifiers: restrict
-│  │        │     │  └─ Identifier: @str
-│  │        │     └─ Identifier: s1
+│  │        │  ├─ CompoundIdentifier
+│  │        │  │  ├─ Modifiers: restrict
+│  │        │  │  └─ Identifier: @str
+│  │        │  └─ Identifier: s1
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  ├─ Modifiers: const, restrict
-│  │              │  └─ Identifier: @str
-│  │              └─ Identifier: s2
+│  │           ├─ CompoundIdentifier
+│  │           │  ├─ Modifiers: const, restrict
+│  │           │  └─ Identifier: @str
+│  │           └─ Identifier: s2
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
@@ -73,37 +68,32 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
-│  │        │  └─ Declaration
-│  │        │     ├─ CompoundIdentifier
-│  │        │     │  ├─ Modifiers: restrict
-│  │        │     │  └─ Identifier: @str
-│  │        │     └─ Identifier: s1
+│  │        │  ├─ CompoundIdentifier
+│  │        │  │  ├─ Modifiers: restrict
+│  │        │  │  └─ Identifier: @str
+│  │        │  └─ Identifier: s1
 │  │        ├─ VariableDeclaration
-│  │        │  └─ Declaration
-│  │        │     ├─ CompoundIdentifier
-│  │        │     │  ├─ Modifiers: const, restrict
-│  │        │     │  └─ Identifier: @str
-│  │        │     └─ Identifier: s2
+│  │        │  ├─ CompoundIdentifier
+│  │        │  │  ├─ Modifiers: const, restrict
+│  │        │  │  └─ Identifier: @str
+│  │        │  └─ Identifier: s2
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @size
-│  │              └─ Identifier: n
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @size
+│  │           └─ Identifier: n
 │  └─ FunctionBody
 ├─ Statement
 │  └─ VariableDeclaration
-│     └─ Declaration
-│        ├─ CompoundIdentifier
-│        │  ├─ Modifiers: volatile
-│        │  └─ Identifier: @int
-│        └─ Identifier: some_register
+│     ├─ CompoundIdentifier
+│     │  ├─ Modifiers: volatile
+│     │  └─ Identifier: @int
+│     └─ Identifier: some_register
 ├─ Statement
 │  └─ VariableDeclaration
-│     ├─ Declaration
-│     │  ├─ CompoundIdentifier
-│     │  │  ├─ Modifiers: volatile
-│     │  │  └─ Identifier: @int
-│     │  └─ Identifier: some_other_register
+│     ├─ CompoundIdentifier
+│     │  ├─ Modifiers: volatile
+│     │  └─ Identifier: @int
+│     ├─ Identifier: some_other_register
 │     └─ Assignment
 │        └─ Expression
 │           └─ Cast
@@ -121,23 +111,21 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  ├─ Modifiers: const
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: i
+      │     ├─ CompoundIdentifier
+      │     │  ├─ Modifiers: const
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Reference
-      │     │  │  ├─ Modifiers: const
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     ├─ Modifiers: const
-      │     │  │     └─ Identifier: @int
-      │     │  └─ Identifier: j
+      │     ├─ Reference
+      │     │  ├─ Modifiers: const
+      │     │  └─ CompoundIdentifier
+      │     │     ├─ Modifiers: const
+      │     │     └─ Identifier: @int
+      │     ├─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
       │           └─ Reference
@@ -151,12 +139,11 @@
       │                             └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Reference
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     ├─ Modifiers: const
-      │     │  │     └─ Identifier: @int
-      │     │  └─ Identifier: k
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     ├─ Modifiers: const
+      │     │     └─ Identifier: @int
+      │     ├─ Identifier: k
       │     └─ Assignment
       │        └─ Expression
       │           └─ Reference
@@ -164,21 +151,19 @@
       │                 └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: l
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: l
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 21
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Reference
-      │     │  │  ├─ Modifiers: const
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @int
-      │     │  └─ Identifier: m
+      │     ├─ Reference
+      │     │  ├─ Modifiers: const
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @int
+      │     ├─ Identifier: m
       │     └─ Assignment
       │        └─ Expression
       │           └─ Reference

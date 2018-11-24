@@ -7,10 +7,9 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: i
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 0
@@ -237,11 +236,10 @@
       │                    └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Reference
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @int
-      │     │  └─ Identifier: ri
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @int
+      │     ├─ Identifier: ri
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 0

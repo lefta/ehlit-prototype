@@ -6,16 +6,14 @@
 │  │     │  └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        ├─ VariableDeclaration
-│  │        │  └─ Declaration
-│  │        │     ├─ CompoundIdentifier
-│  │        │     │  └─ Identifier: @int
-│  │        │     └─ Identifier: i
+│  │        │  ├─ CompoundIdentifier
+│  │        │  │  └─ Identifier: @int
+│  │        │  └─ Identifier: i
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Reference
-│  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: @int
-│  │              └─ Identifier: j
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: @int
+│  │           └─ Identifier: j
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -31,11 +29,10 @@
 │  │     │     └─ Identifier: @int
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Reference
-│  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: @int
-│  │              └─ Identifier: i
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: @int
+│  │           └─ Identifier: i
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -51,17 +48,15 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @int
-      │        └─ Identifier: i
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Reference
-      │        │  └─ CompoundIdentifier
-      │        │     └─ Identifier: @int
-      │        └─ Identifier: j
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @int
+      │     └─ Identifier: j
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference

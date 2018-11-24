@@ -17,10 +17,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @any
-│  │              └─ Identifier: p
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @any
+│  │           └─ Identifier: p
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
@@ -31,10 +30,9 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @str
-      │     │  └─ Identifier: s
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @str
+      │     ├─ Identifier: s
       │     └─ Assignment
       │        └─ Expression
       │           └─ NullValue

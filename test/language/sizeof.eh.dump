@@ -7,10 +7,9 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: sz
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: sz
       │     └─ Assignment
       │        └─ Expression
       │           └─ Sizeof

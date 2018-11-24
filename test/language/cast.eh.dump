@@ -6,10 +6,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @int
-│  │              └─ Identifier: n
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @int
+│  │           └─ Identifier: n
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
@@ -19,16 +18,14 @@
    │     │  └─ Identifier: @int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
-   │        │  └─ Declaration
-   │        │     ├─ CompoundIdentifier
-   │        │     │  └─ Identifier: @int
-   │        │     └─ Identifier: ac
+   │        │  ├─ CompoundIdentifier
+   │        │  │  └─ Identifier: @int
+   │        │  └─ Identifier: ac
    │        └─ VariableDeclaration
-   │           └─ Declaration
-   │              ├─ Array
-   │              │  └─ CompoundIdentifier
-   │              │     └─ Identifier: @str
-   │              └─ Identifier: av
+   │           ├─ Array
+   │           │  └─ CompoundIdentifier
+   │           │     └─ Identifier: @str
+   │           └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ Expression
@@ -46,10 +43,9 @@
       │                          └─ Identifier: av
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @any
-      │     │  └─ Identifier: test
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @any
+      │     ├─ Identifier: test
       │     └─ Assignment
       │        └─ Expression
       │           └─ Cast
@@ -60,10 +56,9 @@
       │                    └─ Identifier: ac
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @size
-      │     │  └─ Identifier: i
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @size
+      │     ├─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ ArrayAccess
@@ -78,10 +73,9 @@
       │                       └─ Identifier: av
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @char
-      │     │  └─ Identifier: c
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @char
+      │     ├─ Identifier: c
       │     └─ Assignment
       │        └─ Expression
       │           └─ ArrayAccess
@@ -95,19 +89,17 @@
       │                       └─ Identifier: ac
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @str
-      │     │  └─ Identifier: s
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @str
+      │     ├─ Identifier: s
       │     └─ Assignment
       │        └─ Expression
       │           └─ String: YOLO
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @str
-      │     │  └─ Identifier: string
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @str
+      │     ├─ Identifier: string
       │     └─ Assignment
       │        └─ Expression
       │           └─ Cast

@@ -6,10 +6,9 @@
 │  │     │  └─ Identifier: @any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @any
-│  │              └─ Identifier: data
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @any
+│  │           └─ Identifier: data
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -25,18 +24,16 @@
 │  │     │     └─ Identifier: @any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Reference
-│  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: @any
-│  │              └─ Identifier: data
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: @any
+│  │           └─ Identifier: data
 │  └─ FunctionBody
 │     ├─ Statement
 │     │  └─ VariableDeclaration
-│     │     ├─ Declaration
-│     │     │  ├─ CompoundIdentifier
-│     │     │  │  └─ Identifier: @any
-│     │     │  └─ Identifier: dummy
+│     │     ├─ CompoundIdentifier
+│     │     │  └─ Identifier: @any
+│     │     ├─ Identifier: dummy
 │     │     └─ Assignment
 │     │        └─ Expression
 │     │           └─ FunctionCall
@@ -60,10 +57,9 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: number
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: number
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 42
@@ -87,10 +83,9 @@
       │                          └─ Identifier: number
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: number2
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: number2
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
@@ -106,10 +101,9 @@
       │                       └─ Identifier: number
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @str
-      │     │  └─ Identifier: string
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @str
+      │     ├─ Identifier: string
       │     └─ Assignment
       │        └─ Expression
       │           └─ String: Hello, World!
@@ -131,10 +125,9 @@
       │                       └─ Identifier: string
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @str
-      │     │  └─ Identifier: string2
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @str
+      │     ├─ Identifier: string2
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
@@ -149,11 +142,10 @@
       │                       └─ Identifier: string
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  └─ CompoundIdentifier
-      │        │     └─ Identifier: @int
-      │        └─ Identifier: array
+      │     ├─ Array
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @int
+      │     └─ Identifier: array
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier
@@ -173,11 +165,10 @@
       │                       └─ Identifier: array
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Array
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @int
-      │     │  └─ Identifier: array2
+      │     ├─ Array
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @int
+      │     ├─ Identifier: array2
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
@@ -216,10 +207,9 @@
       │                          └─ Identifier: array
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: array0
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: array0
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
@@ -238,11 +228,10 @@
       │                          └─ Identifier: array
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Reference
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @int
-      │     │  └─ Identifier: rnb
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @int
+      │     ├─ Identifier: rnb
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
@@ -277,12 +266,11 @@
       │                       └─ Identifier: rnb
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Reference
-      │     │  │  └─ Reference
-      │     │  │     └─ CompoundIdentifier
-      │     │  │        └─ Identifier: @int
-      │     │  └─ Identifier: rrnb
+      │     ├─ Reference
+      │     │  └─ Reference
+      │     │     └─ CompoundIdentifier
+      │     │        └─ Identifier: @int
+      │     ├─ Identifier: rrnb
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
@@ -380,11 +368,10 @@
       │                       └─ Identifier: rrnb
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Reference
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @str
-      │     │  └─ Identifier: rstring
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @str
+      │     ├─ Identifier: rstring
       │     └─ Assignment
       │        └─ Expression
       │           └─ FunctionCall
@@ -417,16 +404,14 @@
       │                       └─ Identifier: rstring
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @any
-      │        └─ Identifier: a1
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @any
+      │     └─ Identifier: a1
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @any
-      │        └─ Identifier: a2
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @any
+      │     └─ Identifier: a2
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier

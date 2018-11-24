@@ -19,9 +19,8 @@
 │  │           │  └─ Identifier: @void
 │  │           └─ Arguments:
 │  │              └─ VariableDeclaration
-│  │                 └─ Declaration
-│  │                    └─ CompoundIdentifier
-│  │                       └─ Identifier: nb
+│  │                 └─ CompoundIdentifier
+│  │                    └─ Identifier: nb
 │  └─ To:
 │     └─ Identifier: pfn
 ├─ FunctionDefinition
@@ -32,11 +31,10 @@
 │  │     │  └─ Identifier: nothing
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Reference
-│  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: @int
-│  │              └─ Identifier: number
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: @int
+│  │           └─ Identifier: number
 │  └─ FunctionBody
 │     ├─ ConditionBranches
 │     │  └─ ControlStructure: if
@@ -65,10 +63,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: nb
-│  │              └─ Identifier: n
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: nb
+│  │           └─ Identifier: n
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
@@ -85,19 +82,17 @@
       │     └─ Identifier: dn
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: nb
-      │     │  └─ Identifier: i
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: nb
+      │     ├─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: pfn
-      │     │  └─ Identifier: pdn
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: pfn
+      │     ├─ Identifier: pdn
       │     └─ Assignment
       │        └─ Expression
       │           └─ CompoundIdentifier

@@ -6,10 +6,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @str
-│  │              └─ Identifier: s
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @str
+│  │           └─ Identifier: s
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
@@ -19,16 +18,14 @@
    │     │  └─ Identifier: @int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
-   │        │  └─ Declaration
-   │        │     ├─ CompoundIdentifier
-   │        │     │  └─ Identifier: @int
-   │        │     └─ Identifier: ac
+   │        │  ├─ CompoundIdentifier
+   │        │  │  └─ Identifier: @int
+   │        │  └─ Identifier: ac
    │        └─ VariableDeclaration
-   │           └─ Declaration
-   │              ├─ Array
-   │              │  └─ CompoundIdentifier
-   │              │     └─ Identifier: @str
-   │              └─ Identifier: av
+   │           ├─ Array
+   │           │  └─ CompoundIdentifier
+   │           │     └─ Identifier: @str
+   │           └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ Expression

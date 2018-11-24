@@ -10,9 +10,8 @@
       │  │           │  └─ Identifier: @str
       │  │           └─ Arguments:
       │  │              └─ VariableDeclaration
-      │  │                 └─ Declaration
-      │  │                    └─ CompoundIdentifier
-      │  │                       └─ Identifier: @int32
+      │  │                 └─ CompoundIdentifier
+      │  │                    └─ Identifier: @int32
       │  └─ To:
       │     └─ Identifier: fun
       └─ FunctionDeclaration
@@ -22,15 +21,13 @@
             │  └─ Identifier: @void
             └─ Arguments:
                └─ VariableDeclaration
-                  └─ Declaration
-                     ├─ TemplatedIdentifier: @func
-                     │  └─ Types
-                     │     └─ FunctionType
-                     │        ├─ CompoundIdentifier
-                     │        │  └─ Identifier: @str
-                     │        └─ Arguments:
-                     │           └─ VariableDeclaration
-                     │              └─ Declaration
-                     │                 └─ CompoundIdentifier
-                     │                    └─ Identifier: @int32
-                     └─ Identifier: param
+                  ├─ TemplatedIdentifier: @func
+                  │  └─ Types
+                  │     └─ FunctionType
+                  │        ├─ CompoundIdentifier
+                  │        │  └─ Identifier: @str
+                  │        └─ Arguments:
+                  │           └─ VariableDeclaration
+                  │              └─ CompoundIdentifier
+                  │                 └─ Identifier: @int32
+                  └─ Identifier: param

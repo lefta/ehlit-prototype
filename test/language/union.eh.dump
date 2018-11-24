@@ -2,22 +2,19 @@
 │  ├─ Identifier: test_union
 │  └─ Fields
 │     ├─ VariableDeclaration
-│     │  └─ Declaration
-│     │     ├─ CompoundIdentifier
-│     │     │  └─ Identifier: @int
-│     │     └─ Identifier: field1
+│     │  ├─ CompoundIdentifier
+│     │  │  └─ Identifier: @int
+│     │  └─ Identifier: field1
 │     ├─ VariableDeclaration
-│     │  └─ Declaration
-│     │     ├─ CompoundIdentifier
-│     │     │  └─ Identifier: @str
-│     │     └─ Identifier: field2
+│     │  ├─ CompoundIdentifier
+│     │  │  └─ Identifier: @str
+│     │  └─ Identifier: field2
 │     └─ VariableDeclaration
-│        └─ Declaration
-│           ├─ Reference
-│           │  └─ Array
-│           │     └─ CompoundIdentifier
-│           │        └─ Identifier: @int
-│           └─ Identifier: field3
+│        ├─ Reference
+│        │  └─ Array
+│        │     └─ CompoundIdentifier
+│        │        └─ Identifier: @int
+│        └─ Identifier: field3
 ├─ Union
 │  ├─ Identifier: forward_decl
 │  ├─ Forward declaration
@@ -29,11 +26,10 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Reference
-│  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: @int
-│  │              └─ Identifier: i
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: @int
+│  │           └─ Identifier: i
 │  └─ FunctionBody
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
@@ -44,11 +40,10 @@
 │  │     │     └─ Identifier: test_union
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ Reference
-│  │              │  └─ CompoundIdentifier
-│  │              │     └─ Identifier: test_union
-│  │              └─ Identifier: s
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: test_union
+│  │           └─ Identifier: s
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -63,10 +58,9 @@
 │  │     │  └─ Identifier: @any
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @any
-│  │              └─ Identifier: p
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @any
+│  │           └─ Identifier: p
 │  └─ FunctionBody
 │     └─ Statement
 │        └─ Return
@@ -82,10 +76,9 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: test_union
-      │        └─ Identifier: t
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: test_union
+      │     └─ Identifier: t
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier
@@ -123,11 +116,10 @@
       │                 └─ Identifier: field1
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Reference
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: test_union
-      │     │  └─ Identifier: rt
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: test_union
+      │     ├─ Identifier: rt
       │     └─ Assignment
       │        └─ Expression
       │           └─ CompoundIdentifier
@@ -183,10 +175,9 @@
       │                       └─ Identifier: t
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @size
-      │     │  └─ Identifier: ss
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @size
+      │     ├─ Identifier: ss
       │     └─ Assignment
       │        └─ Expression
       │           └─ Sizeof
@@ -204,20 +195,18 @@
       │                    └─ Identifier: test_union
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ TemplatedIdentifier: @func
-      │     │  │  └─ Types
-      │     │  │     └─ FunctionType
-      │     │  │        ├─ Reference
-      │     │  │        │  └─ CompoundIdentifier
-      │     │  │        │     └─ Identifier: test_union
-      │     │  │        └─ Arguments:
-      │     │  │           └─ VariableDeclaration
-      │     │  │              └─ Declaration
-      │     │  │                 └─ Reference
-      │     │  │                    └─ CompoundIdentifier
-      │     │  │                       └─ Identifier: test_union
-      │     │  └─ Identifier: psf
+      │     ├─ TemplatedIdentifier: @func
+      │     │  └─ Types
+      │     │     └─ FunctionType
+      │     │        ├─ Reference
+      │     │        │  └─ CompoundIdentifier
+      │     │        │     └─ Identifier: test_union
+      │     │        └─ Arguments:
+      │     │           └─ VariableDeclaration
+      │     │              └─ Reference
+      │     │                 └─ CompoundIdentifier
+      │     │                    └─ Identifier: test_union
+      │     ├─ Identifier: psf
       │     └─ Assignment
       │        └─ Expression
       │           └─ CompoundIdentifier

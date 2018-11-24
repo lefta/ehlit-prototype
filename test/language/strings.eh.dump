@@ -7,19 +7,17 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @str
-      │     │  └─ Identifier: s1
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @str
+      │     ├─ Identifier: s1
       │     └─ Assignment
       │        └─ Expression
       │           └─ String: Hardcoded string
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @str
-      │     │  └─ Identifier: s2
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @str
+      │     ├─ Identifier: s2
       │     └─ Assignment
       │        └─ Expression
       │           └─ String: It should be \"quotable\"

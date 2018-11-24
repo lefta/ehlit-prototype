@@ -2,330 +2,276 @@
    ├─ Path: c_parser/types.h
    └─ Symbols found
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int8
-      │     └─ Identifier: c
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int8
+      │  └─ Identifier: c
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @uint8
-      │     └─ Identifier: uc
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @uint8
+      │  └─ Identifier: uc
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int8
-      │     └─ Identifier: sc
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int8
+      │  └─ Identifier: sc
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int16
-      │     └─ Identifier: s
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int16
+      │  └─ Identifier: s
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @uint16
-      │     └─ Identifier: us
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @uint16
+      │  └─ Identifier: us
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int16
-      │     └─ Identifier: ss
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int16
+      │  └─ Identifier: ss
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int32
-      │     └─ Identifier: i
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int32
+      │  └─ Identifier: i
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @uint32
-      │     └─ Identifier: ui
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @uint32
+      │  └─ Identifier: ui
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int32
-      │     └─ Identifier: si
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int32
+      │  └─ Identifier: si
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int64
-      │     └─ Identifier: l
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int64
+      │  └─ Identifier: l
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @uint64
-      │     └─ Identifier: ul
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @uint64
+      │  └─ Identifier: ul
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int64
-      │     └─ Identifier: sl
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int64
+      │  └─ Identifier: sl
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int64
-      │     └─ Identifier: ll
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int64
+      │  └─ Identifier: ll
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @uint64
-      │     └─ Identifier: ull
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @uint64
+      │  └─ Identifier: ull
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int64
-      │     └─ Identifier: sll
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int64
+      │  └─ Identifier: sll
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @float
-      │     └─ Identifier: f
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @float
+      │  └─ Identifier: f
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @double
-      │     └─ Identifier: d
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @double
+      │  └─ Identifier: d
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @decimal
-      │     └─ Identifier: ld
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @decimal
+      │  └─ Identifier: ld
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @str
-      │     └─ Identifier: cstr
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @str
+      │  └─ Identifier: cstr
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint8
-      │     └─ Identifier: ustr
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint8
+      │  └─ Identifier: ustr
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @str
-      │     └─ Identifier: sstr
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @str
+      │  └─ Identifier: sstr
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int16
-      │     └─ Identifier: ps
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int16
+      │  └─ Identifier: ps
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint16
-      │     └─ Identifier: ups
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint16
+      │  └─ Identifier: ups
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int16
-      │     └─ Identifier: sps
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int16
+      │  └─ Identifier: sps
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int32
-      │     └─ Identifier: pi
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int32
+      │  └─ Identifier: pi
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint32
-      │     └─ Identifier: upi
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint32
+      │  └─ Identifier: upi
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int32
-      │     └─ Identifier: spi
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int32
+      │  └─ Identifier: spi
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int64
-      │     └─ Identifier: pl
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int64
+      │  └─ Identifier: pl
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint64
-      │     └─ Identifier: upl
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint64
+      │  └─ Identifier: upl
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int64
-      │     └─ Identifier: spl
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int64
+      │  └─ Identifier: spl
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int64
-      │     └─ Identifier: pll
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int64
+      │  └─ Identifier: pll
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint64
-      │     └─ Identifier: pull
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint64
+      │  └─ Identifier: pull
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int64
-      │     └─ Identifier: psll
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int64
+      │  └─ Identifier: psll
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @float
-      │     └─ Identifier: pf
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @float
+      │  └─ Identifier: pf
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @double
-      │     └─ Identifier: pd
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @double
+      │  └─ Identifier: pd
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Reference
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @decimal
-      │     └─ Identifier: pld
+      │  ├─ Reference
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @decimal
+      │  └─ Identifier: pld
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int8
-      │     └─ Identifier: ac
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int8
+      │  └─ Identifier: ac
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint8
-      │     └─ Identifier: uac
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint8
+      │  └─ Identifier: uac
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int16
-      │     └─ Identifier: as
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int16
+      │  └─ Identifier: as
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint16
-      │     └─ Identifier: uas
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint16
+      │  └─ Identifier: uas
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int32
-      │     └─ Identifier: ai
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int32
+      │  └─ Identifier: ai
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint32
-      │     └─ Identifier: uai
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint32
+      │  └─ Identifier: uai
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int64
-      │     └─ Identifier: al
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int64
+      │  └─ Identifier: al
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint64
-      │     └─ Identifier: ual
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint64
+      │  └─ Identifier: ual
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @int64
-      │     └─ Identifier: all
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @int64
+      │  └─ Identifier: all
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  └─ CompoundIdentifier
-      │     │     └─ Identifier: @uint64
-      │     └─ Identifier: uall
+      │  ├─ Array
+      │  │  └─ CompoundIdentifier
+      │  │     └─ Identifier: @uint64
+      │  └─ Identifier: uall
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  ├─ Sub-type:
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @int8
-      │     │  └─ Length:
-      │     │     └─ Number: 42
-      │     └─ Identifier: sac
+      │  ├─ Array
+      │  │  ├─ Sub-type:
+      │  │  │  └─ CompoundIdentifier
+      │  │  │     └─ Identifier: @int8
+      │  │  └─ Length:
+      │  │     └─ Number: 42
+      │  └─ Identifier: sac
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  ├─ Sub-type:
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @uint8
-      │     │  └─ Length:
-      │     │     └─ Number: 42
-      │     └─ Identifier: suac
+      │  ├─ Array
+      │  │  ├─ Sub-type:
+      │  │  │  └─ CompoundIdentifier
+      │  │  │     └─ Identifier: @uint8
+      │  │  └─ Length:
+      │  │     └─ Number: 42
+      │  └─ Identifier: suac
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  ├─ Sub-type:
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @int16
-      │     │  └─ Length:
-      │     │     └─ Number: 42
-      │     └─ Identifier: sas
+      │  ├─ Array
+      │  │  ├─ Sub-type:
+      │  │  │  └─ CompoundIdentifier
+      │  │  │     └─ Identifier: @int16
+      │  │  └─ Length:
+      │  │     └─ Number: 42
+      │  └─ Identifier: sas
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  ├─ Sub-type:
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @uint16
-      │     │  └─ Length:
-      │     │     └─ Number: 42
-      │     └─ Identifier: suas
+      │  ├─ Array
+      │  │  ├─ Sub-type:
+      │  │  │  └─ CompoundIdentifier
+      │  │  │     └─ Identifier: @uint16
+      │  │  └─ Length:
+      │  │     └─ Number: 42
+      │  └─ Identifier: suas
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  ├─ Sub-type:
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @int32
-      │     │  └─ Length:
-      │     │     └─ Number: 42
-      │     └─ Identifier: sai
+      │  ├─ Array
+      │  │  ├─ Sub-type:
+      │  │  │  └─ CompoundIdentifier
+      │  │  │     └─ Identifier: @int32
+      │  │  └─ Length:
+      │  │     └─ Number: 42
+      │  └─ Identifier: sai
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  ├─ Sub-type:
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @uint32
-      │     │  └─ Length:
-      │     │     └─ Number: 42
-      │     └─ Identifier: suai
+      │  ├─ Array
+      │  │  ├─ Sub-type:
+      │  │  │  └─ CompoundIdentifier
+      │  │  │     └─ Identifier: @uint32
+      │  │  └─ Length:
+      │  │     └─ Number: 42
+      │  └─ Identifier: suai
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ Array
-      │     │  ├─ Sub-type:
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @int64
-      │     │  └─ Length:
-      │     │     └─ Number: 42
-      │     └─ Identifier: sal
+      │  ├─ Array
+      │  │  ├─ Sub-type:
+      │  │  │  └─ CompoundIdentifier
+      │  │  │     └─ Identifier: @int64
+      │  │  └─ Length:
+      │  │     └─ Number: 42
+      │  └─ Identifier: sal
       └─ VariableDeclaration
-         └─ Declaration
-            ├─ Array
-            │  ├─ Sub-type:
-            │  │  └─ CompoundIdentifier
-            │  │     └─ Identifier: @uint64
-            │  └─ Length:
-            │     └─ Number: 42
-            └─ Identifier: sual
+         ├─ Array
+         │  ├─ Sub-type:
+         │  │  └─ CompoundIdentifier
+         │  │     └─ Identifier: @uint64
+         │  └─ Length:
+         │     └─ Number: 42
+         └─ Identifier: sual

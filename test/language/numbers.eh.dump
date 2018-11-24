@@ -7,103 +7,88 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @int8
-      │        └─ Identifier: i8
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int8
+      │     └─ Identifier: i8
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @int16
-      │        └─ Identifier: i16
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int16
+      │     └─ Identifier: i16
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @int32
-      │        └─ Identifier: i32
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int32
+      │     └─ Identifier: i32
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @int64
-      │        └─ Identifier: i64
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int64
+      │     └─ Identifier: i64
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @uint8
-      │        └─ Identifier: ui8
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @uint8
+      │     └─ Identifier: ui8
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @uint16
-      │        └─ Identifier: ui16
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @uint16
+      │     └─ Identifier: ui16
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @uint32
-      │        └─ Identifier: ui32
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @uint32
+      │     └─ Identifier: ui32
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @uint64
-      │        └─ Identifier: ui64
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @uint64
+      │     └─ Identifier: ui64
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: i
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int
-      │     │  └─ Identifier: j
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: j
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: -42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @float
-      │        └─ Identifier: f
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @float
+      │     └─ Identifier: f
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @double
-      │        └─ Identifier: d
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @double
+      │     └─ Identifier: d
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @decimal
-      │        └─ Identifier: ld
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @decimal
+      │     └─ Identifier: ld
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @float
-      │     │  └─ Identifier: k
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @float
+      │     ├─ Identifier: k
       │     └─ Assignment
       │        └─ Expression
       │           └─ DecimalNumber: 42.59
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @float
-      │     │  └─ Identifier: l
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @float
+      │     ├─ Identifier: l
       │     └─ Assignment
       │        └─ Expression
       │           └─ DecimalNumber: -42.59

@@ -6,10 +6,9 @@
 │  │     │  └─ Identifier: @void
 │  │     └─ Arguments:
 │  │        └─ VariableDeclaration
-│  │           └─ Declaration
-│  │              ├─ CompoundIdentifier
-│  │              │  └─ Identifier: @str
-│  │              └─ Identifier: s
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @str
+│  │           └─ Identifier: s
 │  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
@@ -19,24 +18,21 @@
    │     │  └─ Identifier: @int
    │     └─ Arguments:
    │        ├─ VariableDeclaration
-   │        │  └─ Declaration
-   │        │     ├─ CompoundIdentifier
-   │        │     │  └─ Identifier: @int
-   │        │     └─ Identifier: ac
+   │        │  ├─ CompoundIdentifier
+   │        │  │  └─ Identifier: @int
+   │        │  └─ Identifier: ac
    │        └─ VariableDeclaration
-   │           └─ Declaration
-   │              ├─ Array
-   │              │  └─ CompoundIdentifier
-   │              │     └─ Identifier: @str
-   │              └─ Identifier: av
+   │           ├─ Array
+   │           │  └─ CompoundIdentifier
+   │           │     └─ Identifier: @str
+   │           └─ Identifier: av
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
-      │     ├─ Declaration
-      │     │  ├─ Array
-      │     │  │  └─ CompoundIdentifier
-      │     │  │     └─ Identifier: @str
-      │     │  └─ Identifier: av2
+      │     ├─ Array
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @str
+      │     ├─ Identifier: av2
       │     └─ Assignment
       │        └─ Expression
       │           └─ CompoundIdentifier
@@ -92,28 +88,26 @@
       │                          └─ Identifier: av
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  └─ Array
-      │        │     └─ CompoundIdentifier
-      │        │        └─ Identifier: @int
-      │        └─ Identifier: sarr1
+      │     ├─ Array
+      │     │  └─ Array
+      │     │     └─ CompoundIdentifier
+      │     │        └─ Identifier: @int
+      │     └─ Identifier: sarr1
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  ├─ Sub-type:
-      │        │  │  └─ Array
-      │        │  │     ├─ Sub-type:
-      │        │  │     │  └─ CompoundIdentifier
-      │        │  │     │     └─ Identifier: @int
-      │        │  │     └─ Length:
-      │        │  │        └─ Expression
-      │        │  │           └─ Number: 5
-      │        │  └─ Length:
-      │        │     └─ Expression
-      │        │        └─ Number: 42
-      │        └─ Identifier: sarr2
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Array
+      │     │  │     ├─ Sub-type:
+      │     │  │     │  └─ CompoundIdentifier
+      │     │  │     │     └─ Identifier: @int
+      │     │  │     └─ Length:
+      │     │  │        └─ Expression
+      │     │  │           └─ Number: 5
+      │     │  └─ Length:
+      │     │     └─ Expression
+      │     │        └─ Number: 42
+      │     └─ Identifier: sarr2
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
@@ -129,160 +123,150 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  ├─ Sub-type:
-      │        │  │  └─ Array
-      │        │  │     └─ CompoundIdentifier
-      │        │  │        └─ Identifier: @int
-      │        │  └─ Length:
-      │        │     └─ Expression
-      │        │        └─ Number: 20
-      │        └─ Identifier: arr1
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Array
+      │     │  │     └─ CompoundIdentifier
+      │     │  │        └─ Identifier: @int
+      │     │  └─ Length:
+      │     │     └─ Expression
+      │     │        └─ Number: 20
+      │     └─ Identifier: arr1
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  └─ Array
-      │        │     ├─ Sub-type:
-      │        │     │  └─ CompoundIdentifier
-      │        │     │     └─ Identifier: @int
-      │        │     └─ Length:
-      │        │        └─ Expression
-      │        │           └─ Number: 20
-      │        └─ Identifier: arr2
+      │     ├─ Array
+      │     │  └─ Array
+      │     │     ├─ Sub-type:
+      │     │     │  └─ CompoundIdentifier
+      │     │     │     └─ Identifier: @int
+      │     │     └─ Length:
+      │     │        └─ Expression
+      │     │           └─ Number: 20
+      │     └─ Identifier: arr2
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  ├─ Sub-type:
-      │        │  │  └─ Array
-      │        │  │     └─ Array
-      │        │  │        ├─ Sub-type:
-      │        │  │        │  └─ CompoundIdentifier
-      │        │  │        │     └─ Identifier: @int
-      │        │  │        └─ Length:
-      │        │  │           └─ Expression
-      │        │  │              └─ Number: 20
-      │        │  └─ Length:
-      │        │     └─ Expression
-      │        │        └─ Number: 12
-      │        └─ Identifier: arr3
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Array
+      │     │  │     └─ Array
+      │     │  │        ├─ Sub-type:
+      │     │  │        │  └─ CompoundIdentifier
+      │     │  │        │     └─ Identifier: @int
+      │     │  │        └─ Length:
+      │     │  │           └─ Expression
+      │     │  │              └─ Number: 20
+      │     │  └─ Length:
+      │     │     └─ Expression
+      │     │        └─ Number: 12
+      │     └─ Identifier: arr3
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  └─ Array
-      │        │     ├─ Sub-type:
-      │        │     │  └─ Array
-      │        │     │     └─ CompoundIdentifier
-      │        │     │        └─ Identifier: @int
-      │        │     └─ Length:
-      │        │        └─ Expression
-      │        │           └─ Number: 12
-      │        └─ Identifier: arr4
+      │     ├─ Array
+      │     │  └─ Array
+      │     │     ├─ Sub-type:
+      │     │     │  └─ Array
+      │     │     │     └─ CompoundIdentifier
+      │     │     │        └─ Identifier: @int
+      │     │     └─ Length:
+      │     │        └─ Expression
+      │     │           └─ Number: 12
+      │     └─ Identifier: arr4
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  └─ Array
-      │        │     ├─ Sub-type:
-      │        │     │  └─ Array
-      │        │     │     └─ Array
-      │        │     │        ├─ Sub-type:
-      │        │     │        │  └─ CompoundIdentifier
-      │        │     │        │     └─ Identifier: @int
-      │        │     │        └─ Length:
-      │        │     │           └─ Expression
-      │        │     │              └─ Number: 20
-      │        │     └─ Length:
-      │        │        └─ Expression
-      │        │           └─ Number: 12
-      │        └─ Identifier: arr5
+      │     ├─ Array
+      │     │  └─ Array
+      │     │     ├─ Sub-type:
+      │     │     │  └─ Array
+      │     │     │     └─ Array
+      │     │     │        ├─ Sub-type:
+      │     │     │        │  └─ CompoundIdentifier
+      │     │     │        │     └─ Identifier: @int
+      │     │     │        └─ Length:
+      │     │     │           └─ Expression
+      │     │     │              └─ Number: 20
+      │     │     └─ Length:
+      │     │        └─ Expression
+      │     │           └─ Number: 12
+      │     └─ Identifier: arr5
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  ├─ Sub-type:
-      │        │  │  └─ Array
-      │        │  │     └─ Array
-      │        │  │        ├─ Sub-type:
-      │        │  │        │  └─ Array
-      │        │  │        │     └─ CompoundIdentifier
-      │        │  │        │        └─ Identifier: @int
-      │        │  │        └─ Length:
-      │        │  │           └─ Expression
-      │        │  │              └─ Number: 12
-      │        │  └─ Length:
-      │        │     └─ Expression
-      │        │        └─ Number: 20
-      │        └─ Identifier: arr6
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Array
+      │     │  │     └─ Array
+      │     │  │        ├─ Sub-type:
+      │     │  │        │  └─ Array
+      │     │  │        │     └─ CompoundIdentifier
+      │     │  │        │        └─ Identifier: @int
+      │     │  │        └─ Length:
+      │     │  │           └─ Expression
+      │     │  │              └─ Number: 12
+      │     │  └─ Length:
+      │     │     └─ Expression
+      │     │        └─ Number: 20
+      │     └─ Identifier: arr6
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  ├─ Sub-type:
-      │        │  │  └─ Array
-      │        │  │     ├─ Sub-type:
-      │        │  │     │  └─ Array
-      │        │  │     │     └─ Array
-      │        │  │     │        └─ CompoundIdentifier
-      │        │  │     │           └─ Identifier: @int
-      │        │  │     └─ Length:
-      │        │  │        └─ Expression
-      │        │  │           └─ Number: 12
-      │        │  └─ Length:
-      │        │     └─ Expression
-      │        │        └─ Number: 20
-      │        └─ Identifier: arr7
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Array
+      │     │  │     ├─ Sub-type:
+      │     │  │     │  └─ Array
+      │     │  │     │     └─ Array
+      │     │  │     │        └─ CompoundIdentifier
+      │     │  │     │           └─ Identifier: @int
+      │     │  │     └─ Length:
+      │     │  │        └─ Expression
+      │     │  │           └─ Number: 12
+      │     │  └─ Length:
+      │     │     └─ Expression
+      │     │        └─ Number: 20
+      │     └─ Identifier: arr7
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  └─ Array
-      │        │     └─ Array
-      │        │        ├─ Sub-type:
-      │        │        │  └─ Array
-      │        │        │     ├─ Sub-type:
-      │        │        │     │  └─ CompoundIdentifier
-      │        │        │     │     └─ Identifier: @int
-      │        │        │     └─ Length:
-      │        │        │        └─ Expression
-      │        │        │           └─ Number: 20
-      │        │        └─ Length:
-      │        │           └─ Expression
-      │        │              └─ Number: 12
-      │        └─ Identifier: arr8
+      │     ├─ Array
+      │     │  └─ Array
+      │     │     └─ Array
+      │     │        ├─ Sub-type:
+      │     │        │  └─ Array
+      │     │        │     ├─ Sub-type:
+      │     │        │     │  └─ CompoundIdentifier
+      │     │        │     │     └─ Identifier: @int
+      │     │        │     └─ Length:
+      │     │        │        └─ Expression
+      │     │        │           └─ Number: 20
+      │     │        └─ Length:
+      │     │           └─ Expression
+      │     │              └─ Number: 12
+      │     └─ Identifier: arr8
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  └─ Array
-      │        │     ├─ Sub-type:
-      │        │     │  └─ Array
-      │        │     │     ├─ Sub-type:
-      │        │     │     │  └─ Array
-      │        │     │     │     └─ CompoundIdentifier
-      │        │     │     │        └─ Identifier: @int
-      │        │     │     └─ Length:
-      │        │     │        └─ Expression
-      │        │     │           └─ Number: 12
-      │        │     └─ Length:
-      │        │        └─ Expression
-      │        │           └─ Number: 20
-      │        └─ Identifier: arr9
+      │     ├─ Array
+      │     │  └─ Array
+      │     │     ├─ Sub-type:
+      │     │     │  └─ Array
+      │     │     │     ├─ Sub-type:
+      │     │     │     │  └─ Array
+      │     │     │     │     └─ CompoundIdentifier
+      │     │     │     │        └─ Identifier: @int
+      │     │     │     └─ Length:
+      │     │     │        └─ Expression
+      │     │     │           └─ Number: 12
+      │     │     └─ Length:
+      │     │        └─ Expression
+      │     │           └─ Number: 20
+      │     └─ Identifier: arr9
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  ├─ Sub-type:
-      │        │  │  └─ Reference
-      │        │  │     └─ CompoundIdentifier
-      │        │  │        └─ Identifier: @int
-      │        │  └─ Length:
-      │        │     └─ Expression
-      │        │        └─ Number: 20
-      │        └─ Identifier: rarr1
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Reference
+      │     │  │     └─ CompoundIdentifier
+      │     │  │        └─ Identifier: @int
+      │     │  └─ Length:
+      │     │     └─ Expression
+      │     │        └─ Number: 20
+      │     └─ Identifier: rarr1
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
@@ -295,16 +279,15 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Reference
-      │        │  └─ Array
-      │        │     ├─ Sub-type:
-      │        │     │  └─ CompoundIdentifier
-      │        │     │     └─ Identifier: @int
-      │        │     └─ Length:
-      │        │        └─ Expression
-      │        │           └─ Number: 20
-      │        └─ Identifier: rarr2
+      │     ├─ Reference
+      │     │  └─ Array
+      │     │     ├─ Sub-type:
+      │     │     │  └─ CompoundIdentifier
+      │     │     │     └─ Identifier: @int
+      │     │     └─ Length:
+      │     │        └─ Expression
+      │     │           └─ Number: 20
+      │     └─ Identifier: rarr2
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
@@ -317,21 +300,20 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  ├─ Sub-type:
-      │        │  │  └─ Reference
-      │        │  │     └─ Array
-      │        │  │        ├─ Sub-type:
-      │        │  │        │  └─ CompoundIdentifier
-      │        │  │        │     └─ Identifier: @int
-      │        │  │        └─ Length:
-      │        │  │           └─ Expression
-      │        │  │              └─ Number: 20
-      │        │  └─ Length:
-      │        │     └─ Expression
-      │        │        └─ Number: 12
-      │        └─ Identifier: rarr3
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Reference
+      │     │  │     └─ Array
+      │     │  │        ├─ Sub-type:
+      │     │  │        │  └─ CompoundIdentifier
+      │     │  │        │     └─ Identifier: @int
+      │     │  │        └─ Length:
+      │     │  │           └─ Expression
+      │     │  │              └─ Number: 20
+      │     │  └─ Length:
+      │     │     └─ Expression
+      │     │        └─ Number: 12
+      │     └─ Identifier: rarr3
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
@@ -347,17 +329,16 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Reference
-      │        │  └─ Array
-      │        │     ├─ Sub-type:
-      │        │     │  └─ Reference
-      │        │     │     └─ CompoundIdentifier
-      │        │     │        └─ Identifier: @int
-      │        │     └─ Length:
-      │        │        └─ Expression
-      │        │           └─ Number: 12
-      │        └─ Identifier: rarr4
+      │     ├─ Reference
+      │     │  └─ Array
+      │     │     ├─ Sub-type:
+      │     │     │  └─ Reference
+      │     │     │     └─ CompoundIdentifier
+      │     │     │        └─ Identifier: @int
+      │     │     └─ Length:
+      │     │        └─ Expression
+      │     │           └─ Number: 12
+      │     └─ Identifier: rarr4
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
@@ -370,22 +351,21 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Reference
-      │        │  └─ Array
-      │        │     ├─ Sub-type:
-      │        │     │  └─ Reference
-      │        │     │     └─ Array
-      │        │     │        ├─ Sub-type:
-      │        │     │        │  └─ CompoundIdentifier
-      │        │     │        │     └─ Identifier: @int
-      │        │     │        └─ Length:
-      │        │     │           └─ Expression
-      │        │     │              └─ Number: 20
-      │        │     └─ Length:
-      │        │        └─ Expression
-      │        │           └─ Number: 12
-      │        └─ Identifier: rarr5
+      │     ├─ Reference
+      │     │  └─ Array
+      │     │     ├─ Sub-type:
+      │     │     │  └─ Reference
+      │     │     │     └─ Array
+      │     │     │        ├─ Sub-type:
+      │     │     │        │  └─ CompoundIdentifier
+      │     │     │        │     └─ Identifier: @int
+      │     │     │        └─ Length:
+      │     │     │           └─ Expression
+      │     │     │              └─ Number: 20
+      │     │     └─ Length:
+      │     │        └─ Expression
+      │     │           └─ Number: 12
+      │     └─ Identifier: rarr5
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
@@ -401,22 +381,21 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  ├─ Sub-type:
-      │        │  │  └─ Reference
-      │        │  │     └─ Array
-      │        │  │        ├─ Sub-type:
-      │        │  │        │  └─ Reference
-      │        │  │        │     └─ CompoundIdentifier
-      │        │  │        │        └─ Identifier: @int
-      │        │  │        └─ Length:
-      │        │  │           └─ Expression
-      │        │  │              └─ Number: 12
-      │        │  └─ Length:
-      │        │     └─ Expression
-      │        │        └─ Number: 20
-      │        └─ Identifier: rarr6
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Reference
+      │     │  │     └─ Array
+      │     │  │        ├─ Sub-type:
+      │     │  │        │  └─ Reference
+      │     │  │        │     └─ CompoundIdentifier
+      │     │  │        │        └─ Identifier: @int
+      │     │  │        └─ Length:
+      │     │  │           └─ Expression
+      │     │  │              └─ Number: 12
+      │     │  └─ Length:
+      │     │     └─ Expression
+      │     │        └─ Number: 20
+      │     └─ Identifier: rarr6
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
@@ -432,22 +411,21 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Array
-      │        │  ├─ Sub-type:
-      │        │  │  └─ Array
-      │        │  │     ├─ Sub-type:
-      │        │  │     │  └─ Reference
-      │        │  │     │     └─ Reference
-      │        │  │     │        └─ CompoundIdentifier
-      │        │  │     │           └─ Identifier: @int
-      │        │  │     └─ Length:
-      │        │  │        └─ Expression
-      │        │  │           └─ Number: 12
-      │        │  └─ Length:
-      │        │     └─ Expression
-      │        │        └─ Number: 20
-      │        └─ Identifier: rarr7
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Array
+      │     │  │     ├─ Sub-type:
+      │     │  │     │  └─ Reference
+      │     │  │     │     └─ Reference
+      │     │  │     │        └─ CompoundIdentifier
+      │     │  │     │           └─ Identifier: @int
+      │     │  │     └─ Length:
+      │     │  │        └─ Expression
+      │     │  │           └─ Number: 12
+      │     │  └─ Length:
+      │     │     └─ Expression
+      │     │        └─ Number: 20
+      │     └─ Identifier: rarr7
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
@@ -463,22 +441,21 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Reference
-      │        │  └─ Reference
-      │        │     └─ Array
-      │        │        ├─ Sub-type:
-      │        │        │  └─ Array
-      │        │        │     ├─ Sub-type:
-      │        │        │     │  └─ CompoundIdentifier
-      │        │        │     │     └─ Identifier: @int
-      │        │        │     └─ Length:
-      │        │        │        └─ Expression
-      │        │        │           └─ Number: 20
-      │        │        └─ Length:
-      │        │           └─ Expression
-      │        │              └─ Number: 12
-      │        └─ Identifier: rarr8
+      │     ├─ Reference
+      │     │  └─ Reference
+      │     │     └─ Array
+      │     │        ├─ Sub-type:
+      │     │        │  └─ Array
+      │     │        │     ├─ Sub-type:
+      │     │        │     │  └─ CompoundIdentifier
+      │     │        │     │     └─ Identifier: @int
+      │     │        │     └─ Length:
+      │     │        │        └─ Expression
+      │     │        │           └─ Number: 20
+      │     │        └─ Length:
+      │     │           └─ Expression
+      │     │              └─ Number: 12
+      │     └─ Identifier: rarr8
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess
@@ -494,22 +471,21 @@
       │           └─ Number: 42
       ├─ Statement
       │  └─ VariableDeclaration
-      │     └─ Declaration
-      │        ├─ Reference
-      │        │  └─ Array
-      │        │     ├─ Sub-type:
-      │        │     │  └─ Array
-      │        │     │     ├─ Sub-type:
-      │        │     │     │  └─ Reference
-      │        │     │     │     └─ CompoundIdentifier
-      │        │     │     │        └─ Identifier: @int
-      │        │     │     └─ Length:
-      │        │     │        └─ Expression
-      │        │     │           └─ Number: 12
-      │        │     └─ Length:
-      │        │        └─ Expression
-      │        │           └─ Number: 20
-      │        └─ Identifier: rarr9
+      │     ├─ Reference
+      │     │  └─ Array
+      │     │     ├─ Sub-type:
+      │     │     │  └─ Array
+      │     │     │     ├─ Sub-type:
+      │     │     │     │  └─ Reference
+      │     │     │     │     └─ CompoundIdentifier
+      │     │     │     │        └─ Identifier: @int
+      │     │     │     └─ Length:
+      │     │     │        └─ Expression
+      │     │     │           └─ Number: 12
+      │     │     └─ Length:
+      │     │        └─ Expression
+      │     │           └─ Number: 20
+      │     └─ Identifier: rarr9
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ ArrayAccess

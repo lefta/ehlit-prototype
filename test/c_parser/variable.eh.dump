@@ -2,23 +2,20 @@
    ├─ Path: c_parser/variable.h
    └─ Symbols found
       ├─ VariableDeclaration
-      │  └─ Declaration
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int32
-      │     └─ Identifier: var
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int32
+      │  └─ Identifier: var
       ├─ VariableDeclaration
-      │  ├─ Declaration
-      │  │  ├─ CompoundIdentifier
-      │  │  │  └─ Identifier: @int32
-      │  │  └─ Identifier: assigned_var
+      │  ├─ CompoundIdentifier
+      │  │  └─ Identifier: @int32
+      │  ├─ Identifier: assigned_var
       │  └─ Assignment
       │     └─ Expression
       │        └─ Number: 2
       └─ VariableDeclaration
-         ├─ Declaration
-         │  ├─ CompoundIdentifier
-         │  │  └─ Identifier: @float
-         │  └─ Identifier: float_var
+         ├─ CompoundIdentifier
+         │  └─ Identifier: @float
+         ├─ Identifier: float_var
          └─ Assignment
             └─ Expression
                └─ DecimalNumber: 2.4

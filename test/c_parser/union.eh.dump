@@ -5,32 +5,28 @@
       │  ├─ Identifier: test_union
       │  └─ Fields
       │     ├─ VariableDeclaration
-      │     │  └─ Declaration
-      │     │     ├─ CompoundIdentifier
-      │     │     │  └─ Identifier: @int32
-      │     │     └─ Identifier: field1
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: @int32
+      │     │  └─ Identifier: field1
       │     └─ VariableDeclaration
-      │        └─ Declaration
-      │           ├─ CompoundIdentifier
-      │           │  └─ Identifier: @str
-      │           └─ Identifier: field2
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @str
+      │        └─ Identifier: field2
       ├─ Union
       │  ├─ Identifier: 
       │  └─ Fields
       │     └─ VariableDeclaration
-      │        └─ Declaration
-      │           ├─ CompoundIdentifier
-      │           │  └─ Identifier: @int32
-      │           └─ Identifier: field1
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @int32
+      │        └─ Identifier: field1
       └─ Alias
          ├─ From:
          │  └─ Union
          │     ├─ Identifier: 
          │     └─ Fields
          │        └─ VariableDeclaration
-         │           └─ Declaration
-         │              ├─ CompoundIdentifier
-         │              │  └─ Identifier: @int32
-         │              └─ Identifier: field1
+         │           ├─ CompoundIdentifier
+         │           │  └─ Identifier: @int32
+         │           └─ Identifier: field1
          └─ To:
             └─ Identifier: test_union_t

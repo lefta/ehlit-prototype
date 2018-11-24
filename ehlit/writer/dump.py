@@ -110,13 +110,11 @@ class DumpWriter:
         self.print_str('Path: {}'.format(node.lib))
         self.print_node_list('Symbols found', node.syms, False)
 
-    @indent
-    def dumpDeclaration(self, decl: Union[Node, str]) -> None:
+    def dump_declaration(self, decl: Union[Node, str], is_next: bool = True) -> None:
         decl = cast(Declaration, decl)
-        self.dump('Declaration')
-        self.print_node(decl.typ_src, decl.sym is not None)
+        self.print_node(decl.typ_src, decl.sym is not None or is_next)
         if decl.sym is not None:
-            self.print_node(decl.sym, False)
+            self.print_node(decl.sym, is_next)
 
     @indent
     def dumpVariableDeclaration(self, decl: Union[Node, str]) -> None:
@@ -127,10 +125,10 @@ class DumpWriter:
         if decl.static:
             self.print_str('Modifiers: static')
         if decl.assign is not None:
-            self.dumpDeclaration(decl)
+            self.dump_declaration(decl)
             self.print_node(decl.assign, False)
         else:
-            self.dumpDeclaration(decl, False)
+            self.dump_declaration(decl, False)
 
     @indent
     def dumpFunctionDeclaration(self, fun: Union[Node, str]) -> None:

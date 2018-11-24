@@ -5,46 +5,40 @@
       │  ├─ Identifier: test_struct
       │  └─ Fields
       │     ├─ VariableDeclaration
-      │     │  └─ Declaration
-      │     │     ├─ CompoundIdentifier
-      │     │     │  └─ Identifier: @int32
-      │     │     └─ Identifier: field1
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: @int32
+      │     │  └─ Identifier: field1
       │     └─ VariableDeclaration
-      │        └─ Declaration
-      │           ├─ CompoundIdentifier
-      │           │  └─ Identifier: @str
-      │           └─ Identifier: field2
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @str
+      │        └─ Identifier: field2
       ├─ Struct
       │  ├─ Identifier: 
       │  └─ Fields
       │     └─ VariableDeclaration
-      │        └─ Declaration
-      │           ├─ CompoundIdentifier
-      │           │  └─ Identifier: @int32
-      │           └─ Identifier: field1
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @int32
+      │        └─ Identifier: field1
       ├─ Alias
       │  ├─ From:
       │  │  └─ Struct
       │  │     ├─ Identifier: 
       │  │     └─ Fields
       │  │        └─ VariableDeclaration
-      │  │           └─ Declaration
-      │  │              ├─ CompoundIdentifier
-      │  │              │  └─ Identifier: @int32
-      │  │              └─ Identifier: field1
+      │  │           ├─ CompoundIdentifier
+      │  │           │  └─ Identifier: @int32
+      │  │           └─ Identifier: field1
       │  └─ To:
       │     └─ Identifier: test_struct_t
       └─ Struct
          ├─ Identifier: linked_list
          └─ Fields
             ├─ VariableDeclaration
-            │  └─ Declaration
-            │     ├─ CompoundIdentifier
-            │     │  └─ Identifier: @any
-            │     └─ Identifier: contents
+            │  ├─ CompoundIdentifier
+            │  │  └─ Identifier: @any
+            │  └─ Identifier: contents
             └─ VariableDeclaration
-               └─ Declaration
-                  ├─ Reference
-                  │  └─ CompoundIdentifier
-                  │     └─ Identifier: linked_list
-                  └─ Identifier: next
+               ├─ Reference
+               │  └─ CompoundIdentifier
+               │     └─ Identifier: linked_list
+               └─ Identifier: next
