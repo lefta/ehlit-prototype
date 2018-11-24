@@ -61,7 +61,8 @@ def comment() -> GrammarType:
 
 def builtin_keyword() -> GrammarType:
     return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', 'func', 'alias', 'switch',
-            'case', 'fallthrough', 'default', 'struct', 'union', bool_value]
+            'case', 'fallthrough', 'default', 'struct', 'union', 'const', 'restrict', 'volatile',
+            'inline', 'priv', bool_value]
 
 
 def builtin_type() -> GrammarType:
