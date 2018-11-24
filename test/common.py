@@ -230,3 +230,8 @@ class EhlitTestCase(TestCase):
         decl, err = node.find_declaration(sym)
         self.assertEqual(None, err)
         self.assertNotEqual(None, decl)
+
+    def assert_not_declares(self, node, sym, expected_err=None):
+        decl, err = node.find_declaration(sym)
+        self.assertEqual(expected_err, err)
+        self.assertEqual(None, decl)

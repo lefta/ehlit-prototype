@@ -52,3 +52,7 @@ class TestImports(EhlitTestCase):
         self.assertEqual(None, failure)
         self.assert_declares(ast.nodes[0], 'global')
         self.assert_declares(ast.nodes[0], 'fun_proto_args')
+        self.assert_not_declares(ast.nodes[0], 'this_var_exported',
+                                 'accessing to private symbol `this_var_exported`')
+        self.assert_not_declares(ast.nodes[0], 'mul', 'accessing to private symbol `mul`')
+        self.assert_not_declares(ast.nodes[0], 'div', 'accessing to private symbol `div`')

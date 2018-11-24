@@ -301,6 +301,12 @@ class Import(GenericExternInclusion):
         self.error(self.pos, '%s: no such file or directory' % self.lib)
         return []
 
+    def find_declaration(self, sym: str) -> DeclarationLookup:
+        decl, err = super().find_declaration(sym)
+        if isinstance(decl, Declaration) and decl._qualifiers.is_private:
+            return None, 'accessing to private symbol `{}`'.format(sym)
+        return decl, err
+
 
 class Include(GenericExternInclusion):
     '''! Specialization of GenericExternInclusion for C includes. '''
@@ -850,11 +856,13 @@ class Assignment(Node):
 
 
 class Declaration(DeclarationBase):
-    def __init__(self, pos: int, typ: Symbol, sym: Optional['Identifier']) -> None:
+    def __init__(self, pos: int, typ: Symbol, sym: Optional['Identifier'], qualifiers: TypeQualifier
+                 ) -> None:
         super().__init__(pos)
         self._typ: Optional[Type] = None
         self.typ_src: Symbol = typ
         self.sym: Optional['Identifier'] = sym
+        self._qualifiers: TypeQualifier = qualifiers
 
     def build(self, parent: Node) -> 'Declaration':
         super().build(parent)
@@ -890,9 +898,8 @@ class Declaration(DeclarationBase):
 class VariableDeclaration(Declaration):
     def __init__(self, typ: Symbol, sym: Optional['Identifier'], assign: Optional[Assignment] = None
                  ) -> None:
-        super().__init__(0, typ, sym)
+        super().__init__(0, typ, sym, TypeQualifier.NONE)
         self.assign: Optional[Assignment] = assign
-        self._qualifiers: TypeQualifier = TypeQualifier.NONE
 
     def build(self, parent: Node) -> 'VariableDeclaration':
         super().build(parent)
@@ -913,8 +920,7 @@ class VariableDeclaration(Declaration):
 class FunctionDeclaration(Declaration):
     def __init__(self, pos: int, qualifiers: TypeQualifier, typ: 'TemplatedIdentifier',
                  sym: 'Identifier') -> None:
-        super().__init__(0, typ, sym)
-        self._qualifiers: TypeQualifier = qualifiers
+        super().__init__(0, typ, sym, qualifiers)
 
     @property
     def qualifiers(self) -> TypeQualifier:
