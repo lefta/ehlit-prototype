@@ -3,6 +3,8 @@ priv int universal_answer = 42
 
 int main()
 {
+	static int globint = 42
+
 	int i = 42
 	int j
 
@@ -14,6 +16,7 @@ int main()
 
 	global = false
 	universal_answer = 12
+	globint = 12
 
 	return 0
 }

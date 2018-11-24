@@ -124,6 +124,8 @@ class DumpWriter:
         self.dump('VariableDeclaration')
         if decl.private:
             self.print_str('Modifiers: private')
+        if decl.static:
+            self.print_str('Modifiers: static')
         if decl.assign is not None:
             self.dumpDeclaration(decl)
             self.print_node(decl.assign, False)

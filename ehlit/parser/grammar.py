@@ -243,6 +243,10 @@ def variable_declaration_assignable() -> GrammarType:
     return variable_declaration, Optional(assignment)
 
 
+def local_variable_declaration() -> GrammarType:
+    return Optional('static'), variable_declaration_assignable
+
+
 def variable_assignment() -> GrammarType:
     return [referenced_value, compound_identifier], Optional(array_access), operation_assignment
 
@@ -254,7 +258,7 @@ def return_instruction() -> GrammarType:
 
 
 def statement() -> GrammarType:
-    return [return_instruction, variable_assignment, variable_declaration_assignable, expression]
+    return [return_instruction, variable_assignment, local_variable_declaration, expression]
 
 
 def global_variable() -> GrammarType:

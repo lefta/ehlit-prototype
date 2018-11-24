@@ -5,6 +5,7 @@ static int32_t universal_answer = 42;
 
 int32_t main(void)
 {
+    static int32_t globint = 42;
     int32_t i = 42;
     int32_t j;
     j = 21;
@@ -15,5 +16,6 @@ int32_t main(void)
     }
     global = 0;
     universal_answer = 12;
+    globint = 12;
     return (0);
 }

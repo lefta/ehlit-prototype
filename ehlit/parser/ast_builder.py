@@ -319,6 +319,15 @@ class ASTBuilder(PTNodeVisitor):
             children[0].assign = children[1]
         return children[0]
 
+    def visit_local_variable_declaration(self, node: ParseTreeNode,
+                                         children: Union[Tuple[ast.VariableDeclaration],
+                                                         Tuple[StrMatch, ast.VariableDeclaration]]
+                                         ) -> ast.VariableDeclaration:
+        if len(children) == 2:
+            children[1].static = True
+            return children[1]
+        return children[0]
+
     def visit_variable_assignment(self, node: ParseTreeNode,
                                   children: Union[Tuple[ast.Symbol, ArrayBuilder, ast.Assignment],
                                                   Tuple[ast.Symbol, ast.Assignment]]

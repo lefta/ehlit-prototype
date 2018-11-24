@@ -210,7 +210,7 @@ class SourceWriter:
         self.write_declaration_post(decl.typ_src)
 
     def writeVariableDeclaration(self, decl: VariableDeclaration) -> None:
-        if decl.private:
+        if decl.private or decl.static:
             self.file.write('static ')
         self.writeDeclaration(decl)
         if decl.assign is not None:

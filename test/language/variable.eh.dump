@@ -26,6 +26,16 @@
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
+      │     ├─ Modifiers: static
+      │     ├─ Declaration
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: @int
+      │     │  └─ Identifier: globint
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 42
+      ├─ Statement
+      │  └─ VariableDeclaration
       │     ├─ Declaration
       │     │  ├─ CompoundIdentifier
       │     │  │  └─ Identifier: @int
@@ -83,6 +93,13 @@
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier
       │     │  └─ Identifier: universal_answer
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 12
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: globint
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 12

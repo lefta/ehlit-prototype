@@ -40,7 +40,8 @@ class TypeQualifier(IntFlag):
     RESTRICT = 2
     VOLATILE = 4
     INLINE = 8
-    PRIVATE = 16
+    STATIC = 16
+    PRIVATE = 32
 
     @property
     def is_const(self) -> bool:
@@ -57,6 +58,10 @@ class TypeQualifier(IntFlag):
     @property
     def is_inline(self) -> bool:
         return bool(self & TypeQualifier.INLINE)
+
+    @property
+    def is_static(self) -> bool:
+        return bool(self & TypeQualifier.STATIC)
 
     @property
     def is_private(self) -> bool:
@@ -914,7 +919,21 @@ class VariableDeclaration(Declaration):
 
     @private.setter
     def private(self, value: bool) -> None:
-        self._qualifiers = TypeQualifier.PRIVATE if value is True else TypeQualifier.NONE
+        if value:
+            self._qualifiers |= TypeQualifier.PRIVATE
+        else:
+            self._qualifiers &= ~TypeQualifier.PRIVATE
+
+    @property
+    def static(self) -> bool:
+        return self._qualifiers.is_static
+
+    @static.setter
+    def static(self, value: bool) -> None:
+        if value:
+            self._qualifiers |= TypeQualifier.STATIC
+        else:
+            self._qualifiers &= ~TypeQualifier.STATIC
 
 
 class FunctionDeclaration(Declaration):
