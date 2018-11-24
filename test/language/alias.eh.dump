@@ -18,9 +18,10 @@
 │  │           ├─ CompoundIdentifier
 │  │           │  └─ Identifier: @void
 │  │           └─ Arguments:
-│  │              └─ Declaration
-│  │                 └─ CompoundIdentifier
-│  │                    └─ Identifier: nb
+│  │              └─ VariableDeclaration
+│  │                 └─ Declaration
+│  │                    └─ CompoundIdentifier
+│  │                       └─ Identifier: nb
 │  └─ To:
 │     └─ Identifier: pfn
 ├─ FunctionDefinition

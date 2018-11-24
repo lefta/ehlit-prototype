@@ -215,7 +215,13 @@ def reference() -> GrammarType:
 
 
 def function_type_args() -> GrammarType:
-    return Optional(full_type), ZeroOrMore(',', full_type), trailing_comma
+    return Optional([
+        # The `Not` rule is necessary to prevent the full_type rule to match, that prevents Arpeggio
+        # to try the variadic dots rule
+        Sequence(OneOrMore(full_type, Not('...'), sep=','),
+                 Optional(',', Optional(full_type), function_variadic_dots)),
+        Sequence(Optional(full_type), function_variadic_dots)
+    ]), trailing_comma
 
 
 def function_type() -> GrammarType:

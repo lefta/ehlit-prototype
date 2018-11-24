@@ -158,6 +158,14 @@ class SourceWriter:
                     self.file.write(', ')
                 self.write(node.typ.args[i])
                 i += 1
+            if node.typ.is_variadic:
+                if len(node.typ.args) > 0:
+                    self.file.write(', ')
+                if node.typ.variadic_type is None:
+                    self.file.write('...')
+                else:
+                    self.file.write('int32_t, ')
+                    self.write(Array(node.typ.variadic_type, None))
             self.file.write(')')
         elif isinstance(node, Container):
             if self.array_needs_parens(node):

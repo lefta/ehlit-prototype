@@ -212,10 +212,11 @@
       │     │  │        │  └─ CompoundIdentifier
       │     │  │        │     └─ Identifier: test_struct
       │     │  │        └─ Arguments:
-      │     │  │           └─ Declaration
-      │     │  │              └─ Reference
-      │     │  │                 └─ CompoundIdentifier
-      │     │  │                    └─ Identifier: test_struct
+      │     │  │           └─ VariableDeclaration
+      │     │  │              └─ Declaration
+      │     │  │                 └─ Reference
+      │     │  │                    └─ CompoundIdentifier
+      │     │  │                       └─ Identifier: test_struct
       │     │  └─ Identifier: psf
       │     └─ Assignment
       │        └─ Expression

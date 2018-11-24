@@ -67,6 +67,51 @@
 │  │              │     └─ Identifier: @char
 │  │              └─ Identifier: c
 │  └─ FunctionBody
+├─ FunctionDeclaration
+│  ├─ Identifier: vfun1
+│  └─ FunctionType
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @void
+│     ├─ Arguments:
+│     │  └─ VariableDeclaration
+│     │     └─ Declaration
+│     │        ├─ CompoundIdentifier
+│     │        │  └─ Identifier: @int
+│     │        └─ Identifier: i
+│     └─ Variadic:
+│        └─ CompoundIdentifier
+│           └─ Identifier: @int
+├─ FunctionDeclaration
+│  ├─ Identifier: vfun2
+│  └─ FunctionType
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @void
+│     └─ Variadic:
+│        └─ Array
+│           └─ CompoundIdentifier
+│              └─ Identifier: @int
+├─ FunctionDeclaration
+│  ├─ Identifier: vfun3
+│  └─ FunctionType
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @void
+│     ├─ Arguments:
+│     │  └─ VariableDeclaration
+│     │     └─ Declaration
+│     │        ├─ CompoundIdentifier
+│     │        │  └─ Identifier: @int
+│     │        └─ Identifier: i
+│     └─ Variadic:
+│        └─ CompoundIdentifier
+│           └─ Identifier: @any
+├─ FunctionDeclaration
+│  ├─ Identifier: vfun4
+│  └─ FunctionType
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @void
+│     └─ Variadic:
+│        └─ CompoundIdentifier
+│           └─ Identifier: @any
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
@@ -96,9 +141,10 @@
       │     │  │        ├─ CompoundIdentifier
       │     │  │        │  └─ Identifier: @int
       │     │  │        └─ Arguments:
-      │     │  │           └─ Declaration
-      │     │  │              └─ CompoundIdentifier
-      │     │  │                 └─ Identifier: @int
+      │     │  │           └─ VariableDeclaration
+      │     │  │              └─ Declaration
+      │     │  │                 └─ CompoundIdentifier
+      │     │  │                    └─ Identifier: @int
       │     │  └─ Identifier: pfn2
       │     └─ Assignment
       │        └─ Expression
@@ -113,12 +159,14 @@
       │     │  │        ├─ CompoundIdentifier
       │     │  │        │  └─ Identifier: @int
       │     │  │        └─ Arguments:
-      │     │  │           ├─ Declaration
-      │     │  │           │  └─ CompoundIdentifier
-      │     │  │           │     └─ Identifier: @int
-      │     │  │           └─ Declaration
-      │     │  │              └─ CompoundIdentifier
-      │     │  │                 └─ Identifier: @int
+      │     │  │           ├─ VariableDeclaration
+      │     │  │           │  └─ Declaration
+      │     │  │           │     └─ CompoundIdentifier
+      │     │  │           │        └─ Identifier: @int
+      │     │  │           └─ VariableDeclaration
+      │     │  │              └─ Declaration
+      │     │  │                 └─ CompoundIdentifier
+      │     │  │                    └─ Identifier: @int
       │     │  └─ Identifier: pfn3
       │     └─ Assignment
       │        └─ Expression
@@ -135,11 +183,12 @@
       │     │  │        │     └─ CompoundIdentifier
       │     │  │        │        └─ Identifier: @int
       │     │  │        └─ Arguments:
-      │     │  │           └─ Declaration
-      │     │  │              └─ Reference
-      │     │  │                 └─ Array
-      │     │  │                    └─ CompoundIdentifier
-      │     │  │                       └─ Identifier: @int
+      │     │  │           └─ VariableDeclaration
+      │     │  │              └─ Declaration
+      │     │  │                 └─ Reference
+      │     │  │                    └─ Array
+      │     │  │                       └─ CompoundIdentifier
+      │     │  │                          └─ Identifier: @int
       │     │  └─ Identifier: pfn4
       │     └─ Assignment
       │        └─ Expression
@@ -154,15 +203,91 @@
       │     │  │        ├─ CompoundIdentifier
       │     │  │        │  └─ Identifier: @void
       │     │  │        └─ Arguments:
-      │     │  │           └─ Declaration
-      │     │  │              └─ Reference
-      │     │  │                 └─ CompoundIdentifier
-      │     │  │                    └─ Identifier: @char
+      │     │  │           └─ VariableDeclaration
+      │     │  │              └─ Declaration
+      │     │  │                 └─ Reference
+      │     │  │                    └─ CompoundIdentifier
+      │     │  │                       └─ Identifier: @char
       │     │  └─ Identifier: pfn5
       │     └─ Assignment
       │        └─ Expression
       │           └─ CompoundIdentifier
       │              └─ Identifier: fun5
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ TemplatedIdentifier: @func
+      │     │  │  └─ Types
+      │     │  │     └─ FunctionType
+      │     │  │        ├─ CompoundIdentifier
+      │     │  │        │  └─ Identifier: @void
+      │     │  │        ├─ Arguments:
+      │     │  │        │  └─ VariableDeclaration
+      │     │  │        │     └─ Declaration
+      │     │  │        │        └─ CompoundIdentifier
+      │     │  │        │           └─ Identifier: @int
+      │     │  │        └─ Variadic:
+      │     │  │           └─ CompoundIdentifier
+      │     │  │              └─ Identifier: @int
+      │     │  └─ Identifier: vpfn1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: vfun1
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ TemplatedIdentifier: @func
+      │     │  │  └─ Types
+      │     │  │     └─ FunctionType
+      │     │  │        ├─ CompoundIdentifier
+      │     │  │        │  └─ Identifier: @void
+      │     │  │        └─ Variadic:
+      │     │  │           └─ Array
+      │     │  │              └─ CompoundIdentifier
+      │     │  │                 └─ Identifier: @int
+      │     │  └─ Identifier: vpfn2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: vfun2
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ TemplatedIdentifier: @func
+      │     │  │  └─ Types
+      │     │  │     └─ FunctionType
+      │     │  │        ├─ CompoundIdentifier
+      │     │  │        │  └─ Identifier: @void
+      │     │  │        ├─ Arguments:
+      │     │  │        │  └─ VariableDeclaration
+      │     │  │        │     └─ Declaration
+      │     │  │        │        └─ CompoundIdentifier
+      │     │  │        │           └─ Identifier: @int
+      │     │  │        └─ Variadic:
+      │     │  │           └─ CompoundIdentifier
+      │     │  │              └─ Identifier: @any
+      │     │  └─ Identifier: vpfn3
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: vfun3
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Declaration
+      │     │  ├─ TemplatedIdentifier: @func
+      │     │  │  └─ Types
+      │     │  │     └─ FunctionType
+      │     │  │        ├─ CompoundIdentifier
+      │     │  │        │  └─ Identifier: @void
+      │     │  │        └─ Variadic:
+      │     │  │           └─ CompoundIdentifier
+      │     │  │              └─ Identifier: @any
+      │     │  └─ Identifier: vpfn4
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: vfun4
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall

@@ -256,20 +256,33 @@ class ASTBuilder(PTNodeVisitor):
         return children[1].to_array()
 
     def visit_function_type_args(self, node: ParseTreeNode, children: Tuple[ast.Symbol, ...]
-                                 ) -> List[ast.Declaration]:
-        res: List[ast.Declaration] = []
-        for c in children:
-            res.append(ast.Declaration(c.pos, c, None))
-        return res
+                                 ) -> Tuple[ast.Symbol, ...]:
+        return children
 
     def visit_function_type(self, node: ParseTreeNode,
-                            children: Tuple[StrMatch, ast.Symbol,
-                                            Optional[List[ast.VariableDeclaration]]]
+                            children: Union[Tuple[StrMatch, ast.Symbol],
+                                            Tuple[StrMatch, ast.Symbol, Tuple[ast.Symbol, ...]]]
                             ) -> ast.TemplatedIdentifier:
-        return ast.TemplatedIdentifier('@func', [ast.FunctionType(
-            children[1],
-            children[2] if len(children) > 2 and isinstance(children[2], list) else []
-        )])
+        args: List[ast.VariableDeclaration] = []
+        variadic: bool = False
+        variadic_type: Optional[ast.Symbol] = ast.CompoundIdentifier([ast.Identifier(0, '@any')])
+        if len(children) > 2:
+            i = 0
+            while i < len(children[2]):
+                arg = children[2][i]
+                if arg == '...':
+                    variadic = True
+                elif len(children[2]) > i + 1 and children[2][i + 1] == '...':
+                    assert isinstance(arg, ast.Symbol)
+                    variadic_type = arg
+                    variadic = True
+                else:
+                    args.append(ast.VariableDeclaration(arg, None))
+                i += 2
+        return ast.TemplatedIdentifier(
+            '@func',
+            [ast.FunctionType(children[1], args, variadic, variadic_type)]
+        )
 
     def visit_full_type(self, node: ParseTreeNode,
                         children: Tuple[Optional[ast.TypeQualifier], ast.Symbol, ast.Symbol,
