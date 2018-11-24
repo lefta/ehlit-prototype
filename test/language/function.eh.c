@@ -85,34 +85,34 @@ inline static int32_t inline_and_private_function(int32_t a, int32_t b)
     return (a + b);
 }
 
-void vargs_any_implicit(int32_t vargs_len, ...)
+void vargs_any_implicit(int32_t vargs_len, void** vargs)
 {
 }
 
-void vargs_any_explicit(int32_t vargs_len, ...)
+void vargs_any_explicit(int32_t vargs_len, void** vargs)
 {
 }
 
-void vargs_type(int32_t vargs_len, ...)
+void vargs_type(int32_t vargs_len, int32_t* vargs)
 {
 }
 
-void vargs_complex_type(int32_t vargs_len, ...)
+void vargs_complex_type(int32_t vargs_len, int32_t** vargs)
 {
 }
 
-void args1_vargs_implicit(int32_t* i, int32_t vargs_len, ...)
+void args1_vargs_implicit(int32_t* i, int32_t vargs_len, void** vargs)
 {
 }
 
-void args1_vargs_explicit(int32_t* i, int32_t vargs_len, ...)
+void args1_vargs_explicit(int32_t* i, int32_t vargs_len, int32_t* vargs)
 {
 }
 
-void args3_vargs_implicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, ...)
+void args3_vargs_implicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, void** vargs)
 {
 }
 
-void args3_vargs_explicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, ...)
+void args3_vargs_explicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, int32_t* vargs)
 {
 }
