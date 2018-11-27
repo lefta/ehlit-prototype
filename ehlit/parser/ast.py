@@ -972,6 +972,34 @@ class FunctionDefinition(FunctionDeclaration, Scope):
     def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
         super().fail(severity, pos + self.body_str.pos, msg)
 
+    def find_declaration(self, sym: str) -> DeclarationLookup:
+        if sym != 'vargs':
+            return super().find_declaration(sym)
+        assert isinstance(self.typ, FunctionType)
+        if not self.typ.is_variadic:
+            return None, "use of vargs in a non variadic function"
+        assert self.typ.variadic_type is not None
+        return VArgs(self.typ.variadic_type), None
+
+
+class VArgs(VariableDeclaration):
+    def __init__(self, typ: Symbol) -> None:
+        super().__init__(Array(typ, None), Identifier(0, 'vargs'))
+
+    def get_inner_declaration(self, sym: str) -> DeclarationLookup:
+        if sym == 'length':
+            return VArgsLength(), None
+        return None, None
+
+
+class VArgsLength(VariableDeclaration):
+    def __init__(self) -> None:
+        super().__init__(CompoundIdentifier([Identifier(0, '@int')]), Identifier(0, 'vargs_len'))
+
+    @property
+    def typ(self) -> Type:
+        return BuiltinType('@int').build(self)
+
 
 class Statement(Node):
     def __init__(self, expr: Node) -> None:
@@ -1268,6 +1296,9 @@ class CompoundIdentifier(Symbol):
                     err = "use of undeclared identifier {}".format(e.name)
                 parent.error(e.pos, err)
                 return
+        if len(self.elems) >= 2 and isinstance(self.elems[1].decl, VArgsLength):
+            self.elems = self.elems[1:]
+            self.elems[0].name = '@vargs_len'
 
     @property
     def ref_offset(self) -> int:

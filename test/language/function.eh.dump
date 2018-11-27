@@ -318,6 +318,27 @@
 │  │        └─ CompoundIdentifier
 │  │           └─ Identifier: @any
 │  └─ FunctionBody
+│     ├─ Statement
+│     │  └─ VariableDeclaration
+│     │     ├─ CompoundIdentifier
+│     │     │  └─ Identifier: @int
+│     │     ├─ Identifier: vlen
+│     │     └─ Assignment
+│     │        └─ Expression
+│     │           └─ CompoundIdentifier
+│     │              └─ Identifier: @vargs_len
+│     └─ Statement
+│        └─ VariableDeclaration
+│           ├─ CompoundIdentifier
+│           │  └─ Identifier: @any
+│           ├─ Identifier: va1
+│           └─ Assignment
+│              └─ Expression
+│                 └─ ArrayAccess
+│                    ├─ Expression
+│                    │  └─ Number: 1
+│                    └─ CompoundIdentifier
+│                       └─ Identifier: vargs
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: vargs_any_explicit

@@ -87,6 +87,8 @@ inline static int32_t inline_and_private_function(int32_t a, int32_t b)
 
 void vargs_any_implicit(int32_t vargs_len, void** vargs)
 {
+    int32_t vlen = vargs_len;
+    void* va1 = vargs[1];
 }
 
 void vargs_any_explicit(int32_t vargs_len, void** vargs)

@@ -53,7 +53,11 @@ inline priv int inline_and_private_function(int a, int b) {
 	return a + b
 }
 
-void vargs_any_implicit(...) {}
+void vargs_any_implicit(...) {
+	int vlen = vargs.length
+	any va1 = vargs[1]
+}
+
 void vargs_any_explicit(any...) {}
 void vargs_type(int...) {}
 void vargs_complex_type(ref int...) {}
