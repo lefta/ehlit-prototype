@@ -420,7 +420,7 @@ class SourceWriter:
         self.write_indent()
         self.file.write('{\n')
         self.indent += 1
-        for i in node.contents:
+        for i in node.body:
             self.write(i)
         if not node.fallthrough:
             self.write_indent()

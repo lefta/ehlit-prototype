@@ -226,7 +226,7 @@ class DumpWriter:
     def dumpSwitchCaseBody(self, node: Union[Node, str], _: bool) -> None:
         node = cast(SwitchCaseBody, node)
         self.print_str('Falls through: ' + ('yes' if node.fallthrough else 'no'))
-        self.print_node_list('Body', node.contents, False)
+        self.print_node_list('Body', node.body, False)
 
     @indent
     def dumpReturn(self, ret: Union[Node, str]) -> None:

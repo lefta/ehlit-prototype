@@ -213,6 +213,17 @@ class UnorderedScope(Scope):
         raise NotImplementedError
 
 
+class FlowScope(Scope):
+    def __init__(self, pos: int, body: List['Statement']) -> None:
+        super().__init__(pos)
+        self.body: List[Statement] = body
+
+    def build(self, parent: Node) -> 'Node':
+        super().build(parent)
+        self.body = [i.build(self) for i in self.body]
+        return self
+
+
 class GenericExternInclusion(UnorderedScope):
     '''! Base for include and import defining shared behaviors '''
 
@@ -946,12 +957,11 @@ class FunctionDeclaration(Declaration):
         return self._qualifiers
 
 
-class FunctionDefinition(FunctionDeclaration, Scope):
+class FunctionDefinition(FunctionDeclaration, FlowScope):
     def __init__(self, pos: int, qualifiers: TypeQualifier, typ: 'TemplatedIdentifier',
                  sym: 'Identifier', body_str: UnparsedContents) -> None:
         super().__init__(pos, qualifiers, typ, sym)
-        Scope.__init__(self, pos)
-        self.body: List[Statement] = []
+        FlowScope.__init__(self, pos, [])
         self.body_str: UnparsedContents = body_str
 
     def build(self, parent: Node) -> 'FunctionDefinition':
@@ -962,8 +972,7 @@ class FunctionDefinition(FunctionDeclaration, Scope):
             assert isinstance(self.typ, FunctionType)
             typ: Optional[DeclarationBase] = self.typ.ret.canonical
             self.body = function.parse(self.body_str.contents, not typ == BuiltinType('@void'))
-            for s in self.body:
-                s.build(self)
+            super().build(parent)
         except ParseError as err:
             for f in err.failures:
                 self.fail(f.severity, f.pos + self.body_str.pos, f.msg)
@@ -1171,19 +1180,17 @@ class ArrayAccess(SymbolContainer):
         return "{}[]".format(self.child.repr)
 
 
-class ControlStructure(Scope):
+class ControlStructure(FlowScope):
     def __init__(self, name: str, cond: Optional[Expression], body: List[Statement]) -> None:
-        super().__init__(0)
+        super().__init__(0, body)
         assert cond is not None or name == 'else'
         self.name: str = name
         self.cond: Optional[Expression] = cond
-        self.body: List[Statement] = body
 
     def build(self, parent: Node) -> 'ControlStructure':
         super().build(parent)
         if self.cond is not None:
             self.cond = self.cond.build(self)
-        self.body = [s.build(self) for s in self.body]
         return self
 
 
@@ -1215,16 +1222,10 @@ class SwitchCaseTest(Node):
         return self
 
 
-class SwitchCaseBody(Scope):
-    def __init__(self, contents: List[Statement], fallthrough: bool) -> None:
-        super().__init__(0)
-        self.contents: List[Statement] = contents
+class SwitchCaseBody(FlowScope):
+    def __init__(self, body: List[Statement], fallthrough: bool) -> None:
+        super().__init__(0, body)
         self.fallthrough: bool = fallthrough
-
-    def build(self, parent: Node) -> 'SwitchCaseBody':
-        super().build(parent)
-        self.contents = [i.build(self) for i in self.contents]
-        return self
 
 
 class Return(Node):
