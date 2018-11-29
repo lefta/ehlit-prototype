@@ -1194,7 +1194,7 @@ class ControlStructure(FlowScope):
         return self
 
 
-class Condition(Scope):
+class Condition(Node):
     def __init__(self, branches: List[ControlStructure]) -> None:
         super().__init__(0)
         self.branches: List[ControlStructure] = branches
