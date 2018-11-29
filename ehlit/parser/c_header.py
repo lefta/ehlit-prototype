@@ -136,11 +136,11 @@ def type_to_ehlit(typ: Type) -> ast.Node:
     elif not isinstance(res, ast.Symbol):
         return res
     if typ.is_const_qualified():
-        res.qualifiers = res.qualifiers | ast.TypeQualifier.CONST
+        res.qualifiers = res.qualifiers | ast.Qualifier.CONST
     if typ.is_volatile_qualified():
-        res.qualifiers = res.qualifiers | ast.TypeQualifier.VOLATILE
+        res.qualifiers = res.qualifiers | ast.Qualifier.VOLATILE
     if typ.is_restrict_qualified():
-        res.qualifiers = res.qualifiers | ast.TypeQualifier.RESTRICT
+        res.qualifiers = res.qualifiers | ast.Qualifier.RESTRICT
     return res
 
 
@@ -221,7 +221,7 @@ def parse_FUNCTION_DECL(cursor: Cursor) -> ast.Node:
     assert isinstance(ret_type, ast.Symbol)
     return ast.FunctionDeclaration(
         0,
-        ast.TypeQualifier.NONE,
+        ast.Qualifier.NONE,
         ast.TemplatedIdentifier('@func', [ast.FunctionType(
             ret_type,
             args,

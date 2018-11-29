@@ -220,14 +220,14 @@ class ASTBuilder(PTNodeVisitor):
     #######
 
     def visit_qualifier(self, node: ParseTreeNode, children: Tuple[StrMatch, ...]) -> int:
-        qualifier = ast.TypeQualifier.NONE
+        qualifier = ast.Qualifier.NONE
         for q in children:
             if q == 'const':
-                qualifier = qualifier | ast.TypeQualifier.CONST
+                qualifier = qualifier | ast.Qualifier.CONST
             elif q == 'restrict':
-                qualifier = qualifier | ast.TypeQualifier.RESTRICT
+                qualifier = qualifier | ast.Qualifier.RESTRICT
             elif q == 'volatile':
-                qualifier = qualifier | ast.TypeQualifier.VOLATILE
+                qualifier = qualifier | ast.Qualifier.VOLATILE
         return qualifier
 
     def visit_array_element(self, node: ParseTreeNode, children: Tuple[Union[None, ast.Expression]]
@@ -285,10 +285,10 @@ class ASTBuilder(PTNodeVisitor):
         )
 
     def visit_full_type(self, node: ParseTreeNode,
-                        children: Tuple[Optional[ast.TypeQualifier], ast.Symbol, ast.Symbol,
+                        children: Tuple[Optional[ast.Qualifier], ast.Symbol, ast.Symbol,
                                         Optional[ArrayBuilder]]
                         ) -> ast.Symbol:
-        qualifiers: ast.TypeQualifier = ast.TypeQualifier.NONE
+        qualifiers: ast.Qualifier = ast.Qualifier.NONE
         i: int = 0
         if len(children) > 0 and isinstance(children[0], int):
             qualifiers = children[0]
@@ -478,25 +478,25 @@ class ASTBuilder(PTNodeVisitor):
     def visit_function_declaration(self, node: ParseTreeNode,
                                    children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier]]
                                    ) -> ast.FunctionDeclaration:
-        return ast.FunctionDeclaration(node.position, ast.TypeQualifier.NONE, *children[0])
+        return ast.FunctionDeclaration(node.position, ast.Qualifier.NONE, *children[0])
 
     def visit_function_qualifiers(self, node: ParseTreeNode, children: Tuple[str, ...]
-                                  ) -> ast.TypeQualifier:
-        res: ast.TypeQualifier = ast.TypeQualifier.NONE
+                                  ) -> ast.Qualifier:
+        res: ast.Qualifier = ast.Qualifier.NONE
         for qualifier in children:
             if qualifier == 'inline':
-                res |= ast.TypeQualifier.INLINE
+                res |= ast.Qualifier.INLINE
             elif qualifier == 'priv':
-                res |= ast.TypeQualifier.PRIVATE
+                res |= ast.Qualifier.PRIVATE
         return res
 
     def visit_function_definition(self, node: ParseTreeNode,
                                   children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier],
                                                   ast.UnparsedContents]
                                   ) -> ast.FunctionDefinition:
-        qualifiers: ast.TypeQualifier = ast.TypeQualifier.NONE
+        qualifiers: ast.Qualifier = ast.Qualifier.NONE
         i: int = 0
-        if isinstance(children[0], ast.TypeQualifier):
+        if isinstance(children[0], ast.Qualifier):
             qualifiers = children[0]
             i = 1
         # Ignore type because of Tuple

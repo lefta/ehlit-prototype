@@ -34,7 +34,7 @@ imported: List[str] = []
 included: List[str] = []
 
 
-class TypeQualifier(IntFlag):
+class Qualifier(IntFlag):
     NONE = 0
     CONST = 1
     RESTRICT = 2
@@ -45,27 +45,27 @@ class TypeQualifier(IntFlag):
 
     @property
     def is_const(self) -> bool:
-        return bool(self & TypeQualifier.CONST)
+        return bool(self & Qualifier.CONST)
 
     @property
     def is_restricted(self) -> bool:
-        return bool(self & TypeQualifier.RESTRICT)
+        return bool(self & Qualifier.RESTRICT)
 
     @property
     def is_volatile(self) -> bool:
-        return bool(self & TypeQualifier.VOLATILE)
+        return bool(self & Qualifier.VOLATILE)
 
     @property
     def is_inline(self) -> bool:
-        return bool(self & TypeQualifier.INLINE)
+        return bool(self & Qualifier.INLINE)
 
     @property
     def is_static(self) -> bool:
-        return bool(self & TypeQualifier.STATIC)
+        return bool(self & Qualifier.STATIC)
 
     @property
     def is_private(self) -> bool:
-        return bool(self & TypeQualifier.PRIVATE)
+        return bool(self & Qualifier.PRIVATE)
 
 
 class DeclarationType(IntEnum):
@@ -511,7 +511,7 @@ class Type(DeclarationBase):
 class Symbol(Value):
     def __init__(self, pos: int = 0) -> None:
         super().__init__(pos)
-        self.qualifiers: TypeQualifier = TypeQualifier.NONE
+        self.qualifiers: Qualifier = Qualifier.NONE
         self._canonical: Optional[DeclarationBase] = None
 
     def build(self, parent: Node) -> 'Symbol':
@@ -525,7 +525,7 @@ class Symbol(Value):
             decl = decl.decl
         return decl
 
-    def set_qualifiers(self, qualifiers: TypeQualifier) -> None:
+    def set_qualifiers(self, qualifiers: Qualifier) -> None:
         self.qualifiers = qualifiers
 
     @property
@@ -746,9 +746,9 @@ class ReferenceToValue(Reference):
 
 
 class ReferenceToType(Reference):
-    def __init__(self, child: Symbol, qualifiers: TypeQualifier = TypeQualifier.NONE) -> None:
+    def __init__(self, child: Symbol, qualifiers: Qualifier = Qualifier.NONE) -> None:
         super().__init__(child)
-        self.qualifiers: TypeQualifier = qualifiers
+        self.qualifiers: Qualifier = qualifiers
 
     def build(self, parent: Node) -> 'ReferenceToType':
         return self
@@ -767,11 +767,11 @@ class ReferenceToType(Reference):
 
 
 class ReferenceType(Type, Container):
-    def __init__(self, child: Type, qualifiers: TypeQualifier = TypeQualifier.NONE) -> None:
+    def __init__(self, child: Type, qualifiers: Qualifier = Qualifier.NONE) -> None:
         self.child: Type
         Container.__init__(self, child)
         Type.__init__(self)
-        self.qualifiers: TypeQualifier = qualifiers
+        self.qualifiers: Qualifier = qualifiers
 
     def build(self, parent: Node) -> 'ReferenceType':
         super().build(parent)
@@ -872,13 +872,13 @@ class Assignment(Node):
 
 
 class Declaration(DeclarationBase):
-    def __init__(self, pos: int, typ: Symbol, sym: Optional['Identifier'], qualifiers: TypeQualifier
+    def __init__(self, pos: int, typ: Symbol, sym: Optional['Identifier'], qualifiers: Qualifier
                  ) -> None:
         super().__init__(pos)
         self._typ: Optional[Type] = None
         self.typ_src: Symbol = typ
         self.sym: Optional['Identifier'] = sym
-        self._qualifiers: TypeQualifier = qualifiers
+        self._qualifiers: Qualifier = qualifiers
 
     def build(self, parent: Node) -> 'Declaration':
         super().build(parent)
@@ -914,7 +914,7 @@ class Declaration(DeclarationBase):
 class VariableDeclaration(Declaration):
     def __init__(self, typ: Symbol, sym: Optional['Identifier'], assign: Optional[Assignment] = None
                  ) -> None:
-        super().__init__(0, typ, sym, TypeQualifier.NONE)
+        super().__init__(0, typ, sym, Qualifier.NONE)
         self.assign: Optional[Assignment] = assign
 
     def build(self, parent: Node) -> 'VariableDeclaration':
@@ -931,9 +931,9 @@ class VariableDeclaration(Declaration):
     @private.setter
     def private(self, value: bool) -> None:
         if value:
-            self._qualifiers |= TypeQualifier.PRIVATE
+            self._qualifiers |= Qualifier.PRIVATE
         else:
-            self._qualifiers &= ~TypeQualifier.PRIVATE
+            self._qualifiers &= ~Qualifier.PRIVATE
 
     @property
     def static(self) -> bool:
@@ -942,23 +942,23 @@ class VariableDeclaration(Declaration):
     @static.setter
     def static(self, value: bool) -> None:
         if value:
-            self._qualifiers |= TypeQualifier.STATIC
+            self._qualifiers |= Qualifier.STATIC
         else:
-            self._qualifiers &= ~TypeQualifier.STATIC
+            self._qualifiers &= ~Qualifier.STATIC
 
 
 class FunctionDeclaration(Declaration):
-    def __init__(self, pos: int, qualifiers: TypeQualifier, typ: 'TemplatedIdentifier',
+    def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
                  sym: 'Identifier') -> None:
         super().__init__(0, typ, sym, qualifiers)
 
     @property
-    def qualifiers(self) -> TypeQualifier:
+    def qualifiers(self) -> Qualifier:
         return self._qualifiers
 
 
 class FunctionDefinition(FunctionDeclaration, FlowScope):
-    def __init__(self, pos: int, qualifiers: TypeQualifier, typ: 'TemplatedIdentifier',
+    def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
                  sym: 'Identifier', body_str: UnparsedContents) -> None:
         super().__init__(pos, qualifiers, typ, sym)
         FlowScope.__init__(self, pos, [])
