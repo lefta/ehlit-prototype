@@ -35,6 +35,12 @@ included: List[str] = []
 
 
 class Qualifier(IntFlag):
+    """!
+    Qualifier for a declaration
+
+    This changes the behavior of the declaration. See the description of each value to know in which
+    way.
+    """
     NONE = 0
     CONST = 1
     RESTRICT = 2
@@ -45,31 +51,70 @@ class Qualifier(IntFlag):
 
     @property
     def is_const(self) -> bool:
+        """! Whether this declaration is const or not.
+        A const declaration is a declaration that may not be modified at run time.
+        """
         return bool(self & Qualifier.CONST)
 
     @property
     def is_restricted(self) -> bool:
+        """! Returns whether this declaration is restricted or not.
+        A restricted reference is a reference that refers to a unique value in its scope, i.e. two
+        restricted references may not refer to the same variable, thus allowing the compiler to
+        optimize a function farther.
+        @note: This only applies to function argument declarations
+        """
         return bool(self & Qualifier.RESTRICT)
 
     @property
     def is_volatile(self) -> bool:
+        """! Returns whether this declaration is volatile or not.
+        A volatile declaration is a declaration whose value may change unexpectidely, thus
+        preventing the compiler to guess it a build time.
+        @note: This only applies to variable declarations
+        """
         return bool(self & Qualifier.VOLATILE)
 
     @property
     def is_inline(self) -> bool:
+        """! Returns whether this declaration is inline or not.
+        An inline declaration is a declaration whose usage get replaced with its content at build
+        time.
+        @note: This only applies to function declarations.
+        """
         return bool(self & Qualifier.INLINE)
 
     @property
     def is_static(self) -> bool:
+        """! Returns whether this declaration is static or not.
+        A static declaration is a declaration whose lifetime storage does not belong to the scope it
+        is declared. For example, a static variable in a function will keep its value between each
+        function call.
+        However, the visibility of a static declaration remains the same.
+        """
         return bool(self & Qualifier.STATIC)
 
     @property
     def is_private(self) -> bool:
+        """! Returns whether this declaration is private or not.
+        A private declaration is a declaration that is not visible outside the scope it is declared.
+        For example, a private global symbol will not be visible outside the file where it is
+        declared.
+        """
         return bool(self & Qualifier.PRIVATE)
 
 
 class DeclarationType(IntEnum):
+    """!
+    Type of a declaration
+
+    The type of a declaration is the way a declaration gets mangled, stored and used in the
+    program.
+    """
+
+    ## An Ehlit symbol, this is the default.
     EHLIT = 0
+    ## A C symbol, used by symbols imported from a C header.
     C = 1
 
 
