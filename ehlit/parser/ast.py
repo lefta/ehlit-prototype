@@ -1494,6 +1494,7 @@ class Alias(Symbol, DeclarationBase):
         self.src_sym: Union[Type, Symbol] = src
         self.src: Optional[DeclarationBase] = None
         self.dst: Identifier = dst
+        super().__init__()
 
     def build(self, parent: Node) -> 'Alias':
         self.parent = parent
