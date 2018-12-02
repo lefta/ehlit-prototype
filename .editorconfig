@@ -1,3 +1,11 @@
 [*.{py,pyi}]
 indent_style = space
 indent_size = 4
+
+[*.eh.dump]
+indent_style = space
+indent_size = 3
+
+[*.c]
+indent_style = space
+indent_size = 4
