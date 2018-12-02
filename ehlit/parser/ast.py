@@ -1663,6 +1663,9 @@ class AST(UnorderedScope):
         raise Exception('AST.build may not be called')
 
     def build_ast(self, args: OptionsStruct) -> None:
+        global imported
+        global included
+        imported = included = []
         super().build(Node(0))
         self.declarations: List[DeclarationBase] = [
             FunctionType(CompoundIdentifier([Identifier(0, '@any')]), []),
