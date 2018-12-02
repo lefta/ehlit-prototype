@@ -232,6 +232,14 @@ class Node:
         """
         self.parent.do_before(do, self)
 
+    def generate_var_name(self) -> str:
+        """! Generate a variable name
+        The generated variable name is ensured to be unique in its scope.
+        @return @b str The generated variable name
+        """
+        return self.parent.generate_var_name()
+
+
 class Scope(Node):
     def __init__(self, pos: int) -> None:
         super().__init__(pos)
@@ -1027,6 +1035,7 @@ class FunctionDefinition(FunctionDeclaration, FlowScope):
         super().__init__(pos, qualifiers, typ, sym)
         FlowScope.__init__(self, pos, [])
         self.body_str: UnparsedContents = body_str
+        self.gen_var_count: int = 0
 
     def build(self, parent: Node) -> 'FunctionDefinition':
         super().build(parent)
@@ -1053,6 +1062,10 @@ class FunctionDefinition(FunctionDeclaration, FlowScope):
             return None, "use of vargs in a non variadic function"
         assert self.typ.variadic_type is not None
         return VArgs(self.typ.variadic_type), None
+
+    def generate_var_name(self) -> str:
+        self.gen_var_count += 1
+        return '__gen_fun_{}'.format(self.gen_var_count)
 
 
 class VArgs(VariableDeclaration):
@@ -1668,6 +1681,7 @@ class AST(UnorderedScope):
         self.nodes: List[Node] = nodes
         self.failures: List[Failure] = []
         self.parser: Optional[ParserPython] = None
+        self.gen_var_count: int = 0
 
     def __iter__(self) -> Iterator[Node]:
         return self.nodes.__iter__()
@@ -1735,6 +1749,10 @@ class AST(UnorderedScope):
 
     def is_child_of(self, cls: typing.Type[Node]) -> bool:
         return False
+
+    def generate_var_name(self) -> str:
+        self.gen_var_count += 1
+        return '__gen_ast_{}'.format(self.gen_var_count)
 
 
 from ehlit.parser import source
