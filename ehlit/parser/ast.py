@@ -223,6 +223,14 @@ class Node:
         '''
         return type(self) is cls or self.parent.is_child_of(cls)
 
+    def do_before(self, do: 'Node', before: 'Node') -> None:
+        """! Do something before executing the current node
+        By default, this call is only propagated to this node's parent. It will get handled by node
+        types that are able to handle the requested action.
+        @param do @c Node The node representing the action to execute.
+        @param before @c Node The node before which the action shall be executed.
+        """
+        self.parent.do_before(do, self)
 
 class Scope(Node):
     def __init__(self, pos: int) -> None:
@@ -265,8 +273,19 @@ class FlowScope(Scope):
 
     def build(self, parent: Node) -> 'Node':
         super().build(parent)
-        self.body = [i.build(self) for i in self.body]
+        self._counter: int = 0
+        while self._counter < len(self.body):
+            self.body[self._counter] = self.body[self._counter].build(self)
+            self._counter += 1
         return self
+
+    def do_before(self, do: Node, before: Node) -> None:
+        if not isinstance(do, Statement):
+            super().do_before(do, before)
+            return
+        assert isinstance(before, Statement)
+        self.body.insert(self.body.index(before), do.build(self))
+        self._counter += 1
 
 
 class GenericExternInclusion(UnorderedScope):
