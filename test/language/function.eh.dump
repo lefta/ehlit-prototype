@@ -426,27 +426,264 @@
 │  │        └─ CompoundIdentifier
 │  │           └─ Identifier: @any
 │  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: args3_vargs_explicit
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     ├─ Arguments:
+│  │     │  ├─ VariableDeclaration
+│  │     │  │  ├─ CompoundIdentifier
+│  │     │  │  │  └─ Identifier: @str
+│  │     │  │  └─ Identifier: s
+│  │     │  ├─ VariableDeclaration
+│  │     │  │  ├─ CompoundIdentifier
+│  │     │  │  │  └─ Identifier: @int
+│  │     │  │  └─ Identifier: i
+│  │     │  └─ VariableDeclaration
+│  │     │     ├─ Reference
+│  │     │     │  └─ CompoundIdentifier
+│  │     │     │     └─ Identifier: @int
+│  │     │     └─ Identifier: ri
+│  │     └─ Variadic:
+│  │        └─ CompoundIdentifier
+│  │           └─ Identifier: @int
+│  └─ FunctionBody
 └─ FunctionDefinition
    ├─ FunctionDeclaration
-   │  ├─ Identifier: args3_vargs_explicit
+   │  ├─ Identifier: call_vargs
    │  └─ FunctionType
-   │     ├─ CompoundIdentifier
-   │     │  └─ Identifier: @void
-   │     ├─ Arguments:
-   │     │  ├─ VariableDeclaration
-   │     │  │  ├─ CompoundIdentifier
-   │     │  │  │  └─ Identifier: @str
-   │     │  │  └─ Identifier: s
-   │     │  ├─ VariableDeclaration
-   │     │  │  ├─ CompoundIdentifier
-   │     │  │  │  └─ Identifier: @int
-   │     │  │  └─ Identifier: i
-   │     │  └─ VariableDeclaration
-   │     │     ├─ Reference
-   │     │     │  └─ CompoundIdentifier
-   │     │     │     └─ Identifier: @int
-   │     │     └─ Identifier: ri
-   │     └─ Variadic:
-   │        └─ CompoundIdentifier
-   │           └─ Identifier: @int
+   │     └─ CompoundIdentifier
+   │        └─ Identifier: @void
    └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ CompoundIdentifier
+      │     │  │     └─ Identifier: @any
+      │     │  └─ Length:
+      │     │     └─ Number: 0
+      │     ├─ Identifier: __gen_fun_1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ InitializerList
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_any_explicit
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 0
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_1
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ CompoundIdentifier
+      │     │  │     └─ Identifier: @any
+      │     │  └─ Length:
+      │     │     └─ Number: 1
+      │     ├─ Identifier: __gen_fun_2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ InitializerList
+      │              └─ Expression
+      │                 └─ NullValue
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_any_explicit
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 1
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_2
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ CompoundIdentifier
+      │     │  │     └─ Identifier: @any
+      │     │  └─ Length:
+      │     │     └─ Number: 3
+      │     ├─ Identifier: __gen_fun_3
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ InitializerList
+      │              ├─ Expression
+      │              │  └─ NullValue
+      │              ├─ Expression
+      │              │  └─ NullValue
+      │              └─ Expression
+      │                 └─ NullValue
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_any_explicit
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 3
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_3
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ CompoundIdentifier
+      │     │  │     └─ Identifier: @int
+      │     │  └─ Length:
+      │     │     └─ Number: 0
+      │     ├─ Identifier: __gen_fun_4
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ InitializerList
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_type
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 0
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_4
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ CompoundIdentifier
+      │     │  │     └─ Identifier: @int
+      │     │  └─ Length:
+      │     │     └─ Number: 1
+      │     ├─ Identifier: __gen_fun_5
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ InitializerList
+      │              └─ Expression
+      │                 └─ CompoundIdentifier
+      │                    └─ Identifier: i
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_type
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 1
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_5
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ CompoundIdentifier
+      │     │  │     └─ Identifier: @int
+      │     │  └─ Length:
+      │     │     └─ Number: 3
+      │     ├─ Identifier: __gen_fun_6
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ InitializerList
+      │              ├─ Expression
+      │              │  └─ CompoundIdentifier
+      │              │     └─ Identifier: i
+      │              ├─ Expression
+      │              │  └─ CompoundIdentifier
+      │              │     └─ Identifier: i
+      │              └─ Expression
+      │                 └─ CompoundIdentifier
+      │                    └─ Identifier: i
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_type
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 3
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_6
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ Reference
+      │     │  │     └─ CompoundIdentifier
+      │     │  │        └─ Identifier: @int
+      │     │  └─ Length:
+      │     │     └─ Number: 2
+      │     ├─ Identifier: __gen_fun_7
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ InitializerList
+      │              ├─ Expression
+      │              │  └─ CompoundIdentifier
+      │              │     └─ Identifier: i
+      │              └─ Expression
+      │                 └─ CompoundIdentifier
+      │                    └─ Identifier: i
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_complex_type
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 2
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_7
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ CompoundIdentifier
+      │     │  │     └─ Identifier: @int
+      │     │  └─ Length:
+      │     │     └─ Number: 2
+      │     ├─ Identifier: __gen_fun_8
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ InitializerList
+      │              ├─ Expression
+      │              │  └─ CompoundIdentifier
+      │              │     └─ Identifier: i
+      │              └─ Expression
+      │                 └─ CompoundIdentifier
+      │                    └─ Identifier: i
+      └─ Statement
+         └─ Expression
+            └─ FunctionCall
+               ├─ CompoundIdentifier
+               │  └─ Identifier: args3_vargs_explicit
+               └─ Arguments
+                  ├─ Expression
+                  │  └─ String: Hello
+                  ├─ Expression
+                  │  └─ CompoundIdentifier
+                  │     └─ Identifier: i
+                  ├─ Expression
+                  │  └─ CompoundIdentifier
+                  │     └─ Identifier: i
+                  ├─ Expression
+                  │  └─ Number: 2
+                  └─ Expression
+                     └─ CompoundIdentifier
+                        └─ Identifier: __gen_fun_8

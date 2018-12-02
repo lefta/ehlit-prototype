@@ -36,3 +36,6 @@ class TestCParser(EhlitTestCase):
             with self.subTest(case=c):
                 f = os.path.join(self.test_dir, c)
                 self.assert_dumps_to(f)
+
+    def test_c_variadic_function_call(self):
+        self.assert_compiles('c_parser/function.eh')

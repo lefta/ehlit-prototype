@@ -65,3 +65,16 @@ void args1_vargs_implicit(ref int i, ...) {}
 void args1_vargs_explicit(ref int i, int...) {}
 void args3_vargs_implicit(str s, int i, ref int ri, ...) {}
 void args3_vargs_explicit(str s, int i, ref int ri, int...) {}
+
+void call_vargs() {
+	vargs_any_explicit()
+	vargs_any_explicit(null)
+	vargs_any_explicit(null, null, null)
+
+	int i
+	vargs_type()
+	vargs_type(i)
+	vargs_type(i, i, i)
+	vargs_complex_type(i, i)
+	args3_vargs_explicit("Hello", i, i, i, i)
+}

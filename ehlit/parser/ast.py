@@ -1188,17 +1188,18 @@ class FunctionCall(Value):
             return cast
         self.args = [a.build(self) for a in self.args]
         res = self._reorder()
-        self._check()
-        return res
-
-    def _check(self) -> None:
         if self.sym.canonical is None:
-            return
+            return res
         assert isinstance(self.sym.canonical, Declaration)
         typ: Type = self.sym.canonical.typ
         if not isinstance(typ, FunctionType):
             self.error(self.pos, "calling non function type {}".format(self.sym.repr))
-            return
+            return res
+        self._check_args(typ)
+        self._auto_cast_args(typ)
+        return res
+
+    def _check_args(self, typ: FunctionType) -> None:
         diff = len(self.args) - len(typ.args)
         i = 0
         while i < len(typ.args):
@@ -1214,10 +1215,28 @@ class FunctionCall(Value):
             self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(
                 'not enough' if diff < 0 else 'too many', self.sym.repr, len(typ.args),
                 len(self.args)))
+
+    def _auto_cast_args(self, typ: FunctionType) -> None:
+        fun_decl_type: DeclarationType = DeclarationType.EHLIT
+        if self.sym.decl is not None:
+            fun_decl_type = self.sym.decl.declaration_type
         i = 0
         while i < len(self.args) and i < len(typ.args):
             self.args[i].auto_cast(typ.args[i].typ)
             i += 1
+        if typ.is_variadic and fun_decl_type is DeclarationType.EHLIT:
+            vargs: List[Expression] = self.args[i:]
+            self.args = self.args[:i]
+            assert typ.variadic_type is not None
+            vargs_name: str = self.generate_var_name()
+            stmt: Statement = Statement(VariableDeclaration(
+                Array(typ.variadic_type, Number(str(len(vargs)))),
+                Identifier(0, vargs_name),
+                Assignment(Expression([InitializationList(vargs)], False))
+            ))
+            self.do_before(stmt, self)
+            self.args.append(Expression([Number(str(len(vargs)))], False))
+            self.args.append(Expression([CompoundIdentifier([Identifier(0, vargs_name)])], False))
 
     def _reorder(self) -> 'Value':
         parent: Optional[Value] = None

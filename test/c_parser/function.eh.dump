@@ -1,8 +1,87 @@
-└─ Include
-   ├─ Path: c_parser/function.h
-   └─ Symbols found
-      └─ FunctionDeclaration
-         ├─ Identifier: fun
-         └─ FunctionType
-            └─ CompoundIdentifier
-               └─ Identifier: @void
+├─ Include
+│  ├─ Path: c_parser/function.h
+│  └─ Symbols found
+│     ├─ FunctionDeclaration
+│     │  ├─ Identifier: fun
+│     │  └─ FunctionType
+│     │     └─ CompoundIdentifier
+│     │        └─ Identifier: @void
+│     ├─ FunctionDeclaration
+│     │  ├─ Identifier: vargs_fun_no_arg
+│     │  └─ FunctionType
+│     │     ├─ CompoundIdentifier
+│     │     │  └─ Identifier: @void
+│     │     └─ Variadic (C)
+│     └─ FunctionDeclaration
+│        ├─ Identifier: vargs_fun_args
+│        └─ FunctionType
+│           ├─ CompoundIdentifier
+│           │  └─ Identifier: @void
+│           ├─ Arguments:
+│           │  └─ VariableDeclaration
+│           │     ├─ CompoundIdentifier
+│           │     │  └─ Identifier: @int32
+│           │     └─ Identifier: i
+│           └─ Variadic (C)
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ Identifier: main
+   │  └─ FunctionType
+   │     └─ CompoundIdentifier
+   │        └─ Identifier: @int
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     └─ Identifier: i
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_fun_no_arg
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_fun_no_arg
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ NullValue
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_fun_no_arg
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ CompoundIdentifier
+      │           │     └─ Identifier: i
+      │           └─ Expression
+      │              └─ NullValue
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: vargs_fun_args
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: i
+      └─ Statement
+         └─ Expression
+            └─ FunctionCall
+               ├─ CompoundIdentifier
+               │  └─ Identifier: vargs_fun_args
+               └─ Arguments
+                  ├─ Expression
+                  │  └─ CompoundIdentifier
+                  │     └─ Identifier: i
+                  ├─ Expression
+                  │  └─ CompoundIdentifier
+                  │     └─ Identifier: i
+                  └─ Expression
+                     └─ Reference
+                        └─ CompoundIdentifier
+                           └─ Identifier: i

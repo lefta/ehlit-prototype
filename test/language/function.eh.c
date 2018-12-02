@@ -118,3 +118,24 @@ void args3_vargs_implicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, vo
 void args3_vargs_explicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, int32_t* vargs)
 {
 }
+
+void call_vargs(void)
+{
+    void* __gen_fun_1[0] = {  };
+    vargs_any_explicit(0, __gen_fun_1);
+    void* __gen_fun_2[1] = { NULL };
+    vargs_any_explicit(1, __gen_fun_2);
+    void* __gen_fun_3[3] = { NULL, NULL, NULL };
+    vargs_any_explicit(3, __gen_fun_3);
+    int32_t i;
+    int32_t __gen_fun_4[0] = {  };
+    vargs_type(0, __gen_fun_4);
+    int32_t __gen_fun_5[1] = { i };
+    vargs_type(1, __gen_fun_5);
+    int32_t __gen_fun_6[3] = { i, i, i };
+    vargs_type(3, __gen_fun_6);
+    int32_t* __gen_fun_7[2] = { &i, &i };
+    vargs_complex_type(2, __gen_fun_7);
+    int32_t __gen_fun_8[2] = { i, i };
+    args3_vargs_explicit("Hello", i, &i, 2, __gen_fun_8);
+}
