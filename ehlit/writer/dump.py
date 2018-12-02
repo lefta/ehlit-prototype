@@ -24,10 +24,11 @@ from typing import Callable, cast, List, Sequence, Union
 from ehlit.parser.ast import (
     Alias, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char, CompoundIdentifier,
     Condition, ControlStructure, DecimalNumber, Declaration, EhUnion, Expression, FunctionCall,
-    FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Include, Import, Node,
-    NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return,
-    Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
-    SwitchCaseTest, Symbol, TemplatedIdentifier, VariableAssignment, VariableDeclaration
+    FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Include, Import,
+    InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType,
+    ReferenceToValue, Return, Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase,
+    SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, VariableAssignment,
+    VariableDeclaration
 )
 
 IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
@@ -155,6 +156,10 @@ class DumpWriter:
     def dumpExpression(self, expr: Union[Node, str], is_next: bool) -> None:
         expr = cast(Expression, expr)
         self.print_node_list('Expression', expr.contents, is_next)
+
+    def dumpInitializationList(self, node: Union[Node, str], is_next: bool) -> None:
+        node = cast(InitializationList, node)
+        self.print_node_list('InitializerList', node.contents, is_next)
 
     @indent
     def dumpCast(self, node: Union[Node, str]) -> None:

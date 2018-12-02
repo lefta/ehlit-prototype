@@ -1120,6 +1120,26 @@ class Expression(Value):
         return self.contents[0].typ
 
 
+class InitializationList(Value):
+    def __init__(self, contents: List[Expression]) -> None:
+        super().__init__()
+        self.contents: List[Expression] = contents
+
+    def build(self, parent: Node) -> 'InitializationList':
+        super().build(parent)
+        self.contents = [x.build(self) for x in self.contents]
+        return self
+
+    def auto_cast(self, target: Union['Symbol', 'Type']) -> None:
+        assert isinstance(target, ArrayType)
+        tgt: Type = target.child
+        for n in self.contents:
+            n.auto_cast(tgt)
+
+    def typ(self) -> Type:
+        return BuiltinType('@any')
+
+
 class Cast(Value):
     def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
         super().__init__(pos)

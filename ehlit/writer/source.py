@@ -26,10 +26,11 @@ from ehlit.parser.ast import (
     Alias, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType, Cast, Char,
     CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container, DecimalNumber,
     Declaration, DeclarationBase, EhUnion, Expression, FunctionCall, FunctionDeclaration,
-    FunctionDefinition, FunctionType, Identifier, Import, Include, Node, NullValue, Number,
-    Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return, Sizeof,
-    Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest,
-    Symbol, TemplatedIdentifier, Type, VariableAssignment, VariableDeclaration, Value
+    FunctionDefinition, FunctionType, Identifier, Import, Include, InitializationList, Node,
+    NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
+    ReferenceType, Return, Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase,
+    SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, Type, VariableAssignment,
+    VariableDeclaration, Value
 )
 
 
@@ -304,6 +305,17 @@ class SourceWriter:
                 self.file.write(' ')
         if expr.is_parenthesised:
             self.file.write(')')
+
+    def writeInitializationList(self, node: InitializationList) -> None:
+        self.file.write('{ ')
+        first: bool = True
+        for n in node.contents:
+            if first:
+                first = False
+            else:
+                self.file.write(', ')
+            self.write(n)
+        self.file.write(' }')
 
     def writeAssignment(self, assign: Assignment) -> None:
         self.file.write(' ')
