@@ -298,6 +298,12 @@ def type_CONSTANTARRAY(typ: Type) -> ast.Node:
     return ast.Array(elem, ast.Number(str(typ.element_count)))
 
 
+def type_INCOMPLETEARRAY(typ: Type) -> ast.Node:
+    elem: ast.Node = type_to_ehlit(typ.element_type)
+    assert isinstance(elem, ast.Symbol)
+    return ast.Array(elem, None)
+
+
 def type_ELABORATED(typ: Type) -> ast.Node:
     decl: Cursor = typ.get_canonical().get_declaration()
     # If the declaration do not have a name, it may not be referenced. In this case, we have to

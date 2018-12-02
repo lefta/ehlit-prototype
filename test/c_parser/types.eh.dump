@@ -267,11 +267,22 @@
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: sal
-      └─ VariableDeclaration
-         ├─ Array
-         │  ├─ Sub-type:
-         │  │  └─ CompoundIdentifier
-         │  │     └─ Identifier: @uint64
-         │  └─ Length:
-         │     └─ Number: 42
-         └─ Identifier: sual
+      ├─ VariableDeclaration
+      │  ├─ Array
+      │  │  ├─ Sub-type:
+      │  │  │  └─ CompoundIdentifier
+      │  │  │     └─ Identifier: @uint64
+      │  │  └─ Length:
+      │  │     └─ Number: 42
+      │  └─ Identifier: sual
+      └─ FunctionDeclaration
+         ├─ Identifier: incomplete_array
+         └─ FunctionType
+            ├─ CompoundIdentifier
+            │  └─ Identifier: @void
+            └─ Arguments:
+               └─ VariableDeclaration
+                  ├─ Array
+                  │  └─ CompoundIdentifier
+                  │     └─ Identifier: @double
+                  └─ Identifier: ad

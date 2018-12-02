@@ -56,3 +56,5 @@ int sai[42];
 unsigned int suai[42];
 long sal[42];
 unsigned long sual[42];
+
+void incomplete_array(double ad[]);
