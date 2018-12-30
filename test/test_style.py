@@ -7,7 +7,7 @@ class TestCodeFormat(unittest.TestCase):
     def test_code_format(self) -> None:
         """Test that we conform to PEP-8."""
 
-        style_guide = flake8.get_style_guide(quiet=2, ignore=['E266', 'E402'])
+        style_guide = flake8.get_style_guide(quiet=2, ignore=['E266', 'E402', 'W504'])
         report = style_guide.check_files(glob('../**/*.py', recursive=True))
         self.assertEqual(report.total_errors, 0,
                          'Flake8 found {} violations'.format(report.total_errors))
