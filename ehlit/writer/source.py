@@ -235,9 +235,9 @@ class SourceWriter:
             if variadic_type is None:
                 self.file.write('...')
             else:
-                self.file.write('int32_t vargs_len, ')
+                self.file.write('int32_t _EB9vargs_len, ')
                 self.write(Array(variadic_type, None))
-                self.file.write(' vargs')
+                self.file.write(' _EB5vargs')
 
     def writeFunctionPrototype(self, proto: FunctionDeclaration) -> None:
         assert isinstance(proto.typ, FunctionType)
@@ -478,7 +478,7 @@ class SourceWriter:
 
     def writeIdentifier(self, node: Identifier) -> None:
         if isinstance(node.decl, Alias) and node.decl.is_type:
-            self.file.write(node.decl.dst.name)
+            self.file.write(node.decl.mangled_name)
             return
 
         decl: Optional[DeclarationBase] = node.decl
@@ -488,9 +488,9 @@ class SourceWriter:
             if isinstance(decl, BuiltinType):
                 self.file.write(self.types[decl.name])
             else:
-                self.file.write(decl.name)
+                self.file.write(decl.mangled_name)
         else:
-            self.file.write(node.name)
+            self.file.write(node.mangled_name)
 
     def writeTemplatedIdentifier(self, node: TemplatedIdentifier) -> None:
         self.write(node.typ)

@@ -103,6 +103,17 @@ class Qualifier(IntFlag):
         """
         return bool(self & Qualifier.PRIVATE)
 
+    @property
+    def mangled(self) -> str:
+        res = ''
+        if self.is_const:
+            res += 'C'
+        if self.is_volatile:
+            res += 'W'
+        if self.is_restricted:
+            res += 'X'
+        return res
+
 
 class DeclarationType(IntEnum):
     """!
@@ -238,6 +249,10 @@ class Node:
         @return @b str The generated variable name
         """
         return self.parent.generate_var_name()
+
+    @property
+    def mangled_scope(self) -> str:
+        return self.parent.mangled_scope
 
 
 class Scope(Node):
@@ -557,6 +572,17 @@ class DeclarationBase(Node):
     def name(self) -> str:
         raise NotImplementedError
 
+    @property
+    def mangled_name(self) -> str:
+        if self.declaration_type == DeclarationType.C:
+            return self.name
+        return '{}{}'.format(self.parent.mangled_scope, self.mangled)
+
+    @property
+    @abstractmethod
+    def mangled(self) -> str:
+        raise NotImplementedError
+
 
 class Type(DeclarationBase):
     def build(self, parent: Node) -> 'Type':
@@ -620,6 +646,11 @@ class Symbol(Value):
             self._canonical = self.solve()
         return self._canonical
 
+    @property
+    @abstractmethod
+    def mangled(self) -> str:
+        raise NotImplementedError
+
 
 class BuiltinType(Type):
     def make(parent: Node, name: str) -> 'CompoundIdentifier':
@@ -663,6 +694,10 @@ class BuiltinType(Type):
 
     def dup(self) -> 'BuiltinType':
         return BuiltinType(self.name)
+
+    @property
+    def mangled(self) -> str:
+        return 'B{}{}'.format(len(self.name) - 1, self.name[1:])
 
 
 class Container(Node):
@@ -731,6 +766,10 @@ class Array(SymbolContainer):
         assert isinstance(child_decl, Type)
         return ArrayType(child_decl).build(self)
 
+    @property
+    def mangled(self) -> str:
+        return '{}A{}'.format(self.qualifiers.mangled, self.child.mangled)
+
 
 class ArrayType(Type, Container):
     def __init__(self, child: Type) -> None:
@@ -758,6 +797,10 @@ class ArrayType(Type, Container):
 
     def dup(self) -> Type:
         return ArrayType(self.child.dup())
+
+    @property
+    def mangled(self) -> str:
+        return 'A{}'.format(self.child.mangled)
 
 
 class Reference(SymbolContainer):
@@ -788,6 +831,10 @@ class Reference(SymbolContainer):
     @property
     def name(self) -> str:
         return '@ref'
+
+    @property
+    def mangled(self) -> str:
+        return '{}R{}'.format(self.qualifiers.mangled, self.child.mangled)
 
 
 class ReferenceToValue(Reference):
@@ -879,6 +926,12 @@ class ReferenceType(Type, Container):
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
         return self.child.get_inner_declaration(sym)
 
+    @property
+    def mangled(self) -> str:
+        if self.declaration_type == DeclarationType.C:
+            return self.child.mangled
+        return 'R{}'.format(self.child.mangled)
+
 
 class FunctionType(Type):
     def __init__(self, ret: Symbol, args: List['VariableDeclaration'],
@@ -909,6 +962,16 @@ class FunctionType(Type):
 
     def from_any(self) -> Symbol:
         return TemplatedIdentifier('func', [self])
+
+    @property
+    def mangled(self) -> str:
+        name = 'B4func'
+        for a in self.args:
+            name = '{}{}'.format(name, a.typ_src.mangled)
+        if self.is_variadic:
+            assert self.variadic_type is not None
+            name = '{}v{}'.format(name, self.variadic_type.mangled)
+        return name
 
 
 class Operator(Node):
@@ -1019,6 +1082,24 @@ class VariableDeclaration(Declaration):
         else:
             self._qualifiers &= ~Qualifier.STATIC
 
+    @property
+    def mangled_name(self) -> str:
+        if self.sym is None:
+            return ''
+        if (self.declaration_type == DeclarationType.C or self.is_child_of(FunctionDeclaration) or
+                self.is_child_of(Struct) or self.is_child_of(EhUnion)):
+            return self.sym.name
+        return super().mangled_name
+
+    @property
+    def mangled(self) -> str:
+        if self.sym is None:
+            return ''
+        if (self.declaration_type == DeclarationType.C or self.is_child_of(FunctionDeclaration) or
+                self.is_child_of(Struct) or self.is_child_of(EhUnion)):
+            return self.sym.name
+        return '{}V{}'.format(self.typ_src.qualifiers.mangled, self.sym.mangled)
+
 
 class FunctionDeclaration(Declaration):
     def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
@@ -1028,6 +1109,29 @@ class FunctionDeclaration(Declaration):
     @property
     def qualifiers(self) -> Qualifier:
         return self._qualifiers
+
+    @property
+    def mangled_name(self) -> str:
+        if self.sym is None:
+            return ''
+        if self.sym.name == 'main':
+            return self.sym.name
+        return super().mangled_name
+
+    @property
+    def mangled(self) -> str:
+        if self.sym is None:
+            return ''
+        if self.sym.name == 'main':
+            return self.sym.name
+        assert isinstance(self.typ, FunctionType)
+        name: str = '{}F{}'.format(self.qualifiers.mangled, self.sym.mangled)
+        for a in self.typ.args:
+            name = '{}{}'.format(name, a.typ_src.mangled)
+        if self.typ.is_variadic:
+            assert self.typ.variadic_type is not None
+            name = '{}v{}'.format(name, self.typ.variadic_type.mangled)
+        return name
 
 
 class FunctionDefinition(FunctionDeclaration, FlowScope):
@@ -1078,6 +1182,14 @@ class VArgs(VariableDeclaration):
             return VArgsLength(), None
         return None, None
 
+    @property
+    def mangled_name(self) -> str:
+        return '_EB5vargs'
+
+    @property
+    def mangled(self) -> str:
+        return 'B5vargs'
+
 
 class VArgsLength(VariableDeclaration):
     def __init__(self) -> None:
@@ -1086,6 +1198,14 @@ class VArgsLength(VariableDeclaration):
     @property
     def typ(self) -> Type:
         return BuiltinType('@int').build(self)
+
+    @property
+    def mangled_name(self) -> str:
+        return '_EB9vargs_len'
+
+    @property
+    def mangled(self) -> str:
+        return 'B9vargs_len'
 
 
 class Statement(Node):
@@ -1299,6 +1419,10 @@ class ArrayAccess(SymbolContainer):
     def repr(self) -> str:
         return "{}[]".format(self.child.repr)
 
+    @property
+    def mangled(self) -> str:
+        return self.child.mangled
+
 
 class ControlStructure(FlowScope):
     def __init__(self, name: str, cond: Optional[Expression], body: List[Statement]) -> None:
@@ -1404,6 +1528,15 @@ class Identifier(Value):
     def decl(self, value: Optional[DeclarationBase]) -> None:
         self._decl = value
 
+    @property
+    def mangled_name(self) -> str:
+        assert isinstance(self.parent, DeclarationBase)
+        return self.parent.mangled_name
+
+    @property
+    def mangled(self) -> str:
+        return '{}{}'.format(len(self.name), self.name)
+
 
 class CompoundIdentifier(Symbol):
     def __init__(self, elems: List[Identifier]) -> None:
@@ -1468,6 +1601,12 @@ class CompoundIdentifier(Symbol):
     def any_memory_offset(self) -> int:
         return self.elems[-1].typ.any_memory_offset
 
+    @property
+    def mangled(self) -> str:
+        if self.decl is None:
+            return self.elems[-1].name
+        return '{}{}'.format(self.qualifiers.mangled, self.decl.mangled)
+
 
 class TemplatedIdentifier(Symbol):
     def __init__(self, name: str, types: List[Union[Symbol, Type]]) -> None:
@@ -1497,6 +1636,11 @@ class TemplatedIdentifier(Symbol):
     @property
     def name(self) -> str:
         return self._name
+
+    @property
+    def mangled(self) -> str:
+        assert isinstance(self.types[0], Type)
+        return 't{}'.format(self.types[0].mangled)
 
 
 class String(Value):
@@ -1677,6 +1821,10 @@ class Alias(Symbol, DeclarationBase):
     def decl(self) -> Optional[DeclarationBase]:
         return self.src
 
+    @property
+    def mangled(self) -> str:
+        return 'T{}'.format(self.dst.mangled)
+
 
 class ContainerStructure(Type, Scope):
     def __init__(self, pos: int, sym: Identifier,
@@ -1715,6 +1863,16 @@ class ContainerStructure(Type, Scope):
 
     def dup(self) -> Type:
         return self
+
+    @property
+    def mangled(self) -> str:
+        if self.declaration_type == DeclarationType.C:
+            return self.sym.name
+        return '{}{}'.format(self.display_name[0].upper(), self.sym.mangled)
+
+    @property
+    def mangled_scope(self) -> str:
+        return '{}{}'.format(self.parent.mangled_scope, self.mangled)
 
 
 class Struct(ContainerStructure):
@@ -1809,6 +1967,10 @@ class AST(UnorderedScope):
     def generate_var_name(self) -> str:
         self.gen_var_count += 1
         return '__gen_ast_{}'.format(self.gen_var_count)
+
+    @property
+    def mangled_scope(self) -> str:
+        return '_E'
 
 
 from ehlit.parser import source

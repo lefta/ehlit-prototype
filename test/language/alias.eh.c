@@ -1,10 +1,10 @@
 #include <stddef.h>
 #include <stdint.h>
-typedef int32_t nb;
-typedef void nothing;
-typedef void(* pfn)(nb);
+typedef int32_t _ET2nb;
+typedef void _ET7nothing;
+typedef void(* _ET3pfn)(_ET2nb);
 
-nothing inc(int32_t* number)
+_ET7nothing _EF3incRB3int(int32_t* number)
 {
     if (!number)
     {
@@ -13,16 +13,16 @@ nothing inc(int32_t* number)
     *number += 1;
 }
 
-void do_nothing(nb n)
+void _EF10do_nothingT2nb(_ET2nb n)
 {
 }
 
-nb main(void)
+_ET2nb main(void)
 {
-    nb i = 42;
-    pfn pdn = &do_nothing;
-    inc(&i);
-    do_nothing(i);
+    _ET2nb i = 42;
+    _ET3pfn pdn = &_EF10do_nothingT2nb;
+    _EF3incRB3int(&i);
+    _EF10do_nothingT2nb(i);
     pdn(i);
     return (i);
 }

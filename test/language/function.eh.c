@@ -1,20 +1,20 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void simple_fn(int32_t i)
+void _EF9simple_fnB3int(int32_t i)
 {
 }
 
-void simple_fn_str(char* s)
+void _EF13simple_fn_strB3str(char* s)
 {
 }
 
-int32_t* ref_call(void)
+int32_t* _EF8ref_call(void)
 {
     return (NULL);
 }
 
-void inc(int32_t* nb)
+void _EF3incRB3int(int32_t* nb)
 {
     if (!nb)
     {
@@ -23,7 +23,7 @@ void inc(int32_t* nb)
     *nb += 1;
 }
 
-void inner_parens(int32_t i)
+void _EF12inner_parensB3int(int32_t i)
 {
     if (!0)
     {
@@ -45,97 +45,97 @@ void inner_parens(int32_t i)
     }
 }
 
-void func_with_default_params(int32_t par1, int32_t par2)
+void _EF24func_with_default_paramsB3intB3int(int32_t par1, int32_t par2)
 {
 }
 
-void func_with_trailing_comma(int32_t arg)
+void _EF24func_with_trailing_commaB3int(int32_t arg)
 {
 }
 
-void declared_later(void);
+void _EF14declared_later(void);
 
 int32_t main(int32_t ac, char** av)
 {
-    simple_fn(42);
-    simple_fn(4 * 8);
-    simple_fn_str("Hello, world!\n");
-    ref_call();
-    func_with_default_params(1, 2);
-    func_with_default_params(3, 0);
-    func_with_trailing_comma(4);
-    declared_later();
+    _EF9simple_fnB3int(42);
+    _EF9simple_fnB3int(4 * 8);
+    _EF13simple_fn_strB3str("Hello, world!\n");
+    _EF8ref_call();
+    _EF24func_with_default_paramsB3intB3int(1, 2);
+    _EF24func_with_default_paramsB3intB3int(3, 0);
+    _EF24func_with_trailing_commaB3int(4);
+    _EF14declared_later();
     return (0);
 }
 
-void declared_later(void)
+void _EF14declared_later(void)
 {
 }
 
-static void private_function(void)
+static void _EF16private_function(void)
 {
 }
 
-inline void inline_function(void)
+inline void _EF15inline_function(void)
 {
 }
 
-inline static int32_t inline_and_private_function(int32_t a, int32_t b)
+inline static int32_t _EF27inline_and_private_functionB3intB3int(int32_t a, int32_t b)
 {
     return (a + b);
 }
 
-void vargs_any_implicit(int32_t vargs_len, void** vargs)
+void _EF18vargs_any_implicitvB3any(int32_t _EB9vargs_len, void** _EB5vargs)
 {
-    int32_t vlen = vargs_len;
-    void* va1 = vargs[1];
+    int32_t vlen = _EB9vargs_len;
+    void* va1 = _EB5vargs[1];
 }
 
-void vargs_any_explicit(int32_t vargs_len, void** vargs)
-{
-}
-
-void vargs_type(int32_t vargs_len, int32_t* vargs)
+void _EF18vargs_any_explicitvB3any(int32_t _EB9vargs_len, void** _EB5vargs)
 {
 }
 
-void vargs_complex_type(int32_t vargs_len, int32_t** vargs)
+void _EF10vargs_typevB3int(int32_t _EB9vargs_len, int32_t* _EB5vargs)
 {
 }
 
-void args1_vargs_implicit(int32_t* i, int32_t vargs_len, void** vargs)
+void _EF18vargs_complex_typevRB3int(int32_t _EB9vargs_len, int32_t** _EB5vargs)
 {
 }
 
-void args1_vargs_explicit(int32_t* i, int32_t vargs_len, int32_t* vargs)
+void _EF20args1_vargs_implicitRB3intvB3any(int32_t* i, int32_t _EB9vargs_len, void** _EB5vargs)
 {
 }
 
-void args3_vargs_implicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, void** vargs)
+void _EF20args1_vargs_explicitRB3intvB3int(int32_t* i, int32_t _EB9vargs_len, int32_t* _EB5vargs)
 {
 }
 
-void args3_vargs_explicit(char* s, int32_t i, int32_t* ri, int32_t vargs_len, int32_t* vargs)
+void _EF20args3_vargs_implicitB3strB3intRB3intvB3any(char* s, int32_t i, int32_t* ri, int32_t _EB9vargs_len, void** _EB5vargs)
 {
 }
 
-void call_vargs(void)
+void _EF20args3_vargs_explicitB3strB3intRB3intvB3int(char* s, int32_t i, int32_t* ri, int32_t _EB9vargs_len, int32_t* _EB5vargs)
+{
+}
+
+void _EF10call_vargs(void)
 {
     void* __gen_fun_1[0] = {  };
-    vargs_any_explicit(0, __gen_fun_1);
+    _EF18vargs_any_explicitvB3any(0, __gen_fun_1);
     void* __gen_fun_2[1] = { NULL };
-    vargs_any_explicit(1, __gen_fun_2);
+    _EF18vargs_any_explicitvB3any(1, __gen_fun_2);
     void* __gen_fun_3[3] = { NULL, NULL, NULL };
-    vargs_any_explicit(3, __gen_fun_3);
+    _EF18vargs_any_explicitvB3any(3, __gen_fun_3);
     int32_t i;
     int32_t __gen_fun_4[0] = {  };
-    vargs_type(0, __gen_fun_4);
+    _EF10vargs_typevB3int(0, __gen_fun_4);
     int32_t __gen_fun_5[1] = { i };
-    vargs_type(1, __gen_fun_5);
+    _EF10vargs_typevB3int(1, __gen_fun_5);
     int32_t __gen_fun_6[3] = { i, i, i };
-    vargs_type(3, __gen_fun_6);
+    _EF10vargs_typevB3int(3, __gen_fun_6);
     int32_t* __gen_fun_7[2] = { &i, &i };
-    vargs_complex_type(2, __gen_fun_7);
+    _EF18vargs_complex_typevRB3int(2, __gen_fun_7);
     int32_t __gen_fun_8[2] = { i, i };
-    args3_vargs_explicit("Hello", i, &i, 2, __gen_fun_8);
+    _EF20args3_vargs_explicitB3strB3intRB3intvB3int("Hello", i, &i, 2, __gen_fun_8);
 }

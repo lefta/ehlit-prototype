@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void do_something(void)
+void _EF12do_something(void)
 {
 }
 
@@ -10,7 +10,7 @@ int32_t main(void)
     int32_t i = 3;
     while (i)
     {
-        do_something();
+        _EF12do_something();
         i = i - 1;
     }
     i = 3;

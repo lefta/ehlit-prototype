@@ -1,12 +1,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void printf(char* s)
+void _EF6printfB3str(char* s)
 {
 }
 
 int32_t main(int32_t ac, char** av)
 {
-    printf("Hello, world!\n");
+    _EF6printfB3str("Hello, world!\n");
     return (0);
 }

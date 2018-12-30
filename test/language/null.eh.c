@@ -1,18 +1,18 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void* function(void)
+void* _EF8function(void)
 {
     return (NULL);
 }
 
-void get_null(void* p)
+void _EF8get_nullB3any(void* p)
 {
 }
 
 int32_t main(void)
 {
     char* s = NULL;
-    get_null(NULL);
+    _EF8get_nullB3any(NULL);
     return (0);
 }

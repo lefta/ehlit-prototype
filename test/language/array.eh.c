@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-void puts(char* s)
+void _EF4putsB3str(char* s)
 {
 }
 
@@ -13,7 +13,7 @@ int32_t main(int32_t ac, char** av)
     {
         ac--;
         av2[ac] = av[ac + 1];
-        puts(av[ac]);
+        _EF4putsB3str(av[ac]);
     }
     int32_t** sarr1;
     int32_t sarr2[42][5];

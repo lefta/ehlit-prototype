@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
-uint8_t global = !0;
-static int32_t universal_answer = 42;
+uint8_t _EV6global = !0;
+static int32_t _EV16universal_answer = 42;
 
 int32_t main(void)
 {
@@ -14,8 +14,8 @@ int32_t main(void)
         int32_t k;
         k = 1;
     }
-    global = 0;
-    universal_answer = 12;
+    _EV6global = 0;
+    _EV16universal_answer = 12;
     globint = 12;
     return (0);
 }
