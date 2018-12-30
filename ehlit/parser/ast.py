@@ -1355,6 +1355,10 @@ class SwitchCaseBody(FlowScope):
         super().__init__(0, body)
         self.fallthrough: bool = fallthrough
 
+    def build(self, parent: Node) -> 'SwitchCaseBody':
+        super().build(parent)
+        return self
+
 
 class Return(Node):
     def __init__(self, expr: Optional[Expression] = None) -> None:
