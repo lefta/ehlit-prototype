@@ -221,7 +221,7 @@ class Node:
         '''! Check if this node is a descendant of some node type
         @param cls @b Class The class to check for
         '''
-        return type(self) is cls or self.parent.is_child_of(cls)
+        return isinstance(self, cls) or self.parent.is_child_of(cls)
 
     def do_before(self, do: 'Node', before: 'Node') -> None:
         """! Do something before executing the current node
