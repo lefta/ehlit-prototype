@@ -1626,6 +1626,7 @@ class Alias(Symbol, DeclarationBase):
 
     def build(self, parent: Node) -> 'Alias':
         self.parent = parent
+        self.dst.parent = self
         parent.declare(self)
         self.src_sym = self.src_sym.build(self)
         if isinstance(self.src_sym, Symbol):
