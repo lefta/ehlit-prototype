@@ -1235,10 +1235,12 @@ class FunctionCall(Value):
                 Array(typ.variadic_type, Number(str(len(vargs)))),
                 Identifier(0, vargs_name),
                 Assignment(Expression([InitializationList(vargs)], False))
-            ))
+            )).build(self)
             self.do_before(stmt, self)
-            self.args.append(Expression([Number(str(len(vargs)))], False))
-            self.args.append(Expression([CompoundIdentifier([Identifier(0, vargs_name)])], False))
+            self.args.append(Expression([Number(str(len(vargs)))], False).build(self))
+            self.args.append(
+                Expression([CompoundIdentifier([Identifier(0, vargs_name)])], False).build(self)
+            )
 
     def _reorder(self) -> 'Value':
         parent: Optional[Value] = None
