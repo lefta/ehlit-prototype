@@ -1329,6 +1329,12 @@ class SwitchCase(Node):
         self.cases: List['SwitchCaseTest'] = cases
         self.body: 'SwitchCaseBody' = body
 
+    def build(self, parent: Node) -> 'SwitchCase':
+        super().build(parent)
+        self.cases = [c.build(self) for c in self.cases]
+        self.body = self.body.build(self)
+        return self
+
 
 class SwitchCaseTest(Node):
     def __init__(self, test: Optional[Value]) -> None:
