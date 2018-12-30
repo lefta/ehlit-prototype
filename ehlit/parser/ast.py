@@ -921,6 +921,7 @@ class Operator(Node):
 
 class VariableAssignment(Node):
     def __init__(self, var: Symbol, assign: 'Assignment') -> None:
+        super().__init__()
         self.var: Symbol = var
         self.assign: 'Assignment' = assign
 
@@ -1089,6 +1090,7 @@ class VArgsLength(VariableDeclaration):
 
 class Statement(Node):
     def __init__(self, expr: Node) -> None:
+        super().__init__()
         self.expr: Node = expr
 
     def build(self, parent: Node) -> 'Statement':
@@ -1323,12 +1325,14 @@ class Condition(Node):
 
 class SwitchCase(Node):
     def __init__(self, cases: List['SwitchCaseTest'], body: 'SwitchCaseBody') -> None:
+        super().__init__()
         self.cases: List['SwitchCaseTest'] = cases
         self.body: 'SwitchCaseBody' = body
 
 
 class SwitchCaseTest(Node):
     def __init__(self, test: Optional[Value]) -> None:
+        super().__init__()
         self.test: Optional[Value] = test
 
     def build(self, parent: Node) -> 'SwitchCaseTest':
