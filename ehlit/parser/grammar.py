@@ -262,7 +262,7 @@ def statement() -> GrammarType:
 
 
 def global_variable() -> GrammarType:
-    return Optional('priv'), variable_declaration_assignable
+    return ZeroOrMore(['priv', 'cdecl']), variable_declaration_assignable
 
 
 def global_statement() -> GrammarType:
@@ -366,15 +366,11 @@ def function_prototype() -> GrammarType:
 
 
 def function_declaration() -> GrammarType:
-    return function_prototype, Not('{')
-
-
-def function_qualifiers() -> GrammarType:
-    return ZeroOrMore(['priv', 'inline'])
+    return Optional('cdecl'), function_prototype, Not('{')
 
 
 def function_definition() -> GrammarType:
-    return function_qualifiers, function_prototype, control_structure_body_stub
+    return ZeroOrMore(['priv', 'inline', 'cdecl']), function_prototype, control_structure_body_stub
 
 
 def function() -> GrammarType:

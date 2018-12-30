@@ -201,8 +201,7 @@ class ASTBuilder(PTNodeVisitor):
         if isinstance(children[0], list):
             return ast.Expression(children[0], False)
         # Ignore type because we can't check which variant of Tuple
-        values: List[ast.Value] = list(children)  # type: ignore
-        return ast.Expression(values, False)
+        return ast.Expression(list(children), False)  # type: ignore
 
     def visit_assignment(self, node: ParseTreeNode, children: Tuple[ast.Expression]
                          ) -> ast.Assignment:
@@ -347,14 +346,27 @@ class ASTBuilder(PTNodeVisitor):
         return ast.Statement(children[0])
 
     def visit_global_statement(self, node: ParseTreeNode,
-                               children: Tuple[ast.VariableDeclaration,
-                                               Tuple[str, ast.VariableDeclaration]]
+                               children: Union[Tuple[ast.VariableDeclaration],
+                                               Tuple[str, ast.VariableDeclaration],
+                                               Tuple[str, str, ast.VariableDeclaration]]
                                ) -> ast.Statement:
-        if len(children) == 2:
-            assert isinstance(children[1], ast.VariableDeclaration)
-            children[1].private = True
-            return ast.Statement(children[1])
-        return ast.Statement(children[0])
+        private: bool = False
+        cdecl: bool = False
+        i: int = 0
+        while isinstance(children[i], str):
+            if children[i] == 'priv':
+                private = True
+            elif children[i] == 'cdecl':
+                cdecl = True
+            else:
+                raise Exception('unimplemented variable modifier: {}'.format(children[i]))
+            i += 1
+        assert isinstance(children[i], ast.VariableDeclaration)
+        if private:
+            children[i].private = True
+        if cdecl:
+            children[i].declaration_type = ast.DeclarationType.C
+        return ast.Statement(children[i])
 
     # Control Structures
     ####################
@@ -411,8 +423,7 @@ class ASTBuilder(PTNodeVisitor):
         if children[-1] == 'fallthrough':
             return ast.SwitchCaseBody(list(children[:-1]), True)
         # Ignore type because we can't check which variant of Tuple
-        blocks: List[ast.Statement] = list(children)  # type: ignore
-        return ast.SwitchCaseBody(blocks, False)
+        return ast.SwitchCaseBody(list(children), False)  # type: ignore
 
     def visit_switch_cases(self, node: ParseTreeNode,
                            children: Tuple[List[ast.SwitchCaseTest], ast.SwitchCaseBody]
@@ -478,16 +489,14 @@ class ASTBuilder(PTNodeVisitor):
     def visit_function_declaration(self, node: ParseTreeNode,
                                    children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier]]
                                    ) -> ast.FunctionDeclaration:
-        return ast.FunctionDeclaration(node.position, ast.Qualifier.NONE, *children[0])
-
-    def visit_function_qualifiers(self, node: ParseTreeNode, children: Tuple[str, ...]
-                                  ) -> ast.Qualifier:
-        res: ast.Qualifier = ast.Qualifier.NONE
-        for qualifier in children:
-            if qualifier == 'inline':
-                res |= ast.Qualifier.INLINE
-            elif qualifier == 'priv':
-                res |= ast.Qualifier.PRIVATE
+        i: int = 0
+        cdecl: bool = False
+        if isinstance(children[0], str) and children[0] == 'cdecl':
+            cdecl = True
+            i += 1
+        res = ast.FunctionDeclaration(node.position, ast.Qualifier.NONE, *children[i])
+        if cdecl:
+            res.declaration_type = ast.DeclarationType.C
         return res
 
     def visit_function_definition(self, node: ParseTreeNode,
@@ -495,13 +504,24 @@ class ASTBuilder(PTNodeVisitor):
                                                   ast.UnparsedContents]
                                   ) -> ast.FunctionDefinition:
         qualifiers: ast.Qualifier = ast.Qualifier.NONE
+        cdecl: bool = False
         i: int = 0
-        if isinstance(children[0], ast.Qualifier):
-            qualifiers = children[0]
-            i = 1
-        # Ignore type because of Tuple
-        return ast.FunctionDefinition(node.position, qualifiers, children[i][0],  # type: ignore
-                                      children[i][1], children[i + 1])  # type: ignore
+        while isinstance(children[i], str):
+            if children[i] == 'inline':
+                qualifiers |= ast.Qualifier.INLINE
+            elif children[i] == 'priv':
+                qualifiers |= ast.Qualifier.PRIVATE
+            elif children[i] == 'cdecl':
+                cdecl = True
+            i += 1
+        body = children[i + 1]
+        assert isinstance(body, ast.UnparsedContents)
+        decl = children[i]
+        assert isinstance(decl, tuple)
+        res = ast.FunctionDefinition(node.position, qualifiers, decl[0], decl[1], body)
+        if cdecl:
+            res.declaration_type = ast.DeclarationType.C
+        return res
 
     def visit_function(self, node: ParseTreeNode, children: Tuple[ast.FunctionDeclaration]
                        ) -> ast.FunctionDeclaration:

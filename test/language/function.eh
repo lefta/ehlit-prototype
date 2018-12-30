@@ -78,3 +78,9 @@ void call_vargs() {
 	vargs_complex_type(i, i)
 	args3_vargs_explicit("Hello", i, i, i, i)
 }
+
+cdecl void cdecl_proto()
+cdecl void cdecl_fun() {}
+priv cdecl void cdecl_priv_fun() {}
+inline cdecl void cdecl_inl_fun() {}
+inline priv cdecl void cdecl_priv_inl_fun() {}

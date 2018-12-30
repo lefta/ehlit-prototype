@@ -15,6 +15,32 @@
 │     └─ Assignment
 │        └─ Expression
 │           └─ Number: 42
+├─ Statement
+│  └─ VariableDeclaration
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @int
+│     ├─ Identifier: cdecl_var
+│     └─ Assignment
+│        └─ Expression
+│           └─ Number: 42
+├─ Statement
+│  └─ VariableDeclaration
+│     ├─ Modifiers: private
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @int
+│     ├─ Identifier: cdecl_priv_var
+│     └─ Assignment
+│        └─ Expression
+│           └─ Number: 42
+├─ Statement
+│  └─ VariableDeclaration
+│     ├─ Modifiers: private
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @int
+│     ├─ Identifier: priv_cdecl_var
+│     └─ Assignment
+│        └─ Expression
+│           └─ Number: 42
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: main
@@ -94,6 +120,27 @@
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier
       │     │  └─ Identifier: globint
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 12
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: cdecl_var
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 12
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: cdecl_priv_var
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 12
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: priv_cdecl_var
       │     └─ Assignment
       │        └─ Expression
       │           └─ Number: 12
