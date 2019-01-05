@@ -1,0 +1,24 @@
+└─ Include
+   ├─ Path: c_parser/enum.h
+   └─ Symbols found
+      ├─ Enum
+      │  ├─ Identifier: test_enum
+      │  └─ Fields
+      │     ├─ val1
+      │     ├─ val2
+      │     └─ val3
+      ├─ Enum
+      │  ├─ Identifier: 
+      │  └─ Fields
+      │     └─ val1
+      ├─ Alias
+      │  ├─ From:
+      │  │  └─ Enum
+      │  │     ├─ Identifier: 
+      │  │     └─ Fields
+      │  │        └─ val1
+      │  └─ To:
+      │     └─ Identifier: test_enum_t
+      └─ Enum
+         ├─ Identifier: forward_decl
+         └─ Forward declaration

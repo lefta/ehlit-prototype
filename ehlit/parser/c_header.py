@@ -266,6 +266,22 @@ def parse_UNION_DECL(cursor: Cursor) -> ast.Node:
     )
 
 
+def parse_ENUM_DECL(cursor: Cursor) -> ast.Node:
+    if not cursor.is_definition():
+        return ast.EhEnum(0, ast.Identifier(0, cursor.spelling), None)
+    fields: List[ast.Identifier] = []
+    expect: bool = False
+    for t in cursor.get_tokens():
+        if t.spelling == '{' or t.spelling == ',':
+            expect = True
+        elif t.spelling == '}':
+            break
+        elif expect:
+            fields.append(ast.Identifier(0, t.spelling))
+            expect = False
+    return ast.EhEnum(0, ast.Identifier(0, cursor.spelling), fields)
+
+
 def type_VOID(typ: Type) -> ast.Symbol:
     return ast.CompoundIdentifier([ast.Identifier(0, '@void')])
 
