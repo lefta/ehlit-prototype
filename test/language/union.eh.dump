@@ -17,7 +17,7 @@
 │        └─ Identifier: field3
 ├─ Union
 │  ├─ Identifier: forward_decl
-│  ├─ Forward declaration
+│  └─ Forward declaration
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun

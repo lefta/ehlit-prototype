@@ -395,7 +395,7 @@ class DumpWriter:
         self.dump('Struct')
         self.print_node(node.sym)
         if node.fields is None:
-            self.print_str('Forward declaration')
+            self.print_str('Forward declaration', False)
         else:
             self.print_node_list('Fields', node.fields, False)
 
@@ -405,6 +405,6 @@ class DumpWriter:
         self.dump('Union')
         self.print_node(node.sym)
         if node.fields is None:
-            self.print_str('Forward declaration')
+            self.print_str('Forward declaration', False)
         else:
             self.print_node_list('Fields', node.fields, False)
