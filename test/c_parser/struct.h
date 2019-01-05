@@ -11,3 +11,5 @@ struct linked_list {
     void* contents;
     linked_list* next;
 };
+
+struct forward_decl;

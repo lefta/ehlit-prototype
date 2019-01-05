@@ -6,3 +6,5 @@ union test_union {
 typedef union {
     int field1;
 } test_union_t;
+
+union forward_decl;

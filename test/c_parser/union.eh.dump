@@ -19,14 +19,17 @@
       │        ├─ CompoundIdentifier
       │        │  └─ Identifier: @int32
       │        └─ Identifier: field1
-      └─ Alias
-         ├─ From:
-         │  └─ Union
-         │     ├─ Identifier: 
-         │     └─ Fields
-         │        └─ VariableDeclaration
-         │           ├─ CompoundIdentifier
-         │           │  └─ Identifier: @int32
-         │           └─ Identifier: field1
-         └─ To:
-            └─ Identifier: test_union_t
+      ├─ Alias
+      │  ├─ From:
+      │  │  └─ Union
+      │  │     ├─ Identifier: 
+      │  │     └─ Fields
+      │  │        └─ VariableDeclaration
+      │  │           ├─ CompoundIdentifier
+      │  │           │  └─ Identifier: @int32
+      │  │           └─ Identifier: field1
+      │  └─ To:
+      │     └─ Identifier: test_union_t
+      └─ Union
+         ├─ Identifier: forward_decl
+         └─ Forward declaration

@@ -30,15 +30,18 @@
       │  │           └─ Identifier: field1
       │  └─ To:
       │     └─ Identifier: test_struct_t
+      ├─ Struct
+      │  ├─ Identifier: linked_list
+      │  └─ Fields
+      │     ├─ VariableDeclaration
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: @any
+      │     │  └─ Identifier: contents
+      │     └─ VariableDeclaration
+      │        ├─ Reference
+      │        │  └─ CompoundIdentifier
+      │        │     └─ Identifier: linked_list
+      │        └─ Identifier: next
       └─ Struct
-         ├─ Identifier: linked_list
-         └─ Fields
-            ├─ VariableDeclaration
-            │  ├─ CompoundIdentifier
-            │  │  └─ Identifier: @any
-            │  └─ Identifier: contents
-            └─ VariableDeclaration
-               ├─ Reference
-               │  └─ CompoundIdentifier
-               │     └─ Identifier: linked_list
-               └─ Identifier: next
+         ├─ Identifier: forward_decl
+         └─ Forward declaration
