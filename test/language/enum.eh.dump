@@ -1,0 +1,215 @@
+├─ Enum
+│  ├─ Identifier: TestEnum
+│  └─ Fields
+│     ├─ val1
+│     ├─ val2
+│     └─ val3
+├─ Enum
+│  ├─ Identifier: forward_decl
+│  └─ Forward declaration
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: fun
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: TestEnum
+│  │           └─ Identifier: e
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: enum_fun
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  └─ CompoundIdentifier
+│  │     │     └─ Identifier: TestEnum
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: TestEnum
+│  │           └─ Identifier: s
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ CompoundIdentifier
+│                 └─ Identifier: s
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: any_fun
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @any
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @any
+│  │           └─ Identifier: p
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ CompoundIdentifier
+│                 └─ Identifier: p
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ Identifier: main
+   │  └─ FunctionType
+   │     └─ CompoundIdentifier
+   │        └─ Identifier: @int
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: TestEnum
+      │     ├─ Identifier: e
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              ├─ Identifier: TestEnum
+      │              └─ Identifier: val1
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: e
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: TestEnum
+      │     ├─ Identifier: re
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: e
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: re
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              ├─ Identifier: TestEnum
+      │              └─ Identifier: val2
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: re
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: re
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: enum_fun
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ CompoundIdentifier
+      │                       └─ Identifier: e
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @size
+      │     ├─ Identifier: ss
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Sizeof
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: TestEnum
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: ss
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Sizeof
+      │              └─ Reference
+      │                 └─ CompoundIdentifier
+      │                    └─ Identifier: TestEnum
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ TemplatedIdentifier: @func
+      │     │  └─ Types
+      │     │     └─ FunctionType
+      │     │        ├─ Reference
+      │     │        │  └─ CompoundIdentifier
+      │     │        │     └─ Identifier: TestEnum
+      │     │        └─ Arguments:
+      │     │           └─ VariableDeclaration
+      │     │              └─ Reference
+      │     │                 └─ CompoundIdentifier
+      │     │                    └─ Identifier: TestEnum
+      │     ├─ Identifier: psf
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: enum_fun
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: re
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: any_fun
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ CompoundIdentifier
+      │              │        └─ Identifier: TestEnum
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ CompoundIdentifier
+      │                       └─ Identifier: re
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: e
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: any_fun
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ CompoundIdentifier
+      │              │        └─ Identifier: TestEnum
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ CompoundIdentifier
+      │                       └─ Identifier: e
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: re
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Cast
+      │              ├─ Reference
+      │              │  └─ CompoundIdentifier
+      │              │     └─ Identifier: TestEnum
+      │              └─ Expression
+      │                 └─ Number: 0
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

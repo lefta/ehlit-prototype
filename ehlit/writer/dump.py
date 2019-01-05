@@ -23,12 +23,12 @@ import logging
 from typing import Callable, cast, List, Sequence, Union
 from ehlit.parser.ast import (
     Alias, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char, CompoundIdentifier,
-    Condition, ControlStructure, DecimalNumber, Declaration, EhUnion, Expression, FunctionCall,
-    FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Include, Import,
-    InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType,
-    ReferenceToValue, Return, Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase,
-    SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, VariableAssignment,
-    VariableDeclaration
+    Condition, ControlStructure, DecimalNumber, Declaration, EhEnum, EhUnion, EnumField, Expression,
+    FunctionCall, FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Include,
+    Import, InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue,
+    ReferenceToType, ReferenceToValue, Return, Sizeof, Statement, String, Struct,
+    SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier,
+    VariableAssignment, VariableDeclaration
 )
 
 IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
@@ -408,3 +408,18 @@ class DumpWriter:
             self.print_str('Forward declaration', False)
         else:
             self.print_node_list('Fields', node.fields, False)
+
+    @indent
+    def dumpEhEnum(self, node: Union[Node, str]) -> None:
+        node = cast(EhEnum, node)
+        self.dump('Enum')
+        self.print_node(node.sym)
+        if node.fields is None:
+            self.print_str('Forward declaration', False)
+        else:
+            self.print_node_list('Fields', node.fields, False)
+
+    @indent
+    def dumpEnumField(self, node: Union[Node, str]) -> None:
+        node = cast(EnumField, node)
+        self.dump(node.name)

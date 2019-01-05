@@ -414,6 +414,10 @@ def union() -> GrammarType:
     return 'union', identifier, Optional('{', ZeroOrMore(variable_declaration), '}')
 
 
+def enum() -> GrammarType:
+    return 'enum', identifier, Optional('{', ZeroOrMore(identifier), '}')
+
+
 # Root grammars
 ###############
 
@@ -422,5 +426,5 @@ def function_body_grammar() -> GrammarType:
 
 
 def grammar() -> GrammarType:
-    return ZeroOrMore([comment, import_instruction, include_instruction, struct, union, alias,
+    return ZeroOrMore([comment, import_instruction, include_instruction, struct, union, enum, alias,
                        function, global_statement]), EOF

@@ -25,7 +25,7 @@ import typing
 from ehlit.parser.ast import (
     Alias, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType, Cast, Char,
     CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container, DecimalNumber,
-    Declaration, DeclarationBase, EhUnion, Expression, FunctionCall, FunctionDeclaration,
+    Declaration, DeclarationBase, EhEnum, EhUnion, Expression, FunctionCall, FunctionDeclaration,
     FunctionDefinition, FunctionType, Identifier, Import, Include, InitializationList, Node,
     NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
     ReferenceType, Return, Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase,
@@ -189,6 +189,7 @@ class SourceWriter:
         prefix_mapping: Dict[typing.Type[Type], str] = {
             Struct: 'struct',
             EhUnion: 'union',
+            EhEnum: 'enum',
         }
         prefix = prefix_mapping.get(type(typ))
         if prefix is not None:
@@ -453,26 +454,26 @@ class SourceWriter:
 
     def writeCompoundIdentifier(self, node: CompoundIdentifier) -> None:
         self.write_value(node)
-        i: int = 0
-        while i < len(node.elems):
-            if i < len(node.elems) - 1:
-                ref_offset: int = node.elems[i].ref_offset
+        for elem in node.elems:
+            if elem is not node.elems[-1]:
+                if isinstance(elem.decl, EhEnum):
+                    continue
+                ref_offset: int = elem.ref_offset
                 if ref_offset is 0:
-                    self.write(node.elems[i])
+                    self.write(elem)
                     self.file.write('.')
                 elif ref_offset is 1:
-                    self.write(node.elems[i])
+                    self.write(elem)
                     self.file.write('->')
                 else:
                     self.file.write('(')
                     while ref_offset > 1:
                         self.file.write('*')
                         ref_offset -= 1
-                    self.write(node.elems[i])
+                    self.write(elem)
                     self.file.write(')->')
             else:
-                self.write(node.elems[i])
-            i += 1
+                self.write(elem)
         if node.is_type:
             self.write_type_suffix(node)
 
@@ -565,3 +566,24 @@ class SourceWriter:
     def writeEhUnion(self, node: EhUnion) -> None:
         self.file.write('\nunion ')
         self.writeContainerStructure(node)
+
+    def writeEhEnum(self, node: EhEnum) -> None:
+        self.write_indent()
+        self.file.write('\nenum ')
+        self.write(node.sym)
+        if node.fields is not None:
+            self.write_indent()
+            self.file.write('\n')
+            self.file.write('{\n')
+            self.indent += 1
+            for f in node.fields:
+                self.write_indent()
+                assert f.sym is not None
+                self.write(f.sym)
+                if f is not node.fields[-1]:
+                    self.file.write(',\n')
+            self.indent -= 1
+            self.file.write('\n')
+            self.write_indent()
+            self.file.write('}')
+        self.file.write(';\n')

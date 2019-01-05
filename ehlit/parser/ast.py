@@ -1889,6 +1889,78 @@ class EhUnion(ContainerStructure):
         self.display_name = 'union'
 
 
+class EhEnum(Type, Scope):
+    def __init__(self, pos: int, sym: Identifier, fields: Optional[List[Identifier]]) -> None:
+        super().__init__(pos)
+        Scope.__init__(self, pos)
+        self.sym: Identifier = sym
+        self.fields: Optional[List[EnumField]] = None
+        if fields is not None:
+            self.fields = [EnumField(f, self) for f in fields]
+
+    def build(self, parent: Node) -> 'EhEnum':
+        super().build(parent)
+        self.sym = self.sym.build(self)
+        if self.fields is not None:
+            self.fields = [f.build(self) for f in self.fields]
+        return self
+
+    @property
+    def mangled(self) -> str:
+        if self.declaration_type == DeclarationType.C:
+            return self.sym.name
+        return 'N{}'.format(self.sym.mangled)
+
+    @property
+    def mangled_scope(self) -> str:
+        return '{}{}'.format(self.parent.mangled_scope, self.mangled)
+
+    def from_any(self) -> Symbol:
+        return Reference(CompoundIdentifier([Identifier(0, self.sym.name)])).build(self)
+
+    def get_inner_declaration(self, sym: str) -> DeclarationLookup:
+        if self.fields is None:
+            return None, 'accessing incomplete enum {}'.format(self.sym.name)
+        for f in self.fields:
+            if f.name == sym:
+                return f, None
+        return None, None
+
+    @property
+    def name(self) -> str:
+        return self.sym.name
+
+    def dup(self) -> Type:
+        return EhEnum(self.pos, self.sym, None)
+
+    def find_declaration(self, sym: str) -> DeclarationLookup:
+        if sym == self.name:
+            return self, None
+        return super().find_declaration(sym)
+
+
+class EnumField(Declaration):
+    def __init__(self, sym: Identifier, parent: EhEnum) -> None:
+        super().__init__(sym.pos, CompoundIdentifier([Identifier(0, parent.name)]), sym,
+                         Qualifier.NONE)
+
+    def build(self, parent: Node) -> 'EnumField':
+        super().build(parent)
+        return self
+
+    def _make_type(self) -> None:
+        assert isinstance(self.parent, EhEnum)
+        self._typ = self.parent
+
+    @property
+    def mangled(self) -> str:
+        if self.sym is None:
+            return ''
+        if self.declaration_type == DeclarationType.C:
+            return self.sym.name
+        return self.sym.mangled
+
+
 class AST(UnorderedScope):
     def __init__(self, nodes: List[Node]) -> None:
         super().__init__(0)

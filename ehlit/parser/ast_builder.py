@@ -568,6 +568,13 @@ class ASTBuilder(PTNodeVisitor):
             return ast.EhUnion(node.position, children[1], None)
         return ast.EhUnion(node.position, children[1], list(children[2:]))
 
+    def visit_enum(self, node: ParseTreeNode,
+                   children: Tuple[StrMatch, ast.Identifier, ast.Identifier]
+                   ) -> ast.EhEnum:
+        if len(children) is 2:
+            return ast.EhEnum(node.position, children[1], None)
+        return ast.EhEnum(node.position, children[1], list(children[2:]))
+
     # Root grammars
     ###############
 

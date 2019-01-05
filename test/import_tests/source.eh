@@ -10,6 +10,12 @@ union test_union {
 	str s
 }
 
+enum forward_decl_enum
+enum test_enum {
+	val1
+	val2
+}
+
 int fun_proto()
 int fun_proto_args(int i, str s)
 

@@ -23,9 +23,9 @@ import sys
 from typing import List, TextIO
 from ehlit.parser.ast import (
     Alias, Array, Assignment, AST, BoolValue, Cast, CompoundIdentifier, ContainerStructure,
-    Declaration, DecimalNumber, EhUnion, Expression, FunctionDeclaration, FunctionDefinition,
-    FunctionType, Identifier, Import, Include, Node, Number, Operator, ReferenceToType, Return,
-    Statement, Struct, TemplatedIdentifier, VariableDeclaration
+    Declaration, DecimalNumber, EhEnum, EhUnion, Expression, FunctionDeclaration,
+    FunctionDefinition, FunctionType, Identifier, Import, Include, Node, Number, Operator,
+    ReferenceToType, Return, Statement, Struct, TemplatedIdentifier, VariableDeclaration
 )
 
 
@@ -237,3 +237,16 @@ class ImportWriter:
 
     def writeEhUnion(self, node: EhUnion) -> None:
         self.writeContainerStructure(node)
+
+    def writeEhEnum(self, node: EhEnum) -> None:
+        self.file.write('\nenum ')
+        self.write(node.sym)
+        if node.fields is not None:
+            self.file.write(' {\n')
+            self.indent += 1
+            for f in node.fields:
+                self.write_indent()
+                self.file.write(f.name)
+                self.file.write('\n')
+            self.indent -= 1
+            self.file.write('}\n')
