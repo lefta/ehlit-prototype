@@ -1,4 +1,4 @@
-from typing import Iterator, List, Optional, Text
+from typing import Iterator, List, Optional, Text, Tuple, Union
 
 
 class File(object):
@@ -13,6 +13,8 @@ class SourceLocation(object):
 
 class TokenKind(object):
     IDENTIFIER: 'TokenKind'
+    KEYWORD: 'TokenKind'
+    LITERAL: 'TokenKind'
 
 
 class Token(object):
@@ -202,6 +204,7 @@ class CursorKind(object):
     FUNCTION_DECL: 'CursorKind'
     FUNCTION_TEMPLATE: 'CursorKind'
     LAMBDA_EXPR: 'CursorKind'
+    MACRO_DEFINITION: 'CursorKind'
     NAMESPACE: 'CursorKind'
     NAMESPACE_REF: 'CursorKind'
     NO_DECL_FOUND: 'CursorKind'
@@ -267,7 +270,8 @@ class Index(object):
     def create(excludeDecls: bool =False) -> 'Index':
         pass
 
-    def parse(self, path: str, args: Optional[List[str]] =None, unsaved_files: Optional[str] =None,
+    def parse(self, path: str, args: Optional[List[str]] =None,
+              unsaved_files: Union[List[Tuple[str, str]], Optional[str]] =None,
               options: int =0) -> 'TranslationUnit':
         pass
 
@@ -280,6 +284,8 @@ class Diagnostic(object):
 
 
 class TranslationUnit(object):
+    PARSE_DETAILED_PROCESSING_RECORD: int
+
     cursor: Cursor
     diagnostics: Iterator[Diagnostic]
 
