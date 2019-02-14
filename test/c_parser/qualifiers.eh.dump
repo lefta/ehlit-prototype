@@ -1,6 +1,7 @@
 └─ Include
    ├─ Path: c_parser/qualifiers.h
    └─ Symbols found
+      ├─ No type
       ├─ FunctionDeclaration
       │  ├─ Identifier: print_int
       │  └─ FunctionType

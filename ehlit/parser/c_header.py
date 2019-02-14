@@ -24,7 +24,7 @@ import logging
 import subprocess
 from argparse import ArgumentParser
 from clang.cindex import (Index, TranslationUnitLoadError, CursorKind, TypeKind, Cursor, Type,
-                          TranslationUnit)
+                          TranslationUnit, TokenKind, Token)
 from ehlit.parser.error import ParseError, Failure
 from ehlit.parser import ast
 from typing import Dict, List, Optional, Set
@@ -81,17 +81,66 @@ try:
 except Exception:
     logging.warning('failed to get default include directories')
 
-
 # Yups, mixing multiple languages in the same directory would be very disapointing, but who knows...
 include_dirs.append('.')
 
 
-def cursor_to_ehlit(cursor: Cursor) -> Optional[ast.Node]:
-    try:
-        return globals()['parse_' + cursor.kind.name](cursor)
-    except KeyError:
-        logging.debug('c_compat: unimplemented: parse_%s' % cursor.kind.name)
-    return None
+# Build an empty file to get a list of builtin Clang macros. We do not want to expose them, as they
+# are too much specific and could change between the Ehlit build and the C build.
+def _get_builtin_defines() -> List[str]:
+    defs: List[str] = []
+    index: Index = Index.create()
+    tu: TranslationUnit = index.parse('builtins.h',
+                                      options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD,
+                                      unsaved_files=[('builtins.h', '')])
+    for c in tu.cursor.get_children():
+        if c.kind == CursorKind.MACRO_DEFINITION:
+            toks = list(c.get_tokens())
+            defs.append(toks[0].spelling)
+    del tu
+    del index
+    return defs
+
+
+builtin_defines: List[str] = _get_builtin_defines()
+
+
+class CDefine(ast.Declaration):
+    def __init__(self, sym: ast.Identifier) -> None:
+        super().__init__(
+            0,
+            ast.CompoundIdentifier([ast.Identifier(0, '@any')]),
+            sym,
+            ast.Qualifier.NONE
+        )
+        self.declaration_type = ast.DeclarationType.C
+
+
+class CMacroFunction(ast.FunctionDeclaration):
+    def __init__(self, sym: ast.Identifier, arg_cnt: int) -> None:
+        super().__init__(
+            0,
+            ast.Qualifier.NONE,
+            ast.TemplatedIdentifier('@func', [ast.FunctionType(
+                CAnyType.make(),
+                [ast.VariableDeclaration(CAnyType.make(), None)] * arg_cnt
+            )]),
+            sym
+        )
+        self.declaration_type = ast.DeclarationType.C
+
+
+class CAnyType(ast.Type):
+    @staticmethod
+    def make() -> ast.Symbol:
+        return ast.CompoundIdentifier([ast.Identifier(0, '@c_any')])
+
+    @property
+    def name(self) -> str:
+        return '@c_any'
+
+    def dup(self) -> ast.Type:
+        return CAnyType()
 
 
 uint_types: Set[TypeKind] = {
@@ -116,6 +165,14 @@ decimal_types: Dict[TypeKind, str] = {
     TypeKind.DOUBLE: '@double',
     TypeKind.LONGDOUBLE: '@decimal'
 }
+
+
+def cursor_to_ehlit(cursor: Cursor) -> Optional[ast.Node]:
+    try:
+        return globals()['parse_' + cursor.kind.name](cursor)
+    except KeyError:
+        logging.debug('c_compat: unimplemented: parse_%s' % cursor.kind.name)
+    return None
 
 
 def type_to_ehlit(typ: Type) -> ast.Node:
@@ -170,11 +227,12 @@ def parse(filename: str) -> List[ast.Node]:
     path: str = find_file_in_path(filename)
     index: Index = Index.create()
     try:
-        tu: TranslationUnit = index.parse(path)
+        tu: TranslationUnit = index.parse(path,
+                                          options=TranslationUnit.PARSE_DETAILED_PROCESSING_RECORD)
     except TranslationUnitLoadError:
         raise ParseError([Failure(ParseError.Severity.Error, 0, '%s: parsing failed' % filename,
                                   None)])
-    result: List[ast.Node] = []
+    result: List[ast.Node] = [CAnyType()]
     for c in tu.cursor.get_children():
         node: Optional[ast.Node] = cursor_to_ehlit(c)
         if node is not None:
@@ -280,6 +338,101 @@ def parse_ENUM_DECL(cursor: Cursor) -> ast.Node:
             fields.append(ast.Identifier(0, t.spelling))
             expect = False
     return ast.EhEnum(0, ast.Identifier(0, cursor.spelling), fields)
+
+
+def parse_MACRO_DEFINITION(cursor: Cursor) -> Optional[ast.Node]:
+    tokens: List[Token] = list(cursor.get_tokens())
+    if tokens[0].spelling in builtin_defines:
+        return None
+
+    sym: ast.Identifier = ast.Identifier(0, tokens[0].spelling)
+
+    # Simple define
+    if len(tokens) is 1:
+        return CDefine(sym)
+    # Function macro
+    if tokens[1].spelling == '(':
+        i = 2
+        arg_cnt = 0
+        while i < len(tokens):
+            if tokens[i].kind != TokenKind.IDENTIFIER or i + 1 >= len(tokens):
+                break
+            arg_cnt += 1
+            if tokens[i + 1].spelling == ')':
+                if i + 2 >= len(tokens) and ',' not in [t.spelling for t in tokens]:
+                    break
+                return CMacroFunction(sym, arg_cnt)
+            elif tokens[i + 1].spelling != ',':
+                break
+            i += 2
+    # Constant macro
+    next_relevant_token = 2 if tokens[1].spelling == '(' else 1
+    if tokens[next_relevant_token].kind == TokenKind.LITERAL:
+        return ast.VariableDeclaration(_macro_var_type(tokens), sym)
+    # Alias macro
+    alias: Optional[ast.Identifier] = _macro_alias_value(tokens)
+    if alias is not None:
+        return ast.Alias(ast.CompoundIdentifier([alias]), ast.Identifier(0, tokens[0].spelling))
+    return None
+
+
+def _macro_var_type(tokens: List[Token]) -> ast.Symbol:
+    for tok in tokens:
+        if tok.kind == TokenKind.LITERAL:
+            if tok.spelling[0] == '"':
+                return ast.CompoundIdentifier([ast.Identifier(0, '@str')])
+            if all(x in '0123456789' for x in tok.spelling):
+                return ast.CompoundIdentifier([ast.Identifier(0, '@int32')])
+            if all(x in '0123456789.' for x in tok.spelling):
+                return ast.CompoundIdentifier([ast.Identifier(0, '@float')])
+    return CAnyType.make()
+
+
+def _macro_alias_value(tokens: List[Token]) -> Optional[ast.Identifier]:
+    name: str = tokens[0].spelling
+    tokens = tokens[2:] if tokens[1].spelling == '(' else tokens[1:]
+    if tokens[0].kind == TokenKind.KEYWORD:
+        typ: Optional[ast.Identifier] = _macro_alias_type(tokens)
+        if type is not None:
+            return typ
+    elif len(tokens) == 1 or (len(tokens) == 2 and tokens[1].spelling == ')'):
+        return ast.Identifier(0, tokens[0].spelling)
+    logging.debug('c_parser: failed to parse macro: {}'.format(name))
+    return None
+
+
+def _macro_alias_type(tokens: List[Token]) -> Optional[ast.Identifier]:
+    prefix: str = ''
+    size: int = 32
+    decimal: bool = False
+    for t in tokens:
+        if t.spelling == 'char':
+            size = 8
+        elif t.spelling == 'short':
+            size = 16
+        elif t.spelling == 'long':
+            size *= 2
+        elif t.spelling == 'float':
+            decimal = True
+        elif t.spelling == 'double':
+            decimal = True
+            size *= 2
+        elif t.spelling == 'unsigned':
+            prefix = 'u'
+        elif t.spelling == ')':
+            break
+        elif t.spelling not in ['signed', 'int']:
+            logging.debug('c_parser: unhandled token: {}'.format(t.spelling))
+            return None
+    if decimal:
+        if size == 32:
+            return ast.Identifier(0, '@float')
+        if size == 64:
+            return ast.Identifier(0, '@double')
+        if size == 128:
+            return ast.Identifier(0, '@decimal')
+        return None
+    return ast.Identifier(0, '@{}int{}'.format(prefix, size))
 
 
 def type_VOID(typ: Type) -> ast.Symbol:

@@ -1,0 +1,110 @@
+├─ Include
+│  ├─ Path: c_parser/macro.h
+│  └─ Symbols found
+│     ├─ No type
+│     ├─ C define
+│     │  └─ Identifier: NO_VALUE
+│     ├─ VariableDeclaration
+│     │  ├─ CompoundIdentifier
+│     │  │  └─ Identifier: @int32
+│     │  └─ Identifier: CONSTANT
+│     ├─ VariableDeclaration
+│     │  ├─ CompoundIdentifier
+│     │  │  └─ Identifier: @int32
+│     │  └─ Identifier: VALUE
+│     ├─ VariableDeclaration
+│     │  ├─ CompoundIdentifier
+│     │  │  └─ Identifier: @int32
+│     │  └─ Identifier: PARENTHESISED_VALUE
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: CONSTANT
+│     │  └─ To:
+│     │     └─ Identifier: MACROCEPTION
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: CONSTANT
+│     │  └─ To:
+│     │     └─ Identifier: MACROCEPTION_PARENS
+│     ├─ C function macro
+│     │  ├─ Identifier: MACROFUNC
+│     │  └─ Arg count: 2
+│     └─ C function macro
+│        ├─ Identifier: MACROFUNC_NO_BODY
+│        └─ Arg count: 2
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ Identifier: call_macros
+   │  └─ FunctionType
+   │     └─ CompoundIdentifier
+   │        └─ Identifier: @str
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: MACROFUNC
+      │              └─ Arguments
+      │                 ├─ Expression
+      │                 │  └─ Number: 1
+      │                 └─ Expression
+      │                    └─ Number: 2
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @str
+      │     ├─ Identifier: s
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: MACROFUNC_NO_BODY
+      │              └─ Arguments
+      │                 ├─ Expression
+      │                 │  └─ String: Hello
+      │                 └─ Expression
+      │                    └─ String: World
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: CONSTANT
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: VALUE
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: i
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: MACROCEPTION
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ FunctionCall
+                  ├─ CompoundIdentifier
+                  │  └─ Identifier: MACROFUNC
+                  └─ Arguments
+                     ├─ Expression
+                     │  └─ CompoundIdentifier
+                     │     └─ Identifier: i
+                     └─ Expression
+                        └─ CompoundIdentifier
+                           └─ Identifier: s

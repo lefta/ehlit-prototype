@@ -1,6 +1,7 @@
 └─ Include
    ├─ Path: c_parser/function_type.h
    └─ Symbols found
+      ├─ No type
       ├─ Alias
       │  ├─ From:
       │  │  └─ TemplatedIdentifier: @func

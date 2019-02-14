@@ -39,3 +39,6 @@ class TestCParser(EhlitTestCase):
 
     def test_c_variadic_function_call(self):
         self.assert_compiles('c_parser/function.eh')
+
+    def test_c_macro_usage(self):
+        self.assert_compiles('c_parser/macro.eh')

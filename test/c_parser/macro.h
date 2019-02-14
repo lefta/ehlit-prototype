@@ -1,0 +1,8 @@
+#define NO_VALUE
+#define CONSTANT 42
+#define VALUE (1 << 15)
+#define PARENTHESISED_VALUE (42)
+#define MACROCEPTION CONSTANT
+#define MACROCEPTION_PARENS (CONSTANT)
+#define MACROFUNC(a, b) (a+b)
+#define MACROFUNC_NO_BODY(a, b)

@@ -1,6 +1,7 @@
 └─ Include
    ├─ Path: c_parser/struct.h
    └─ Symbols found
+      ├─ No type
       ├─ Struct
       │  ├─ Identifier: test_struct
       │  └─ Fields

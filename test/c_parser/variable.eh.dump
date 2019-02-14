@@ -1,6 +1,7 @@
 └─ Include
    ├─ Path: c_parser/variable.h
    └─ Symbols found
+      ├─ No type
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
       │  │  └─ Identifier: @int32

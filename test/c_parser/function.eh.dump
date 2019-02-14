@@ -1,6 +1,7 @@
 ├─ Include
 │  ├─ Path: c_parser/function.h
 │  └─ Symbols found
+│     ├─ No type
 │     ├─ FunctionDeclaration
 │     │  ├─ Identifier: fun
 │     │  └─ FunctionType

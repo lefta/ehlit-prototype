@@ -1,6 +1,7 @@
 └─ Include
    ├─ Path: c_parser/enum.h
    └─ Symbols found
+      ├─ No type
       ├─ Enum
       │  ├─ Identifier: test_enum
       │  └─ Fields

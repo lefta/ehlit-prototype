@@ -1,6 +1,7 @@
 └─ Include
    ├─ Path: c_parser/union.h
    └─ Symbols found
+      ├─ No type
       ├─ Union
       │  ├─ Identifier: test_union
       │  └─ Fields

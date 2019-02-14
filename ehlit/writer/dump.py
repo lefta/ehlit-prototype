@@ -21,6 +21,7 @@
 
 import logging
 from typing import Callable, cast, List, Sequence, Union
+from ehlit.parser.c_header import CDefine, CMacroFunction, CAnyType
 from ehlit.parser.ast import (
     Alias, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char, CompoundIdentifier,
     Condition, ControlStructure, DecimalNumber, Declaration, EhEnum, EhUnion, EnumField, Expression,
@@ -423,3 +424,24 @@ class DumpWriter:
     def dumpEnumField(self, node: Union[Node, str]) -> None:
         node = cast(EnumField, node)
         self.dump(node.name)
+
+    @indent
+    def dumpCDefine(self, node: Union[Node, str]) -> None:
+        node = cast(CDefine, node)
+        self.dump('C define')
+        if node.sym is not None:
+            self.print_node(node.sym, False)
+
+    @indent
+    def dumpCMacroFunction(self, node: Union[Node, str]) -> None:
+        node = cast(CMacroFunction, node)
+        self.dump('C function macro')
+        if node.sym is not None:
+            self.print_node(node.sym)
+        assert isinstance(node.typ, FunctionType)
+        self.print_str('Arg count: {}'.format(len(node.typ.args)), False)
+
+    @indent
+    def dumpCAnyType(self, node: Union[Node, str]) -> None:
+        node = cast(CAnyType, node)
+        self.dump('No type')
