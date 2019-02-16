@@ -60,9 +60,9 @@ def comment() -> GrammarType:
 ########
 
 def builtin_keyword() -> GrammarType:
-    return ['null', 'ref', 'if', 'elif', 'else', 'while', 'return', 'func', 'alias', 'switch',
-            'case', 'fallthrough', 'default', 'struct', 'union', 'const', 'restrict', 'volatile',
-            'inline', 'priv', bool_value]
+    return ['null', 'ref', 'if', 'elif', 'else', 'while', 'do', 'for', 'return', 'func', 'alias',
+            'switch', 'case', 'fallthrough', 'default', 'struct', 'union', 'const', 'restrict',
+            'volatile', 'inline', 'priv', bool_value]
 
 
 def builtin_type() -> GrammarType:
@@ -270,7 +270,7 @@ def global_statement() -> GrammarType:
 
 
 def instruction() -> GrammarType:
-    return [comment, condition, do_while_loop, while_loop, switch, alias, statement]
+    return [comment, condition, for_do_loop, do_while_loop, while_loop, switch, alias, statement]
 
 
 # Control Structures
@@ -306,6 +306,18 @@ def while_loop() -> GrammarType:
 
 def do_while_loop() -> GrammarType:
     return 'do', [instruction, control_structure_body], 'while', expression
+
+
+def for_do_loop_initializers() -> GrammarType:
+    return OneOrMore([variable_declaration_assignable, variable_assignment], sep=',')
+
+
+def for_do_loop_actions() -> GrammarType:
+    return OneOrMore([variable_assignment, expression], sep=',')
+
+
+def for_do_loop() -> GrammarType:
+    return 'for', for_do_loop_initializers, 'do', for_do_loop_actions, 'while', control_structure
 
 
 def switch_case_test() -> GrammarType:

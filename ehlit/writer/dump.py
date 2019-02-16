@@ -25,8 +25,8 @@ from ehlit.parser.c_header import CDefine, CMacroFunction, CAnyType
 from ehlit.parser.ast import (
     Alias, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char, CompoundIdentifier,
     Condition, ControlStructure, DecimalNumber, Declaration, EhEnum, EhUnion, EnumField, Expression,
-    FunctionCall, FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Include,
-    Import, InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue,
+    ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition, FunctionType, Identifier,
+    Include, Import, InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue,
     ReferenceToType, ReferenceToValue, Return, Sizeof, Statement, String, Struct,
     SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier,
     VariableAssignment, VariableDeclaration
@@ -213,6 +213,15 @@ class DumpWriter:
 
     def dumpDoWhileLoop(self, node: Union[Node, str], is_next: bool) -> None:
         self.dumpControlStructure(node, is_next)
+
+    @indent
+    def dumpForDoLoop(self, node: Union[Node, str]) -> None:
+        node = cast(ForDoLoop, node)
+        self.dump('ControlStructure: ' + node.name)
+        self.print_node(node.cond)
+        self.print_node_list("Initializers", node.initializers)
+        self.print_node_list("Actions", node.actions)
+        self.print_node_list("ControlStructureBody", node.body, False)
 
     def dumpCondition(self, cond: Union[Node, str], is_next: bool) -> None:
         cond = cast(Condition, cond)

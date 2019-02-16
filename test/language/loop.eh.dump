@@ -99,6 +99,90 @@
       │              ├─ Operator: --
       │              └─ CompoundIdentifier
       │                 └─ Identifier: i
+      ├─ ControlStructure: for do
+      │  ├─ Expression
+      │  │  ├─ CompoundIdentifier
+      │  │  │  └─ Identifier: i
+      │  │  ├─ Operator: <
+      │  │  └─ Expression
+      │  │     └─ Number: 5
+      │  ├─ Initializers
+      │  │  └─ VariableAssignment
+      │  │     ├─ CompoundIdentifier
+      │  │     │  └─ Identifier: i
+      │  │     └─ Assignment
+      │  │        └─ Expression
+      │  │           └─ Number: 0
+      │  ├─ Actions
+      │  │  └─ Expression
+      │  │     └─ SuffixOperatorValue
+      │  │        ├─ Operator: ++
+      │  │        └─ CompoundIdentifier
+      │  │           └─ Identifier: i
+      │  └─ ControlStructureBody
+      │     ├─ Statement
+      │     │  └─ Expression
+      │     │     └─ FunctionCall
+      │     │        ├─ CompoundIdentifier
+      │     │        │  └─ Identifier: do_something
+      │     │        └─ Arguments
+      │     └─ Statement
+      │        └─ Expression
+      │           └─ PrefixOperatorValue
+      │              ├─ Operator: ++
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: i
+      ├─ ControlStructure: for do
+      │  ├─ Expression
+      │  │  ├─ CompoundIdentifier
+      │  │  │  └─ Identifier: i
+      │  │  ├─ Operator: >
+      │  │  └─ Expression
+      │  │     ├─ Number: 5
+      │  │     ├─ Operator: &&
+      │  │     └─ Expression
+      │  │        ├─ CompoundIdentifier
+      │  │        │  └─ Identifier: j
+      │  │        ├─ Operator: <
+      │  │        └─ Expression
+      │  │           └─ Number: 2
+      │  ├─ Initializers
+      │  │  ├─ VariableDeclaration
+      │  │  │  ├─ CompoundIdentifier
+      │  │  │  │  └─ Identifier: @int
+      │  │  │  ├─ Identifier: j
+      │  │  │  └─ Assignment
+      │  │  │     └─ Expression
+      │  │  │        └─ Number: 0
+      │  │  └─ VariableAssignment
+      │  │     ├─ CompoundIdentifier
+      │  │     │  └─ Identifier: i
+      │  │     └─ Assignment
+      │  │        └─ Expression
+      │  │           └─ Number: 10
+      │  ├─ Actions
+      │  │  ├─ Expression
+      │  │  │  └─ SuffixOperatorValue
+      │  │  │     ├─ Operator: ++
+      │  │  │     └─ CompoundIdentifier
+      │  │  │        └─ Identifier: j
+      │  │  ├─ Expression
+      │  │  │  └─ SuffixOperatorValue
+      │  │  │     ├─ Operator: --
+      │  │  │     └─ CompoundIdentifier
+      │  │  │        └─ Identifier: i
+      │  │  └─ Expression
+      │  │     └─ FunctionCall
+      │  │        ├─ CompoundIdentifier
+      │  │        │  └─ Identifier: do_something
+      │  │        └─ Arguments
+      │  └─ ControlStructureBody
+      │     └─ Statement
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: do_something
+      │              └─ Arguments
       └─ Statement
          └─ Return
             └─ Expression

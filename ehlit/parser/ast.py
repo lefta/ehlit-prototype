@@ -1445,6 +1445,29 @@ class DoWhileLoop(ControlStructure):
         self.cond: Expression
 
 
+class ForDoLoop(ControlStructure):
+    def __init__(self, pos: int, initializers: List[Union[VariableDeclaration, VariableAssignment]],
+                 actions: List[Union[Expression, VariableAssignment]], cond: Expression,
+                 body: List[Statement]) -> None:
+        super().__init__(pos, 'for do', cond, body)
+        self.cond: Expression
+        self.initializers: List[Union[VariableDeclaration, VariableAssignment]] = initializers
+        self.actions: List[Union[Expression, VariableAssignment]] = actions
+
+    def build(self, parent: Node) -> 'ForDoLoop':
+        # The condition may use a symbol declared in initializers. In this case, we need to have
+        # the declaration actually declared before building the condition. But when beeing built,
+        # initializers may also need the parent of the loop.
+        self.parent = parent
+        self.initializers = [init.build(self) for init in self.initializers]
+        super().build(parent)
+        self.actions = [act.build(self) for act in self.actions]
+        for init in self.initializers:
+            if isinstance(init, VariableDeclaration) and init.assign is None:
+                self.error(init.pos, "uninitialised variable declaration in for do loop")
+        return self
+
+
 class Condition(Node):
     def __init__(self, branches: List[ControlStructure]) -> None:
         super().__init__(0)

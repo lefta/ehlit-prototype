@@ -55,6 +55,8 @@ class ArrayBuilder:
 OperatorSequence = List[Union[ast.Value, ast.Operator]]
 ComparisonSequence = Tuple[ast.Value, StrMatch, ast.Value, StrMatch, ast.Value]
 ControlStructureArgs = Tuple[ast.Expression, List[ast.Statement]]
+ForDoInitializer = Union[ast.VariableDeclaration, ast.VariableAssignment]
+ForDoAction = Union[ast.Expression, ast.VariableAssignment]
 
 
 class ASTBuilder(PTNodeVisitor):
@@ -419,6 +421,22 @@ class ASTBuilder(PTNodeVisitor):
         else:
             body = children[1]
         return ast.DoWhileLoop(node.position, children[3], body)
+
+    def visit_for_do_loop_initializers(self, node: ParseTreeNode,
+                                       children: Tuple[ForDoInitializer, ...]
+                                       ) -> List[ForDoInitializer]:
+        return list(children[::2])
+
+    def visit_for_do_loop_actions(self, node: ParseTreeNode, children: Tuple[ForDoAction]
+                                  ) -> List[ForDoAction]:
+        return list(children[::2])
+
+    def visit_for_do_loop(self, node: ParseTreeNode,
+                          children: Tuple[StrMatch, List[ForDoInitializer], StrMatch,
+                                          List[ForDoAction], StrMatch, ControlStructureArgs]
+                          ) -> ast.ControlStructure:
+        return ast.ForDoLoop(node.position, children[1], children[3], children[5][0],
+                             children[5][1])
 
     def visit_switch_case_test(self, node: ParseTreeNode,
                                children: Tuple[StrMatch, Optional[ast.Value]]

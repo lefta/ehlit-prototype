@@ -27,5 +27,14 @@ int32_t main(void)
         _EF12do_something();
         i--;
     } while (i > 0);
+    for (i = 0; i < 5; i++)
+    {
+        _EF12do_something();
+        ++i;
+    }
+    for (int32_t j = 0, i = 10; i > 5 && j < 2; j++, i--, _EF12do_something())
+    {
+        _EF12do_something();
+    }
     return (0);
 }
