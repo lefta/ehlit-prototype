@@ -65,6 +65,40 @@
       │                 ├─ Operator: -
       │                 └─ Expression
       │                    └─ Number: 1
+      ├─ ControlStructure: do while
+      │  ├─ Expression
+      │  │  ├─ CompoundIdentifier
+      │  │  │  └─ Identifier: i
+      │  │  ├─ Operator: <
+      │  │  └─ Expression
+      │  │     └─ Number: 10
+      │  └─ ControlStructureBody
+      │     └─ Statement
+      │        └─ Expression
+      │           └─ SuffixOperatorValue
+      │              ├─ Operator: ++
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: i
+      ├─ ControlStructure: do while
+      │  ├─ Expression
+      │  │  ├─ CompoundIdentifier
+      │  │  │  └─ Identifier: i
+      │  │  ├─ Operator: >
+      │  │  └─ Expression
+      │  │     └─ Number: 0
+      │  └─ ControlStructureBody
+      │     ├─ Statement
+      │     │  └─ Expression
+      │     │     └─ FunctionCall
+      │     │        ├─ CompoundIdentifier
+      │     │        │  └─ Identifier: do_something
+      │     │        └─ Arguments
+      │     └─ Statement
+      │        └─ Expression
+      │           └─ SuffixOperatorValue
+      │              ├─ Operator: --
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: i
       └─ Statement
          └─ Return
             └─ Expression

@@ -25,12 +25,12 @@ import typing
 from ehlit.parser.ast import (
     Alias, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType, Cast, Char,
     CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container, DecimalNumber,
-    Declaration, DeclarationBase, EhEnum, EhUnion, Expression, FunctionCall, FunctionDeclaration,
-    FunctionDefinition, FunctionType, Identifier, Import, Include, InitializationList, Node,
-    NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
-    ReferenceType, Return, Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase,
-    SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, Type, VariableAssignment,
-    VariableDeclaration, Value
+    Declaration, DeclarationBase, DoWhileLoop, EhEnum, EhUnion, Expression, FunctionCall,
+    FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Import, Include,
+    InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType,
+    ReferenceToValue, ReferenceType, Return, Sizeof, Statement, String, Struct, SuffixOperatorValue,
+    SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, Type,
+    VariableAssignment, VariableDeclaration, Value
 )
 
 
@@ -408,6 +408,22 @@ class SourceWriter:
 
         self.write_indent()
         self.file.write('}\n')
+
+    def writeDoWhileLoop(self, node: DoWhileLoop) -> None:
+        self.write_indent()
+        self.file.write('do\n')
+
+        self.write_indent()
+        self.file.write('{\n')
+        self.indent += 1
+        for instruction in node.body:
+            self.write(instruction)
+        self.indent -= 1
+
+        self.write_indent()
+        self.file.write('} while (')
+        self.write(node.cond)
+        self.file.write(');\n')
 
     def writeCondition(self, cond: Condition) -> None:
         for branch in cond.branches:

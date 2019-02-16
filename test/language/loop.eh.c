@@ -18,5 +18,14 @@ int32_t main(void)
     {
         i = i - 1;
     }
+    do
+    {
+        i++;
+    } while (i < 10);
+    do
+    {
+        _EF12do_something();
+        i--;
+    } while (i > 0);
     return (0);
 }

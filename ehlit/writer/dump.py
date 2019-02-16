@@ -211,6 +211,9 @@ class DumpWriter:
             self.print_node(struct.cond)
         self.print_node_list("ControlStructureBody", struct.body, False)
 
+    def dumpDoWhileLoop(self, node: Union[Node, str], is_next: bool) -> None:
+        self.dumpControlStructure(node, is_next)
+
     def dumpCondition(self, cond: Union[Node, str], is_next: bool) -> None:
         cond = cast(Condition, cond)
         self.print_node_list("ConditionBranches", cond.branches, is_next)

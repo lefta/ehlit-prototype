@@ -270,7 +270,7 @@ def global_statement() -> GrammarType:
 
 
 def instruction() -> GrammarType:
-    return [comment, condition, while_loop, switch, alias, statement]
+    return [comment, condition, do_while_loop, while_loop, switch, alias, statement]
 
 
 # Control Structures
@@ -302,6 +302,10 @@ def condition() -> GrammarType:
 
 def while_loop() -> GrammarType:
     return 'while', control_structure
+
+
+def do_while_loop() -> GrammarType:
+    return 'do', [instruction, control_structure_body], 'while', expression
 
 
 def switch_case_test() -> GrammarType:

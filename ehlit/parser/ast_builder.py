@@ -409,6 +409,17 @@ class ASTBuilder(PTNodeVisitor):
                          children: Tuple[StrMatch, ControlStructureArgs]) -> ast.ControlStructure:
         return ast.ControlStructure(node.position, 'while', children[1][0], children[1][1])
 
+    def visit_do_while_loop(self, node: ParseTreeNode,
+                            children: Tuple[StrMatch, Union[ast.Statement, List[ast.Statement]],
+                                            StrMatch, ast.Expression]
+                            ) -> ast.ControlStructure:
+        body: List[ast.Statement]
+        if isinstance(children[1], ast.Statement):
+            body = [children[1]]
+        else:
+            body = children[1]
+        return ast.DoWhileLoop(node.position, children[3], body)
+
     def visit_switch_case_test(self, node: ParseTreeNode,
                                children: Tuple[StrMatch, Optional[ast.Value]]
                                ) -> List[ast.SwitchCaseTest]:

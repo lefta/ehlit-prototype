@@ -1439,6 +1439,12 @@ class ControlStructure(FlowScope):
         return self
 
 
+class DoWhileLoop(ControlStructure):
+    def __init__(self, pos: int, cond: Expression, body: List[Statement]) -> None:
+        super().__init__(pos, 'do while', cond, body)
+        self.cond: Expression
+
+
 class Condition(Node):
     def __init__(self, branches: List[ControlStructure]) -> None:
         super().__init__(0)
