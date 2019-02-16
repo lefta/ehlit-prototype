@@ -1425,8 +1425,9 @@ class ArrayAccess(SymbolContainer):
 
 
 class ControlStructure(FlowScope):
-    def __init__(self, name: str, cond: Optional[Expression], body: List[Statement]) -> None:
-        super().__init__(0, body)
+    def __init__(self, pos: int, name: str, cond: Optional[Expression], body: List[Statement]
+                 ) -> None:
+        super().__init__(pos, body)
         assert cond is not None or name == 'else'
         self.name: str = name
         self.cond: Optional[Expression] = cond

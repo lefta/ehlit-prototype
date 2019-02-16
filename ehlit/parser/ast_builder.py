@@ -386,12 +386,12 @@ class ASTBuilder(PTNodeVisitor):
 
     def visit_if_condition(self, node: ParseTreeNode,
                            children: Tuple[StrMatch, ControlStructureArgs]) -> ast.ControlStructure:
-        return ast.ControlStructure('if', children[1][0], children[1][1])
+        return ast.ControlStructure(node.position, 'if', children[1][0], children[1][1])
 
     def visit_elif_condition(self, node: ParseTreeNode,
                              children: Tuple[StrMatch, ControlStructureArgs]
                              ) -> ast.ControlStructure:
-        return ast.ControlStructure('elif', children[1][0], children[1][1])
+        return ast.ControlStructure(node.position, 'elif', children[1][0], children[1][1])
 
     def visit_else_condition(self, node: ParseTreeNode,
                              children: Tuple[StrMatch, Union[List[ast.Statement], ast.Statement]]
@@ -399,7 +399,7 @@ class ASTBuilder(PTNodeVisitor):
         body = children[1]
         if isinstance(body, ast.Statement):
             body = [body]
-        return ast.ControlStructure('else', None, body)
+        return ast.ControlStructure(node.position, 'else', None, body)
 
     def visit_condition(self, node: ParseTreeNode, children: Tuple[ast.ControlStructure, ...]
                         ) -> ast.Condition:
@@ -407,7 +407,7 @@ class ASTBuilder(PTNodeVisitor):
 
     def visit_while_loop(self, node: ParseTreeNode,
                          children: Tuple[StrMatch, ControlStructureArgs]) -> ast.ControlStructure:
-        return ast.ControlStructure('while', children[1][0], children[1][1])
+        return ast.ControlStructure(node.position, 'while', children[1][0], children[1][1])
 
     def visit_switch_case_test(self, node: ParseTreeNode,
                                children: Tuple[StrMatch, Optional[ast.Value]]
@@ -433,7 +433,7 @@ class ASTBuilder(PTNodeVisitor):
     def visit_switch(self, node: ParseTreeNode,
                      children: Tuple[StrMatch, ast.Expression, ast.Statement]
                      ) -> ast.ControlStructure:
-        return ast.ControlStructure('switch', children[1], list(children[2:]))
+        return ast.ControlStructure(node.position, 'switch', children[1], list(children[2:]))
 
     # Control structures stub
     #########################
