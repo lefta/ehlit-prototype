@@ -234,6 +234,18 @@
       │                 ├─ Operator: ++
       │                 └─ CompoundIdentifier
       │                    └─ Identifier: i
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  └─ SuffixOperatorValue
+      │     │     ├─ Operator: ++
+      │     │     └─ CompoundIdentifier
+      │     │        └─ Identifier: i
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: i
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Reference

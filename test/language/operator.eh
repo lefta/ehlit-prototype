@@ -33,8 +33,11 @@ int main()
 		return 6
 	if !i
 		return 7
+	// Test that it does not get parsed as if (i++) i
 	if i
 		++i
+	if i++
+		i
 
 	ref int ri = 0
 	ri++
