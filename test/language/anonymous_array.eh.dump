@@ -1,0 +1,82 @@
+├─ FunctionDeclaration
+│  ├─ Identifier: strjoin
+│  └─ FunctionType
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @str
+│     └─ Arguments:
+│        └─ VariableDeclaration
+│           ├─ Array
+│           │  └─ CompoundIdentifier
+│           │     └─ Identifier: @str
+│           └─ Identifier: ary
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ Identifier: main
+   │  └─ FunctionType
+   │     └─ CompoundIdentifier
+   │        └─ Identifier: @int
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ CompoundIdentifier
+      │     │  │     └─ Identifier: @int
+      │     │  └─ Length:
+      │     │     └─ Number: 
+      │     ├─ Identifier: __gen_fun_1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ AnonymousArray
+      │              └─ Contents:
+      │                 ├─ Expression
+      │                 │  └─ Number: 42
+      │                 ├─ Expression
+      │                 │  └─ Number: 12
+      │                 └─ Expression
+      │                    └─ Number: 36
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: @int
+      │     ├─ Identifier: ary
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: __gen_fun_1
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Array
+      │     │  ├─ Sub-type:
+      │     │  │  └─ CompoundIdentifier
+      │     │  │     └─ Identifier: @str
+      │     │  └─ Length:
+      │     │     └─ Number: 
+      │     ├─ Identifier: __gen_fun_2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ AnonymousArray
+      │              └─ Contents:
+      │                 ├─ Expression
+      │                 │  └─ String: Hello
+      │                 └─ Expression
+      │                    └─ String: World
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @str
+      │     ├─ Identifier: joined
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: strjoin
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ CompoundIdentifier
+      │                       └─ Identifier: __gen_fun_2
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

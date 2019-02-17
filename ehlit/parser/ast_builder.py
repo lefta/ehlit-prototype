@@ -146,6 +146,10 @@ class ASTBuilder(PTNodeVisitor):
             i -= 1
         return res
 
+    def visit_anonymous_array(self, node: ParseTreeNode, children: Tuple[ast.Value, StrMatch]
+                              ) -> ast.AnonymousArray:
+        return ast.AnonymousArray(node.position, list(children[::2]))
+
     def visit_value(self, node: ParseTreeNode, children: Tuple[ast.Symbol, ArrayBuilder]
                     ) -> ast.Symbol:
         if len(children) == 1:

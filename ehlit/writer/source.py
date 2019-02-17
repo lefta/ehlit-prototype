@@ -23,14 +23,14 @@ import sys
 from typing import cast, Dict, Optional, Sequence, TextIO
 import typing
 from ehlit.parser.ast import (
-    Alias, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType, Cast, Char,
-    CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container, DecimalNumber,
-    Declaration, DeclarationBase, DoWhileLoop, EhEnum, EhUnion, Expression, ForDoLoop, FunctionCall,
-    FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Import, Include,
-    InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType,
-    ReferenceToValue, ReferenceType, Return, Sizeof, Statement, String, Struct, SuffixOperatorValue,
-    SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, Type,
-    VariableAssignment, VariableDeclaration, Value
+    Alias, AnonymousArray, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType,
+    Cast, Char, CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container,
+    DecimalNumber, Declaration, DeclarationBase, DoWhileLoop, EhEnum, EhUnion, Expression,
+    ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition, FunctionType, Identifier,
+    Import, Include, InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue,
+    ReferenceToType, ReferenceToValue, ReferenceType, Return, Sizeof, Statement, String, Struct,
+    SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier,
+    Type, VariableAssignment, VariableDeclaration, Value
 )
 
 
@@ -571,6 +571,14 @@ class SourceWriter:
         if val.val.ref_offset is not 0:
             self.file.write(')')
         self.file.write(val.op)
+
+    def writeAnonymousArray(self, node: AnonymousArray) -> None:
+        self.file.write('{ ')
+        for v in node.contents:
+            self.write(v)
+            if v is not node.contents[-1]:
+                self.file.write(', ')
+        self.file.write(' }')
 
     def writeSizeof(self, node: Sizeof) -> None:
         self.file.write('sizeof(')

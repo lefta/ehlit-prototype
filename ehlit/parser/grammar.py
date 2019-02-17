@@ -138,10 +138,14 @@ def array_access() -> GrammarType:
     return ZeroOrMore('[', expression, ']')
 
 
+def anonymous_array() -> GrammarType:
+    return '[', OneOrMore(expression, sep=','), ']'
+
+
 def value() -> GrammarType:
     return [null_value, bool_value, sizeof, function_call, prefix_operator_value,
-            suffix_operator_value, writable_value, string, char, decimal_number, number
-            ], array_access
+            suffix_operator_value, writable_value, string, char, decimal_number, number,
+            anonymous_array], array_access
 
 
 # Operators & assigment

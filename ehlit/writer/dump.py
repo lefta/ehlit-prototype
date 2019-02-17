@@ -23,13 +23,13 @@ import logging
 from typing import Callable, cast, List, Sequence, Union
 from ehlit.parser.c_header import CDefine, CMacroFunction, CAnyType
 from ehlit.parser.ast import (
-    Alias, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char, CompoundIdentifier,
-    Condition, ControlStructure, DecimalNumber, Declaration, EhEnum, EhUnion, EnumField, Expression,
-    ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition, FunctionType, Identifier,
-    Include, Import, InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue,
-    ReferenceToType, ReferenceToValue, Return, Sizeof, Statement, String, Struct,
-    SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier,
-    VariableAssignment, VariableDeclaration
+    Alias, AnonymousArray, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char,
+    CompoundIdentifier, Condition, ControlStructure, DecimalNumber, Declaration, EhEnum, EhUnion,
+    EnumField, Expression, ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition,
+    FunctionType, Identifier, Include, Import, InitializationList, Node, NullValue, Number,
+    Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return, Sizeof, Statement,
+    String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol,
+    TemplatedIdentifier, VariableAssignment, VariableDeclaration
 )
 
 IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
@@ -382,6 +382,12 @@ class DumpWriter:
         self.dump('SuffixOperatorValue')
         self.print_str('Operator: %s' % val.op)
         self.print_node(val.val, False)
+
+    @indent
+    def dumpAnonymousArray(self, node: Union[Node, str]) -> None:
+        node = cast(AnonymousArray, node)
+        self.dump('AnonymousArray')
+        self.print_node_list('Contents:', node.contents, False)
 
     @indent
     def dumpSizeof(self, node: Union[Node, str]) -> None:

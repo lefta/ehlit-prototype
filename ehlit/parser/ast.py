@@ -1780,6 +1780,31 @@ class SuffixOperatorValue(UnaryOperatorValue):
     pass
 
 
+class AnonymousArray(Value):
+    def __init__(self, pos: int, contents: List[Value]) -> None:
+        super().__init__(pos)
+        self.contents = contents
+
+    def build(self, parent: Node) -> Value:
+        if self.built:
+            super().build(parent)
+            return self
+        super().build(parent)
+        tmp_name = self.generate_var_name()
+        self.do_before(Statement(VariableDeclaration(
+            Array(CompoundIdentifier([Identifier(0, self.contents[0].typ.name)]), Number('')),
+            Identifier(0, tmp_name),
+            Assignment(Expression([self], False))
+        )).build(parent), self)
+        return CompoundIdentifier([Identifier(0, tmp_name)]).build(parent)
+
+    @property
+    def typ(self) -> Type:
+        if len(self.contents) is 0:
+            return ArrayType(BuiltinType('@any'))
+        return ArrayType(self.contents[0].typ.dup())
+
+
 class Sizeof(Value):
     def __init__(self, sz_typ: Symbol) -> None:
         super().__init__()
