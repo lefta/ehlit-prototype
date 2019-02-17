@@ -1,4 +1,4 @@
-# Ehlit Code
+# Ehlit language
 
 This project is in a very early stage and is not safe for production use. The compiler and the
 language itself *will* change. You have been warned !
@@ -21,8 +21,7 @@ below. Unfortunately, I do not have as much time that I want to work on this pro
 
 Ehlit is a compiled programmation language designed for performance, simplicity, readability and
 typing economy (in this order). It is a global usage language, but excells when performance or
-compatibility are required. It is designed to create programs directly but also allows for C code
-prototyping.
+compatibility are required.
 
 It is compatible out of the box with any existing C library, and using an Ehlit library in a C
 program is very easy.
@@ -33,12 +32,12 @@ for details.
 
 ## Hello world example
 
-Note that the language is still a work in progress. While the language syntax should be quite fixed,
-no standard library have been started. That's why this example relies on the C libraries, but it
-will not stay this way.
+Note that the language is still a work in progress. While the syntax of the language syntax should
+be quite stable, no standard library have been started. That's why this example relies on the C
+libraries, but it will not stay this way.
 
 ```ehlit
-include stdio
+include stdio.h
 
 int main(int ac, str[] av)
 {
@@ -53,16 +52,23 @@ int main(int ac, str[] av)
 * Native binaries (fast and lightweight execution, no runtime support required and all other
   strenghts it implies)
 * Weaknesses of native execution reduced at a their minimum.
-* « If it builds, it won't crash » language. (Well, at least that is what I'm planning)
-* Clean syntax (no weird symbols everywhere like in C)
-* De facto out of source builds
+* « If it builds, it won't crash » language. (Well, at least that is what I'm planning and trying)
+* Clean syntax (no weird symbols everywhere)
+* Out of source builds
 * ...
 
 ## Requirements
 
+### Usage
+
 * Python 3.6+
 * arpeggio Python module
 * clang with Python 3.5+ bindings (shipped with clang 5.0+)
+
+### Developement
+
+* flake8
+* MyPy
 
 ## Basic usage
 
@@ -98,11 +104,11 @@ compiler. Even better if you improve the test suite by the way, and there is a l
 * Write documentation : the language and its features are not yet documented. This would make it
 easier to start with.
 * Suggest features : I would love to know what you expect from Ehlit (but please, avoid things like
-"fast", this is obvious and planned :) ).
+« fast », this is obvious and planned :) ).
 * Implement features : If the development of the feature you are waiting for takes too long, you are
-welcome to implement it. But if you do, please make sure to discuss it with me before to make sure
-we agree on the whys and the hows.
-* Anything else I did not think of but that may be usefull.
+welcome to implement it. But if you do, please make sure to talk about it with me before to make
+sure we agree on the whys and the hows.
+* Anything else I did not think of but that may still be usefull.
 
 ## Roadmap
 
@@ -126,5 +132,5 @@ Codenames will be revealed once the development of their corresponding milestone
 ### Ecosystem
 
 * WIP: Syntax files for major text editors
-* TODO: Autocompletion module for Atom
-* TODO: Bring support for ehlit to GDB
+* TODO: KDevelop plugin
+* TODO: Support for GDB
