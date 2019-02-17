@@ -125,7 +125,7 @@ Codenames will be revealed once the development of their corresponding milestone
 ### Documentation
 
 * WIP: Compiler code
-* WIP: Tutorial
+* WIP: [Tutorial](https://github.com/lefta/ehlit-tutorial)
 * TODO: Language specification
 * TODO: Standard library documentation
 
