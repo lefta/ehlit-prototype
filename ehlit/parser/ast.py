@@ -256,6 +256,12 @@ class Node:
 
 
 class Scope(Node):
+    """! Container for declarations.
+    A @c Scope handles the declaration of symbols and their resolution.
+    It also handles pre-declaration of symbols, i.e. symbols that are declared later, but that
+    are used in this @c Scope. Pre-declaration is needed to generate valid C output.
+    """
+
     def __init__(self, pos: int) -> None:
         super().__init__(pos)
         self.declarations: List[DeclarationBase] = []
@@ -276,6 +282,8 @@ class Scope(Node):
 
 
 class UnorderedScope(Scope):
+    """! @c Scope in which declaration order does not matter """
+
     def find_declaration(self, sym: str) -> DeclarationLookup:
         for node in self.scope_contents:
             res, err = node.get_declaration(sym)
@@ -286,10 +294,17 @@ class UnorderedScope(Scope):
     @property
     @abstractmethod
     def scope_contents(self) -> List[Node]:
+        """! Contents of the scope
+        @return @b List[Node] The list of nodes contained in the scope
+        """
         raise NotImplementedError
 
 
 class FlowScope(Scope):
+    """! Scope containing a @c Statement flow
+    It adds the ability to change the statement flow at build time.
+    @see do_before
+    """
     def __init__(self, pos: int, body: List['Statement']) -> None:
         super().__init__(pos)
         self.body: List[Statement] = body
@@ -303,6 +318,11 @@ class FlowScope(Scope):
         return self
 
     def do_before(self, do: Node, before: Node) -> None:
+        """! Insert a @c Statement to be executed before @c before
+        @param do @b Node The @c Statement to be executed. It must be a @c Statement, otherwise it
+                          gets ignored
+        @param before @b Node The node before which the statement will be executed
+        """
         if not isinstance(do, Statement):
             super().do_before(do, before)
             return
