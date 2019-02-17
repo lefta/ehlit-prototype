@@ -4,6 +4,7 @@
 int32_t main(void)
 {
     int32_t i = 0;
+    int32_t j = 1;
     i = i + 5;
     i = i - 3;
     i = i * 4;
@@ -105,5 +106,37 @@ int32_t main(void)
     {
         return (19);
     }
+    if (i && j)
+    {
+        return (1);
+    }
+    if (i || j)
+    {
+        return (2);
+    }
+    int32_t k = i << 5;
+    k = i << j;
+    k = 5 << j;
+    k = i >> 5;
+    k = i >> j;
+    k = 5 >> j;
+    k = ~k;
+    if (i | j)
+    {
+        return (1);
+    }
+    if (i & j)
+    {
+        return (2);
+    }
+    if (i ^ j)
+    {
+        return (3);
+    }
+    k >>= i;
+    k <<= i;
+    k |= i;
+    k &= i;
+    k ^= i;
     return (0);
 }

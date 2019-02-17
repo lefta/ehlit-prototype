@@ -194,6 +194,12 @@ class ASTBuilder(PTNodeVisitor):
     def visit_boolean_operator(self, node: ParseTreeNode, children: StrMatch) -> ast.Operator:
         return ast.Operator(str(node))
 
+    def visit_bitwise_operator(self, node: ParseTreeNode, children: StrMatch) -> ast.Operator:
+        return ast.Operator(str(node))
+
+    def visit_comparison_operator(self, node: ParseTreeNode, children: StrMatch) -> ast.Operator:
+        return ast.Operator(str(node))
+
     def visit_parenthesised_expression(self, node: ParseTreeNode, children: Tuple[ast.Expression]
                                        ) -> ast.Expression:
         return ast.Expression(list(children), True)

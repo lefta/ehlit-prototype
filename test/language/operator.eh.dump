@@ -14,6 +14,14 @@
       │        └─ Expression
       │           └─ Number: 0
       ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: j
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 1
+      ├─ Statement
       │  └─ VariableAssignment
       │     ├─ CompoundIdentifier
       │     │  └─ Identifier: i
@@ -491,6 +499,200 @@
       │           └─ Return
       │              └─ Expression
       │                 └─ Number: 19
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &&
+      │     │  └─ Expression
+      │     │     └─ CompoundIdentifier
+      │     │        └─ Identifier: j
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 1
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: ||
+      │     │  └─ Expression
+      │     │     └─ CompoundIdentifier
+      │     │        └─ Identifier: j
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 2
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: k
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ CompoundIdentifier
+      │           │  └─ Identifier: i
+      │           ├─ Operator: <<
+      │           └─ Expression
+      │              └─ Number: 5
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ CompoundIdentifier
+      │           │  └─ Identifier: i
+      │           ├─ Operator: <<
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: j
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Number: 5
+      │           ├─ Operator: <<
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: j
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ CompoundIdentifier
+      │           │  └─ Identifier: i
+      │           ├─ Operator: >>
+      │           └─ Expression
+      │              └─ Number: 5
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ CompoundIdentifier
+      │           │  └─ Identifier: i
+      │           ├─ Operator: >>
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: j
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        └─ Expression
+      │           ├─ Number: 5
+      │           ├─ Operator: >>
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: j
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ PrefixOperatorValue
+      │              ├─ Operator: ~
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: k
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: |
+      │     │  └─ Expression
+      │     │     └─ CompoundIdentifier
+      │     │        └─ Identifier: j
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 1
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: &
+      │     │  └─ Expression
+      │     │     └─ CompoundIdentifier
+      │     │        └─ Identifier: j
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 2
+      ├─ ConditionBranches
+      │  └─ ControlStructure: if
+      │     ├─ Expression
+      │     │  ├─ CompoundIdentifier
+      │     │  │  └─ Identifier: i
+      │     │  ├─ Operator: ^
+      │     │  └─ Expression
+      │     │     └─ CompoundIdentifier
+      │     │        └─ Identifier: j
+      │     └─ ControlStructureBody
+      │        └─ Statement
+      │           └─ Return
+      │              └─ Expression
+      │                 └─ Number: 3
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        ├─ Operator: >>
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        ├─ Operator: <<
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        ├─ Operator: |
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        ├─ Operator: &
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: i
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: k
+      │     └─ Assignment
+      │        ├─ Operator: ^
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: i
       └─ Statement
          └─ Return
             └─ Expression

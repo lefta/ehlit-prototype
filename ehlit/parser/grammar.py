@@ -123,7 +123,7 @@ def disambiguated_prefix_operator_value() -> GrammarType:
 
 
 def prefix_operator_value() -> GrammarType:
-    return [disambiguated_prefix_operator_value, '!'], writable_value
+    return [disambiguated_prefix_operator_value, '!', '~'], writable_value
 
 
 def suffix_operator_value() -> GrammarType:
@@ -172,11 +172,19 @@ def mathematical_operator() -> GrammarType:
 
 
 def boolean_operator() -> GrammarType:
-    return ['==', '!=', '>=', '<=', '>', '<', '||', '&&']
+    return ['||', '&&']
+
+
+def comparison_operator() -> GrammarType:
+    return ['==', '!=', '>=', '<=', '>', '<']
+
+
+def bitwise_operator() -> GrammarType:
+    return ['|', '&', '^', '<<', '>>']
 
 
 def operator() -> GrammarType:
-    return [mathematical_operator, boolean_operator]
+    return [mathematical_operator, boolean_operator, bitwise_operator, comparison_operator]
 
 
 def parenthesised_expression() -> GrammarType:
@@ -192,7 +200,7 @@ def assignment() -> GrammarType:
 
 
 def operation_assignment() -> GrammarType:
-    return Optional(mathematical_operator), assignment
+    return Optional([mathematical_operator, bitwise_operator]), assignment
 
 
 # Types

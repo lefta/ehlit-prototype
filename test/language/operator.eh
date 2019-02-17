@@ -1,6 +1,7 @@
 int main()
 {
 	int i = 0
+	int j = 1
 
 	i = i + 5
 	i = i - 3
@@ -67,6 +68,32 @@ int main()
 		return 18
 	if 1 >= i > 10
 		return 19
+
+	if i && j
+		return 1
+	if i || j
+		return 2
+
+	int k = i << 5
+	k = i << j
+	k = 5 << j
+	k = i >> 5
+	k = i >> j
+	k = 5 >> j
+	k = ~k
+
+	if i | j
+		return 1
+	if i & j
+		return 2
+	if i ^ j
+		return 3
+
+	k >>= i
+	k <<= i
+	k |= i
+	k &= i
+	k ^= i
 
 	return 0
 }
