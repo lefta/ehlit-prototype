@@ -130,108 +130,108 @@ class DeclarationType(IntEnum):
 
 
 class UnparsedContents:
-    '''!
+    """!
     Contents for which parsing have been delayed, for example because of a lack of context.
-    '''
+    """
 
     def __init__(self, contents: str, pos: int) -> None:
-        '''! Constructor
+        """! Constructor
         @param contents @b str Contents to be parsed later.
         @param pos @b int Position of the contents in the file.
-        '''
+        """
         self.contents: str = contents
         self.pos: int = pos
 
 
 class Node:
-    '''!
+    """!
     Base class for all AST node types. It defines some default behaviors.
-    '''
+    """
 
     def __init__(self, pos: int = 0) -> None:
-        '''! Constructor
+        """! Constructor
         @param pos @b int The position of the node in the source file
-        '''
+        """
         ## @b int Position of the node in the source file.
         self.pos: int = pos
         ## @b bool Whether this node have already been built or not.
         self.built: bool = False
 
     def build(self, parent: 'Node') -> 'Node':
-        '''! Build a node.
+        """! Build a node.
         Depending on the node type, this may mean resolving symbol references, making sanity checks
         and / or building children.
         @param parent @b Node The parent node of this node.
-        '''
+        """
         ## @b Node The parent node of this node.
         self.parent: Node = parent
         self.built = True
         return self
 
     def is_declaration(self) -> bool:
-        '''! Checks whether a node is a symbol declaration or not.
+        """! Checks whether a node is a symbol declaration or not.
         By default, this value is False.
         @return @b bool
-        '''
+        """
         return False
 
     def find_declaration(self, sym: str) -> DeclarationLookup:
-        '''! Find a declaration when coming from downsides.
+        """! Find a declaration when coming from downsides.
         Scoping structures (like functions) would want to search symbols in this function. The
         default is to pass the lookup to the parent.
         @param sym @b str The symbol to find.
         @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
-        '''
+        """
         return self.parent.find_declaration(sym)
 
     def get_declaration(self, sym: str) -> DeclarationLookup:
-        '''! Find a declaration when coming from upsides.
+        """! Find a declaration when coming from upsides.
         Structures exposing symbols to their parent (like Import) would want to search symbols in
         this function.
         @param sym @b str The symbol to find
         @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
-        '''
+        """
         return None, None
 
     def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
-        '''! Report a failure to the parent, up to the AST where it will be handled.
+        """! Report a failure to the parent, up to the AST where it will be handled.
         There is no reason to override it, except maybe intercepting it for whatever reason.
         @param severity @b ParseError.Severity Severity of the failure
         @param pos @b int The position in code where the failure happened
         @param msg @b str The failure message to display
-        '''
+        """
         self.parent.fail(severity, pos, msg)
 
     def error(self, pos: int, msg: str) -> None:
-        '''! Shorthand for fail with severity Error.
+        """! Shorthand for fail with severity Error.
         @param pos @b int The position in code where the failure happened
         @param msg @b str The failure message to display
-        '''
+        """
         self.fail(ParseError.Severity.Error, pos, msg)
 
     def warn(self, pos: int, msg: str) -> None:
-        '''! Shorthand for fail with severity Warning.
+        """! Shorthand for fail with severity Warning.
         @param pos @b int The position in code where the failure happened
         @param msg @b str The failure message to display
-        '''
+        """
         self.fail(ParseError.Severity.Warning, pos, msg)
 
     def declare(self, decl: 'DeclarationBase') -> None:
-        '''! Declare a symbol.
+        """! Declare a symbol.
         By default, this is only propagated to the parent. @c Scope override it to remember it.
         @param decl @b DeclarationBase The declaration to be declared.
-        '''
+        """
         self.parent.declare(decl)
 
     @property
     def import_paths(self) -> List[str]:
-        '''! @c property @b List[str] The list of paths to be looked up when importing a module. '''
+        """! @c property @b List[str] The list of paths to be looked up when importing a module. """
         return self.parent.import_paths
 
     def is_child_of(self, cls: typing.Type['Node']) -> bool:
-        '''! Check if this node is a descendant of some node type
+        """! Check if this node is a descendant of some node type
         @param cls @b Class The class to check for
-        '''
+        """
         return isinstance(self, cls) or self.parent.is_child_of(cls)
 
     def do_before(self, do: 'Node', before: 'Node') -> None:
@@ -312,13 +312,13 @@ class FlowScope(Scope):
 
 
 class GenericExternInclusion(UnorderedScope):
-    '''! Base for include and import defining shared behaviors '''
+    """! Base for include and import defining shared behaviors """
 
     def __init__(self, pos: int, lib: List[str]) -> None:
-        '''! Constructor
+        """! Constructor
         @param pos @b int The position of the node in the source file
         @param lib @b List[str] Path of the file to be imported
-        '''
+        """
         super().__init__(pos)
         ## @b str The library that will be imported
         self.lib: str = path.join(*lib)
@@ -326,9 +326,9 @@ class GenericExternInclusion(UnorderedScope):
         self.syms: List[Node] = []
 
     def build(self, parent: Node) -> 'GenericExternInclusion':
-        '''! Build the node, this actually imports the file
+        """! Build the node, this actually imports the file
         @param parent @b Node The parent of this node
-        '''
+        """
         super().build(parent)
         parsed: List[Node] = []
         try:
@@ -342,16 +342,16 @@ class GenericExternInclusion(UnorderedScope):
 
     @abstractmethod
     def parse(self) -> List[Node]:
-        '''! Parse the imported file
+        """! Parse the imported file
         @return @b List[Node] A list of the imported nodes
-        '''
+        """
         raise NotImplementedError
 
     def get_declaration(self, sym: str) -> DeclarationLookup:
-        '''! Look for a declaration from the imported file
+        """! Look for a declaration from the imported file
         @param sym @b List[str] The symbol to look for
         @return @b Declaration|FunctionDeclaration The declaration if found, @c None otherwise
-        '''
+        """
         for decl in self.syms:
             res, err = decl.get_declaration(sym)
             if res is not None or err is not None:
@@ -364,14 +364,14 @@ class GenericExternInclusion(UnorderedScope):
 
 
 class Import(GenericExternInclusion):
-    '''! Specialization of GenericExternInclusion for Ehlit imports. '''
+    """! Specialization of GenericExternInclusion for Ehlit imports. """
 
     def import_dir(self, dir: str) -> List[Node]:
-        '''! Import a whole directory.
+        """! Import a whole directory.
         This recursively imports all Ehlit files in the specified directory.
         @param dir @b str The directory to import.
         @return @b List[Node] A list of the imported nodes.
-        '''
+        """
         res: List[Node] = []
         for sub in listdir(dir):
             full_path: str = path.join(dir, sub)
@@ -385,9 +385,9 @@ class Import(GenericExternInclusion):
         return res
 
     def parse(self) -> List[Node]:
-        '''! Parse the imported file or directory contents.
+        """! Parse the imported file or directory contents.
         @return @b List[Node] A list of the imported nodes.
-        '''
+        """
         for p in self.import_paths:
             full_path: str = path.abspath(path.join(p, self.lib))
             if path.isdir(full_path):
@@ -412,12 +412,12 @@ class Import(GenericExternInclusion):
 
 
 class Include(GenericExternInclusion):
-    '''! Specialization of GenericExternInclusion for C includes. '''
+    """! Specialization of GenericExternInclusion for C includes. """
 
     def parse(self) -> List[Node]:
-        '''! Parse the included file.
+        """! Parse the included file.
         @return @b List[Node] A list of the imported nodes.
-        '''
+        """
         if self.lib in included:
             return []
         included.append(self.lib)
@@ -429,12 +429,12 @@ class Include(GenericExternInclusion):
 
 
 class Value(Node):
-    '''! Base for all nodes representing a value. '''
+    """! Base for all nodes representing a value. """
 
     def __init__(self, pos: int = 0) -> None:
-        '''! Constructor
+        """! Constructor
         @param pos @b int The position of the node in the source file
-        '''
+        """
         super().__init__(pos)
         ## @b int Referencing offset to be applied when writing this value.
         self._ref_offset: int = 0
@@ -472,7 +472,7 @@ class Value(Node):
 
     def _from_any_aligned(self, target: Union['Symbol', 'Type', 'Value'],
                           source: Union['Symbol', 'Type', 'Value'], is_casting: bool) -> 'Symbol':
-        '''! Compute the conversion needed to transform an any into target.
+        """! Compute the conversion needed to transform an any into target.
         This function computes the referencing offset and / or the cast to make an @b any, or a
         container of @b any, binary compatible with target. It also takes into account the will of
         the developper if he wants more references than the minimum required.
@@ -482,7 +482,7 @@ class Value(Node):
                               @c any, or any container of it.
         @param is_casting @b bool Whether we are already in a casting context or not.
         @return @b Type The cast needed for a successful conversion.
-        '''
+        """
         target_ref_count: int = source.ref_offset
         res: Symbol = target.from_any() if isinstance(target, Type) else target.typ.from_any()
         if is_casting:
@@ -509,9 +509,9 @@ class Value(Node):
         return res
 
     def auto_cast(self, target: Union['Symbol', 'Type']) -> None:
-        '''! Make this value binary compatible with target.
+        """! Make this value binary compatible with target.
         @param target @b Node The node that this value shall be made compatible with.
-        '''
+        """
         src: 'Type' = self.typ
         target_ref_level: int = 0
         self_typ: 'Type' = self.typ
@@ -557,11 +557,11 @@ class DeclarationBase(Node):
         return None, None
 
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
-        '''! Find a declaration strictly in children.
+        """! Find a declaration strictly in children.
         Container types (like structs) would want to search symbols in this function.
         @param sym @b List[str] The symbol to find.
         @return @b Declaration|FunctionDeclaration The inner declaration if found, None otherwise.
-        '''
+        """
         return None, None
 
     def is_declaration(self) -> bool:
