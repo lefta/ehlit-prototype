@@ -116,11 +116,11 @@ sure we agree on the whys and the hows.
 
 Codenames will be revealed once the development of their corresponding milestone starts.
 
-* WIP: V0.1 - C WITH CLEAN SYNTAX / Codename CWCS
-* TODO: V0.2 - Codename CHLF
-* TODO: V0.3 - Codename SL
-* TODO: V0.4 - Codename DRC
-* TODO: V0.5 - Codename OPAT
+* C with clean syntax / CWCS
+* WIP: Cool, high level features / CHLF
+* TODO: SL
+* TODO: DRC
+* TODO: OPAT
 
 ### Documentation
 
