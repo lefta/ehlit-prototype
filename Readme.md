@@ -17,6 +17,12 @@ interrested in the Ehlit language, please be patient (really patient). If you ar
 interrested, I am open to any help you are able to provide. See the `how can I help ?` section
 below. Unfortunately, I do not have as much time that I want to work on this project.
 
+## Build status
+
+| Build bot | Status |
+|-----------|--------|
+| Travis CI | [![Build Status](https://travis-ci.org/lefta/ehlit-prototype.svg?branch=master)](https://travis-ci.org/lefta/ehlit-prototype) |
+
 ## Introduction
 
 Ehlit is a compiled programmation language designed for performance, simplicity, readability and
