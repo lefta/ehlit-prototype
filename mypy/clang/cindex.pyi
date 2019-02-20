@@ -1,6 +1,12 @@
 from typing import Iterator, List, Optional, Text, Tuple, Union
 
 
+class Config(object):
+    @classmethod
+    def set_library_file(self, file: str) -> None:
+        pass
+
+
 class File(object):
     name: Text
 
