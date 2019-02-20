@@ -265,7 +265,7 @@ class DumpWriter:
             qualifiers.append('inline')
         if node.qualifiers.is_private:
             qualifiers.append('private')
-        if len(qualifiers) is not 0:
+        if len(qualifiers) != 0:
             self.print_str('Modifiers: {}'.format(', '.join(qualifiers)))
 
     @indent
@@ -305,8 +305,8 @@ class DumpWriter:
     def dumpFunctionType(self, node: Union[Node, str]) -> None:
         node = cast(FunctionType, node)
         self.dump('FunctionType')
-        self.print_node(node.ret, len(node.args) is not 0 or node.is_variadic)
-        if len(node.args) is not 0:
+        self.print_node(node.ret, len(node.args) != 0 or node.is_variadic)
+        if len(node.args) != 0:
             self.print_node_list('Arguments:', node.args, node.is_variadic)
         if node.is_variadic:
             if node.variadic_type is None:

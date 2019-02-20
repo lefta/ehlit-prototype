@@ -222,7 +222,7 @@ class ASTBuilder(PTNodeVisitor):
     def visit_operation_assignment(self, node: ParseTreeNode,
                                    children: Union[Tuple[StrMatch, ast.Assignment],
                                                    Tuple[ast.Assignment]]) -> ast.Assignment:
-        if len(children) is 1:
+        if len(children) == 1:
             return children[0]
         children[1].operator = children[0]
         return children[1]
@@ -243,7 +243,7 @@ class ASTBuilder(PTNodeVisitor):
 
     def visit_array_element(self, node: ParseTreeNode, children: Tuple[Union[None, ast.Expression]]
                             ) -> ArrayBuilder:
-        if len(children) is 0:
+        if len(children) == 0:
             return ArrayBuilder(None, None)
         return ArrayBuilder(None, children[0])
 
@@ -350,7 +350,7 @@ class ASTBuilder(PTNodeVisitor):
 
     def visit_return_instruction(self, node: ParseTreeNode,
                                  children: Tuple[StrMatch, ast.Expression]) -> ast.Return:
-        if len(children) is 0:
+        if len(children) == 0:
             return ast.Return()
         return ast.Return(children[1])
 
@@ -596,21 +596,21 @@ class ASTBuilder(PTNodeVisitor):
     def visit_struct(self, node: ParseTreeNode,
                      children: Tuple[StrMatch, ast.Identifier, ast.VariableDeclaration]
                      ) -> ast.Struct:
-        if len(children) is 2:
+        if len(children) == 2:
             return ast.Struct(node.position, children[1], None)
         return ast.Struct(node.position, children[1], list(children[2:]))
 
     def visit_union(self, node: ParseTreeNode,
                     children: Tuple[StrMatch, ast.Identifier, ast.VariableDeclaration]
                     ) -> ast.EhUnion:
-        if len(children) is 2:
+        if len(children) == 2:
             return ast.EhUnion(node.position, children[1], None)
         return ast.EhUnion(node.position, children[1], list(children[2:]))
 
     def visit_enum(self, node: ParseTreeNode,
                    children: Tuple[StrMatch, ast.Identifier, ast.Identifier]
                    ) -> ast.EhEnum:
-        if len(children) is 2:
+        if len(children) == 2:
             return ast.EhEnum(node.position, children[1], None)
         return ast.EhEnum(node.position, children[1], list(children[2:]))
 

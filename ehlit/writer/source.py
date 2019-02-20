@@ -155,7 +155,7 @@ class SourceWriter:
             i: int = 0
             assert isinstance(node.typ, FunctionType)
             while i < len(node.typ.args):
-                if i is not 0:
+                if i != 0:
                     self.file.write(', ')
                 self.write(node.typ.args[i])
                 i += 1
@@ -263,7 +263,7 @@ class SourceWriter:
                 self.writeFunctionDeclaration(fun)
             return
 
-        if len(fun.predeclarations) is not 0:
+        if len(fun.predeclarations) != 0:
             self.file.write('\n')
         for decl in fun.predeclarations:
             # It is possible that we get the definition of the function, but we only want to write
@@ -501,10 +501,10 @@ class SourceWriter:
                 if isinstance(elem.decl, EhEnum):
                     continue
                 ref_offset: int = elem.ref_offset
-                if ref_offset is 0:
+                if ref_offset == 0:
                     self.write(elem)
                     self.file.write('.')
-                elif ref_offset is 1:
+                elif ref_offset == 1:
                     self.write(elem)
                     self.file.write('->')
                 else:
@@ -565,10 +565,10 @@ class SourceWriter:
         self.write(val.val)
 
     def writeSuffixOperatorValue(self, val: SuffixOperatorValue) -> None:
-        if val.val.ref_offset is not 0:
+        if val.val.ref_offset != 0:
             self.file.write('(')
         self.write(val.val)
-        if val.val.ref_offset is not 0:
+        if val.val.ref_offset != 0:
             self.file.write(')')
         self.file.write(val.op)
 

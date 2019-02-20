@@ -42,7 +42,7 @@ if proc.returncode != 0:
     raise RuntimeError('Could not find LLVM path, make sure it is installed')
 
 clang_libs: List[str] = glob.glob(os.path.join(proc.stdout.strip(), 'libclang.so*'))
-if len(clang_libs) is 0:
+if len(clang_libs) == 0:
     raise RuntimeError('Could not find libclang.so, make sure Clang is installed')
 
 Config.set_library_file(clang_libs[0])
@@ -364,7 +364,7 @@ def parse_MACRO_DEFINITION(cursor: Cursor) -> Optional[ast.Node]:
     sym: ast.Identifier = ast.Identifier(0, tokens[0].spelling)
 
     # Simple define
-    if len(tokens) is 1:
+    if len(tokens) == 1:
         return CDefine(sym)
     # Function macro
     if tokens[1].spelling == '(':

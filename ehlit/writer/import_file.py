@@ -145,7 +145,7 @@ class ImportWriter:
         self.file.write('(')
         i: int = 0
         while i < len(node.args):
-            if i is not 0:
+            if i != 0:
                 self.file.write(', ')
             self.write(node.args[i])
             i += 1

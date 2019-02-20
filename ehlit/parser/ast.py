@@ -518,9 +518,9 @@ class Value(Node):
             if isinstance(res, ReferenceToType):
                 while isinstance(res.child, ReferenceToType):
                     res = res.child
-                if res.any_memory_offset is 0:
+                if res.any_memory_offset == 0:
                     res = res.child
-        if target_ref_count is not 0:
+        if target_ref_count != 0:
             # The developper asked for some referencing
             target_ref_count -= res.ref_offset - res.typ.any_memory_offset
             while target_ref_count > 0:
@@ -552,7 +552,7 @@ class Value(Node):
                 while type(parent) is ReferenceToValue:
                     target_ref_level += 1
                     parent = parent.parent
-                if target_ref_level is not 0:
+                if target_ref_level != 0:
                     target_ref_level -= target.ref_offset
         if src:
             if (isinstance(target, Symbol) and target.is_type) or isinstance(target, Type):
@@ -1820,7 +1820,7 @@ class AnonymousArray(Value):
 
     @property
     def typ(self) -> Type:
-        if len(self.contents) is 0:
+        if len(self.contents) == 0:
             return ArrayType(BuiltinType('@any'))
         return ArrayType(self.contents[0].typ.dup())
 
