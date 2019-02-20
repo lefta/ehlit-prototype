@@ -59,16 +59,50 @@ int main(int ac, str[] av)
 
 ## Requirements
 
-### Usage
+### On Ubuntu
+
+Note that Ubuntu prior to 18.04 LTS is not supported
+
+```bash
+sudo apt install python3-pip clang llvm
+pip3 -r requirements.txt
+```
+
+### On Gentoo
+
+*Before answering yes to the installation, make sure all packages are installed with at least the
+python3.6 python target*
+
+```bash
+# For usage
+emerge --ask dev-python/clang-python dev-python/arpeggio
+# Or, for development
+emerge --ask dev-python/clang-python dev-python/arpeggio dev-python/mypy dev-python/flake8
+```
+
+### On other systems
+
+Make sure you have the following packages installed:
 
 * Python 3.6+
-* arpeggio Python module
-* clang with Python 3.5+ bindings (shipped with clang 5.0+)
+* pip
+* LLVM
+* Clang
 
-### Developement
+Then run:
 
-* flake8
-* MyPy
+```bash
+pip3 -r requirements.txt
+```
+
+Alternatively to the pip3 command, you may install the following python modules in the way that
+suits you:
+
+* arpeggio
+* clang
+* mypy (for development only)
+* flake8 (for development only)
+
 
 ## Basic usage
 
