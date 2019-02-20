@@ -20,14 +20,33 @@
 # SOFTWARE.
 
 import os
+import glob
 import logging
 import subprocess
 from argparse import ArgumentParser
 from clang.cindex import (Index, TranslationUnitLoadError, CursorKind, TypeKind, Cursor, Type,
-                          TranslationUnit, TokenKind, Token)
+                          TranslationUnit, TokenKind, Token, Config)
 from ehlit.parser.error import ParseError, Failure
 from ehlit.parser import ast
 from typing import Dict, List, Optional, Set
+
+# Find the clang library. On some systems, the clang library is not called `libclang.so`, for
+# example on Ubuntu, it is `libclang.so.1`.
+proc: subprocess.CompletedProcess = subprocess.run(['llvm-config', '--libdir'],
+                                                   stdin=subprocess.PIPE,
+                                                   stderr=subprocess.PIPE,
+                                                   stdout=subprocess.PIPE,
+                                                   encoding='utf-8')
+
+if proc.returncode != 0:
+    raise RuntimeError('Could not find LLVM path, make sure it is installed')
+
+clang_libs: List[str] = glob.glob(os.path.join(proc.stdout.strip(), 'libclang.so*'))
+if len(clang_libs) is 0:
+    raise RuntimeError('Could not find libclang.so, make sure Clang is installed')
+
+Config.set_library_file(clang_libs[0])
+
 
 include_dirs: List[str] = []
 
@@ -53,11 +72,8 @@ try:
     #   combo out there
     # - They should be quite the same than the ones actually used
     # - Only differences should be minor / internal enough to not have consequences on ehlit code
-    proc: subprocess.CompletedProcess = subprocess.run(['clang', '-E', '-v', '-'],
-                                                       stdin=subprocess.PIPE,
-                                                       stderr=subprocess.PIPE,
-                                                       stdout=subprocess.PIPE,
-                                                       encoding='utf-8')
+    proc = subprocess.run(['clang', '-E', '-v', '-'], stdin=subprocess.PIPE, stderr=subprocess.PIPE,
+                          stdout=subprocess.PIPE, encoding='utf-8')
 
     if proc.returncode != 0:
         # Just to stop the execution of the try block
