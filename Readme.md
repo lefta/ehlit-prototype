@@ -22,6 +22,7 @@ below. Unfortunately, I do not have as much time that I want to work on this pro
 | Build bot | Status |
 |-----------|--------|
 | Travis CI | [![Build Status](https://travis-ci.org/lefta/ehlit-prototype.svg?branch=master)](https://travis-ci.org/lefta/ehlit-prototype) |
+| AppVeyor  | [![Build status](https://ci.appveyor.com/api/projects/status/l9nrggik29m1pjri/branch/master?svg=true)](https://ci.appveyor.com/project/lefta/ehlit-prototype/branch/master) |
 | Coveralls | [![Coverage Status](https://coveralls.io/repos/github/lefta/ehlit-prototype/badge.svg?branch=master)](https://coveralls.io/github/lefta/ehlit-prototype?branch=master) |
 
 ## Introduction

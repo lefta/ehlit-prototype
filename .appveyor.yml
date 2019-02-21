@@ -1,0 +1,11 @@
+image: Visual Studio 2017
+
+install:
+  # Prepend Python 3.7 to path to avoid Python 2.7 being picked up by default
+  - "SET PATH=C:\\Python37-x64;C:\\Python37-x64\\Scripts;%PATH%"
+  - "pip install -r requirements.txt"
+
+build: off
+
+test_script:
+  - "python -m unittest discover test"
