@@ -1,5 +1,6 @@
 arpeggio
 clang
 coverage
+coveralls
 flake8
 mypy
