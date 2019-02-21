@@ -30,22 +30,27 @@ from ehlit.parser.error import ParseError, Failure
 from ehlit.parser import ast
 from typing import Dict, List, Optional, Set
 
-# Find the clang library. On some systems, the clang library is not called `libclang.so`, for
-# example on Ubuntu, it is `libclang.so.1`.
-proc: subprocess.CompletedProcess = subprocess.run(['llvm-config', '--libdir'],
-                                                   stdin=subprocess.PIPE,
-                                                   stderr=subprocess.PIPE,
-                                                   stdout=subprocess.PIPE,
-                                                   encoding='utf-8')
 
-if proc.returncode != 0:
-    raise RuntimeError('Could not find LLVM path, make sure it is installed')
+def find_clang_posix() -> None:
+    # Find the clang library. On some distros, the clang library is not called `libclang.so`, for
+    # example on Ubuntu, it is `libclang.so.1`, making cindex unable to find it.
+    proc: subprocess.CompletedProcess = subprocess.run(['llvm-config', '--libdir'],
+                                                       stdin=subprocess.PIPE,
+                                                       stderr=subprocess.PIPE,
+                                                       stdout=subprocess.PIPE,
+                                                       encoding='utf-8')
 
-clang_libs: List[str] = glob.glob(os.path.join(proc.stdout.strip(), 'libclang.so*'))
-if len(clang_libs) == 0:
-    raise RuntimeError('Could not find libclang.so, make sure Clang is installed')
+    if proc.returncode != 0:
+        raise RuntimeError('Could not find LLVM path')
 
-Config.set_library_file(clang_libs[0])
+    clang_libs: List[str] = glob.glob(os.path.join(proc.stdout.strip(), 'libclang.so*'))
+    if len(clang_libs) == 0:
+        raise RuntimeError('Could not find libclang.so, make sure Clang is installed')
+    Config.set_library_file(clang_libs[0])
+
+
+if os.name == 'posix':
+    find_clang_posix()
 
 
 include_dirs: List[str] = []
