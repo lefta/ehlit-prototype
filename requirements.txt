@@ -1,4 +1,5 @@
 arpeggio
-mypy
-flake8
 clang
+coverage
+flake8
+mypy
