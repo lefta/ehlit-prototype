@@ -67,6 +67,33 @@ int main(int ac, str[] av)
 
 ## Requirements
 
+*All commands must be run from the project root directory*
+
+### On Windows
+
+*Please note that you must be consistent in the dependencies architecture. If installing the 64 bits
+version of Python, you have to install the 64 bits version of LLVM.*
+
+* Install [Python](https://www.python.org/downloads/)
+
+In the installer, make sure the « Add Python 3.X to path » is checked, and click the « Install now »
+button. Note that the primary download link will install the 32 bit version.
+
+* Install [LLVM](http://releases.llvm.org/download.html)
+
+Download the latest pre-built binary for Windows, with the architecture matching you Python
+installation. In the installer, make sure one of the options to add LLVM to the system path is
+checked.
+
+Open a command prompt, and run
+
+```bash
+pip install --user -r requirements.txt
+```
+
+Warnings about installed binaries not being in path will be displayed. This is not a concern as long
+as you don't try to run them directly.
+
 ### On Ubuntu
 
 Note that Ubuntu prior to 18.04 LTS is not supported
@@ -110,6 +137,18 @@ suits you:
 * clang
 * mypy (for development only)
 * flake8 (for development only)
+
+
+## Checking the installation
+
+In the project root directory, run
+
+```bash
+python -m unittest discover test
+```
+
+A series of dots should appear, then a message stating that no errors were found. Congrat's, you
+are ready to develop in Ehlit !
 
 
 ## Basic usage
