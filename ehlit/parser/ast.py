@@ -341,7 +341,7 @@ class GenericExternInclusion(UnorderedScope):
         """
         super().__init__(pos)
         ## @b str The library that will be imported
-        self.lib: str = path.join(*lib)
+        self.lib: str = '/'.join(lib)
         ## @b List[Node] The symbols that have been imported from the library
         self.syms: List[Node] = []
 
