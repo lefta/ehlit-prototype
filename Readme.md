@@ -173,7 +173,7 @@ do not even have to think about this. For instance, with Makefiles, you could us
 This way, you may build your program the exact same way you would build it if it was written in pure
 C. C source files will be generated dynamically as needed.
 
-Import files are put in an `include` subdirecty. If you are writing a library, you will need to
+Import files are put in an `include` subdirectory. If you are writing a library, you will need to
 release this directory as well.
 
 ## How can I help ?
