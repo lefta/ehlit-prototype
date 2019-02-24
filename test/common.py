@@ -172,7 +172,7 @@ class EhlitTestCase(TestCase):
         @param src The file to compile
         @param error_file The file to check the error against
         """
-        with open(error_file, 'r') as f:
+        with open(error_file, 'r', encoding="utf-8") as f:
             return self.assert_error(src, f.read())
 
     def assert_compiles(self, src):
@@ -201,7 +201,7 @@ class EhlitTestCase(TestCase):
         @param file1 The first file to check
         @param file2 The second file to check
         """
-        with open(file1, 'r') as f:
+        with open(file1, 'r', encoding="utf-8") as f:
             self.assert_equal_to_file(f.read(), file2)
 
     def assert_equal_to_file(self, string, filename):
@@ -211,7 +211,7 @@ class EhlitTestCase(TestCase):
         @param string The string to test
         @param filename Path to the file containing reference output
         """
-        with open(filename, 'r') as f:
+        with open(filename, 'r', encoding="utf-8") as f:
             expected = f.read()
         self.assertEqual(string, expected)
 
@@ -223,8 +223,7 @@ class EhlitTestCase(TestCase):
         """
         dump = self.dump(src)
         self.assertNotEqual(dump, '', 'No dump have been generated.')
-        with open('{}.dump'.format(src), 'r') as f:
-            self.assertEqual(dump, f.read())
+        self.assert_equal_to_file(dump, '{}.dump'.format(src))
 
     def assert_declares(self, node, sym):
         decl, err = node.find_declaration(sym)
