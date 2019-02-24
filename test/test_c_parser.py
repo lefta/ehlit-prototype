@@ -19,7 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os.path
 from common import EhlitTestCase
 
 
@@ -34,7 +33,7 @@ class TestCParser(EhlitTestCase):
     def test_c_parser(self):
         for c in self.cases:
             with self.subTest(case=c):
-                f = os.path.join(self.test_dir, c)
+                f = '{}/{}'.format(self.test_dir, c)
                 self.assert_dumps_to(f)
 
     def test_c_variadic_function_call(self):
