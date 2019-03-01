@@ -21,7 +21,7 @@
 │           ├─ Arguments:
 │           │  └─ VariableDeclaration
 │           │     ├─ CompoundIdentifier
-│           │     │  └─ Identifier: @int32
+│           │     │  └─ Identifier: @int{int_sz}
 │           │     └─ Identifier: i
 │           └─ Variadic (C)
 └─ FunctionDefinition

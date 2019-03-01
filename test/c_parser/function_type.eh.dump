@@ -12,7 +12,7 @@
       │  │           └─ Arguments:
       │  │              └─ VariableDeclaration
       │  │                 └─ CompoundIdentifier
-      │  │                    └─ Identifier: @int32
+      │  │                    └─ Identifier: @int{int_sz}
       │  └─ To:
       │     └─ Identifier: fun
       └─ FunctionDeclaration
@@ -30,5 +30,5 @@
                   │        └─ Arguments:
                   │           └─ VariableDeclaration
                   │              └─ CompoundIdentifier
-                  │                 └─ Identifier: @int32
+                  │                 └─ Identifier: @int{int_sz}
                   └─ Identifier: param

@@ -6,15 +6,15 @@
 │     │  └─ Identifier: NO_VALUE
 │     ├─ VariableDeclaration
 │     │  ├─ CompoundIdentifier
-│     │  │  └─ Identifier: @int32
+│     │  │  └─ Identifier: @int{int_sz}
 │     │  └─ Identifier: CONSTANT
 │     ├─ VariableDeclaration
 │     │  ├─ CompoundIdentifier
-│     │  │  └─ Identifier: @int32
+│     │  │  └─ Identifier: @int{int_sz}
 │     │  └─ Identifier: VALUE
 │     ├─ VariableDeclaration
 │     │  ├─ CompoundIdentifier
-│     │  │  └─ Identifier: @int32
+│     │  │  └─ Identifier: @int{int_sz}
 │     │  └─ Identifier: PARENTHESISED_VALUE
 │     ├─ Alias
 │     │  ├─ From:

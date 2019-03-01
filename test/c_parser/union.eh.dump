@@ -7,7 +7,7 @@
       │  └─ Fields
       │     ├─ VariableDeclaration
       │     │  ├─ CompoundIdentifier
-      │     │  │  └─ Identifier: @int32
+      │     │  │  └─ Identifier: @int{int_sz}
       │     │  └─ Identifier: field1
       │     └─ VariableDeclaration
       │        ├─ CompoundIdentifier
@@ -18,7 +18,7 @@
       │  └─ Fields
       │     └─ VariableDeclaration
       │        ├─ CompoundIdentifier
-      │        │  └─ Identifier: @int32
+      │        │  └─ Identifier: @int{int_sz}
       │        └─ Identifier: field1
       ├─ Alias
       │  ├─ From:
@@ -27,7 +27,7 @@
       │  │     └─ Fields
       │  │        └─ VariableDeclaration
       │  │           ├─ CompoundIdentifier
-      │  │           │  └─ Identifier: @int32
+      │  │           │  └─ Identifier: @int{int_sz}
       │  │           └─ Identifier: field1
       │  └─ To:
       │     └─ Identifier: test_union_t

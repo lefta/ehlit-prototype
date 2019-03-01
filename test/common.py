@@ -204,26 +204,30 @@ class EhlitTestCase(TestCase):
         with open(file1, 'r', encoding="utf-8") as f:
             self.assert_equal_to_file(f.read(), file2)
 
-    def assert_equal_to_file(self, string, filename):
+    def assert_equal_to_file(self, string, filename, repls=None):
         """
         Check that a string is equal to a file contents
 
         @param string The string to test
         @param filename Path to the file containing reference output
+        @param repls Dict of named replacements to be made in the expectation file
         """
         with open(filename, 'r', encoding="utf-8") as f:
             expected = f.read()
+        if repls is not None:
+            expected = expected.format(**repls)
         self.assertEqual(string, expected)
 
-    def assert_dumps_to(self, src):
+    def assert_dumps_to(self, src, repls=None):
         """
         Check that an AST dump of the file contents matches the contents of src.dump
 
         @param src The source file to test
+        @param repls Dict of named replacements to be made in the expected dump file
         """
         dump = self.dump(src)
         self.assertNotEqual(dump, '', 'No dump have been generated.')
-        self.assert_equal_to_file(dump, '{}.dump'.format(src))
+        self.assert_equal_to_file(dump, '{}.dump'.format(src), repls)
 
     def assert_declares(self, node, sym):
         decl, err = node.find_declaration(sym)

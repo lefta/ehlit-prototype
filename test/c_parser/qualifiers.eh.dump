@@ -9,14 +9,14 @@
       │     │  ├─ Modifiers: const
       │     │  └─ CompoundIdentifier
       │     │     ├─ Modifiers: const
-      │     │     └─ Identifier: @int32
+      │     │     └─ Identifier: @int{int_sz}
       │     └─ Arguments:
       │        └─ VariableDeclaration
       │           ├─ Reference
       │           │  ├─ Modifiers: const
       │           │  └─ CompoundIdentifier
       │           │     ├─ Modifiers: const
-      │           │     └─ Identifier: @int32
+      │           │     └─ Identifier: @int{int_sz}
       │           └─ Identifier: i
       ├─ FunctionDeclaration
       │  ├─ Identifier: update_ptrs
@@ -28,13 +28,13 @@
       │        │  ├─ Reference
       │        │  │  ├─ Modifiers: restrict
       │        │  │  └─ CompoundIdentifier
-      │        │  │     └─ Identifier: @int32
+      │        │  │     └─ Identifier: @int{int_sz}
       │        │  └─ Identifier: i
       │        └─ VariableDeclaration
       │           ├─ Reference
       │           │  ├─ Modifiers: restrict
       │           │  └─ CompoundIdentifier
-      │           │     └─ Identifier: @int32
+      │           │     └─ Identifier: @int{int_sz}
       │           └─ Identifier: j
       ├─ FunctionDeclaration
       │  ├─ Identifier: strcpy
@@ -70,10 +70,10 @@
       │        │  └─ Identifier: s2
       │        └─ VariableDeclaration
       │           ├─ CompoundIdentifier
-      │           │  └─ Identifier: @int32
+      │           │  └─ Identifier: @int{int_sz}
       │           └─ Identifier: n
       └─ VariableDeclaration
          ├─ CompoundIdentifier
          │  ├─ Modifiers: volatile
-         │  └─ Identifier: @int32
+         │  └─ Identifier: @int{int_sz}
          └─ Identifier: some_register

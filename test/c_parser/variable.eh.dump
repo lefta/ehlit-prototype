@@ -4,11 +4,11 @@
       ├─ No type
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int32
+      │  │  └─ Identifier: @int{int_sz}
       │  └─ Identifier: var
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int32
+      │  │  └─ Identifier: @int{int_sz}
       │  ├─ Identifier: assigned_var
       │  └─ Assignment
       │     └─ Expression

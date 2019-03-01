@@ -4,63 +4,63 @@
       ├─ No type
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int8
+      │  │  └─ Identifier: @int{char_sz}
       │  └─ Identifier: c
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @uint8
+      │  │  └─ Identifier: @uint{char_sz}
       │  └─ Identifier: uc
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int8
+      │  │  └─ Identifier: @int{char_sz}
       │  └─ Identifier: sc
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int16
+      │  │  └─ Identifier: @int{short_sz}
       │  └─ Identifier: s
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @uint16
+      │  │  └─ Identifier: @uint{short_sz}
       │  └─ Identifier: us
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int16
+      │  │  └─ Identifier: @int{short_sz}
       │  └─ Identifier: ss
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int32
+      │  │  └─ Identifier: @int{int_sz}
       │  └─ Identifier: i
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @uint32
+      │  │  └─ Identifier: @uint{int_sz}
       │  └─ Identifier: ui
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int32
+      │  │  └─ Identifier: @int{int_sz}
       │  └─ Identifier: si
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int64
+      │  │  └─ Identifier: @int{long_sz}
       │  └─ Identifier: l
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @uint64
+      │  │  └─ Identifier: @uint{long_sz}
       │  └─ Identifier: ul
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int64
+      │  │  └─ Identifier: @int{long_sz}
       │  └─ Identifier: sl
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int64
+      │  │  └─ Identifier: @int{longlong_sz}
       │  └─ Identifier: ll
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @uint64
+      │  │  └─ Identifier: @uint{longlong_sz}
       │  └─ Identifier: ull
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
-      │  │  └─ Identifier: @int64
+      │  │  └─ Identifier: @int{longlong_sz}
       │  └─ Identifier: sll
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
@@ -81,7 +81,7 @@
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint8
+      │  │     └─ Identifier: @uint{char_sz}
       │  └─ Identifier: ustr
       ├─ VariableDeclaration
       │  ├─ CompoundIdentifier
@@ -90,62 +90,62 @@
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int16
+      │  │     └─ Identifier: @int{short_sz}
       │  └─ Identifier: ps
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint16
+      │  │     └─ Identifier: @uint{short_sz}
       │  └─ Identifier: ups
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int16
+      │  │     └─ Identifier: @int{short_sz}
       │  └─ Identifier: sps
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int32
+      │  │     └─ Identifier: @int{int_sz}
       │  └─ Identifier: pi
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint32
+      │  │     └─ Identifier: @uint{int_sz}
       │  └─ Identifier: upi
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int32
+      │  │     └─ Identifier: @int{int_sz}
       │  └─ Identifier: spi
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int64
+      │  │     └─ Identifier: @int{long_sz}
       │  └─ Identifier: pl
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint64
+      │  │     └─ Identifier: @uint{long_sz}
       │  └─ Identifier: upl
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int64
+      │  │     └─ Identifier: @int{long_sz}
       │  └─ Identifier: spl
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int64
+      │  │     └─ Identifier: @int{longlong_sz}
       │  └─ Identifier: pll
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint64
+      │  │     └─ Identifier: @uint{longlong_sz}
       │  └─ Identifier: pull
       ├─ VariableDeclaration
       │  ├─ Reference
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int64
+      │  │     └─ Identifier: @int{longlong_sz}
       │  └─ Identifier: psll
       ├─ VariableDeclaration
       │  ├─ Reference
@@ -165,58 +165,58 @@
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int8
+      │  │     └─ Identifier: @int{char_sz}
       │  └─ Identifier: ac
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint8
+      │  │     └─ Identifier: @uint{char_sz}
       │  └─ Identifier: uac
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int16
+      │  │     └─ Identifier: @int{short_sz}
       │  └─ Identifier: as
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint16
+      │  │     └─ Identifier: @uint{short_sz}
       │  └─ Identifier: uas
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int32
+      │  │     └─ Identifier: @int{int_sz}
       │  └─ Identifier: ai
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint32
+      │  │     └─ Identifier: @uint{int_sz}
       │  └─ Identifier: uai
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int64
+      │  │     └─ Identifier: @int{long_sz}
       │  └─ Identifier: al
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint64
+      │  │     └─ Identifier: @uint{long_sz}
       │  └─ Identifier: ual
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @int64
+      │  │     └─ Identifier: @int{longlong_sz}
       │  └─ Identifier: all
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  └─ CompoundIdentifier
-      │  │     └─ Identifier: @uint64
+      │  │     └─ Identifier: @uint{longlong_sz}
       │  └─ Identifier: uall
       ├─ VariableDeclaration
       │  ├─ Array
       │  │  ├─ Sub-type:
       │  │  │  └─ CompoundIdentifier
-      │  │  │     └─ Identifier: @int8
+      │  │  │     └─ Identifier: @int{char_sz}
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: sac
@@ -224,7 +224,7 @@
       │  ├─ Array
       │  │  ├─ Sub-type:
       │  │  │  └─ CompoundIdentifier
-      │  │  │     └─ Identifier: @uint8
+      │  │  │     └─ Identifier: @uint{char_sz}
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: suac
@@ -232,7 +232,7 @@
       │  ├─ Array
       │  │  ├─ Sub-type:
       │  │  │  └─ CompoundIdentifier
-      │  │  │     └─ Identifier: @int16
+      │  │  │     └─ Identifier: @int{short_sz}
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: sas
@@ -240,7 +240,7 @@
       │  ├─ Array
       │  │  ├─ Sub-type:
       │  │  │  └─ CompoundIdentifier
-      │  │  │     └─ Identifier: @uint16
+      │  │  │     └─ Identifier: @uint{short_sz}
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: suas
@@ -248,7 +248,7 @@
       │  ├─ Array
       │  │  ├─ Sub-type:
       │  │  │  └─ CompoundIdentifier
-      │  │  │     └─ Identifier: @int32
+      │  │  │     └─ Identifier: @int{int_sz}
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: sai
@@ -256,7 +256,7 @@
       │  ├─ Array
       │  │  ├─ Sub-type:
       │  │  │  └─ CompoundIdentifier
-      │  │  │     └─ Identifier: @uint32
+      │  │  │     └─ Identifier: @uint{int_sz}
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: suai
@@ -264,7 +264,7 @@
       │  ├─ Array
       │  │  ├─ Sub-type:
       │  │  │  └─ CompoundIdentifier
-      │  │  │     └─ Identifier: @int64
+      │  │  │     └─ Identifier: @int{long_sz}
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: sal
@@ -272,7 +272,7 @@
       │  ├─ Array
       │  │  ├─ Sub-type:
       │  │  │  └─ CompoundIdentifier
-      │  │  │     └─ Identifier: @uint64
+      │  │  │     └─ Identifier: @uint{long_sz}
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: sual

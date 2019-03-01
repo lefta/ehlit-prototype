@@ -19,6 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from clang.cindex import Index
 from common import EhlitTestCase
 
 
@@ -29,15 +30,32 @@ class TestCParser(EhlitTestCase):
         super().__init__(arg)
         self.test_dir = 'c_parser'
         self.cases = self.discover_tests(self.test_dir)
+        self._compute_sizes()
 
     def test_c_parser(self):
         for c in self.cases:
             with self.subTest(case=c):
                 f = '{}/{}'.format(self.test_dir, c)
-                self.assert_dumps_to(f)
+                self.assert_dumps_to(f, self.sizes)
 
     def test_c_variadic_function_call(self):
         self.assert_compiles('c_parser/function.eh')
 
     def test_c_macro_usage(self):
         self.assert_compiles('c_parser/macro.eh')
+
+    def _compute_sizes(self):
+        self.sizes = {}
+        index = Index.create()
+        tu = index.parse('test.c', unsaved_files=[
+            ('test.c', '''
+                char char_sz;
+                short short_sz;
+                int int_sz;
+                long long_sz;
+                long long longlong_sz;
+            ''')])
+        for c in tu.cursor.get_children():
+            self.sizes[c.spelling] = c.type.get_size() * 8
+        del tu
+        del index
