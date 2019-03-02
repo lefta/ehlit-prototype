@@ -28,7 +28,7 @@ from clang.cindex import (Index, TranslationUnitLoadError, CursorKind, TypeKind,
                           TranslationUnit, TokenKind, Token, Config)
 from ehlit.parser.error import ParseError, Failure
 from ehlit.parser import ast
-from typing import Dict, List, Optional, Set
+from typing import cast, Dict, List, Optional, Set
 
 
 def find_clang_posix() -> None:
@@ -162,6 +162,9 @@ class CAnyType(ast.Type):
 
     def dup(self) -> ast.Type:
         return CAnyType()
+
+    def from_any(self) -> ast.Symbol:
+        return CAnyType.make()
 
 
 uint_types: Set[TypeKind] = {
@@ -391,9 +394,9 @@ def parse_MACRO_DEFINITION(cursor: Cursor) -> Optional[ast.Node]:
     if tokens[next_relevant_token].kind == TokenKind.LITERAL:
         return ast.VariableDeclaration(_macro_var_type(tokens), sym)
     # Alias macro
-    alias: Optional[ast.Identifier] = _macro_alias_value(tokens)
+    alias: Optional[ast.Symbol] = _macro_alias_value(tokens)
     if alias is not None:
-        return ast.Alias(ast.CompoundIdentifier([alias]), ast.Identifier(0, tokens[0].spelling))
+        return ast.Alias(alias, ast.Identifier(0, tokens[0].spelling))
     return None
 
 
@@ -409,51 +412,38 @@ def _macro_var_type(tokens: List[Token]) -> ast.Symbol:
     return CAnyType.make()
 
 
-def _macro_alias_value(tokens: List[Token]) -> Optional[ast.Identifier]:
+def _macro_alias_value(tokens: List[Token]) -> Optional[ast.Symbol]:
     name: str = tokens[0].spelling
     tokens = tokens[2:] if tokens[1].spelling == '(' else tokens[1:]
     if tokens[0].kind == TokenKind.KEYWORD:
-        typ: Optional[ast.Identifier] = _macro_alias_type(tokens)
+        typ: Optional[ast.Symbol] = _macro_alias_type(tokens)
         if type is not None:
             return typ
     elif len(tokens) == 1 or (len(tokens) == 2 and tokens[1].spelling == ')'):
-        return ast.Identifier(0, tokens[0].spelling)
+        return ast.CompoundIdentifier([ast.Identifier(0, tokens[0].spelling)])
     logging.debug('c_parser: failed to parse macro: {}'.format(name))
     return None
 
 
-def _macro_alias_type(tokens: List[Token]) -> Optional[ast.Identifier]:
-    prefix: str = ''
-    size: int = 32
-    decimal: bool = False
-    for t in tokens:
-        if t.spelling == 'char':
-            size = 8
-        elif t.spelling == 'short':
-            size = 16
-        elif t.spelling == 'long':
-            size *= 2
-        elif t.spelling == 'float':
-            decimal = True
-        elif t.spelling == 'double':
-            decimal = True
-            size *= 2
-        elif t.spelling == 'unsigned':
-            prefix = 'u'
-        elif t.spelling == ')':
+def _macro_alias_type(tokens: List[Token]) -> Optional[ast.Symbol]:
+    tokens_str: List[str] = []
+    for tok in tokens:
+        tokens_str.append(tok.spelling)
+    res: Optional[ast.Symbol] = None
+    index: Index = Index.create()
+    try:
+        tu: TranslationUnit = index.parse('macro_type_parser.c', unsaved_files=[
+            ('macro_type_parser.c', '{} var;'.format(' '.join(tokens_str)))
+        ])
+        for c in tu.cursor.get_children():
+            res = cast(ast.CompoundIdentifier, type_to_ehlit(c.type))
             break
-        elif t.spelling not in ['signed', 'int']:
-            logging.debug('c_parser: unhandled token: {}'.format(t.spelling))
-            return None
-    if decimal:
-        if size == 32:
-            return ast.Identifier(0, '@float')
-        if size == 64:
-            return ast.Identifier(0, '@double')
-        if size == 128:
-            return ast.Identifier(0, '@decimal')
-        return None
-    return ast.Identifier(0, '@{}int{}'.format(prefix, size))
+        del tu
+    except TranslationUnitLoadError:
+        print(' '.join(tokens_str))
+        pass
+    del index
+    return res
 
 
 def type_VOID(typ: Type) -> ast.Symbol:

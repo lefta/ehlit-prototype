@@ -31,20 +31,86 @@
 │     ├─ C function macro
 │     │  ├─ Identifier: MACROFUNC
 │     │  └─ Arg count: 2
-│     └─ C function macro
-│        ├─ Identifier: MACROFUNC_NO_BODY
-│        └─ Arg count: 2
+│     ├─ C function macro
+│     │  ├─ Identifier: MACROFUNC_NO_BODY
+│     │  └─ Arg count: 2
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @int{char_sz}
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_CHAR
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @uint{char_sz}
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_UCHAR
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @int{char_sz}
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_SCHAR
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @int{short_sz}
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_SHORT
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @int{int_sz}
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_INT
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @int{long_sz}
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_LONG
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @int{longlong_sz}
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_LLONG
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @float
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_FLOAT
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @double
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_DOUBLE
+│     ├─ Alias
+│     │  ├─ From:
+│     │  │  └─ CompoundIdentifier
+│     │  │     └─ Identifier: @decimal
+│     │  └─ To:
+│     │     └─ Identifier: MACRO_TYPE_LDOUBLE
+│     └─ Alias
+│        ├─ From:
+│        │  └─ CompoundIdentifier
+│        │     └─ Identifier: @str
+│        └─ To:
+│           └─ Identifier: MACRO_TYPE_STR
 └─ FunctionDefinition
    ├─ FunctionDeclaration
    │  ├─ Identifier: call_macros
    │  └─ FunctionType
    │     └─ CompoundIdentifier
-   │        └─ Identifier: @str
+   │        └─ Identifier: MACRO_TYPE_STR
    └─ FunctionBody
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @int
+      │     │  └─ Identifier: MACRO_TYPE_INT
       │     ├─ Identifier: i
       │     └─ Assignment
       │        └─ Expression
@@ -59,7 +125,7 @@
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @str
+      │     │  └─ Identifier: MACRO_TYPE_STR
       │     ├─ Identifier: s
       │     └─ Assignment
       │        └─ Expression
