@@ -1265,6 +1265,9 @@ class Statement(Node):
         self.expr = self.expr.build(self)
         return self
 
+    def get_declaration(self, sym: str) -> DeclarationLookup:
+        return self.expr.get_declaration(sym)
+
 
 class Expression(Value):
     def __init__(self, contents: List[Value], parenthesised: bool) -> None:
