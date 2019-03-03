@@ -1621,12 +1621,12 @@ class CompoundIdentifier(Symbol):
         super().__init__()
 
     def build(self, parent: Node) -> 'CompoundIdentifier':
-        self.find_children_declarations(parent)
+        self._find_children_declarations(parent)
         super().build(parent)
         self.elems = [e.build(self) for e in self.elems]
         return self
 
-    def find_children_declarations(self, parent: Node) -> None:
+    def _find_children_declarations(self, parent: Node) -> None:
         cur_decl: Optional[DeclarationLookup] = None
         for e in self.elems:
             if cur_decl is None:
