@@ -23,15 +23,48 @@ from abc import abstractmethod
 from arpeggio import ParserPython
 from enum import IntEnum, IntFlag
 from os import path, getcwd, listdir
-from typing import Iterator, List, Optional, Tuple, Union, cast
+from typing import Iterator, List, Optional, Union, cast
 import typing
 from ehlit.parser.error import ParseError, Failure
 from ehlit.options import OptionsStruct
 
-DeclarationLookup = Tuple[Optional['DeclarationBase'], Optional[str]]
-
 imported: List[str] = []
 included: List[str] = []
+
+
+class DeclarationLookup(list):
+    def __init__(self, name: str, decls: Optional[List['Node']] = None) -> None:
+        super().__init__()
+        self._error: Optional[str] = None
+        self._name = name
+        if decls is not None:
+            self.find_in(decls)
+
+    def get_inner_declaration(self, sym: str) -> 'DeclarationLookup':
+        res: DeclarationLookup = DeclarationLookup(sym)
+        for decl in self:
+            res.merge(decl.get_inner_declaration(sym))
+        return res
+
+    @property
+    def error(self) -> str:
+        if self._error is None:
+            return "use of undeclared identifier {}".format(self._name)
+        return self._error
+
+    @error.setter
+    def error(self, err: str) -> None:
+        self._error = err
+
+    def merge(self, other: 'DeclarationLookup') -> None:
+        assert self._name == other._name
+        self.extend(other)
+        if self._error is None:
+            self._error = other._error
+
+    def find_in(self, decls: List['Node']) -> None:
+        for decl in decls:
+            self.merge(decl.get_declaration(self._name))
 
 
 class Qualifier(IntFlag):
@@ -184,7 +217,7 @@ class Node:
         @param sym @b str The symbol to find
         @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
         """
-        return None, None
+        return DeclarationLookup(sym)
 
     def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
         """! Report a failure to the parent, up to the AST where it will be handled.
@@ -264,25 +297,22 @@ class Scope(Node):
         self.declarations.append(decl)
 
     def find_declaration(self, sym: str) -> DeclarationLookup:
-        for decl in self.declarations:
-            res, err = decl.get_declaration(sym)
-            if res is not None or err is not None:
-                return res, err
-        res, err = super().find_declaration(sym)
-        if res is not None and not res.built:
-            self.predeclarations.append(res)
-        return res, err
+        # MyPy does not consider List[DeclarationBase] as a List[Node]
+        res: DeclarationLookup = DeclarationLookup(sym, cast(List[Node], self.declarations))
+        res.merge(super().find_declaration(sym))
+        for decl in res:
+            if decl is not None and not decl.built:
+                self.predeclarations.append(decl)
+        return res
 
 
 class UnorderedScope(Scope):
     """! @c Scope in which declaration order does not matter """
 
     def find_declaration(self, sym: str) -> DeclarationLookup:
-        for node in self.scope_contents:
-            res, err = node.get_declaration(sym)
-            if res is not None or err is not None:
-                return res, err
-        return super().find_declaration(sym)
+        res: DeclarationLookup = DeclarationLookup(sym, self.scope_contents)
+        res.merge(super().find_declaration(sym))
+        return res
 
     @property
     @abstractmethod
@@ -365,11 +395,7 @@ class GenericExternInclusion(UnorderedScope):
         @param sym @b List[str] The symbol to look for
         @return @b Declaration|FunctionDeclaration The declaration if found, @c None otherwise
         """
-        for decl in self.syms:
-            res, err = decl.get_declaration(sym)
-            if res is not None or err is not None:
-                return res, err
-        return None, None
+        return DeclarationLookup(sym, self.syms)
 
     @property
     def scope_contents(self) -> List[Node]:
@@ -418,10 +444,14 @@ class Import(GenericExternInclusion):
         return []
 
     def find_declaration(self, sym: str) -> DeclarationLookup:
-        decl, err = super().find_declaration(sym)
-        if isinstance(decl, Declaration) and decl._qualifiers.is_private:
-            return None, 'accessing to private symbol `{}`'.format(sym)
-        return decl, err
+        found = super().find_declaration(sym)
+        res = DeclarationLookup(sym)
+        for decl in found:
+            if isinstance(decl, Declaration) and decl._qualifiers.is_private:
+                res.error = 'accessing to private symbol `{}`'.format(sym)
+            else:
+                res.append(decl)
+        return res
 
 
 class Include(GenericExternInclusion):
@@ -565,9 +595,10 @@ class DeclarationBase(Node):
         return self
 
     def get_declaration(self, sym: str) -> DeclarationLookup:
+        res = DeclarationLookup(sym)
         if self.name == sym:
-            return self, None
-        return None, None
+            res.append(self)
+        return res
 
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
         """! Find a declaration strictly in children.
@@ -575,7 +606,7 @@ class DeclarationBase(Node):
         @param sym @b List[str] The symbol to find.
         @return @b Declaration|FunctionDeclaration The inner declaration if found, None otherwise.
         """
-        return None, None
+        return DeclarationLookup(sym)
 
     @property
     @abstractmethod
@@ -1173,10 +1204,13 @@ class FunctionDefinition(FunctionDeclaration, FlowScope):
         if sym != 'vargs':
             return super().find_declaration(sym)
         assert isinstance(self.typ, FunctionType)
-        if not self.typ.is_variadic:
-            return None, "use of vargs in a non variadic function"
-        assert self.typ.variadic_type is not None
-        return VArgs(self.typ.variadic_type), None
+        res = DeclarationLookup(sym)
+        if self.typ.is_variadic:
+            assert self.typ.variadic_type is not None
+            res.append(VArgs(self.typ.variadic_type))
+        else:
+            res.error = "use of vargs in a non variadic function"
+        return res
 
     def generate_var_name(self) -> str:
         self.gen_var_count += 1
@@ -1188,9 +1222,12 @@ class VArgs(VariableDeclaration):
         super().__init__(Array(typ, None), Identifier(0, 'vargs'))
 
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
+        res = DeclarationLookup(sym)
         if sym == 'length':
-            return VArgsLength(), None
-        return None, None
+            res.append(VArgsLength())
+        else:
+            res.error = "`vargs` have no property {}".format(sym)
+        return res
 
     @property
     def mangled_name(self) -> str:
@@ -1590,18 +1627,16 @@ class CompoundIdentifier(Symbol):
         return self
 
     def find_children_declarations(self, parent: Node) -> None:
-        cur_decl = None
+        cur_decl: Optional[DeclarationLookup] = None
         for e in self.elems:
             if cur_decl is None:
-                cur_decl, err = parent.find_declaration(e.name)
+                cur_decl = parent.find_declaration(e.name)
             else:
-                cur_decl, err = cur_decl.get_inner_declaration(e.name)
-            e.decl = cur_decl
-            if cur_decl is None:
-                if err is None:
-                    err = "use of undeclared identifier {}".format(e.name)
-                parent.error(e.pos, err)
+                cur_decl = cur_decl.get_inner_declaration(e.name)
+            if len(cur_decl) == 0:
+                parent.error(e.pos, cur_decl.error)
                 return
+            e.decl = cur_decl[0]
         if len(self.elems) >= 2 and isinstance(self.elems[1].decl, VArgsLength):
             self.elems = self.elems[1:]
             self.elems[0].name = '@vargs_len'
@@ -1915,13 +1950,12 @@ class ContainerStructure(Type, Scope):
         return self.sym.name
 
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
+        res = DeclarationLookup(sym)
         if self.fields is None:
-            return None, 'accessing incomplete {} {}'.format(self.display_name, self.sym.name)
-        for f in self.fields:
-            decl, err = f.get_declaration(sym)
-            if decl is not None or err is not None:
-                return decl, err
-        return None, None
+            res.error = 'accessing incomplete {} {}'.format(self.display_name, self.sym.name)
+        else:
+            res.find_in(cast(List[Node], self.fields))
+        return res
 
     def from_any(self) -> Symbol:
         return Reference(CompoundIdentifier([Identifier(0, self.sym.name)])).build(self)
@@ -1984,12 +2018,14 @@ class EhEnum(Type, Scope):
         return Reference(CompoundIdentifier([Identifier(0, self.sym.name)])).build(self)
 
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
+        res = DeclarationLookup(sym)
         if self.fields is None:
-            return None, 'accessing incomplete enum {}'.format(self.sym.name)
-        for f in self.fields:
-            if f.name == sym:
-                return f, None
-        return None, None
+            res.error = 'accessing incomplete enum {}'.format(self.sym.name)
+        else:
+            for f in self.fields:
+                if f.name == sym:
+                    res.append(f)
+        return res
 
     @property
     def name(self) -> str:
@@ -1999,9 +2035,11 @@ class EhEnum(Type, Scope):
         return EhEnum(self.pos, self.sym, None)
 
     def find_declaration(self, sym: str) -> DeclarationLookup:
+        res = DeclarationLookup(sym)
         if sym == self.name:
-            return self, None
-        return super().find_declaration(sym)
+            res.append(self)
+        res.merge(super().find_declaration(sym))
+        return res
 
 
 class EnumField(Declaration):
@@ -2080,19 +2118,18 @@ class AST(UnorderedScope):
         return self.nodes
 
     def find_declaration(self, sym: str) -> DeclarationLookup:
-        for n in self.nodes:
-            res, err = n.get_declaration(sym)
-            if res is not None or err is not None:
-                return res, err
+        res: DeclarationLookup = DeclarationLookup(sym, self.nodes)
         for decl in self.declarations:
-            res, err = decl.get_declaration(sym)
-            if res is not None:
-                if isinstance(res, Type):
-                    return res.dup().build(self), err
-                return res, err
-            if err is not None:
-                return res, err
-        return None, None
+            found = decl.get_declaration(sym)
+            if len(found) > 0:
+                for f in found:
+                    if isinstance(f, Type):
+                        res.append(f.dup().build(self))
+                    else:
+                        res.append(f)
+            else:
+                res.merge(found)
+        return res
 
     @property
     def import_paths(self) -> List[str]:

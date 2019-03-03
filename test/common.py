@@ -230,11 +230,11 @@ class EhlitTestCase(TestCase):
         self.assert_equal_to_file(dump, '{}.dump'.format(src), repls)
 
     def assert_declares(self, node, sym):
-        decl, err = node.find_declaration(sym)
-        self.assertEqual(None, err)
-        self.assertNotEqual(None, decl)
+        res = node.find_declaration(sym)
+        self.assertEqual(None, res._error)
+        self.assertNotEqual(0, len(res))
 
     def assert_not_declares(self, node, sym, expected_err=None):
-        decl, err = node.find_declaration(sym)
-        self.assertEqual(expected_err, err)
-        self.assertEqual(None, decl)
+        res = node.find_declaration(sym)
+        self.assertEqual(expected_err, res._error)
+        self.assertEqual(0, len(res))
