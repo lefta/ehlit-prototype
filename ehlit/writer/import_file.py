@@ -55,6 +55,7 @@ class ImportWriter:
         pass
 
     def writeFunctionDefinition(self, node: FunctionDefinition) -> None:
+        self.write_indent()
         if node.qualifiers.is_private:
             return
         if node.qualifiers.is_inline:
@@ -70,6 +71,7 @@ class ImportWriter:
         self.file.write('\n')
 
     def writeFunctionDeclaration(self, node: FunctionDeclaration) -> None:
+        self.write_indent()
         self.write_function_prototype(node)
         self.file.write('\n')
 
