@@ -24,8 +24,8 @@ from typing import List, TextIO
 from ehlit.parser.ast import (
     Alias, Array, Assignment, AST, BoolValue, Cast, CompoundIdentifier, ContainerStructure,
     Declaration, DecimalNumber, EhEnum, EhUnion, Expression, FunctionDeclaration,
-    FunctionDefinition, FunctionType, Identifier, Import, Include, Node, Number, Operator,
-    ReferenceToType, Return, Statement, Struct, TemplatedIdentifier, VariableDeclaration
+    FunctionDefinition, FunctionType, Identifier, Import, Include, Namespace, Node, Number,
+    Operator, ReferenceToType, Return, Statement, Struct, TemplatedIdentifier, VariableDeclaration
 )
 
 
@@ -252,3 +252,16 @@ class ImportWriter:
                 self.file.write('\n')
             self.indent -= 1
             self.file.write('}\n')
+
+    def writeNamespace(self, node: Namespace) -> None:
+        self.file.write('\n')
+        self.write_indent()
+        self.file.write('namespace ')
+        self.write(node.sym)
+        self.file.write(' {\n')
+        self.indent += 1
+        for n in node.contents:
+            self.write(n)
+        self.indent -= 1
+        self.write_indent()
+        self.file.write('}\n')

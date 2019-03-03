@@ -26,10 +26,10 @@ from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char,
     CompoundIdentifier, Condition, ControlStructure, DecimalNumber, Declaration, EhEnum, EhUnion,
     EnumField, Expression, ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition,
-    FunctionType, Identifier, Include, Import, InitializationList, Node, NullValue, Number,
-    Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return, Sizeof, Statement,
-    String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol,
-    TemplatedIdentifier, VariableAssignment, VariableDeclaration
+    FunctionType, Identifier, Include, Import, InitializationList, Namespace, Node, NullValue,
+    Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return, Sizeof,
+    Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest,
+    Symbol, TemplatedIdentifier, VariableAssignment, VariableDeclaration
 )
 
 IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
@@ -442,6 +442,13 @@ class DumpWriter:
     def dumpEnumField(self, node: Union[Node, str]) -> None:
         node = cast(EnumField, node)
         self.dump(node.name)
+
+    @indent
+    def dumpNamespace(self, node: Union[Node, str]) -> None:
+        node = cast(Namespace, node)
+        self.dump('Namespace')
+        self.print_node(node.sym)
+        self.print_node_list('Contents', node.contents, False)
 
     @indent
     def dumpCDefine(self, node: Union[Node, str]) -> None:

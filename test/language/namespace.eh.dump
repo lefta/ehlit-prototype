@@ -1,0 +1,112 @@
+├─ FunctionDeclaration
+│  ├─ Identifier: non_namespaced_function
+│  └─ FunctionType
+│     └─ CompoundIdentifier
+│        └─ Identifier: @void
+├─ Namespace
+│  ├─ Identifier: Foo
+│  └─ Contents
+│     ├─ Statement
+│     │  └─ VariableDeclaration
+│     │     ├─ CompoundIdentifier
+│     │     │  └─ Identifier: @int
+│     │     ├─ Identifier: some_variable
+│     │     └─ Assignment
+│     │        └─ Expression
+│     │           └─ Number: 42
+│     └─ FunctionDefinition
+│        ├─ FunctionDeclaration
+│        │  ├─ Identifier: some_function
+│        │  └─ FunctionType
+│        │     └─ CompoundIdentifier
+│        │        └─ Identifier: @void
+│        └─ FunctionBody
+│           └─ Statement
+│              └─ Expression
+│                 └─ FunctionCall
+│                    ├─ CompoundIdentifier
+│                    │  └─ Identifier: non_namespaced_function
+│                    └─ Arguments
+├─ Namespace
+│  ├─ Identifier: Bar
+│  └─ Contents
+│     └─ Namespace
+│        ├─ Identifier: Nested
+│        └─ Contents
+│           └─ FunctionDefinition
+│              ├─ FunctionDeclaration
+│              │  ├─ Identifier: some_nested_function
+│              │  └─ FunctionType
+│              │     └─ CompoundIdentifier
+│              │        └─ Identifier: @void
+│              └─ FunctionBody
+│                 └─ Statement
+│                    └─ Expression
+│                       └─ FunctionCall
+│                          ├─ CompoundIdentifier
+│                          │  ├─ Identifier: Foo
+│                          │  └─ Identifier: some_function
+│                          └─ Arguments
+├─ Namespace
+│  ├─ Identifier: Bar
+│  └─ Contents
+│     └─ Namespace
+│        ├─ Identifier: Nested
+│        └─ Contents
+│           └─ FunctionDefinition
+│              ├─ FunctionDeclaration
+│              │  ├─ Identifier: another_nested_function
+│              │  └─ FunctionType
+│              │     └─ CompoundIdentifier
+│              │        └─ Identifier: @void
+│              └─ FunctionBody
+│                 └─ Statement
+│                    └─ Expression
+│                       └─ FunctionCall
+│                          ├─ CompoundIdentifier
+│                          │  └─ Identifier: some_nested_function
+│                          └─ Arguments
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ Identifier: main
+   │  └─ FunctionType
+   │     └─ CompoundIdentifier
+   │        └─ Identifier: @int
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @int
+      │     ├─ Identifier: var
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              ├─ Identifier: Foo
+      │              └─ Identifier: some_variable
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  ├─ Identifier: Foo
+      │        │  └─ Identifier: some_function
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  ├─ Identifier: Bar
+      │        │  ├─ Identifier: Nested
+      │        │  └─ Identifier: some_nested_function
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  ├─ Identifier: Bar
+      │        │  ├─ Identifier: Nested
+      │        │  └─ Identifier: another_nested_function
+      │        └─ Arguments
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

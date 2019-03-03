@@ -49,3 +49,18 @@ priv int mul(int a, int b) {
 priv inline int div(int a, int b) {
 	return a / b
 }
+
+namespace Foo {
+    void namespaced_func()
+    int namespaced_var
+}
+
+namespace Bar {
+    namespace Nested {
+        void nested_func()
+    }
+}
+
+namespace Bar.Nested {
+    void second_nested_func()
+}

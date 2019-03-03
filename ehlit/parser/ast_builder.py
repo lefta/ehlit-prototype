@@ -357,11 +357,11 @@ class ASTBuilder(PTNodeVisitor):
     def visit_statement(self, node: ParseTreeNode, children: Tuple[ast.Node]) -> ast.Statement:
         return ast.Statement(children[0])
 
-    def visit_global_statement(self, node: ParseTreeNode,
-                               children: Union[Tuple[ast.VariableDeclaration],
-                                               Tuple[str, ast.VariableDeclaration],
-                                               Tuple[str, str, ast.VariableDeclaration]]
-                               ) -> ast.Statement:
+    def visit_global_variable(self, node: ParseTreeNode,
+                              children: Union[Tuple[ast.VariableDeclaration],
+                                              Tuple[str, ast.VariableDeclaration],
+                                              Tuple[str, str, ast.VariableDeclaration]]
+                              ) -> ast.Statement:
         private: bool = False
         cdecl: bool = False
         i: int = 0
@@ -589,6 +589,19 @@ class ASTBuilder(PTNodeVisitor):
     def visit_alias(self, node: ParseTreeNode, children: Tuple[StrMatch, ast.Symbol, ast.Identifier]
                     ) -> ast.Alias:
         return ast.Alias(children[1], children[2])
+
+    def visit_namespace(self, node: ParseTreeNode,
+                        children: Tuple[StrMatch, ast.CompoundIdentifier, ast.Node]
+                        ) -> ast.Namespace:
+        ns: List[ast.Identifier] = children[1].elems
+        top: ast.Namespace = ast.Namespace(node.position, ns[0])
+        cur: ast.Namespace = top
+        for sub_ns in ns[1:]:
+            tmp: ast.Namespace = ast.Namespace(sub_ns.pos, sub_ns)
+            cur.contents = [tmp]
+            cur = tmp
+        cur.contents = list(children[2:])
+        return top
 
     # Container structures
     ######################

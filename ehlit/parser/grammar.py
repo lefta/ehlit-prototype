@@ -277,10 +277,6 @@ def global_variable() -> GrammarType:
     return ZeroOrMore(['priv', 'cdecl']), variable_declaration_assignable
 
 
-def global_statement() -> GrammarType:
-    return global_variable
-
-
 def instruction() -> GrammarType:
     return [comment, condition, for_do_loop, do_while_loop, while_loop, switch, alias, statement]
 
@@ -431,6 +427,14 @@ def alias() -> GrammarType:
     return 'alias', full_type, identifier
 
 
+def namespace() -> GrammarType:
+    return 'namespace', compound_identifier, '{', ZeroOrMore(global_statement), '}'
+
+
+def global_statement() -> GrammarType:
+    return [comment, struct, union, enum, alias, namespace, function, global_variable]
+
+
 # Container structures
 ######################
 
@@ -454,5 +458,4 @@ def function_body_grammar() -> GrammarType:
 
 
 def grammar() -> GrammarType:
-    return ZeroOrMore([comment, import_instruction, include_instruction, struct, union, enum, alias,
-                       function, global_statement]), EOF
+    return ZeroOrMore([import_instruction, include_instruction, global_statement]), EOF

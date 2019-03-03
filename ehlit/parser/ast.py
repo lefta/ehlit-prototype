@@ -1597,8 +1597,9 @@ class Identifier(Value):
             return BuiltinType('@any').build(self)
         if isinstance(self.decl, Type):
             return self.decl.dup().build(self)
-        assert isinstance(self.decl, Declaration) or isinstance(self.decl, Alias)
-        return self.decl.typ
+        if isinstance(self.decl, (Declaration, Alias)):
+            return self.decl.typ
+        return BuiltinType('@any')
 
     @property
     def decl(self) -> Optional[DeclarationBase]:
@@ -2065,6 +2066,45 @@ class EnumField(Declaration):
         if self.declaration_type == DeclarationType.C:
             return self.sym.name
         return self.sym.mangled
+
+
+class Namespace(DeclarationBase, UnorderedScope):
+    def __init__(self, pos: int, sym: Identifier) -> None:
+        super().__init__(pos)
+        super(UnorderedScope, self).__init__(pos)
+        self.sym: Identifier = sym
+        self.contents: List[Node] = []
+
+    def build(self, parent: Node) -> 'Namespace':
+        super().build(parent)
+        self.contents = [stmt.build(self) for stmt in self.contents]
+        return self
+
+    @property
+    def scope_contents(self) -> List[Node]:
+        return self.contents
+
+    def find_declaration(self, sym: str) -> DeclarationLookup:
+        res: DeclarationLookup = DeclarationLookup(sym)
+        ns: DeclarationLookup = super().find_declaration(self.name)
+        res.merge(ns.get_inner_declaration(sym))
+        res.merge(super().find_declaration(sym))
+        return res
+
+    def get_inner_declaration(self, sym: str) -> DeclarationLookup:
+        return DeclarationLookup(sym, self.contents)
+
+    @property
+    def name(self) -> str:
+        return self.sym.name
+
+    @property
+    def mangled(self) -> str:
+        return 'N{}'.format(self.sym.mangled)
+
+    @property
+    def mangled_scope(self) -> str:
+        return '{}N{}'.format(self.parent.mangled_scope, self.sym.mangled)
 
 
 class AST(UnorderedScope):

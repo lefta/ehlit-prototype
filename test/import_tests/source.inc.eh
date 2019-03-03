@@ -28,3 +28,22 @@ nb main()
 inline int inlined_function(int a, int b) {
     return a + b
 }
+
+namespace Foo {
+    void namespaced_func()
+    int namespaced_var
+}
+
+namespace Bar {
+
+    namespace Nested {
+        void nested_func()
+    }
+}
+
+namespace Bar {
+
+    namespace Nested {
+        void second_nested_func()
+    }
+}

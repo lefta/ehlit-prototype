@@ -27,10 +27,10 @@ from ehlit.parser.ast import (
     Cast, Char, CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container,
     DecimalNumber, Declaration, DeclarationBase, DoWhileLoop, EhEnum, EhUnion, Expression,
     ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition, FunctionType, Identifier,
-    Import, Include, InitializationList, Node, NullValue, Number, Operator, PrefixOperatorValue,
-    ReferenceToType, ReferenceToValue, ReferenceType, Return, Sizeof, Statement, String, Struct,
-    SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier,
-    Type, VariableAssignment, VariableDeclaration, Value
+    Import, Include, InitializationList, Namespace, Node, NullValue, Number, Operator,
+    PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return, Sizeof,
+    Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest,
+    Symbol, TemplatedIdentifier, Type, VariableAssignment, VariableDeclaration, Value
 )
 
 
@@ -498,7 +498,7 @@ class SourceWriter:
         self.write_value(node)
         for elem in node.elems:
             if elem is not node.elems[-1]:
-                if isinstance(elem.decl, EhEnum):
+                if isinstance(elem.decl, (EhEnum, Namespace)):
                     continue
                 ref_offset: int = elem.ref_offset
                 if ref_offset == 0:
@@ -637,3 +637,7 @@ class SourceWriter:
             self.write_indent()
             self.file.write('}')
         self.file.write(';\n')
+
+    def writeNamespace(self, node: Namespace) -> None:
+        for n in node.contents:
+            self.write(n)
