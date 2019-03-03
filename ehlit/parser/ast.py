@@ -168,13 +168,6 @@ class Node:
         self.built = True
         return self
 
-    def is_declaration(self) -> bool:
-        """! Checks whether a node is a symbol declaration or not.
-        By default, this value is False.
-        @return @b bool
-        """
-        return False
-
     def find_declaration(self, sym: str) -> DeclarationLookup:
         """! Find a declaration when coming from downsides.
         Scoping structures (like functions) would want to search symbols in this function. The
@@ -583,9 +576,6 @@ class DeclarationBase(Node):
         @return @b Declaration|FunctionDeclaration The inner declaration if found, None otherwise.
         """
         return None, None
-
-    def is_declaration(self) -> bool:
-        return True
 
     @property
     @abstractmethod
