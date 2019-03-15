@@ -1,0 +1,345 @@
+├─ Class
+│  ├─ Identifier: test_class
+│  ├─ Properties
+│  │  ├─ ClassProperty
+│  │  │  ├─ CompoundIdentifier
+│  │  │  │  └─ Identifier: @int
+│  │  │  └─ Identifier: field1
+│  │  ├─ ClassProperty
+│  │  │  ├─ CompoundIdentifier
+│  │  │  │  └─ Identifier: @str
+│  │  │  └─ Identifier: field2
+│  │  └─ ClassProperty
+│  │     ├─ Reference
+│  │     │  └─ Array
+│  │     │     └─ CompoundIdentifier
+│  │     │        └─ Identifier: @int
+│  │     └─ Identifier: field3
+│  └─ Methods
+│     └─ ClassMethod
+│        ├─ FunctionDeclaration
+│        │  ├─ Identifier: set_fields
+│        │  └─ FunctionType
+│        │     ├─ CompoundIdentifier
+│        │     │  └─ Identifier: @void
+│        │     └─ Arguments:
+│        │        ├─ VariableDeclaration
+│        │        │  ├─ Reference
+│        │        │  │  └─ CompoundIdentifier
+│        │        │  │     └─ Identifier: test_class
+│        │        │  └─ Identifier: _this
+│        │        ├─ VariableDeclaration
+│        │        │  ├─ CompoundIdentifier
+│        │        │  │  └─ Identifier: @int
+│        │        │  └─ Identifier: f1
+│        │        ├─ VariableDeclaration
+│        │        │  ├─ CompoundIdentifier
+│        │        │  │  └─ Identifier: @str
+│        │        │  └─ Identifier: f2
+│        │        └─ VariableDeclaration
+│        │           ├─ Reference
+│        │           │  └─ Array
+│        │           │     └─ CompoundIdentifier
+│        │           │        └─ Identifier: @int
+│        │           └─ Identifier: f3
+│        └─ FunctionBody
+│           ├─ Statement
+│           │  └─ VariableAssignment
+│           │     ├─ CompoundIdentifier
+│           │     │  ├─ Identifier: _this
+│           │     │  └─ Identifier: field1
+│           │     └─ Assignment
+│           │        └─ Expression
+│           │           └─ CompoundIdentifier
+│           │              └─ Identifier: f1
+│           ├─ Statement
+│           │  └─ VariableAssignment
+│           │     ├─ CompoundIdentifier
+│           │     │  ├─ Identifier: _this
+│           │     │  └─ Identifier: field2
+│           │     └─ Assignment
+│           │        └─ Expression
+│           │           └─ CompoundIdentifier
+│           │              └─ Identifier: f2
+│           └─ Statement
+│              └─ VariableAssignment
+│                 ├─ Reference
+│                 │  └─ CompoundIdentifier
+│                 │     ├─ Identifier: _this
+│                 │     └─ Identifier: field3
+│                 └─ Assignment
+│                    └─ Expression
+│                       └─ CompoundIdentifier
+│                          └─ Identifier: f3
+├─ Class
+│  ├─ Identifier: forward_decl
+│  └─ Forward declaration
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: fun
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: @int
+│  │           └─ Identifier: i
+│  └─ FunctionBody
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: class_fun
+│  │  └─ FunctionType
+│  │     ├─ Reference
+│  │     │  └─ CompoundIdentifier
+│  │     │     └─ Identifier: test_class
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           ├─ Reference
+│  │           │  └─ CompoundIdentifier
+│  │           │     └─ Identifier: test_class
+│  │           └─ Identifier: cls
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ CompoundIdentifier
+│                 └─ Identifier: cls
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
+│  │  ├─ Identifier: any_fun
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @any
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @any
+│  │           └─ Identifier: p
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Return
+│           └─ Expression
+│              └─ CompoundIdentifier
+│                 └─ Identifier: p
+└─ FunctionDefinition
+   ├─ FunctionDeclaration
+   │  ├─ Identifier: main
+   │  └─ FunctionType
+   │     └─ CompoundIdentifier
+   │        └─ Identifier: @int
+   └─ FunctionBody
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: test_class
+      │     └─ Identifier: cls
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  ├─ Identifier: cls
+      │     │  └─ Identifier: field1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 0
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  ├─ Identifier: cls
+      │     │  └─ Identifier: field2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ String: 123456
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     ├─ Identifier: cls
+      │     │     └─ Identifier: field3
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ NullValue
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 ├─ Identifier: cls
+      │                 └─ Identifier: field1
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: set_fields
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 42
+      │           ├─ Expression
+      │           │  └─ String: Hello
+      │           └─ Expression
+      │              └─ NullValue
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: test_class
+      │     ├─ Identifier: rcls
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: cls
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  ├─ Identifier: rcls
+      │     │  └─ Identifier: field1
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Number: 0
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  ├─ Identifier: rcls
+      │     │  └─ Identifier: field2
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ String: 123456
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     ├─ Identifier: rcls
+      │     │     └─ Identifier: field3
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ NullValue
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 ├─ Identifier: rcls
+      │                 └─ Identifier: field1
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: set_fields
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 42
+      │           ├─ Expression
+      │           │  └─ String: Hello
+      │           └─ Expression
+      │              └─ NullValue
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: rcls
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: class_fun
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ CompoundIdentifier
+      │                       └─ Identifier: cls
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @size
+      │     ├─ Identifier: ss
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Sizeof
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: test_class
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: ss
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Sizeof
+      │              └─ Reference
+      │                 └─ CompoundIdentifier
+      │                    └─ Identifier: test_class
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ TemplatedIdentifier: @func
+      │     │  └─ Types
+      │     │     └─ FunctionType
+      │     │        ├─ Reference
+      │     │        │  └─ CompoundIdentifier
+      │     │        │     └─ Identifier: test_class
+      │     │        └─ Arguments:
+      │     │           └─ VariableDeclaration
+      │     │              └─ Reference
+      │     │                 └─ CompoundIdentifier
+      │     │                    └─ Identifier: test_class
+      │     ├─ Identifier: psf
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: class_fun
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: rcls
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: any_fun
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ CompoundIdentifier
+      │              │        └─ Identifier: test_class
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ CompoundIdentifier
+      │                       └─ Identifier: rcls
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: cls
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ FunctionCall
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: any_fun
+      │              ├─ Automatic cast
+      │              │  └─ Reference
+      │              │     └─ CompoundIdentifier
+      │              │        └─ Identifier: test_class
+      │              └─ Arguments
+      │                 └─ Expression
+      │                    └─ CompoundIdentifier
+      │                       └─ Identifier: cls
+      ├─ Statement
+      │  └─ VariableAssignment
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: rcls
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ Cast
+      │              ├─ Reference
+      │              │  └─ CompoundIdentifier
+      │              │     └─ Identifier: test_class
+      │              └─ Expression
+      │                 └─ Number: 0
+      └─ Statement
+         └─ Return
+            └─ Expression
+               └─ Number: 0

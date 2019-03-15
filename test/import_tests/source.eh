@@ -64,3 +64,13 @@ namespace Bar {
 namespace Bar.Nested {
     void second_nested_func()
 }
+
+class A
+
+class B {
+    int property
+    void method() {
+        property = 42
+    }
+    str name
+}

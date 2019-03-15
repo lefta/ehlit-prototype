@@ -22,10 +22,11 @@
 import sys
 from typing import List, TextIO
 from ehlit.parser.ast import (
-    Alias, Array, Assignment, AST, BoolValue, Cast, CompoundIdentifier, ContainerStructure,
-    Declaration, DecimalNumber, EhEnum, EhUnion, Expression, FunctionDeclaration,
-    FunctionDefinition, FunctionType, Identifier, Import, Include, Namespace, Node, Number,
-    Operator, ReferenceToType, Return, Statement, Struct, TemplatedIdentifier, VariableDeclaration
+    Alias, Array, Assignment, AST, BoolValue, Cast, ClassMethod, ClassProperty, CompoundIdentifier,
+    ContainerStructure, Declaration, DecimalNumber, EhClass, EhEnum, EhUnion, Expression,
+    FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Import, Include, Namespace,
+    Node, Number, Operator, ReferenceToType, Return, Statement, Struct, TemplatedIdentifier,
+    VariableDeclaration
 )
 
 
@@ -82,7 +83,10 @@ class ImportWriter:
         if node.sym is not None:
             self.write(node.sym)
         self.file.write('(')
-        self.writeArgumentDefinitionList(node.typ.args)
+        if isinstance(node, ClassMethod):
+            self.writeArgumentDefinitionList(node.typ.args[1:])
+        else:
+            self.writeArgumentDefinitionList(node.typ.args)
         self.file.write(")")
 
     def writeDeclaration(self, node: Declaration) -> None:
@@ -239,6 +243,30 @@ class ImportWriter:
 
     def writeEhUnion(self, node: EhUnion) -> None:
         self.writeContainerStructure(node)
+
+    def writeClassMethod(self, node: ClassMethod) -> None:
+        self.writeFunctionDefinition(node)
+
+    def writeClassProperty(self, node: ClassProperty) -> None:
+        self.writeVariableDeclaration(node)
+
+    def writeEhClass(self, node: EhClass) -> None:
+        self.file.write('\n')
+        self.write_indent()
+        self.file.write('class ')
+        self.write(node.sym)
+        if node.contents is not None:
+            self.file.write(' {\n')
+            self.indent += 1
+            for prop in node.properties:
+                self.write_indent()
+                self.write(prop)
+                self.file.write('\n')
+            self.file.write('\n')
+            for meth in node.methods:
+                self.write(meth)
+            self.indent -= 1
+            self.file.write('}\n')
 
     def writeEhEnum(self, node: EhEnum) -> None:
         self.file.write('\nenum ')

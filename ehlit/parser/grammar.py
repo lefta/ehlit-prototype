@@ -62,7 +62,7 @@ def comment() -> GrammarType:
 def builtin_keyword() -> GrammarType:
     return ['null', 'ref', 'if', 'elif', 'else', 'while', 'do', 'for', 'return', 'func', 'alias',
             'switch', 'case', 'fallthrough', 'default', 'struct', 'union', 'const', 'restrict',
-            'volatile', 'inline', 'priv', bool_value]
+            'volatile', 'inline', 'priv', 'namespace', 'class', bool_value]
 
 
 def builtin_type() -> GrammarType:
@@ -432,7 +432,7 @@ def namespace() -> GrammarType:
 
 
 def global_statement() -> GrammarType:
-    return [comment, struct, union, enum, alias, namespace, function, global_variable]
+    return [comment, eh_class, struct, union, enum, alias, namespace, function, global_variable]
 
 
 # Container structures
@@ -448,6 +448,22 @@ def union() -> GrammarType:
 
 def enum() -> GrammarType:
     return 'enum', identifier, Optional('{', ZeroOrMore(identifier), '}')
+
+
+def class_method() -> GrammarType:
+    return function_definition
+
+
+def class_property() -> GrammarType:
+    return variable_declaration
+
+
+def class_contents() -> GrammarType:
+    return [class_method, class_property]
+
+
+def eh_class() -> GrammarType:
+    return 'class', identifier, Optional('{', ZeroOrMore(class_contents), '}')
 
 
 # Root grammars

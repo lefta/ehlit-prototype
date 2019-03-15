@@ -23,7 +23,7 @@ from abc import abstractmethod
 from arpeggio import ParserPython
 from enum import IntEnum, IntFlag
 from os import path, getcwd, listdir
-from typing import Iterator, List, Optional, Union, cast
+from typing import Any, Iterator, List, Optional, Union, cast
 import typing
 from ehlit.parser.error import ParseError, Failure
 from ehlit.options import OptionsStruct
@@ -1127,25 +1127,30 @@ class VariableDeclaration(Declaration):
     def mangled_name(self) -> str:
         if self.sym is None:
             return ''
-        if (self.declaration_type == DeclarationType.C or self.is_child_of(FunctionDeclaration) or
-                self.is_child_of(Struct) or self.is_child_of(EhUnion)):
-            return self.sym.name
-        return super().mangled_name
+        if self._is_mangled:
+            return super().mangled_name
+        return self.sym.name
 
     @property
     def mangled(self) -> str:
         if self.sym is None:
             return ''
-        if (self.declaration_type == DeclarationType.C or self.is_child_of(FunctionDeclaration) or
-                self.is_child_of(Struct) or self.is_child_of(EhUnion)):
-            return self.sym.name
-        return '{}V{}'.format(self.typ_src.qualifiers.mangled, self.sym.mangled)
+        if self._is_mangled:
+            return '{}V{}'.format(self.typ_src.qualifiers.mangled, self.sym.mangled)
+        return self.sym.name
+
+    @property
+    def _is_mangled(self) -> bool:
+        return not (self.declaration_type == DeclarationType.C or
+                    self.is_child_of(FunctionDeclaration) or self.is_child_of(Struct) or
+                    self.is_child_of(EhUnion) or self.is_child_of(EhClass))
 
 
 class FunctionDeclaration(Declaration):
     def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
                  sym: 'Identifier') -> None:
         super().__init__(0, typ, sym, qualifiers)
+        self.this_cls: Optional[EhClass] = None
 
     @property
     def qualifiers(self) -> Qualifier:
@@ -1350,10 +1355,13 @@ class FunctionCall(Value):
         super().__init__(pos)
         self.sym: Symbol = sym
         self.args: List[Expression] = args
+        self.this_ptr: Optional[CompoundIdentifier] = None
 
     def build(self, parent: Node) -> Value:
         super().build(parent)
         self.sym = self.sym.build(self)
+        if self.this_ptr is not None:
+            self.this_ptr = self.this_ptr.build(self)
         if self.sym.is_type:
             cast: Cast = Cast(self.pos, self.sym, self.args)
             cast = cast.build(parent)
@@ -1372,10 +1380,10 @@ class FunctionCall(Value):
         return res
 
     def _check_args(self, typ: FunctionType) -> None:
-        diff = len(self.args) - len(typ.args)
+        diff = self.arg_count - len(typ.args)
         i = 0
         while i < len(typ.args):
-            if i >= len(self.args):
+            if i >= self.arg_count:
                 assign: Optional[Assignment] = typ.args[i].assign
                 if assign is not None:
                     self.args.append(assign.expr)
@@ -1386,15 +1394,19 @@ class FunctionCall(Value):
         if diff < 0 or (diff > 0 and not typ.is_variadic):
             self.warn(self.pos, '{} arguments for call to {}: expected {}, got {}'.format(
                 'not enough' if diff < 0 else 'too many', self.sym.repr, len(typ.args),
-                len(self.args)))
+                self.arg_count))
 
     def _auto_cast_args(self, typ: FunctionType) -> None:
         fun_decl_type: DeclarationType = DeclarationType.EHLIT
         if self.sym.decl is not None:
             fun_decl_type = self.sym.decl.declaration_type
         i = 0
+        arg_offset = 0
+        if self.this_ptr is not None:
+            self.this_ptr.auto_cast(typ.args[0].typ)
+            arg_offset = 1
         while i < len(self.args) and i < len(typ.args):
-            self.args[i].auto_cast(typ.args[i].typ)
+            self.args[i].auto_cast(typ.args[i + arg_offset].typ)
             i += 1
         if typ.is_variadic and fun_decl_type is DeclarationType.EHLIT:
             vargs: List[Expression] = self.args[i:]
@@ -1441,6 +1453,12 @@ class FunctionCall(Value):
     @property
     def decl(self) -> Optional[DeclarationBase]:
         return self.sym.decl
+
+    @property
+    def arg_count(self) -> int:
+        if self.this_ptr is None:
+            return len(self.args)
+        return len(self.args) + 1
 
 
 class ArrayAccess(SymbolContainer):
@@ -1627,6 +1645,16 @@ class CompoundIdentifier(Symbol):
     def build(self, parent: Node) -> 'CompoundIdentifier':
         self._find_children_declarations(parent)
         super().build(parent)
+        if isinstance(self.elems[0].decl, ClassProperty):
+            self.elems.insert(0, Identifier(0, '_this'))
+            decl = parent.find_declaration('_this')
+            if len(decl) == 0:
+                parent.error(0, decl.error)
+            else:
+                self.elems[0].decl = decl[0]
+        elif isinstance(self.elems[-1].decl, ClassMethod) and isinstance(parent, FunctionCall):
+            parent.this_ptr = CompoundIdentifier(self.elems[:-1])
+            self.elems = self.elems[-1:]
         self.elems = [e.build(self) for e in self.elems]
         return self
 
@@ -1990,6 +2018,119 @@ class EhUnion(ContainerStructure):
                  fields: Optional[List[VariableDeclaration]]) -> None:
         super().__init__(pos, sym, fields)
         self.display_name = 'union'
+
+
+class ClassMethod(FunctionDefinition):
+    def __init__(self, obj: FunctionDefinition) -> None:
+        self.obj: FunctionDefinition = obj
+
+    def build(self, parent: Node) -> 'ClassMethod':
+        assert isinstance(parent, EhClass)
+        assert isinstance(self.typ, FunctionType)
+        self.typ.args.insert(0, VariableDeclaration(
+            Reference(CompoundIdentifier([Identifier(0, parent.name)])),
+            Identifier(0, '_this'),
+            None
+        ))
+        self.obj = self.obj.build(parent)
+        if self.obj.sym is not None:
+            self.obj.sym.parent = self
+        return self
+
+    def __getattr__(self, attr: Any) -> Any:
+        return getattr(self.obj, attr)
+
+    @property
+    def mangled(self) -> str:
+        if self.sym is None:
+            return ''
+        if self.sym.name == 'main':
+            return self.sym.name
+        assert isinstance(self.typ, FunctionType)
+        name: str = '{}F{}'.format(self.qualifiers.mangled, self.sym.mangled)
+        for a in self.typ.args[1:]:
+            name = '{}{}'.format(name, a.typ_src.mangled)
+        if self.typ.is_variadic:
+            assert self.typ.variadic_type is not None
+            name = '{}v{}'.format(name, self.typ.variadic_type.mangled)
+        return name
+
+
+class ClassProperty(VariableDeclaration):
+    def __init__(self, obj: VariableDeclaration) -> None:
+        self.obj: VariableDeclaration = obj
+
+    def build(self, parent: Node) -> 'ClassProperty':
+        self.obj = self.obj.build(parent)
+        return self
+
+    def __getattr__(self, attr: Any) -> Any:
+        return getattr(self.obj, attr)
+
+
+class EhClass(Type, UnorderedScope):
+    FieldList = List[Union[ClassMethod, ClassProperty]]
+
+    def __init__(self, pos: int, sym: Identifier, contents: Optional['EhClass.FieldList']) -> None:
+        super(Type, self).__init__(pos)
+        super(UnorderedScope, self).__init__(pos)
+        self.sym: Identifier = sym
+        self.contents: Optional[EhClass.FieldList] = contents
+        self._properties: List[ClassProperty] = []
+        self._methods: List[ClassMethod] = []
+
+    def build(self, parent: Node) -> 'EhClass':
+        if self.built:
+            return self
+        super().build(parent)
+        parent.declare(self)
+        self.sym.build(self)
+        if self.contents is not None:
+            self.contents = [f.build(self) for f in self.contents]
+            for node in self.contents:
+                if isinstance(node, ClassProperty):
+                    self._properties.append(node)
+                else:
+                    self._methods.append(node)
+        return self
+
+    def get_inner_declaration(self, sym: str) -> DeclarationLookup:
+        res = DeclarationLookup(sym)
+        if self.contents is None:
+            res.error = 'accessing incomplete class `{}`'.format(self.sym.name)
+        else:
+            res.find_in(cast(List[Node], self.contents))
+        return res
+
+    def from_any(self) -> Symbol:
+        return Reference(CompoundIdentifier([Identifier(0, self.sym.name)])).build(self)
+
+    def dup(self) -> Type:
+        return self
+
+    @property
+    def scope_contents(self) -> List[Node]:
+        return cast(List[Node], self.contents)
+
+    @property
+    def name(self) -> str:
+        return self.sym.name
+
+    @property
+    def mangled(self) -> str:
+        return 'C{}'.format(self.sym.mangled)
+
+    @property
+    def mangled_scope(self) -> str:
+        return '{}{}'.format(self.parent.mangled_scope, self.mangled)
+
+    @property
+    def properties(self) -> List[ClassProperty]:
+        return self._properties
+
+    @property
+    def methods(self) -> List[ClassMethod]:
+        return self._methods
 
 
 class EhEnum(Type, Scope):

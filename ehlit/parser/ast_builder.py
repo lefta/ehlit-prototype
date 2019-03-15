@@ -627,6 +627,23 @@ class ASTBuilder(PTNodeVisitor):
             return ast.EhEnum(node.position, children[1], None)
         return ast.EhEnum(node.position, children[1], list(children[2:]))
 
+    def visit_class_method(self, node: ParseTreeNode,
+                           children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier],
+                                           ast.UnparsedContents]) -> ast.ClassMethod:
+        return ast.ClassMethod(self.visit_function_definition(node, children))
+
+    def visit_class_property(self, node: ParseTreeNode, children: Tuple[ast.Symbol, ast.Identifier]
+                             ) -> ast.ClassProperty:
+        return ast.ClassProperty(self.visit_variable_declaration(node, children))
+
+    def visit_eh_class(self, node: ParseTreeNode,
+                       children: Tuple[StrMatch, ast.Identifier,
+                                       Union[ast.ClassMethod, ast.ClassProperty]]
+                       ) -> ast.EhClass:
+        if len(children) == 2:
+            return ast.EhClass(node.position, children[1], None)
+        return ast.EhClass(node.position, children[1], list(children[2:]))
+
     # Root grammars
     ###############
 

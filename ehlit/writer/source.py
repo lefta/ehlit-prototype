@@ -24,14 +24,20 @@ from typing import cast, Dict, Optional, Sequence, TextIO
 import typing
 from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType,
-    Cast, Char, CompoundIdentifier, Condition, ContainerStructure, ControlStructure, Container,
-    DecimalNumber, Declaration, DeclarationBase, DoWhileLoop, EhEnum, EhUnion, Expression,
-    ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition, FunctionType, Identifier,
-    Import, Include, InitializationList, Namespace, Node, NullValue, Number, Operator,
-    PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return, Sizeof,
-    Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest,
-    Symbol, TemplatedIdentifier, Type, VariableAssignment, VariableDeclaration, Value
+    Cast, Char, ClassMethod, ClassProperty, CompoundIdentifier, Condition, ContainerStructure,
+    ControlStructure, Container, DecimalNumber, Declaration, DeclarationBase, DoWhileLoop, EhClass,
+    EhEnum, EhUnion, Expression, ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition,
+    FunctionType, Identifier, Import, Include, InitializationList, Namespace, Node, NullValue,
+    Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return,
+    Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
+    SwitchCaseTest, Symbol, TemplatedIdentifier, Type, VariableAssignment, VariableDeclaration,
+    Value
 )
+
+
+class GeneratedIdentifier(Identifier):
+    def __init__(self, name: str) -> None:
+        super().__init__(0, name)
 
 
 class SourceWriter:
@@ -188,6 +194,7 @@ class SourceWriter:
         typ: Type = node.typ
         prefix_mapping: Dict[typing.Type[Type], str] = {
             Struct: 'struct',
+            EhClass: 'struct',
             EhUnion: 'union',
             EhEnum: 'enum',
         }
@@ -248,6 +255,8 @@ class SourceWriter:
         if proto.sym is not None:
             self.write(proto.sym)
         self.file.write('(')
+        if proto.this_cls is not None:
+            self.file.write('struct {}* _this, '.format(proto.this_cls.mangled_name))
         self.writeArgumentDefinitionList(proto.typ.args, proto.typ.is_variadic,
                                          proto.typ.variadic_type)
         self.file.write(")")
@@ -342,12 +351,13 @@ class SourceWriter:
         self.write_value(call)
         self.write(call.sym)
         self.file.write('(')
-        i: int = 0
-        count: int = len(call.args)
-        while i < count:
-            self.write(call.args[i])
-            i += 1
-            if i < count:
+        if call.this_ptr is not None:
+            self.write(call.this_ptr)
+            if len(call.args) != 0:
+                self.file.write(', ')
+        for arg in call.args:
+            self.write(arg)
+            if arg != call.args[-1]:
                 self.file.write(', ')
         self.file.write(')')
 
@@ -535,6 +545,9 @@ class SourceWriter:
         else:
             self.file.write(node.mangled_name)
 
+    def writeGeneratedIdentifier(self, node: GeneratedIdentifier) -> None:
+        self.file.write(node.name)
+
     def writeTemplatedIdentifier(self, node: TemplatedIdentifier) -> None:
         self.write(node.typ)
 
@@ -616,6 +629,30 @@ class SourceWriter:
     def writeEhUnion(self, node: EhUnion) -> None:
         self.file.write('\nunion ')
         self.writeContainerStructure(node)
+
+    def writeClassMethod(self, node: ClassMethod) -> None:
+        self.writeFunctionDefinition(node)
+
+    def writeClassProperty(self, node: ClassProperty) -> None:
+        if node.static:
+            self.file.write('static ')
+        self.writeDeclaration(node)
+
+    def writeEhClass(self, node: EhClass) -> None:
+        self.file.write('\nstruct ')
+        self.write(node.sym)
+        if node.contents is not None:
+            self.file.write('\n{\n')
+            self.indent += 1
+            for f in node.properties:
+                self.write_indent()
+                self.write(f)
+                self.file.write(';\n')
+            self.indent -= 1
+            self.file.write('}')
+        self.file.write(';\n')
+        for method in node.methods:
+            self.write(method)
 
     def writeEhEnum(self, node: EhEnum) -> None:
         self.write_indent()

@@ -24,12 +24,13 @@ from typing import Callable, cast, List, Sequence, Union
 from ehlit.parser.c_header import CDefine, CMacroFunction, CAnyType
 from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char,
-    CompoundIdentifier, Condition, ControlStructure, DecimalNumber, Declaration, EhEnum, EhUnion,
-    EnumField, Expression, ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition,
-    FunctionType, Identifier, Include, Import, InitializationList, Namespace, Node, NullValue,
-    Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return, Sizeof,
-    Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest,
-    Symbol, TemplatedIdentifier, VariableAssignment, VariableDeclaration
+    ClassMethod, ClassProperty, CompoundIdentifier, Condition, ControlStructure, DecimalNumber,
+    Declaration, EhClass, EhEnum, EhUnion, EnumField, Expression, ForDoLoop, FunctionCall,
+    FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Include, Import,
+    InitializationList, Namespace, Node, NullValue, Number, Operator, PrefixOperatorValue,
+    ReferenceToType, ReferenceToValue, Return, Sizeof, Statement, String, Struct,
+    SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier,
+    VariableAssignment, VariableDeclaration
 )
 
 IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
@@ -118,10 +119,8 @@ class DumpWriter:
         if decl.sym is not None:
             self.print_node(decl.sym, is_next)
 
-    @indent
-    def dumpVariableDeclaration(self, decl: Union[Node, str]) -> None:
-        decl = cast(VariableDeclaration, decl)
-        self.dump('VariableDeclaration')
+    def dump_variable_declaration(self, cls_name: str, decl: VariableDeclaration) -> None:
+        self.dump(cls_name)
         if decl.private:
             self.print_str('Modifiers: private')
         if decl.static:
@@ -133,6 +132,11 @@ class DumpWriter:
             self.dump_declaration(decl, False)
 
     @indent
+    def dumpVariableDeclaration(self, decl: Union[Node, str]) -> None:
+        decl = cast(VariableDeclaration, decl)
+        self.dump_variable_declaration('VariableDeclaration', decl)
+
+    @indent
     def dumpFunctionDeclaration(self, fun: Union[Node, str]) -> None:
         fun = cast(FunctionDeclaration, fun)
         self.dump('FunctionDeclaration')
@@ -141,12 +145,15 @@ class DumpWriter:
         self.dump_qualifiers(fun)
         self.print_node(fun.typ, False)
 
+    def dump_function_definition(self, cls_name: str, fun: FunctionDefinition) -> None:
+        self.dump(cls_name)
+        self.dumpFunctionDeclaration(fun)
+        self.print_node_list('FunctionBody', fun.body, False)
+
     @indent
     def dumpFunctionDefinition(self, fun: Union[Node, str]) -> None:
         fun = cast(FunctionDefinition, fun)
-        self.dump('FunctionDefinition')
-        self.dumpFunctionDeclaration(fun)
-        self.print_node_list('FunctionBody', fun.body, False)
+        self.dump_function_definition('FunctionDefinition', fun)
 
     @indent
     def dumpStatement(self, stmt: Union[Node, str]) -> None:
@@ -427,6 +434,27 @@ class DumpWriter:
             self.print_str('Forward declaration', False)
         else:
             self.print_node_list('Fields', node.fields, False)
+
+    @indent
+    def dumpClassMethod(self, node: Union[Node, str]) -> None:
+        node = cast(ClassMethod, node)
+        self.dump_function_definition('ClassMethod', node)
+
+    @indent
+    def dumpClassProperty(self, node: Union[Node, str]) -> None:
+        node = cast(ClassProperty, node)
+        self.dump_variable_declaration('ClassProperty', node)
+
+    @indent
+    def dumpEhClass(self, node: Union[Node, str]) -> None:
+        node = cast(EhClass, node)
+        self.dump('Class')
+        self.print_node(node.sym)
+        if node.contents is None:
+            self.print_str('Forward declaration', False)
+        else:
+            self.print_node_list('Properties', node.properties)
+            self.print_node_list('Methods', node.methods, False)
 
     @indent
     def dumpEhEnum(self, node: Union[Node, str]) -> None:

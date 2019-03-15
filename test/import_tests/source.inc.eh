@@ -47,3 +47,11 @@ namespace Bar {
         void second_nested_func()
     }
 }
+
+class A
+class B {
+    int property
+    str name
+
+    void method()
+}
