@@ -2288,8 +2288,7 @@ class AST(UnorderedScope):
             getcwd(),
             path.dirname(args.output_import_file)]
 
-        for n in self.nodes:
-            n.build(self)
+        self.nodes = [n.build(self) for n in self.nodes]
         if len(self.failures) != 0:
             raise ParseError(self.failures, self.parser)
 
