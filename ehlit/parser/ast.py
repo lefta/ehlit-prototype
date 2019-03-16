@@ -590,10 +590,6 @@ class DeclarationBase(Node):
         Node.__init__(self, pos)
         self.declaration_type: DeclarationType = DeclarationType.EHLIT
 
-    def build(self, parent: Node) -> 'Node':
-        super().build(parent)
-        return self
-
     def get_declaration(self, sym: str) -> DeclarationLookup:
         res = DeclarationLookup(sym)
         if self.name == sym:
