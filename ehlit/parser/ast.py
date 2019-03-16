@@ -1642,8 +1642,8 @@ class CompoundIdentifier(Symbol):
         self._find_children_declarations(parent)
         super().build(parent)
         if isinstance(self.elems[0].decl, ClassProperty):
-            self.elems.insert(0, Identifier(0, '_this'))
-            decl = parent.find_declaration('_this')
+            self.elems.insert(0, Identifier(0, 'this'))
+            decl = parent.find_declaration('this')
             if len(decl) == 0:
                 parent.error(0, decl.error)
             else:
@@ -2025,7 +2025,7 @@ class ClassMethod(FunctionDefinition):
         assert isinstance(self.typ, FunctionType)
         self.typ.args.insert(0, VariableDeclaration(
             Reference(CompoundIdentifier([Identifier(0, parent.name)])),
-            Identifier(0, '_this'),
+            Identifier(0, 'this'),
             None
         ))
         self.obj = self.obj.build(parent)

@@ -8,11 +8,11 @@ struct _EC10test_class
     int32_t** field3;
 };
 
-void _EC10test_classF10set_fieldsB3intB3strRAB3int(struct _EC10test_class* _this, int32_t f1, char* f2, int32_t** f3)
+void _EC10test_classF10set_fieldsB3intB3strRAB3int(struct _EC10test_class* this, int32_t f1, char* f2, int32_t** f3)
 {
-    _this->field1 = f1;
-    _this->field2 = f2;
-    _this->field3 = f3;
+    this->field1 = f1;
+    this->field2 = f2;
+    this->field3 = f3;
 }
 
 struct _EC12forward_decl;
