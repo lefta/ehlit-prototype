@@ -1199,7 +1199,7 @@ class FunctionDefinition(FunctionDeclaration, FlowScope):
             super().build(parent)
         except ParseError as err:
             for f in err.failures:
-                self.fail(f.severity, f.pos + self.body_str.pos, f.msg)
+                self.fail(f.severity, f.pos, f.msg)
         return self
 
     def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
