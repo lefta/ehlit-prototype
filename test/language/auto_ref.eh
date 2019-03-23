@@ -1,3 +1,6 @@
+void caller(int i) {
+    fun(i, i)
+}
 
 int fun(int i, ref int j) {
   return j

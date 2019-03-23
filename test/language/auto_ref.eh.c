@@ -1,6 +1,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
+int32_t _EF3funB3intRB3int(int32_t i, int32_t* j);
+
+void _EF6callerB3int(int32_t i)
+{
+    _EF3funB3intRB3int(i, &i);
+}
+
 int32_t _EF3funB3intRB3int(int32_t i, int32_t* j)
 {
     return (*j);

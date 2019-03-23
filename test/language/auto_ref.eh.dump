@@ -1,5 +1,29 @@
 ├─ FunctionDefinition
 │  ├─ FunctionDeclaration
+│  │  ├─ Identifier: caller
+│  │  └─ FunctionType
+│  │     ├─ CompoundIdentifier
+│  │     │  └─ Identifier: @void
+│  │     └─ Arguments:
+│  │        └─ VariableDeclaration
+│  │           ├─ CompoundIdentifier
+│  │           │  └─ Identifier: @int
+│  │           └─ Identifier: i
+│  └─ FunctionBody
+│     └─ Statement
+│        └─ Expression
+│           └─ FunctionCall
+│              ├─ CompoundIdentifier
+│              │  └─ Identifier: fun
+│              └─ Arguments
+│                 ├─ Expression
+│                 │  └─ CompoundIdentifier
+│                 │     └─ Identifier: i
+│                 └─ Expression
+│                    └─ CompoundIdentifier
+│                       └─ Identifier: i
+├─ FunctionDefinition
+│  ├─ FunctionDeclaration
 │  │  ├─ Identifier: fun
 │  │  └─ FunctionType
 │  │     ├─ CompoundIdentifier

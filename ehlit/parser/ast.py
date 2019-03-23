@@ -675,7 +675,11 @@ class Symbol(Value):
         decl = self.decl
         while decl is not None and isinstance(decl, Symbol):
             decl = decl.decl
-        return decl
+        if decl is None or decl.built:
+            return decl
+        res = decl.build()
+        assert res is None or isinstance(res, DeclarationBase)
+        return res
 
     def set_qualifiers(self, qualifiers: Qualifier) -> None:
         self.qualifiers = qualifiers
