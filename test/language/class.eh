@@ -8,9 +8,20 @@ class test_class {
     field2 = f2
     ref field3 = f3
   }
+
+  void this_test() {
+    cls_fun(this)
+    ref_cls_fun(this)
+    ref_ref_cls_fun(this)
+    any_fun(this)
+  }
 }
 
 class forward_decl
+
+void cls_fun(test_class cls)
+void ref_cls_fun(ref test_class cls)
+void ref_ref_cls_fun(ref ref test_class cls)
 
 void fun(ref int i) {}
 ref test_class class_fun(ref test_class cls) {

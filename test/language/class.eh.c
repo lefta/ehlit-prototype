@@ -15,7 +15,23 @@ void _EC10test_classF10set_fieldsB3intB3strRAB3int(struct _EC10test_class* this,
     this->field3 = f3;
 }
 
+void _EF7cls_funC10test_class(struct _EC10test_class cls);
+void _EF11ref_cls_funRC10test_class(struct _EC10test_class* cls);
+void _EF15ref_ref_cls_funRRC10test_class(struct _EC10test_class** cls);
+void* _EF7any_funB3any(void* p);
+
+void _EC10test_classF9this_test(struct _EC10test_class* this)
+{
+    _EF7cls_funC10test_class(*this);
+    _EF11ref_cls_funRC10test_class(this);
+    _EF15ref_ref_cls_funRRC10test_class(&this);
+    _EF7any_funB3any(this);
+}
+
 struct _EC12forward_decl;
+void _EF7cls_funC10test_class(struct _EC10test_class cls);
+void _EF11ref_cls_funRC10test_class(struct _EC10test_class* cls);
+void _EF15ref_ref_cls_funRRC10test_class(struct _EC10test_class** cls);
 
 void _EF3funRB3int(int32_t* i)
 {
