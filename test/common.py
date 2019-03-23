@@ -31,14 +31,9 @@ import os.path
 import sys
 from inspect import getsourcefile
 from unittest import TestCase
-
-file_dir = os.path.dirname(os.path.abspath(getsourcefile(lambda: 0)))
-
-sys.path.insert(0, file_dir[:file_dir.rfind(os.path.sep)])
 import ehlit
 import ehlit.parser
 import ehlit.writer
-sys.path.pop(0)
 
 __unittest = True
 
@@ -73,7 +68,7 @@ class EhlitTestCase(TestCase):
     def __init__(self, arg):
         super().__init__(arg)
         self.maxDiff = None
-        os.chdir(file_dir)
+        os.chdir(os.path.dirname(os.path.abspath(getsourcefile(lambda: 0))))
 
     def setUp(self):
         logging.basicConfig(format='%(message)s', level=logging.DEBUG)

@@ -20,7 +20,7 @@
 # SOFTWARE.
 
 from clang.cindex import Index
-from common import EhlitTestCase
+from test.common import EhlitTestCase
 
 
 class TestCParser(EhlitTestCase):
