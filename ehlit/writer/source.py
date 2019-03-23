@@ -24,14 +24,14 @@ from typing import cast, Dict, Optional, Sequence, TextIO
 import typing
 from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType,
-    Cast, Char, ClassMethod, ClassProperty, CompoundIdentifier, Condition, ContainerStructure,
-    ControlStructure, Container, DecimalNumber, Declaration, DeclarationBase, DoWhileLoop, EhClass,
-    EhEnum, EhUnion, Expression, ForDoLoop, FunctionCall, FunctionDeclaration, FunctionDefinition,
-    FunctionType, Identifier, Import, Include, InitializationList, Namespace, Node, NullValue,
-    Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return,
-    Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
-    SwitchCaseTest, Symbol, TemplatedIdentifier, Type, VariableAssignment, VariableDeclaration,
-    Value
+    Cast, Char, ClassMethod, ClassProperty, ClassType, CompoundIdentifier, Condition,
+    ContainerStructure, ControlStructure, Container, DecimalNumber, Declaration, DeclarationBase,
+    DoWhileLoop, EhClass, EhEnum, EhUnion, Expression, ForDoLoop, FunctionCall, FunctionDeclaration,
+    FunctionDefinition, FunctionType, Identifier, Import, Include, InitializationList, Namespace,
+    Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
+    ReferenceType, Return, Sizeof, Statement, String, Struct, StructType, SuffixOperatorValue,
+    SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, Type, UnionType,
+    VariableAssignment, VariableDeclaration, Value
 )
 
 
@@ -193,9 +193,9 @@ class SourceWriter:
             node = node.inner_child
         typ: Type = node.typ
         prefix_mapping: Dict[typing.Type[Type], str] = {
-            Struct: 'struct',
-            EhClass: 'struct',
-            EhUnion: 'union',
+            StructType: 'struct',
+            ClassType: 'struct',
+            UnionType: 'union',
             EhEnum: 'enum',
         }
         prefix = prefix_mapping.get(type(typ))

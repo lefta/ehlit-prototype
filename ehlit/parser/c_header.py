@@ -143,8 +143,8 @@ class CMacroFunction(ast.FunctionDeclaration):
             0,
             ast.Qualifier.NONE,
             ast.TemplatedIdentifier('@func', [ast.FunctionType(
-                CAnyType.make(),
-                [ast.VariableDeclaration(CAnyType.make(), None)] * arg_cnt
+                CAnyType.make_symbol(),
+                [ast.VariableDeclaration(CAnyType.make_symbol(), None)] * arg_cnt
             )]),
             sym
         )
@@ -153,7 +153,7 @@ class CMacroFunction(ast.FunctionDeclaration):
 
 class CAnyType(ast.Type):
     @staticmethod
-    def make() -> ast.Symbol:
+    def make_symbol() -> ast.Symbol:
         return ast.CompoundIdentifier([ast.Identifier(0, '@c_any')])
 
     @property
@@ -164,7 +164,7 @@ class CAnyType(ast.Type):
         return CAnyType()
 
     def from_any(self) -> ast.Symbol:
-        return CAnyType.make()
+        return CAnyType.make_symbol()
 
 
 uint_types: Set[TypeKind] = {
@@ -409,7 +409,7 @@ def _macro_var_type(tokens: List[Token]) -> ast.Symbol:
                 return ast.CompoundIdentifier([ast.Identifier(0, '@int32')])
             if all(x in '0123456789.' for x in tok.spelling):
                 return ast.CompoundIdentifier([ast.Identifier(0, '@float')])
-    return CAnyType.make()
+    return CAnyType.make_symbol()
 
 
 def _macro_alias_value(tokens: List[Token]) -> Optional[ast.Symbol]:

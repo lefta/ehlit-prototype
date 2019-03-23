@@ -23,10 +23,12 @@ from abc import abstractmethod
 from arpeggio import ParserPython
 from enum import IntEnum, IntFlag
 from os import path, getcwd, listdir
-from typing import Any, Iterator, List, Optional, Union, cast
+from typing import Any, Iterator, List, Optional, TypeVar, Union, cast
 import typing
 from ehlit.parser.error import ParseError, Failure
 from ehlit.options import OptionsStruct
+
+T = TypeVar('T', bound='Node')
 
 imported: List[str] = []
 included: List[str] = []
@@ -189,15 +191,14 @@ class Node:
         self.pos: int = pos
         ## @b bool Whether this node have already been built or not.
         self.built: bool = False
+        ## @b Node The parent node of this node.
+        self._parent: Optional[Node] = None
 
-    def build(self, parent: 'Node') -> 'Node':
+    def build(self) -> 'Node':
         """! Build a node.
         Depending on the node type, this may mean resolving symbol references, making sanity checks
         and / or building children.
-        @param parent @b Node The parent node of this node.
         """
-        ## @b Node The parent node of this node.
-        self.parent: Node = parent
         self.built = True
         return self
 
@@ -280,6 +281,20 @@ class Node:
     def mangled_scope(self) -> str:
         return self.parent.mangled_scope
 
+    def make(self, node: T) -> T:
+        node.parent = self
+        return cast(T, node.build())
+
+    @property
+    def parent(self) -> 'Node':
+        assert self._parent is not None
+        return self._parent
+
+    @parent.setter
+    def parent(self, parent: 'Node') -> None:
+        if self._parent is None:
+            self._parent = parent
+
 
 class Scope(Node):
     """! Container for declarations.
@@ -331,12 +346,14 @@ class FlowScope(Scope):
     def __init__(self, pos: int, body: List['Statement']) -> None:
         super().__init__(pos)
         self.body: List[Statement] = body
+        for node in self.body:
+            node.parent = self
 
-    def build(self, parent: Node) -> 'Node':
-        super().build(parent)
+    def build(self) -> Node:
+        super().build()
         self._counter: int = 0
         while self._counter < len(self.body):
-            self.body[self._counter] = self.body[self._counter].build(self)
+            self.body[self._counter] = self.make(self.body[self._counter])
             self._counter += 1
         return self
 
@@ -350,7 +367,7 @@ class FlowScope(Scope):
             super().do_before(do, before)
             return
         assert isinstance(before, Statement)
-        self.body.insert(self.body.index(before), do.build(self))
+        self.body.insert(self.body.index(before), self.make(do))
         self._counter += 1
 
 
@@ -368,11 +385,11 @@ class GenericExternInclusion(UnorderedScope):
         ## @b List[Node] The symbols that have been imported from the library
         self.syms: List[Node] = []
 
-    def build(self, parent: Node) -> 'GenericExternInclusion':
+    def build(self) -> 'GenericExternInclusion':
         """! Build the node, this actually imports the file
         @param parent @b Node The parent of this node
         """
-        super().build(parent)
+        super().build()
         parsed: List[Node] = []
         try:
             parsed = self.parse()
@@ -380,7 +397,7 @@ class GenericExternInclusion(UnorderedScope):
             for e in err.failures:
                 self.fail(e.severity, self.pos, e.msg)
         for s in parsed:
-            self.syms.append(s.build(self))
+            self.syms.append(self.make(s))
         return self
 
     @abstractmethod
@@ -478,14 +495,14 @@ class Value(Node):
         """! Constructor
         @param pos @b int The position of the node in the source file
         """
-        super().__init__(pos)
+        Node.__init__(self, pos)
         ## @b int Referencing offset to be applied when writing this value.
         self._ref_offset: int = 0
         ## @b Type Cast to apply to this value when writing it, if relevant.
         self._cast: Optional[Symbol] = None
 
-    def build(self, parent: Node) -> 'Value':
-        super().build(parent)
+    def build(self) -> 'Value':
+        super().build()
         return self
 
     @property
@@ -547,7 +564,7 @@ class Value(Node):
             # The developper asked for some referencing
             target_ref_count -= res.ref_offset - res.typ.any_memory_offset
             while target_ref_count > 0:
-                res = Reference(res).build(self)
+                res = self.make(Reference(res))
                 target_ref_count -= 1
         return res
 
@@ -622,8 +639,8 @@ class DeclarationBase(Node):
 
 
 class Type(DeclarationBase):
-    def build(self, parent: Node) -> 'Type':
-        super().build(parent)
+    def build(self) -> 'Type':
+        super().build()
         return self
 
     @property
@@ -649,8 +666,8 @@ class Symbol(Value):
         self.qualifiers: Qualifier = Qualifier.NONE
         self._canonical: Optional[DeclarationBase] = None
 
-    def build(self, parent: Node) -> 'Symbol':
-        super().build(parent)
+    def build(self) -> 'Symbol':
+        super().build()
         self._canonical = self.solve()
         return self
 
@@ -690,29 +707,32 @@ class Symbol(Value):
 
 
 class BuiltinType(Type):
-    def make(parent: Node, name: str) -> 'CompoundIdentifier':
-        res = CompoundIdentifier([Identifier(parent.pos, '@' + name)])
-        res.build(parent)
-        return res
+    @staticmethod
+    def make_symbol(parent: Node, name: str) -> 'CompoundIdentifier':
+        return parent.make(CompoundIdentifier([Identifier(parent.pos, '@' + name)]))
 
     def __init__(self, name: str) -> None:
         super().__init__()
         self._name: str = name
 
-    def build(self, parent: Node) -> 'BuiltinType':
-        super().build(parent)
+    def build(self) -> 'BuiltinType':
+        super().build()
         return self
 
     @property
     def child(self) -> Optional[Type]:
         if self.name == '@str':
-            return BuiltinType('@char').build(self)
+            return self.make(BuiltinType('@char'))
         return None
+
+    @property
+    def as_symbol(self) -> 'CompoundIdentifier':
+        return CompoundIdentifier([Identifier(self.pos, self.name)])
 
     def from_any(self) -> Symbol:
         if self.name == '@str':
-            return BuiltinType.make(self, 'str')
-        return Reference(BuiltinType.make(self, self.name[1:])).build(self)
+            return BuiltinType.make_symbol(self, 'str')
+        return self.make(Reference(self.as_symbol))
 
     @property
     def any_memory_offset(self) -> int:
@@ -741,10 +761,11 @@ class Container(Node):
     def __init__(self, child: Node) -> None:
         super().__init__(0)
         self.child: Node = child
+        self.child.parent = self
 
-    def build(self, parent: Node) -> Node:
-        super().build(parent)
-        self.child = self.child.build(self)
+    def build(self) -> Node:
+        super().build()
+        self.child = self.child.build()
         return self
 
     @property
@@ -761,9 +782,9 @@ class SymbolContainer(Symbol, Container):
         super().__init__()
         Container.__init__(self, child)
 
-    def build(self, parent: Node) -> 'SymbolContainer':
-        super().build(parent)
-        Container.build(self, parent)
+    def build(self) -> 'SymbolContainer':
+        super().build()
+        Container.build(self)
         return self
 
     @property
@@ -775,14 +796,16 @@ class Array(SymbolContainer):
     def __init__(self, child: Symbol, length: Optional[Node]) -> None:
         super().__init__(child)
         self.length: Optional[Node] = length
+        if self.length is not None:
+            self.length.parent = self
 
-    def build(self, parent: Node) -> 'Array':
-        super().build(parent)
+    def build(self) -> 'Array':
+        super().build()
         return self
 
     @property
     def typ(self) -> Type:
-        return ArrayType(self.child.typ).build(self)
+        return self.make(ArrayType(self.child.typ))
 
     @property
     def any_memory_offset(self) -> int:
@@ -791,7 +814,7 @@ class Array(SymbolContainer):
     def solve(self) -> DeclarationBase:
         child: Optional[DeclarationBase] = self.child.canonical
         assert isinstance(child, Type)
-        return ArrayType(child).build(self)
+        return self.make(ArrayType(child))
 
     @property
     def repr(self) -> str:
@@ -801,7 +824,7 @@ class Array(SymbolContainer):
     def decl(self) -> DeclarationBase:
         child_decl: Optional[DeclarationBase] = self.child.decl
         assert isinstance(child_decl, Type)
-        return ArrayType(child_decl).build(self)
+        return self.make(ArrayType(child_decl))
 
     @property
     def mangled(self) -> str:
@@ -813,10 +836,11 @@ class ArrayType(Type, Container):
         self.child: Type
         Type.__init__(self)
         Container.__init__(self, child)
+        child._parent = self
 
-    def build(self, parent: Node) -> 'ArrayType':
-        super().build(parent)
-        Container.build(self, parent)
+    def build(self) -> 'ArrayType':
+        super().build()
+        Container.build(self)
         return self
 
     @property
@@ -825,8 +849,8 @@ class ArrayType(Type, Container):
 
     def from_any(self) -> Symbol:
         if isinstance(self.child, Container):
-            return Array(self.child.from_any(), None).build(self)
-        return Array(CompoundIdentifier([Identifier(0, self.child.name)]), None).build(self)
+            return self.make(Array(self.child.from_any(), None))
+        return self.make(Array(CompoundIdentifier([Identifier(0, self.child.name)]), None))
 
     @property
     def name(self) -> str:
@@ -842,24 +866,24 @@ class ArrayType(Type, Container):
 
 class Reference(SymbolContainer):
     def __init__(self, child: Symbol) -> None:
-        SymbolContainer.__init__(self, child)
+        super().__init__(child)
         self.child: Symbol
 
-    def build(self, parent: Node) -> SymbolContainer:
-        super().build(parent)
-        ref: Reference = (ReferenceToType(self.child, self.qualifiers) if self.child.is_type else
-                          ReferenceToValue(self.child))
-        ref.child.parent = ref
-        ref.parent = parent
-        return ref.build(parent)
+    def build(self) -> SymbolContainer:
+        self.child.build()
+        res: SymbolContainer = self.parent.make(ReferenceToType(self.child, self.qualifiers)
+                                                if self.child.is_type
+                                                else ReferenceToValue(self.child))
+        res.child._parent = res
+        return res
 
     @property
     def decl(self) -> Optional[DeclarationBase]:
-        return ReferenceType(self.child.typ).build(self)
+        return self.typ
 
     @property
     def typ(self) -> Type:
-        return ReferenceType(self.child.typ).build(self)
+        return self.make(ReferenceType(self.child.typ))
 
     @property
     def repr(self) -> str:
@@ -878,7 +902,8 @@ class ReferenceToValue(Reference):
     def __init__(self, child: Symbol) -> None:
         super().__init__(child)
 
-    def build(self, parent: Node) -> 'ReferenceToValue':
+    def build(self) -> 'ReferenceToValue':
+        SymbolContainer.build(self)
         self.child.ref_offset -= 1
         return self
 
@@ -887,7 +912,7 @@ class ReferenceToValue(Reference):
         if self.child.decl is not None:
             assert isinstance(self.inner_child.decl, Declaration)
             return self.inner_child.decl.typ
-        return BuiltinType('@any').build(self)
+        return self.make(BuiltinType('@any'))
 
     @property
     def ref_offset(self) -> int:
@@ -895,7 +920,7 @@ class ReferenceToValue(Reference):
 
     @ref_offset.setter
     def ref_offset(self, val: int) -> None:
-        self.child.ref_offset = val - 1
+        self.child.ref_offset = val
 
     def auto_cast(self, target: Union[Symbol, Type]) -> None:
         self.child.auto_cast(target)
@@ -906,7 +931,8 @@ class ReferenceToType(Reference):
         super().__init__(child)
         self.qualifiers: Qualifier = qualifiers
 
-    def build(self, parent: Node) -> 'ReferenceToType':
+    def build(self) -> 'ReferenceToType':
+        SymbolContainer.build(self)
         return self
 
     @property
@@ -928,9 +954,10 @@ class ReferenceType(Type, Container):
         Container.__init__(self, child)
         Type.__init__(self)
         self.qualifiers: Qualifier = qualifiers
+        self.child._parent = self
 
-    def build(self, parent: Node) -> 'ReferenceType':
-        super().build(parent)
+    def build(self) -> 'ReferenceType':
+        super().build()
         return self
 
     @property
@@ -944,7 +971,7 @@ class ReferenceType(Type, Container):
     def from_any(self) -> Symbol:
         if self.child.any_memory_offset == 1 and not type(self.child) is ReferenceType:
             return self.child.from_any()
-        return Reference(self.child.from_any()).build(self)
+        return self.make(Reference(self.child.from_any()))
 
     @property
     def inner_child(self) -> Type:
@@ -978,16 +1005,18 @@ class FunctionType(Type):
         self.ret: Symbol = ret
         self.is_variadic: bool = is_variadic
         self.variadic_type: Optional[Symbol] = variadic_type
-
-    def build(self, parent: Node) -> 'FunctionType':
-        super().build(parent)
-        self.ret = self.ret.build(self)
-        i: int = 0
-        while i < len(self.args):
-            self.args[i].build(self)
-            i += 1
+        for arg in self.args:
+            arg.parent = self
+        self.ret.parent = self
         if self.variadic_type is not None:
-            self.variadic_type = self.variadic_type.build(self)
+            self.variadic_type.parent = self
+
+    def build(self) -> 'FunctionType':
+        super().build()
+        self.ret = self.ret.build()
+        self.args = [arg.build() for arg in self.args]
+        if self.variadic_type is not None:
+            self.variadic_type = self.variadic_type.build()
         return self
 
     @property
@@ -1013,6 +1042,7 @@ class FunctionType(Type):
 
 class Operator(Node):
     def __init__(self, op: str) -> None:
+        super().__init__()
         self.op: str = op
 
     def auto_cast(self, target: Symbol) -> None:
@@ -1023,24 +1053,28 @@ class VariableAssignment(Node):
     def __init__(self, var: Symbol, assign: 'Assignment') -> None:
         super().__init__()
         self.var: Symbol = var
-        self.assign: 'Assignment' = assign
+        self.assign: Assignment = assign
+        self.var.parent = self
+        self.assign.parent = self
 
-    def build(self, parent: Node) -> 'VariableAssignment':
-        super().build(parent)
-        self.var = self.var.build(self)
-        self.assign = self.assign.build(self)
+    def build(self) -> 'VariableAssignment':
+        super().build()
+        self.var = self.var.build()
+        self.assign = self.assign.build()
         self.assign.expr.auto_cast(self.var)
         return self
 
 
 class Assignment(Node):
     def __init__(self, expr: 'Expression') -> None:
-        self.expr: 'Expression' = expr
+        super().__init__()
+        self.expr: Expression = expr
+        self.expr.parent = self
         self.operator: Optional[Operator] = None
 
-    def build(self, parent: Node) -> 'Assignment':
-        super().build(parent)
-        self.expr = self.expr.build(self)
+    def build(self) -> 'Assignment':
+        super().build()
+        self.expr = self.expr.build()
         return self
 
 
@@ -1052,14 +1086,17 @@ class Declaration(DeclarationBase):
         self.typ_src: Symbol = typ
         self.sym: Optional['Identifier'] = sym
         self._qualifiers: Qualifier = qualifiers
+        self.typ_src.parent = self
+        if self.sym is not None:
+            self.sym.parent = self
 
-    def build(self, parent: Node) -> 'Declaration':
-        super().build(parent)
-        parent.declare(self)
-        self.typ_src = self.typ_src.build(self)
+    def build(self) -> 'Declaration':
+        super().build()
+        self.parent.declare(self)
+        self.typ_src = self.typ_src.build()
         self._make_type()
         if self.sym is not None:
-            self.sym.build(self)
+            self.sym.build()
         return self
 
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
@@ -1088,12 +1125,12 @@ class VariableDeclaration(Declaration):
     def __init__(self, typ: Symbol, sym: Optional['Identifier'], assign: Optional[Assignment] = None
                  ) -> None:
         super().__init__(0, typ, sym, Qualifier.NONE)
-        self.assign: Optional[Assignment] = assign
+        self.assign = assign
 
-    def build(self, parent: Node) -> 'VariableDeclaration':
-        super().build(parent)
+    def build(self) -> 'VariableDeclaration':
+        super().build()
         if self.assign is not None:
-            self.assign = self.assign.build(self)
+            self.assign = self.assign.build()
             self.assign.expr.auto_cast(self.typ)
         return self
 
@@ -1141,6 +1178,16 @@ class VariableDeclaration(Declaration):
                     self.is_child_of(FunctionDeclaration) or self.is_child_of(Struct) or
                     self.is_child_of(EhUnion) or self.is_child_of(EhClass))
 
+    @property
+    def assign(self) -> Optional[Assignment]:
+        return self._assign
+
+    @assign.setter
+    def assign(self, assign: Optional[Assignment]) -> None:
+        self._assign = assign
+        if self._assign is not None:
+            self._assign.parent = self
+
 
 class FunctionDeclaration(Declaration):
     def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
@@ -1184,15 +1231,17 @@ class FunctionDefinition(FunctionDeclaration, FlowScope):
         self.body_str: UnparsedContents = body_str
         self.gen_var_count: int = 0
 
-    def build(self, parent: Node) -> 'FunctionDefinition':
-        super().build(parent)
+    def build(self) -> 'FunctionDefinition':
+        super().build()
         if self.is_child_of(Import):
             return self
         try:
             assert isinstance(self.typ, FunctionType)
             typ: Optional[DeclarationBase] = self.typ.ret.canonical
             self.body = function.parse(self.body_str.contents, not typ == BuiltinType('@void'))
-            super().build(parent)
+            for stmt in self.body:
+                stmt.parent = self
+            super().build()
         except ParseError as err:
             for f in err.failures:
                 self.fail(f.severity, f.pos, f.msg)
@@ -1208,7 +1257,7 @@ class FunctionDefinition(FunctionDeclaration, FlowScope):
         res = DeclarationLookup(sym)
         if self.typ.is_variadic:
             assert self.typ.variadic_type is not None
-            res.append(VArgs(self.typ.variadic_type))
+            res.append(self.make(VArgs(self.typ.variadic_type)))
         else:
             res.error = "use of vargs in a non variadic function"
         return res
@@ -1225,7 +1274,7 @@ class VArgs(VariableDeclaration):
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
         res = DeclarationLookup(sym)
         if sym == 'length':
-            res.append(VArgsLength())
+            res.append(self.make(VArgsLength()))
         else:
             res.error = "`vargs` have no property {}".format(sym)
         return res
@@ -1245,7 +1294,7 @@ class VArgsLength(VariableDeclaration):
 
     @property
     def typ(self) -> Type:
-        return BuiltinType('@int').build(self)
+        return self.make(BuiltinType('@int'))
 
     @property
     def mangled_name(self) -> str:
@@ -1260,10 +1309,11 @@ class Statement(Node):
     def __init__(self, expr: Node) -> None:
         super().__init__()
         self.expr: Node = expr
+        self.expr.parent = self
 
-    def build(self, parent: Node) -> 'Statement':
-        super().build(parent)
-        self.expr = self.expr.build(self)
+    def build(self) -> 'Statement':
+        super().build()
+        self.expr = self.expr.build()
         return self
 
     def get_declaration(self, sym: str) -> DeclarationLookup:
@@ -1272,12 +1322,15 @@ class Statement(Node):
 
 class Expression(Value):
     def __init__(self, contents: List[Value], parenthesised: bool) -> None:
+        super().__init__()
         self.contents: List[Value] = contents
         self.parenthesised: bool = parenthesised
+        for node in self.contents:
+            node.parent = self
 
-    def build(self, parent: Node) -> 'Expression':
-        super().build(parent)
-        self.contents = [e.build(self) for e in self.contents]
+    def build(self) -> 'Expression':
+        super().build()
+        self.contents = [e.build() for e in self.contents]
         return self
 
     def auto_cast(self, target: Union[Symbol, Type]) -> None:
@@ -1297,10 +1350,12 @@ class InitializationList(Value):
     def __init__(self, contents: List[Expression]) -> None:
         super().__init__()
         self.contents: List[Expression] = contents
+        for node in self.contents:
+            node.parent = self
 
-    def build(self, parent: Node) -> 'InitializationList':
-        super().build(parent)
-        self.contents = [x.build(self) for x in self.contents]
+    def build(self) -> 'InitializationList':
+        super().build()
+        self.contents = [x.build() for x in self.contents]
         return self
 
     def auto_cast(self, target: Union['Symbol', 'Type']) -> None:
@@ -1317,18 +1372,21 @@ class Cast(Value):
     def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
         super().__init__(pos)
         self.sym: Symbol = sym
+        self.args: List[Expression] = args
+        self.sym.parent = self
+        for node in self.args:
+            node.parent = self
         assert isinstance(sym.canonical, Type)
         self._typ: Type = sym.canonical
-        self.args: List[Expression] = args
 
-    def build(self, parent: Node) -> 'Cast':
-        super().build(parent)
+    def build(self) -> 'Cast':
+        super().build()
         if len(self.args) < 1:
             self.error(self.pos, 'cast requires a value')
         elif len(self.args) > 1:
             self.error(self.pos, 'too many values for cast expression')
         else:
-            self.args[0].build(self)
+            self.args[0].build()
         return self
 
     @property
@@ -1351,18 +1409,19 @@ class FunctionCall(Value):
         super().__init__(pos)
         self.sym: Symbol = sym
         self.args: List[Expression] = args
-        self.this_ptr: Optional[CompoundIdentifier] = None
+        self._this_ptr: Optional[CompoundIdentifier] = None
+        self.sym.parent = self
+        for arg in self.args:
+            arg.parent = self
 
-    def build(self, parent: Node) -> Value:
-        super().build(parent)
-        self.sym = self.sym.build(self)
+    def build(self) -> Value:
+        super().build()
+        self.sym = self.sym.build()
         if self.this_ptr is not None:
-            self.this_ptr = self.this_ptr.build(self)
+            self.this_ptr = self.this_ptr.build()
         if self.sym.is_type:
-            cast: Cast = Cast(self.pos, self.sym, self.args)
-            cast = cast.build(parent)
-            return cast
-        self.args = [a.build(self) for a in self.args]
+            return self.parent.make(Cast(self.pos, self.sym, self.args))
+        self.args = [a.build() for a in self.args]
         res = self._reorder()
         if self.sym.canonical is None:
             return res
@@ -1409,16 +1468,16 @@ class FunctionCall(Value):
             self.args = self.args[:i]
             assert typ.variadic_type is not None
             vargs_name: str = self.generate_var_name()
-            stmt: Statement = Statement(VariableDeclaration(
+            stmt: Statement = self.make(Statement(VariableDeclaration(
                 Array(typ.variadic_type, Number(str(len(vargs)))),
                 Identifier(0, vargs_name),
                 Assignment(Expression([InitializationList(vargs)], False))
-            )).build(self)
+            )))
             self.do_before(stmt, self)
-            self.args.append(Expression([Number(str(len(vargs)))], False).build(self))
-            self.args.append(
-                Expression([CompoundIdentifier([Identifier(0, vargs_name)])], False).build(self)
-            )
+            self.args.append(self.make(Expression([Number(str(len(vargs)))], False)))
+            self.args.append(self.make(
+                Expression([CompoundIdentifier([Identifier(0, vargs_name)])], False)
+            ))
 
     def _reorder(self) -> 'Value':
         parent: Optional[Value] = None
@@ -1440,7 +1499,7 @@ class FunctionCall(Value):
     @property
     def typ(self) -> Type:
         if self.sym.decl is None:
-            return BuiltinType('@any').build(self)
+            return self.make(BuiltinType('@any'))
         assert isinstance(self.sym.decl, Declaration)
         if not isinstance(self.sym.decl.typ, FunctionType):
             return self.sym.decl.typ
@@ -1456,15 +1515,24 @@ class FunctionCall(Value):
             return len(self.args)
         return len(self.args) + 1
 
+    @property
+    def this_ptr(self) -> Optional['CompoundIdentifier']:
+        return self._this_ptr
+
+    @this_ptr.setter
+    def this_ptr(self, value: 'CompoundIdentifier') -> None:
+        self._this_ptr = self.make(value)
+
 
 class ArrayAccess(SymbolContainer):
     def __init__(self, child: Symbol, idx: Expression) -> None:
         super().__init__(child)
         self.idx: Expression = idx
+        self.idx.parent = self
 
-    def build(self, parent: Node) -> 'ArrayAccess':
-        super().build(parent)
-        self.idx = self.idx.build(self)
+    def build(self) -> 'ArrayAccess':
+        super().build()
+        self.idx = self.idx.build()
         return self
 
     @property
@@ -1495,11 +1563,13 @@ class ControlStructure(FlowScope):
         assert cond is not None or name == 'else'
         self.name: str = name
         self.cond: Optional[Expression] = cond
-
-    def build(self, parent: Node) -> 'ControlStructure':
-        super().build(parent)
         if self.cond is not None:
-            self.cond = self.cond.build(self)
+            self.cond.parent = self
+
+    def build(self) -> 'ControlStructure':
+        super().build()
+        if self.cond is not None:
+            self.cond = self.cond.build()
         return self
 
 
@@ -1517,15 +1587,17 @@ class ForDoLoop(ControlStructure):
         self.cond: Expression
         self.initializers: List[Union[VariableDeclaration, VariableAssignment]] = initializers
         self.actions: List[Union[Expression, VariableAssignment]] = actions
+        for node in self.initializers:
+            node.parent = self
+        for act in self.actions:
+            act.parent = self
 
-    def build(self, parent: Node) -> 'ForDoLoop':
+    def build(self) -> 'ForDoLoop':
         # The condition may use a symbol declared in initializers. In this case, we need to have
-        # the declaration actually declared before building the condition. But when beeing built,
-        # initializers may also need the parent of the loop.
-        self.parent = parent
-        self.initializers = [init.build(self) for init in self.initializers]
-        super().build(parent)
-        self.actions = [act.build(self) for act in self.actions]
+        # the declaration actually declared before building the condition.
+        self.initializers = [init.build() for init in self.initializers]
+        super().build()
+        self.actions = [act.build() for act in self.actions]
         for init in self.initializers:
             if isinstance(init, VariableDeclaration) and init.assign is None:
                 self.error(init.pos, "uninitialised variable declaration in for do loop")
@@ -1536,23 +1608,28 @@ class Condition(Node):
     def __init__(self, branches: List[ControlStructure]) -> None:
         super().__init__(0)
         self.branches: List[ControlStructure] = branches
+        for branch in self.branches:
+            branch.parent = self
 
-    def build(self, parent: Node) -> 'Condition':
-        super().build(parent)
-        self.branches = [b.build(self) for b in self.branches]
+    def build(self) -> 'Condition':
+        super().build()
+        self.branches = [b.build() for b in self.branches]
         return self
 
 
 class SwitchCase(Node):
     def __init__(self, cases: List['SwitchCaseTest'], body: 'SwitchCaseBody') -> None:
         super().__init__()
-        self.cases: List['SwitchCaseTest'] = cases
-        self.body: 'SwitchCaseBody' = body
+        self.cases: List[SwitchCaseTest] = cases
+        self.body: SwitchCaseBody = body
+        for case in self.cases:
+            case.parent = self
+        self.body.parent = self
 
-    def build(self, parent: Node) -> 'SwitchCase':
-        super().build(parent)
-        self.cases = [c.build(self) for c in self.cases]
-        self.body = self.body.build(self)
+    def build(self) -> 'SwitchCase':
+        super().build()
+        self.cases = [c.build() for c in self.cases]
+        self.body = self.body.build()
         return self
 
 
@@ -1560,11 +1637,13 @@ class SwitchCaseTest(Node):
     def __init__(self, test: Optional[Value]) -> None:
         super().__init__()
         self.test: Optional[Value] = test
-
-    def build(self, parent: Node) -> 'SwitchCaseTest':
-        super().build(parent)
         if self.test is not None:
-            self.test = self.test.build(self)
+            self.test.parent = self
+
+    def build(self) -> 'SwitchCaseTest':
+        super().build()
+        if self.test is not None:
+            self.test = self.test.build()
         return self
 
 
@@ -1573,19 +1652,22 @@ class SwitchCaseBody(FlowScope):
         super().__init__(0, body)
         self.fallthrough: bool = fallthrough
 
-    def build(self, parent: Node) -> 'SwitchCaseBody':
-        super().build(parent)
+    def build(self) -> 'SwitchCaseBody':
+        super().build()
         return self
 
 
 class Return(Node):
     def __init__(self, expr: Optional[Expression] = None) -> None:
+        super().__init__()
         self.expr: Optional[Expression] = expr
-
-    def build(self, parent: Node) -> 'Return':
-        super().build(parent)
         if self.expr is not None:
-            self.expr = self.expr.build(self)
+            self.expr.parent = self
+
+    def build(self) -> 'Return':
+        super().build()
+        if self.expr is not None:
+            self.expr = self.expr.build()
             decl: Node = self.parent
             while not isinstance(decl, FunctionDefinition):
                 decl = decl.parent
@@ -1600,17 +1682,17 @@ class Identifier(Value):
         self.name: str = name
         self._decl: Optional[DeclarationBase] = None
 
-    def build(self, parent: Node) -> 'Identifier':
-        super().build(parent)
+    def build(self) -> 'Identifier':
+        super().build()
         self.ref_offset = self.typ.ref_offset
         return self
 
     @property
     def typ(self) -> Type:
         if self.decl is None:
-            return BuiltinType('@any').build(self)
+            return self.make(BuiltinType('@any'))
         if isinstance(self.decl, Type):
-            return self.decl.dup().build(self)
+            return self.make(self.decl.dup())
         if isinstance(self.decl, (Declaration, Alias)):
             return self.decl.typ
         return BuiltinType('@any')
@@ -1636,33 +1718,35 @@ class Identifier(Value):
 class CompoundIdentifier(Symbol):
     def __init__(self, elems: List[Identifier]) -> None:
         self.elems: List[Identifier] = elems
+        for elem in self.elems:
+            elem.parent = self
         super().__init__()
 
-    def build(self, parent: Node) -> 'CompoundIdentifier':
-        self._find_children_declarations(parent)
-        super().build(parent)
+    def build(self) -> 'CompoundIdentifier':
+        self._find_children_declarations()
+        super().build()
         if isinstance(self.elems[0].decl, ClassProperty):
             self.elems.insert(0, Identifier(0, 'this'))
-            decl = parent.find_declaration('this')
+            decl = self.find_declaration('this')
             if len(decl) == 0:
-                parent.error(0, decl.error)
+                self.error(0, decl.error)
             else:
                 self.elems[0].decl = decl[0]
-        elif isinstance(self.elems[-1].decl, ClassMethod) and isinstance(parent, FunctionCall):
-            parent.this_ptr = CompoundIdentifier(self.elems[:-1])
+        elif isinstance(self.elems[-1].decl, ClassMethod) and isinstance(self.parent, FunctionCall):
+            self.parent.this_ptr = CompoundIdentifier(self.elems[:-1])
             self.elems = self.elems[-1:]
-        self.elems = [e.build(self) for e in self.elems]
+        self.elems = [e.build() for e in self.elems]
         return self
 
-    def _find_children_declarations(self, parent: Node) -> None:
+    def _find_children_declarations(self) -> None:
         cur_decl: Optional[DeclarationLookup] = None
         for e in self.elems:
             if cur_decl is None:
-                cur_decl = parent.find_declaration(e.name)
+                cur_decl = self.find_declaration(e.name)
             else:
                 cur_decl = cur_decl.get_inner_declaration(e.name)
             if len(cur_decl) == 0:
-                parent.error(e.pos, cur_decl.error)
+                self.error(e.pos, cur_decl.error)
                 return
             e.decl = cur_decl[0]
         if len(self.elems) >= 2 and isinstance(self.elems[1].decl, VArgsLength):
@@ -1713,13 +1797,15 @@ class CompoundIdentifier(Symbol):
 
 class TemplatedIdentifier(Symbol):
     def __init__(self, name: str, types: List[Union[Symbol, Type]]) -> None:
+        super().__init__()
         self._name: str = name
         self.types: List[Union[Symbol, Type]] = types
-        super().__init__()
+        for t in self.types:
+            t.parent = self
 
-    def build(self, parent: Node) -> 'TemplatedIdentifier':
-        super().build(parent)
-        self.types = [t.build(self) for t in self.types]
+    def build(self) -> 'TemplatedIdentifier':
+        super().build()
+        self.types = [t.build() for t in self.types]
         return self
 
     @property
@@ -1753,7 +1839,7 @@ class String(Value):
 
     @property
     def typ(self) -> Type:
-        return BuiltinType('@str').build(self)
+        return self.make(BuiltinType('@str'))
 
     def auto_cast(self, target: Union[Symbol, Type]) -> None:
         pass
@@ -1766,7 +1852,7 @@ class Char(Value):
 
     @property
     def typ(self) -> Type:
-        return BuiltinType('@char').build(self)
+        return self.make(BuiltinType('@char'))
 
     def auto_cast(self, target: Union[Symbol, Type]) -> None:
         pass
@@ -1779,7 +1865,7 @@ class Number(Value):
 
     @property
     def typ(self) -> Type:
-        return BuiltinType('@int').build(self)
+        return self.make(BuiltinType('@int'))
 
     def auto_cast(self, target: Union[Symbol, Type]) -> None:
         pass
@@ -1792,7 +1878,7 @@ class DecimalNumber(Value):
 
     @property
     def typ(self) -> Type:
-        return BuiltinType('@float').build(self)
+        return self.make(BuiltinType('@float'))
 
     def auto_cast(self, target: Union[Symbol, Type]) -> None:
         pass
@@ -1804,7 +1890,7 @@ class NullValue(Value):
 
     @property
     def typ(self) -> Type:
-        return BuiltinType('@any').build(self)
+        return self.make(BuiltinType('@any'))
 
     def auto_cast(self, target: Union[Symbol, Type]) -> None:
         pass
@@ -1817,7 +1903,7 @@ class BoolValue(Value):
 
     @property
     def typ(self) -> Type:
-        return BuiltinType('@bool').build(self)
+        return self.make(BuiltinType('@bool'))
 
     def auto_cast(self, target: Union[Symbol, Type]) -> None:
         pass
@@ -1825,12 +1911,14 @@ class BoolValue(Value):
 
 class UnaryOperatorValue(Value):
     def __init__(self, op: str, val: Value) -> None:
+        super().__init__()
         self.op: str = op
         self.val: Value = val
+        self.val.parent = self
 
-    def build(self, parent: Node) -> 'UnaryOperatorValue':
-        super().build(parent)
-        self.val = self.val.build(self)
+    def build(self) -> 'UnaryOperatorValue':
+        super().build()
+        self.val = self.val.build()
         return self
 
     @property
@@ -1857,19 +1945,20 @@ class AnonymousArray(Value):
     def __init__(self, pos: int, contents: List[Value]) -> None:
         super().__init__(pos)
         self.contents = contents
+        for node in self.contents:
+            node.parent = self
 
-    def build(self, parent: Node) -> Value:
+    def build(self) -> Value:
         if self.built:
-            super().build(parent)
             return self
-        super().build(parent)
+        super().build()
         tmp_name = self.generate_var_name()
         self.do_before(Statement(VariableDeclaration(
             Array(CompoundIdentifier([Identifier(0, self.contents[0].typ.name)]), Number('')),
             Identifier(0, tmp_name),
             Assignment(Expression([self], False))
-        )).build(parent), self)
-        return CompoundIdentifier([Identifier(0, tmp_name)]).build(parent)
+        )), self)
+        return self.make(CompoundIdentifier([Identifier(0, tmp_name)]))
 
     @property
     def typ(self) -> Type:
@@ -1882,34 +1971,36 @@ class Sizeof(Value):
     def __init__(self, sz_typ: Symbol) -> None:
         super().__init__()
         self.sz_typ: Symbol = sz_typ
+        self.sz_typ.parent = self
 
-    def build(self, parent: Node) -> 'Sizeof':
-        super().build(parent)
-        self.sz_typ = self.sz_typ.build(self)
+    def build(self) -> 'Sizeof':
+        super().build()
+        self.sz_typ = self.sz_typ.build()
         return self
 
     @property
     def typ(self) -> Type:
-        return BuiltinType('@size').build(self)
+        return self.make(BuiltinType('@size'))
 
 
 class Alias(Symbol, DeclarationBase):
     def __init__(self, src: Union[Type, Symbol], dst: Identifier) -> None:
+        super().__init__()
+        DeclarationBase.__init__(self)
         self.src_sym: Union[Type, Symbol] = src
         self.src: Optional[DeclarationBase] = None
         self.dst: Identifier = dst
-        super().__init__()
-
-    def build(self, parent: Node) -> 'Alias':
-        self.parent = parent
+        self.src_sym.parent = self
         self.dst.parent = self
-        parent.declare(self)
-        self.src_sym = self.src_sym.build(self)
+
+    def build(self) -> 'Alias':
+        self.parent.declare(self)
+        self.src_sym = self.src_sym.build()
         if isinstance(self.src_sym, Symbol):
             self.src = self.src_sym.canonical
         else:
             self.src = self.src_sym
-        super().build(parent)
+        super().build()
         return self
 
     @property
@@ -1962,15 +2053,19 @@ class ContainerStructure(Type, Scope):
         self.sym: Identifier = sym
         self.fields: Optional[List[VariableDeclaration]] = fields
         self.display_name = ''
+        self.sym.parent = self
+        if self.fields is not None:
+            for f in self.fields:
+                f.parent = self
 
-    def build(self, parent: Node) -> 'ContainerStructure':
+    def build(self) -> 'ContainerStructure':
         if self.built:
             return self
-        super().build(parent)
-        parent.declare(self)
-        self.sym.build(self)
+        super().build()
+        self.parent.declare(self)
+        self.sym.build()
         if self.fields is not None:
-            self.fields = [f.build(self) for f in self.fields]
+            self.fields = [f.build() for f in self.fields]
         return self
 
     @property
@@ -1986,10 +2081,7 @@ class ContainerStructure(Type, Scope):
         return res
 
     def from_any(self) -> Symbol:
-        return Reference(CompoundIdentifier([Identifier(0, self.sym.name)])).build(self)
-
-    def dup(self) -> Type:
-        return self
+        return self.make(Reference(CompoundIdentifier([Identifier(0, self.sym.name)])))
 
     @property
     def mangled(self) -> str:
@@ -2008,6 +2100,9 @@ class Struct(ContainerStructure):
         super().__init__(pos, sym, fields)
         self.display_name = 'struct'
 
+    def dup(self) -> Type:
+        return self.make(StructType(self))
+
 
 class EhUnion(ContainerStructure):
     def __init__(self, pos: int, sym: Identifier,
@@ -2015,22 +2110,27 @@ class EhUnion(ContainerStructure):
         super().__init__(pos, sym, fields)
         self.display_name = 'union'
 
+    def dup(self) -> Type:
+        return self.make(UnionType(self))
+
 
 class ClassMethod(FunctionDefinition):
     def __init__(self, obj: FunctionDefinition) -> None:
         self.obj: FunctionDefinition = obj
 
-    def build(self, parent: Node) -> 'ClassMethod':
-        assert isinstance(parent, EhClass)
+    def build(self) -> 'ClassMethod':
+        self.obj.parent = self.parent
+        assert isinstance(self.parent, EhClass)
         assert isinstance(self.typ, FunctionType)
         self.typ.args.insert(0, VariableDeclaration(
-            Reference(CompoundIdentifier([Identifier(0, parent.name)])),
+            Reference(CompoundIdentifier([Identifier(0, self.parent.name)])),
             Identifier(0, 'this'),
             None
         ))
-        self.obj = self.obj.build(parent)
+        self.typ.args[0].parent = self
+        self.obj = self.obj.build()
         if self.obj.sym is not None:
-            self.obj.sym.parent = self
+            self.obj.sym._parent = self
         return self
 
     def __getattr__(self, attr: Any) -> Any:
@@ -2056,8 +2156,9 @@ class ClassProperty(VariableDeclaration):
     def __init__(self, obj: VariableDeclaration) -> None:
         self.obj: VariableDeclaration = obj
 
-    def build(self, parent: Node) -> 'ClassProperty':
-        self.obj = self.obj.build(parent)
+    def build(self) -> 'ClassProperty':
+        self.obj.parent = self.parent
+        self.obj = self.obj.build()
         return self
 
     def __getattr__(self, attr: Any) -> Any:
@@ -2072,17 +2173,21 @@ class EhClass(Type, UnorderedScope):
         super(UnorderedScope, self).__init__(pos)
         self.sym: Identifier = sym
         self.contents: Optional[EhClass.FieldList] = contents
+        self.sym.parent = self
+        if self.contents is not None:
+            for node in self.contents:
+                node.parent = self
         self._properties: List[ClassProperty] = []
         self._methods: List[ClassMethod] = []
 
-    def build(self, parent: Node) -> 'EhClass':
+    def build(self) -> 'EhClass':
         if self.built:
             return self
-        super().build(parent)
-        parent.declare(self)
-        self.sym.build(self)
+        super().build()
+        self.parent.declare(self)
+        self.sym.build()
         if self.contents is not None:
-            self.contents = [f.build(self) for f in self.contents]
+            self.contents = [f.build() for f in self.contents]
             for node in self.contents:
                 if isinstance(node, ClassProperty):
                     self._properties.append(node)
@@ -2099,10 +2204,10 @@ class EhClass(Type, UnorderedScope):
         return res
 
     def from_any(self) -> Symbol:
-        return Reference(CompoundIdentifier([Identifier(0, self.sym.name)])).build(self)
+        return self.make(Reference(CompoundIdentifier([Identifier(0, self.sym.name)])))
 
     def dup(self) -> Type:
-        return self
+        return ClassType(self)
 
     @property
     def scope_contents(self) -> List[Node]:
@@ -2129,20 +2234,60 @@ class EhClass(Type, UnorderedScope):
         return self._methods
 
 
+class ContainerStructureType(Type):
+    def __init__(self, decl: Union[ContainerStructure, EhClass]) -> None:
+        super().__init__()
+        self._decl: Union[ContainerStructure, EhClass] = decl
+
+    def from_any(self) -> Symbol:
+        return self._decl.from_any()
+
+    @property
+    def decl(self) -> Optional[DeclarationBase]:
+        return self._decl
+
+    def get_inner_declaration(self, sym: str) -> DeclarationLookup:
+        return self._decl.get_inner_declaration(sym)
+
+    def dup(self) -> Type:
+        return self._decl.dup()
+
+    @property
+    def mangled(self) -> str:
+        return self._decl.mangled
+
+    @property
+    def name(self) -> str:
+        return self._decl.name
+
+
+class StructType(ContainerStructureType):
+    pass
+
+
+class UnionType(ContainerStructureType):
+    pass
+
+
+class ClassType(ContainerStructureType):
+    pass
+
+
 class EhEnum(Type, Scope):
     def __init__(self, pos: int, sym: Identifier, fields: Optional[List[Identifier]]) -> None:
         super().__init__(pos)
         Scope.__init__(self, pos)
         self.sym: Identifier = sym
+        self.sym.parent = self
         self.fields: Optional[List[EnumField]] = None
         if fields is not None:
             self.fields = [EnumField(f, self) for f in fields]
 
-    def build(self, parent: Node) -> 'EhEnum':
-        super().build(parent)
-        self.sym = self.sym.build(self)
+    def build(self) -> 'EhEnum':
+        super().build()
+        self.sym = self.sym.build()
         if self.fields is not None:
-            self.fields = [f.build(self) for f in self.fields]
+            self.fields = [f.build() for f in self.fields]
         return self
 
     @property
@@ -2156,7 +2301,7 @@ class EhEnum(Type, Scope):
         return '{}{}'.format(self.parent.mangled_scope, self.mangled)
 
     def from_any(self) -> Symbol:
-        return Reference(CompoundIdentifier([Identifier(0, self.sym.name)])).build(self)
+        return self.make(Reference(CompoundIdentifier([Identifier(0, self.sym.name)])))
 
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
         res = DeclarationLookup(sym)
@@ -2187,9 +2332,10 @@ class EnumField(Declaration):
     def __init__(self, sym: Identifier, parent: EhEnum) -> None:
         super().__init__(sym.pos, CompoundIdentifier([Identifier(0, parent.name)]), sym,
                          Qualifier.NONE)
+        self.parent = parent
 
-    def build(self, parent: Node) -> 'EnumField':
-        super().build(parent)
+    def build(self) -> 'EnumField':
+        super().build()
         return self
 
     def _make_type(self) -> None:
@@ -2210,16 +2356,17 @@ class Namespace(DeclarationBase, UnorderedScope):
         super().__init__(pos)
         super(UnorderedScope, self).__init__(pos)
         self.sym: Identifier = sym
-        self.contents: List[Node] = []
+        self.sym.parent = self
+        self._contents: List[Node] = []
 
-    def build(self, parent: Node) -> 'Namespace':
-        super().build(parent)
-        self.contents = [stmt.build(self) for stmt in self.contents]
+    def build(self) -> 'Namespace':
+        super().build()
+        self._contents = [stmt.build() for stmt in self._contents]
         return self
 
     @property
     def scope_contents(self) -> List[Node]:
-        return self.contents
+        return self._contents
 
     def find_declaration(self, sym: str) -> DeclarationLookup:
         res: DeclarationLookup = DeclarationLookup(sym)
@@ -2229,7 +2376,7 @@ class Namespace(DeclarationBase, UnorderedScope):
         return res
 
     def get_inner_declaration(self, sym: str) -> DeclarationLookup:
-        return DeclarationLookup(sym, self.contents)
+        return DeclarationLookup(sym, self._contents)
 
     @property
     def name(self) -> str:
@@ -2243,11 +2390,23 @@ class Namespace(DeclarationBase, UnorderedScope):
     def mangled_scope(self) -> str:
         return '{}N{}'.format(self.parent.mangled_scope, self.sym.mangled)
 
+    @property
+    def contents(self) -> List[Node]:
+        return self._contents
+
+    @contents.setter
+    def contents(self, contents: List[Node]) -> None:
+        self._contents = contents
+        for node in self._contents:
+            node.parent = self
+
 
 class AST(UnorderedScope):
     def __init__(self, nodes: List[Node]) -> None:
         super().__init__(0)
         self.nodes: List[Node] = nodes
+        for node in self.nodes:
+            node.parent = self
         self.failures: List[Failure] = []
         self.parser: Optional[ParserPython] = None
         self.gen_var_count: int = 0
@@ -2261,14 +2420,14 @@ class AST(UnorderedScope):
     def __len__(self) -> int:
         return len(self.nodes)
 
-    def build(self, parent: Node) -> 'Node':
+    def build(self) -> Node:
         raise Exception('AST.build may not be called')
 
     def build_ast(self, args: OptionsStruct) -> None:
         global imported
         global included
         imported = included = []
-        super().build(Node(0))
+        super().build()
         self.declarations: List[DeclarationBase] = [
             FunctionType(CompoundIdentifier([Identifier(0, '@any')]), []),
             BuiltinType('@int'), BuiltinType('@int8'), BuiltinType('@int16'), BuiltinType('@int32'),
@@ -2278,13 +2437,13 @@ class AST(UnorderedScope):
             BuiltinType('@void'), BuiltinType('@bool'), BuiltinType('@char'), BuiltinType('@size'),
             BuiltinType('@str'), BuiltinType('@any'),
         ]
-        self.declarations = [cast(DeclarationBase, decl.build(self)) for decl in self.declarations]
+        self.declarations = [self.make(decl) for decl in self.declarations]
         self._import_paths = [
             path.dirname(args.source),
             getcwd(),
             path.dirname(args.output_import_file)]
 
-        self.nodes = [n.build(self) for n in self.nodes]
+        self.nodes = [n.build() for n in self.nodes]
         if len(self.failures) != 0:
             raise ParseError(self.failures, self.parser)
 
@@ -2303,7 +2462,7 @@ class AST(UnorderedScope):
             if len(found) > 0:
                 for f in found:
                     if isinstance(f, Type):
-                        res.append(f.dup().build(self))
+                        res.append(self.make(f.dup()))
                     else:
                         res.append(f)
             else:
