@@ -1,6 +1,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+struct _EC10test_class;
+void _EF9use_classRC10test_class(struct _EC10test_class* cls);
+
 struct _EC10test_class
 {
     int32_t field1;

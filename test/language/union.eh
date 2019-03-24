@@ -1,3 +1,5 @@
+void use_union(ref test_union u)
+
 union test_union {
   int field1
   str field2

@@ -1,3 +1,14 @@
+├─ FunctionDeclaration
+│  ├─ Identifier: use_class
+│  └─ FunctionType
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @void
+│     └─ Arguments:
+│        └─ VariableDeclaration
+│           ├─ Reference
+│           │  └─ CompoundIdentifier
+│           │     └─ Identifier: test_class
+│           └─ Identifier: cls
 ├─ Class
 │  ├─ Identifier: test_class
 │  ├─ Properties

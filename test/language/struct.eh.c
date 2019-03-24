@@ -1,6 +1,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+struct _ES11test_struct;
+void _EF10use_structRS11test_struct(struct _ES11test_struct* s);
+
 struct _ES11test_struct
 {
     int32_t field1;

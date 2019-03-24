@@ -1,6 +1,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+union _EU10test_union;
+void _EF9use_unionRU10test_union(union _EU10test_union* u);
+
 union _EU10test_union
 {
     int32_t field1;

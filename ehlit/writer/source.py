@@ -27,11 +27,11 @@ from ehlit.parser.ast import (
     Cast, Char, ClassMethod, ClassProperty, ClassType, CompoundIdentifier, Condition,
     ContainerStructure, ControlStructure, Container, DecimalNumber, Declaration, DeclarationBase,
     DoWhileLoop, EhClass, EhEnum, EhUnion, Expression, ForDoLoop, FunctionCall, FunctionDeclaration,
-    FunctionDefinition, FunctionType, Identifier, Import, Include, InitializationList, Namespace,
-    Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
-    ReferenceType, Return, Sizeof, Statement, String, Struct, StructType, SuffixOperatorValue,
-    SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, Type, UnionType,
-    VariableAssignment, VariableDeclaration, Value
+    FunctionDeclarationBase, FunctionDefinition, FunctionType, Identifier, Import, Include,
+    InitializationList, Namespace, Node, NullValue, Number, Operator, PrefixOperatorValue,
+    ReferenceToType, ReferenceToValue, ReferenceType, Return, Scope, Sizeof, Statement, String,
+    Struct, StructType, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol,
+    TemplatedIdentifier, Type, UnionType, VariableAssignment, VariableDeclaration, Value
 )
 
 
@@ -97,7 +97,7 @@ class SourceWriter:
         decl: Optional[DeclarationBase] = node.decl
         if isinstance(decl, Alias):
             decl = decl.canonical
-        if isinstance(decl, FunctionDeclaration) and not isinstance(node, FunctionCall):
+        if isinstance(decl, FunctionDeclarationBase) and not isinstance(node, FunctionCall):
             parent: Node = node.parent
             while (type(parent) is ReferenceToValue or type(parent) is CompoundIdentifier):
                 parent = parent.parent
@@ -247,7 +247,7 @@ class SourceWriter:
                 self.write(Array(variadic_type, None))
                 self.file.write(' _EB5vargs')
 
-    def writeFunctionPrototype(self, proto: FunctionDeclaration) -> None:
+    def writeFunctionPrototype(self, proto: FunctionDeclarationBase) -> None:
         assert isinstance(proto.typ, FunctionType)
         self.write_type_prefix(proto.typ.ret)
         self.write(proto.typ.ret)
@@ -261,26 +261,46 @@ class SourceWriter:
                                          proto.typ.variadic_type)
         self.file.write(")")
 
-    def writeFunctionDeclaration(self, fun: FunctionDeclaration) -> None:
+    def write_predeclarations(self, node: Scope) -> None:
+        if len(node.predeclarations) != 0:
+            self.file.write('\n')
+        for decl in node.predeclarations:
+            # It is possible that we get the definition of the function, but we only want to write
+            # its prototype. For all other declaration types, we can write it as is.
+            if isinstance(decl, FunctionDefinition):
+                self.writeFunctionDeclarationBase(decl)
+            elif isinstance(decl, (ContainerStructure, EhClass, EhEnum)):
+                self.write_indent()
+                prefix_mapping: Dict[typing.Type[Type], str] = {
+                    Struct: 'struct',
+                    EhClass: 'struct',
+                    EhUnion: 'union',
+                    EhEnum: 'enum',
+                }
+                prefix = prefix_mapping.get(type(decl))
+                if prefix is not None:
+                    self.file.write(prefix + ' ')
+                self.write(decl.sym)
+                self.file.write(';\n')
+            else:
+                self.write(decl)
+
+    def writeFunctionDeclarationBase(self, fun: FunctionDeclarationBase) -> None:
         self.write_indent()
         self.writeFunctionPrototype(fun)
         self.file.write(';\n')
 
+    def writeFunctionDeclaration(self, fun: FunctionDeclaration) -> None:
+        self.write_predeclarations(fun)
+        self.writeFunctionDeclarationBase(fun)
+
     def writeFunctionDefinition(self, fun: FunctionDefinition) -> None:
+        self.write_predeclarations(fun)
+
         if self.in_import > 0 and not fun.qualifiers.is_inline:
             if not fun.qualifiers.is_private:
-                self.writeFunctionDeclaration(fun)
+                self.writeFunctionDeclarationBase(fun)
             return
-
-        if len(fun.predeclarations) != 0:
-            self.file.write('\n')
-        for decl in fun.predeclarations:
-            # It is possible that we get the definition of the function, but we only want to write
-            # its prototype. For all other declaration types, we can write it as is.
-            if isinstance(decl, FunctionDefinition):
-                self.writeFunctionDeclaration(decl)
-            else:
-                self.write(decl)
 
         self.write_indent()
         self.file.write("\n")

@@ -1179,7 +1179,7 @@ class VariableDeclaration(Declaration):
     @property
     def _is_mangled(self) -> bool:
         return not (self.declaration_type == DeclarationType.C or
-                    self.is_child_of(FunctionDeclaration) or self.is_child_of(Struct) or
+                    self.is_child_of(FunctionDeclarationBase) or self.is_child_of(Struct) or
                     self.is_child_of(EhUnion) or self.is_child_of(EhClass))
 
     @property
@@ -1193,10 +1193,10 @@ class VariableDeclaration(Declaration):
             self._assign.parent = self
 
 
-class FunctionDeclaration(Declaration):
+class FunctionDeclarationBase(Declaration):
     def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
                  sym: 'Identifier') -> None:
-        super().__init__(0, typ, sym, qualifiers)
+        super().__init__(pos, typ, sym, qualifiers)
         self.this_cls: Optional[EhClass] = None
 
     @property
@@ -1227,7 +1227,14 @@ class FunctionDeclaration(Declaration):
         return name
 
 
-class FunctionDefinition(FunctionDeclaration, FlowScope):
+class FunctionDeclaration(FunctionDeclarationBase, Scope):
+    def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
+                 sym: 'Identifier') -> None:
+        super().__init__(pos, qualifiers, typ, sym)
+        Scope.__init__(self, pos)
+
+
+class FunctionDefinition(FunctionDeclarationBase, FlowScope):
     def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
                  sym: 'Identifier', body_str: UnparsedContents) -> None:
         super().__init__(pos, qualifiers, typ, sym)

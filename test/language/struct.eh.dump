@@ -1,3 +1,14 @@
+├─ FunctionDeclaration
+│  ├─ Identifier: use_struct
+│  └─ FunctionType
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @void
+│     └─ Arguments:
+│        └─ VariableDeclaration
+│           ├─ Reference
+│           │  └─ CompoundIdentifier
+│           │     └─ Identifier: test_struct
+│           └─ Identifier: s
 ├─ Struct
 │  ├─ Identifier: test_struct
 │  └─ Fields

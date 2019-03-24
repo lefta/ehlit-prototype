@@ -1,3 +1,5 @@
+void use_class(ref test_class cls)
+
 class test_class {
   int field1
   str field2

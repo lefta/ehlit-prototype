@@ -1,3 +1,14 @@
+├─ FunctionDeclaration
+│  ├─ Identifier: use_union
+│  └─ FunctionType
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @void
+│     └─ Arguments:
+│        └─ VariableDeclaration
+│           ├─ Reference
+│           │  └─ CompoundIdentifier
+│           │     └─ Identifier: test_union
+│           └─ Identifier: u
 ├─ Union
 │  ├─ Identifier: test_union
 │  └─ Fields

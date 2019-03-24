@@ -24,9 +24,9 @@ from typing import List, TextIO
 from ehlit.parser.ast import (
     Alias, Array, Assignment, AST, BoolValue, Cast, ClassMethod, ClassProperty, CompoundIdentifier,
     ContainerStructure, Declaration, DecimalNumber, EhClass, EhEnum, EhUnion, Expression,
-    FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Import, Include, Namespace,
-    Node, Number, Operator, ReferenceToType, Return, Statement, Struct, TemplatedIdentifier,
-    VariableDeclaration
+    FunctionDeclaration, FunctionDeclarationBase, FunctionDefinition, FunctionType, Identifier,
+    Import, Include, Namespace, Node, Number, Operator, ReferenceToType, Return, Statement, Struct,
+    TemplatedIdentifier, VariableDeclaration
 )
 
 
@@ -76,7 +76,7 @@ class ImportWriter:
         self.write_function_prototype(node)
         self.file.write('\n')
 
-    def write_function_prototype(self, node: FunctionDeclaration) -> None:
+    def write_function_prototype(self, node: FunctionDeclarationBase) -> None:
         assert isinstance(node.typ, FunctionType)
         self.write(node.typ.ret)
         self.file.write(' ')

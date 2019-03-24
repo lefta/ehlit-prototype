@@ -1,3 +1,5 @@
+void use_struct(ref test_struct s)
+
 struct test_struct {
   int field1
   str field2
