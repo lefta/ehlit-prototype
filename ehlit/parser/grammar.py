@@ -451,11 +451,11 @@ def enum() -> GrammarType:
 
 
 def class_method() -> GrammarType:
-    return function_definition
+    return ZeroOrMore(['priv', 'inline', 'cdecl']), function_prototype, control_structure_body_stub
 
 
 def class_property() -> GrammarType:
-    return variable_declaration
+    return full_type, identifier
 
 
 def class_contents() -> GrammarType:

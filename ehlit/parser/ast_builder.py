@@ -538,10 +538,11 @@ class ASTBuilder(PTNodeVisitor):
             res.declaration_type = ast.DeclarationType.C
         return res
 
-    def visit_function_definition(self, node: ParseTreeNode,
+    def parse_function_definition(self,
                                   children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier],
                                                   ast.UnparsedContents]
-                                  ) -> ast.FunctionDefinition:
+                                  ) -> Tuple[ast.Qualifier, ast.TemplatedIdentifier, ast.Identifier,
+                                             ast.UnparsedContents, bool]:
         qualifiers: ast.Qualifier = ast.Qualifier.NONE
         cdecl: bool = False
         i: int = 0
@@ -557,7 +558,14 @@ class ASTBuilder(PTNodeVisitor):
         assert isinstance(body, ast.UnparsedContents)
         decl = children[i]
         assert isinstance(decl, tuple)
-        res = ast.FunctionDefinition(node.position, qualifiers, decl[0], decl[1], body)
+        return qualifiers, decl[0], decl[1], body, cdecl
+
+    def visit_function_definition(self, node: ParseTreeNode,
+                                  children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier],
+                                                  ast.UnparsedContents]
+                                  ) -> ast.FunctionDefinition:
+        qualifiers, typ, sym, body, cdecl = self.parse_function_definition(children)
+        res = ast.FunctionDefinition(node.position, qualifiers, typ, sym, body)
         if cdecl:
             res.declaration_type = ast.DeclarationType.C
         return res
@@ -630,11 +638,15 @@ class ASTBuilder(PTNodeVisitor):
     def visit_class_method(self, node: ParseTreeNode,
                            children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier],
                                            ast.UnparsedContents]) -> ast.ClassMethod:
-        return ast.ClassMethod(self.visit_function_definition(node, children))
+        qualifiers, typ, sym, body, cdecl = self.parse_function_definition(children)
+        res = ast.ClassMethod(node.position, qualifiers, typ, sym, body)
+        if cdecl:
+            res.declaration_type = ast.DeclarationType.C
+        return res
 
     def visit_class_property(self, node: ParseTreeNode, children: Tuple[ast.Symbol, ast.Identifier]
                              ) -> ast.ClassProperty:
-        return ast.ClassProperty(self.visit_variable_declaration(node, children))
+        return ast.ClassProperty(children[0], children[1], None)
 
     def visit_eh_class(self, node: ParseTreeNode,
                        children: Tuple[StrMatch, ast.Identifier,

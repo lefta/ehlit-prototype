@@ -23,7 +23,7 @@ from abc import abstractmethod
 from arpeggio import ParserPython
 from enum import IntEnum, IntFlag
 from os import path, getcwd, listdir
-from typing import Any, Iterator, List, Optional, TypeVar, Union, cast
+from typing import Iterator, List, Optional, TypeVar, Union, cast
 import typing
 from ehlit.parser.error import ParseError, Failure
 from ehlit.options import OptionsStruct
@@ -2126,11 +2126,11 @@ class EhUnion(ContainerStructure):
 
 
 class ClassMethod(FunctionDefinition):
-    def __init__(self, obj: FunctionDefinition) -> None:
-        self.obj: FunctionDefinition = obj
+    def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
+                 sym: 'Identifier', body_str: UnparsedContents) -> None:
+        super().__init__(pos, qualifiers, typ, sym, body_str)
 
     def build(self) -> 'ClassMethod':
-        self.obj.parent = self.parent
         assert isinstance(self.parent, EhClass)
         assert isinstance(self.typ, FunctionType)
         self.typ.args.insert(0, VariableDeclaration(
@@ -2139,13 +2139,8 @@ class ClassMethod(FunctionDefinition):
             None
         ))
         self.typ.args[0].parent = self
-        self.obj = self.obj.build()
-        if self.obj.sym is not None:
-            self.obj.sym._parent = self
+        super().build()
         return self
-
-    def __getattr__(self, attr: Any) -> Any:
-        return getattr(self.obj, attr)
 
     @property
     def mangled(self) -> str:
@@ -2164,16 +2159,13 @@ class ClassMethod(FunctionDefinition):
 
 
 class ClassProperty(VariableDeclaration):
-    def __init__(self, obj: VariableDeclaration) -> None:
-        self.obj: VariableDeclaration = obj
+    def __init__(self, typ: Symbol, sym: Optional['Identifier'], assign: Optional[Assignment] = None
+                 ) -> None:
+        super().__init__(typ, sym, assign)
 
     def build(self) -> 'ClassProperty':
-        self.obj.parent = self.parent
-        self.obj = self.obj.build()
+        super().build()
         return self
-
-    def __getattr__(self, attr: Any) -> Any:
-        return getattr(self.obj, attr)
 
 
 class EhClass(Type, UnorderedScope):
