@@ -20,7 +20,7 @@
 # SOFTWARE.
 
 from arpeggio import ParseTreeNode, PTNodeVisitor, RegExMatch, StrMatch
-from typing import List, Optional, Tuple, Union
+from typing import cast, List, Optional, Tuple, Union
 
 from ehlit.parser import ast
 
@@ -103,8 +103,7 @@ class ASTBuilder(PTNodeVisitor):
         return ast.BoolValue(children[0] == 'true')
 
     def visit_referenced_value(self, node: ParseTreeNode,
-                               children: Union[Tuple[StrMatch, ast.Symbol],
-                                               Tuple[StrMatch, ast.Symbol, ArrayBuilder]]
+                               children: Tuple[StrMatch, ast.Symbol, ArrayBuilder]
                                ) -> ast.Reference:
         if len(children) == 2:
             return ast.Reference(children[1])
@@ -220,12 +219,14 @@ class ASTBuilder(PTNodeVisitor):
         return ast.Assignment(children[0])
 
     def visit_operation_assignment(self, node: ParseTreeNode,
-                                   children: Union[Tuple[StrMatch, ast.Assignment],
+                                   children: Union[Tuple[ast.Operator, ast.Assignment],
                                                    Tuple[ast.Assignment]]) -> ast.Assignment:
         if len(children) == 1:
+            assert isinstance(children[0], ast.Assignment)
             return children[0]
-        children[1].operator = children[0]
-        return children[1]
+        typed_children = cast(Tuple[ast.Operator, ast.Assignment], children)
+        typed_children[1].operator = typed_children[0]
+        return typed_children[1]
 
     # Types
     #######
@@ -258,21 +259,22 @@ class ASTBuilder(PTNodeVisitor):
         return res
 
     def visit_reference(self, node: ParseTreeNode,
-                        children: Union[Tuple[StrMatch, ast.Type],
-                                        Tuple[StrMatch, ArrayBuilder, ast.Type]]
+                        children: Union[Tuple[StrMatch, ast.Symbol],
+                                        Tuple[StrMatch, ArrayBuilder, ast.Symbol]]
                         ) -> Union[ast.Array, ast.Reference]:
         if len(children) == 2:
+            assert isinstance(children[1], ast.Symbol)
             return ast.Reference(children[1])
-        children[1].set_child(ast.Reference(children[2]))
-        return children[1].to_array()
+        typed_children = cast(Tuple[StrMatch, ArrayBuilder, ast.Symbol], children)
+        typed_children[1].set_child(ast.Reference(typed_children[2]))
+        return typed_children[1].to_array()
 
     def visit_function_type_args(self, node: ParseTreeNode, children: Tuple[ast.Symbol, ...]
                                  ) -> Tuple[ast.Symbol, ...]:
         return children
 
     def visit_function_type(self, node: ParseTreeNode,
-                            children: Union[Tuple[StrMatch, ast.Symbol],
-                                            Tuple[StrMatch, ast.Symbol, Tuple[ast.Symbol, ...]]]
+                            children: Tuple[StrMatch, ast.Symbol, Tuple[ast.Symbol, ...]]
                             ) -> ast.TemplatedIdentifier:
         args: List[ast.VariableDeclaration] = []
         variadic: bool = False
@@ -334,19 +336,23 @@ class ASTBuilder(PTNodeVisitor):
                                          children: Union[Tuple[ast.VariableDeclaration],
                                                          Tuple[StrMatch, ast.VariableDeclaration]]
                                          ) -> ast.VariableDeclaration:
-        if len(children) == 2:
-            children[1].static = True
-            return children[1]
-        return children[0]
+        if len(children) == 1:
+            assert isinstance(children[0], ast.VariableDeclaration)
+            return children[0]
+        typed_children = cast(Tuple[StrMatch, ast.VariableDeclaration], children)
+        typed_children[1].static = True
+        return typed_children[1]
 
     def visit_variable_assignment(self, node: ParseTreeNode,
                                   children: Union[Tuple[ast.Symbol, ArrayBuilder, ast.Assignment],
                                                   Tuple[ast.Symbol, ast.Assignment]]
                                   ) -> ast.VariableAssignment:
         if len(children) == 2:
+            assert isinstance(children[1], ast.Assignment)
             return ast.VariableAssignment(children[0], children[1])
-        children[1].set_child(children[0])
-        return ast.VariableAssignment(children[1].to_array_access(), children[2])
+        typed_children = cast(Tuple[ast.Symbol, ArrayBuilder, ast.Assignment], children)
+        typed_children[1].set_child(typed_children[0])
+        return ast.VariableAssignment(typed_children[1].to_array_access(), typed_children[2])
 
     def visit_return_instruction(self, node: ParseTreeNode,
                                  children: Tuple[StrMatch, ast.Expression]) -> ast.Return:
@@ -373,12 +379,13 @@ class ASTBuilder(PTNodeVisitor):
             else:
                 raise Exception('unimplemented variable modifier: {}'.format(children[i]))
             i += 1
-        assert isinstance(children[i], ast.VariableDeclaration)
+        var_decl = children[i]
+        assert isinstance(var_decl, ast.VariableDeclaration)
         if private:
-            children[i].private = True
+            var_decl.private = True
         if cdecl:
-            children[i].declaration_type = ast.DeclarationType.C
-        return ast.Statement(children[i])
+            var_decl.declaration_type = ast.DeclarationType.C
+        return ast.Statement(var_decl)
 
     # Control Structures
     ####################
