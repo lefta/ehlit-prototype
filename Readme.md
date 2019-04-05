@@ -1,5 +1,11 @@
 # Ehlit language
 
+![Python version](https://img.shields.io/badge/python-3.6%2B-3.6%2B.svg?color=informational)
+![License](https://img.shields.io/badge/license-MIT-MIT.svg?color=informational)
+[![Build Status](https://img.shields.io/travis/lefta/ehlit-prototype/master.svg?label=travis%20build&logo=travis)](https://travis-ci.org/lefta/ehlit-prototype)
+[![Build Status](https://img.shields.io/appveyor/ci/lefta/ehlit-prototype/master.svg?label=appveyor%20build&logo=appveyor)](https://ci.appveyor.com/project/lefta/ehlit-prototype/branch/master)
+[![Coverage Status](https://coveralls.io/repos/github/lefta/ehlit-prototype/badge.svg?branch=master)](https://coveralls.io/github/lefta/ehlit-prototype?branch=master)
+
 This project is in a very early stage and is not safe for production use. The compiler and the
 language itself *will* change. You have been warned !
 
@@ -16,14 +22,6 @@ are backed by anyone. This means that you may not expect any ETA for any feature
 interrested in the Ehlit language, please be patient (really patient). If you are **very**
 interrested, I am open to any help you are able to provide. See the `how can I help ?` section
 below. Unfortunately, I do not have as much time that I want to work on this project.
-
-## Build status
-
-| Build bot | Status |
-|-----------|--------|
-| Travis CI | [![Build Status](https://travis-ci.org/lefta/ehlit-prototype.svg?branch=master)](https://travis-ci.org/lefta/ehlit-prototype) |
-| AppVeyor  | [![Build status](https://ci.appveyor.com/api/projects/status/l9nrggik29m1pjri/branch/master?svg=true)](https://ci.appveyor.com/project/lefta/ehlit-prototype/branch/master) |
-| Coveralls | [![Coverage Status](https://coveralls.io/repos/github/lefta/ehlit-prototype/badge.svg?branch=master)](https://coveralls.io/github/lefta/ehlit-prototype?branch=master) |
 
 ## Introduction
 
