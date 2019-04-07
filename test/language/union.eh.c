@@ -2,7 +2,7 @@
 #include <stdint.h>
 
 union _EU10test_union;
-void _EF9use_unionRU10test_union(union _EU10test_union* u);
+void _EF9use_unionrU10test_union(union _EU10test_union* u);
 
 union _EU10test_union
 {
@@ -13,11 +13,11 @@ union _EU10test_union
 
 union _EU12forward_decl;
 
-void _EF3funRB3int(int32_t* i)
+void _EF3funrB3int(int32_t* i)
 {
 }
 
-union _EU10test_union* _EF9union_funRU10test_union(union _EU10test_union* s)
+union _EU10test_union* _EF9union_funrU10test_union(union _EU10test_union* s)
 {
     return (s);
 }
@@ -33,16 +33,16 @@ int32_t main(void)
     t.field1 = 0;
     t.field2 = "123456";
     t.field3 = NULL;
-    _EF3funRB3int(&t.field1);
+    _EF3funrB3int(&t.field1);
     union _EU10test_union* rt = &t;
     rt->field1 = 0;
     rt->field2 = "123456";
     rt->field3 = NULL;
-    _EF3funRB3int(&rt->field1);
-    rt = _EF9union_funRU10test_union(&t);
+    _EF3funrB3int(&rt->field1);
+    rt = _EF9union_funrU10test_union(&t);
     size_t ss = sizeof(union _EU10test_union);
     ss = sizeof(union _EU10test_union*);
-    union _EU10test_union*(* psf)(union _EU10test_union*) = &_EF9union_funRU10test_union;
+    union _EU10test_union*(* psf)(union _EU10test_union*) = &_EF9union_funrU10test_union;
     rt = (union _EU10test_union*)_EF7any_funB3any(rt);
     t = *(union _EU10test_union*)_EF7any_funB3any(&t);
     rt = ((union _EU10test_union*)0);

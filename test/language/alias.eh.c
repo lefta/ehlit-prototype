@@ -4,7 +4,7 @@ typedef int32_t _ET2nb;
 typedef void _ET7nothing;
 typedef void(* _ET3pfn)(_ET2nb);
 
-_ET7nothing _EF3incRB3int(int32_t* number)
+_ET7nothing _EF3incrB3int(int32_t* number)
 {
     if (!number)
     {
@@ -21,7 +21,7 @@ _ET2nb main(void)
 {
     _ET2nb i = 42;
     _ET3pfn pdn = &_EF10do_nothingT2nb;
-    _EF3incRB3int(&i);
+    _EF3incrB3int(&i);
     _EF10do_nothingT2nb(i);
     pdn(i);
     return (i);

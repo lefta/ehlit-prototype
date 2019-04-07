@@ -14,7 +14,7 @@ int32_t* _EF8ref_call(void)
     return (NULL);
 }
 
-void _EF3incRB3int(int32_t* nb)
+void _EF3incrB3int(int32_t* nb)
 {
     if (!nb)
     {
@@ -99,23 +99,23 @@ void _EF10vargs_typevB3int(int32_t _EB9vargs_len, int32_t* _EB5vargs)
 {
 }
 
-void _EF18vargs_complex_typevRB3int(int32_t _EB9vargs_len, int32_t** _EB5vargs)
+void _EF18vargs_complex_typevrB3int(int32_t _EB9vargs_len, int32_t** _EB5vargs)
 {
 }
 
-void _EF20args1_vargs_implicitRB3intvB3any(int32_t* i, int32_t _EB9vargs_len, void** _EB5vargs)
+void _EF20args1_vargs_implicitrB3intvB3any(int32_t* i, int32_t _EB9vargs_len, void** _EB5vargs)
 {
 }
 
-void _EF20args1_vargs_explicitRB3intvB3int(int32_t* i, int32_t _EB9vargs_len, int32_t* _EB5vargs)
+void _EF20args1_vargs_explicitrB3intvB3int(int32_t* i, int32_t _EB9vargs_len, int32_t* _EB5vargs)
 {
 }
 
-void _EF20args3_vargs_implicitB3strB3intRB3intvB3any(char* s, int32_t i, int32_t* ri, int32_t _EB9vargs_len, void** _EB5vargs)
+void _EF20args3_vargs_implicitB3strB3intrB3intvB3any(char* s, int32_t i, int32_t* ri, int32_t _EB9vargs_len, void** _EB5vargs)
 {
 }
 
-void _EF20args3_vargs_explicitB3strB3intRB3intvB3int(char* s, int32_t i, int32_t* ri, int32_t _EB9vargs_len, int32_t* _EB5vargs)
+void _EF20args3_vargs_explicitB3strB3intrB3intvB3int(char* s, int32_t i, int32_t* ri, int32_t _EB9vargs_len, int32_t* _EB5vargs)
 {
 }
 
@@ -135,9 +135,9 @@ void _EF10call_vargs(void)
     int32_t __gen_fun_6[3] = { i, i, i };
     _EF10vargs_typevB3int(3, __gen_fun_6);
     int32_t* __gen_fun_7[2] = { &i, &i };
-    _EF18vargs_complex_typevRB3int(2, __gen_fun_7);
+    _EF18vargs_complex_typevrB3int(2, __gen_fun_7);
     int32_t __gen_fun_8[2] = { i, i };
-    _EF20args3_vargs_explicitB3strB3intRB3intvB3int("Hello", i, &i, 2, __gen_fun_8);
+    _EF20args3_vargs_explicitB3strB3intrB3intvB3int("Hello", i, &i, 2, __gen_fun_8);
 }
 void cdecl_proto(void);
 

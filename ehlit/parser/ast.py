@@ -142,11 +142,11 @@ class Qualifier(IntFlag):
     def mangled(self) -> str:
         res = ''
         if self.is_const:
-            res += 'C'
+            res += 'c'
         if self.is_volatile:
-            res += 'W'
+            res += 'w'
         if self.is_restricted:
-            res += 'X'
+            res += 'x'
         return res
 
 
@@ -899,7 +899,7 @@ class Reference(SymbolContainer):
 
     @property
     def mangled(self) -> str:
-        return '{}R{}'.format(self.qualifiers.mangled, self.child.mangled)
+        return '{}r{}'.format(self.qualifiers.mangled, self.child.mangled)
 
 
 class ReferenceToValue(Reference):
@@ -998,7 +998,7 @@ class ReferenceType(Type, Container):
     def mangled(self) -> str:
         if self.declaration_type == DeclarationType.C:
             return self.child.mangled
-        return 'R{}'.format(self.child.mangled)
+        return 'r{}'.format(self.child.mangled)
 
 
 class FunctionType(Type):

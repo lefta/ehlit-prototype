@@ -14,7 +14,7 @@ void _EF3funN8TestEnum(enum _EN8TestEnum e)
 {
 }
 
-enum _EN8TestEnum* _EF8enum_funRN8TestEnum(enum _EN8TestEnum* s)
+enum _EN8TestEnum* _EF8enum_funrN8TestEnum(enum _EN8TestEnum* s)
 {
     return (s);
 }
@@ -31,10 +31,10 @@ int32_t main(void)
     enum _EN8TestEnum* re = &e;
     *re = _EN8TestEnum4val2;
     _EF3funN8TestEnum(*re);
-    re = _EF8enum_funRN8TestEnum(&e);
+    re = _EF8enum_funrN8TestEnum(&e);
     size_t ss = sizeof(enum _EN8TestEnum);
     ss = sizeof(enum _EN8TestEnum*);
-    enum _EN8TestEnum*(* psf)(enum _EN8TestEnum*) = &_EF8enum_funRN8TestEnum;
+    enum _EN8TestEnum*(* psf)(enum _EN8TestEnum*) = &_EF8enum_funrN8TestEnum;
     re = (enum _EN8TestEnum*)_EF7any_funB3any(re);
     e = *(enum _EN8TestEnum*)_EF7any_funB3any(&e);
     re = ((enum _EN8TestEnum*)0);
