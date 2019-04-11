@@ -49,6 +49,7 @@ namespace Bar {
 }
 
 class A
+
 class B {
     int property
     str name

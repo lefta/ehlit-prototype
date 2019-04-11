@@ -285,7 +285,8 @@ class ImportWriter:
             for meth in node.methods:
                 self.write(meth)
             self.indent -= 1
-            self.file.write('}\n')
+            self.file.write('}')
+        self.file.write('\n')
 
     def writeEhEnum(self, node: EhEnum) -> None:
         self.file.write('\nenum ')
