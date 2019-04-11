@@ -381,12 +381,14 @@ def function_variadic_dots() -> GrammarType:
     return '...'
 
 
+def function_arguments() -> GrammarType:
+    return (Optional([Sequence(OneOrMore(variable_declaration_assignable, sep=','),
+                               Optional(',', Optional(full_type), function_variadic_dots)),
+                      Sequence(Optional(full_type), function_variadic_dots)]), trailing_comma)
+
+
 def function_prototype() -> GrammarType:
-    return (full_type, identifier, '(', Optional([
-        Sequence(OneOrMore(variable_declaration_assignable, sep=','),
-                 Optional(',', Optional(full_type), function_variadic_dots)),
-        Sequence(Optional(full_type), function_variadic_dots)
-    ]), trailing_comma, ')')
+    return full_type, identifier, '(', function_arguments, ')'
 
 
 def function_declaration() -> GrammarType:

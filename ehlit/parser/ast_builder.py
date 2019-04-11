@@ -508,28 +508,38 @@ class ASTBuilder(PTNodeVisitor):
     def visit_function_variadic_dots(self, node: ParseTreeNode, children: None) -> str:
         return '...'
 
-    def visit_function_prototype(self, node: ParseTreeNode,
-                                 children: Tuple[ast.Symbol, ast.Identifier,
-                                                 ast.VariableDeclaration]
-                                 ) -> Tuple[ast.TemplatedIdentifier, ast.Identifier]:
+    def visit_function_arguments(self, node: ParseTreeNode,
+                                 children: Tuple[ast.VariableDeclaration]
+                                 ) -> Tuple[List[ast.VariableDeclaration], Optional[ast.Symbol]]:
         args: List[ast.VariableDeclaration] = []
-        variadic: bool = False
-        variadic_type: Optional[ast.Symbol] = ast.CompoundIdentifier([ast.Identifier(0, '@any')])
-        i = 2
-        while i < len(children):
-            arg = children[i]
+        variadic_type: Optional[ast.Symbol] = None
+        for child in children[::2]:
+            arg = child
             if isinstance(arg, ast.VariableDeclaration):
                 args.append(arg)
             else:
-                if arg != '...':
+                if arg == '...':
+                    variadic_type = ast.CompoundIdentifier([ast.Identifier(0, '@any')])
+                else:
                     assert isinstance(arg, ast.Symbol)
                     variadic_type = arg
-                variadic = True
-                break
-            i += 2
+        return args, variadic_type
+
+    def visit_function_prototype(self, node: ParseTreeNode,
+                                 children: Tuple[ast.Symbol, ast.Identifier,
+                                                 Tuple[List[ast.VariableDeclaration],
+                                                       Optional[ast.Symbol]]]
+                                 ) -> Tuple[ast.TemplatedIdentifier, ast.Identifier]:
+        args: List[ast.VariableDeclaration]
+        variadic_type: Optional[ast.Symbol]
+        if len(children) == 3:
+            args, variadic_type = children[2]
+        else:
+            args = []
+            variadic_type = None
         return ast.TemplatedIdentifier(
             '@func',
-            [ast.FunctionType(children[0], args, variadic, variadic_type)]
+            [ast.FunctionType(children[0], args, variadic_type is not None, variadic_type)]
         ), children[1]
 
     def visit_function_declaration(self, node: ParseTreeNode,
