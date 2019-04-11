@@ -1234,10 +1234,10 @@ class FunctionDeclaration(FunctionDeclarationBase, Scope):
 
 class FunctionDefinition(FunctionDeclarationBase, FlowScope):
     def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
-                 sym: 'Identifier', body_str: UnparsedContents) -> None:
+                 sym: 'Identifier', body_str: Optional[UnparsedContents]) -> None:
         super().__init__(pos, qualifiers, typ, sym)
         FlowScope.__init__(self, pos, [])
-        self.body_str: UnparsedContents = body_str
+        self.body_str: Optional[UnparsedContents] = body_str
         self.gen_var_count: int = 0
 
     def build(self) -> 'FunctionDefinition':
@@ -1247,7 +1247,10 @@ class FunctionDefinition(FunctionDeclarationBase, FlowScope):
         try:
             assert isinstance(self.typ, FunctionType)
             typ: Optional[DeclarationBase] = self.typ.ret.canonical
-            self.body = function.parse(self.body_str.contents, not typ == BuiltinType('@void'))
+            if self.body_str is None:
+                self.body = []
+            else:
+                self.body = function.parse(self.body_str.contents, not typ == BuiltinType('@void'))
             for stmt in self.body:
                 stmt.parent = self
             super().build()
@@ -1257,7 +1260,7 @@ class FunctionDefinition(FunctionDeclarationBase, FlowScope):
         return self
 
     def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
-        super().fail(severity, pos + self.body_str.pos, msg)
+        super().fail(severity, pos + (0 if self.body_str is None else self.body_str.pos), msg)
 
     def find_declaration(self, sym: str) -> DeclarationLookup:
         if sym != 'vargs':
@@ -2125,7 +2128,7 @@ class EhUnion(ContainerStructure):
 
 class ClassMethod(FunctionDefinition):
     def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
-                 sym: 'Identifier', body_str: UnparsedContents) -> None:
+                 sym: 'Identifier', body_str: Optional[UnparsedContents]) -> None:
         super().__init__(pos, qualifiers, typ, sym, body_str)
 
     def build(self) -> 'ClassMethod':
@@ -2166,6 +2169,23 @@ class ClassProperty(VariableDeclaration):
         return self
 
 
+class Ctor(ClassMethod):
+    def __init__(self, pos: int, qualifiers: Qualifier, typ: TemplatedIdentifier,
+                 body_str: Optional[UnparsedContents]) -> None:
+        super().__init__(pos, qualifiers, typ, Identifier(pos, '@ctor'), body_str)
+
+    @property
+    def mangled(self) -> str:
+        assert isinstance(self.typ, FunctionType)
+        name: str = '{}I'.format(self.qualifiers.mangled)
+        for a in self.typ.args[1:]:
+            name = '{}{}'.format(name, a.typ_src.mangled)
+        if self.typ.is_variadic:
+            assert self.typ.variadic_type is not None
+            name = '{}v{}'.format(name, self.typ.variadic_type.mangled)
+        return name
+
+
 class EhClass(Type, UnorderedScope):
     FieldList = List[Union[ClassMethod, ClassProperty]]
 
@@ -2180,6 +2200,7 @@ class EhClass(Type, UnorderedScope):
                 node.parent = self
         self._properties: List[ClassProperty] = []
         self._methods: List[ClassMethod] = []
+        self._ctors: List[Ctor] = []
 
     def build(self) -> 'EhClass':
         if self.built:
@@ -2192,6 +2213,8 @@ class EhClass(Type, UnorderedScope):
             for node in self.contents:
                 if isinstance(node, ClassProperty):
                     self._properties.append(node)
+                elif isinstance(node, Ctor):
+                    self._ctors.append(node)
                 else:
                     self._methods.append(node)
         return self
@@ -2233,6 +2256,10 @@ class EhClass(Type, UnorderedScope):
     @property
     def methods(self) -> List[ClassMethod]:
         return self._methods
+
+    @property
+    def ctors(self) -> List[Ctor]:
+        return self._ctors
 
 
 class ContainerStructureType(Type):

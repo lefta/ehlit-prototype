@@ -26,11 +26,11 @@ from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char,
     ClassMethod, ClassProperty, CompoundIdentifier, Condition, ControlStructure, DecimalNumber,
     Declaration, EhClass, EhEnum, EhUnion, EnumField, Expression, ForDoLoop, FunctionCall,
-    FunctionDeclaration, FunctionDefinition, FunctionType, Identifier, Include, Import,
-    InitializationList, Namespace, Node, NullValue, Number, Operator, PrefixOperatorValue,
-    ReferenceToType, ReferenceToValue, Return, Sizeof, Statement, String, Struct,
-    SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier,
-    VariableAssignment, VariableDeclaration
+    FunctionDeclaration, FunctionDeclarationBase, FunctionDefinition, FunctionType, Identifier,
+    Include, Import, InitializationList, Namespace, Node, NullValue, Number, Operator,
+    PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return, Sizeof, Statement, String,
+    Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol,
+    TemplatedIdentifier, VariableAssignment, VariableDeclaration
 )
 
 IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
@@ -260,7 +260,7 @@ class DumpWriter:
         if ret.expr is not None:
             self.print_node(ret.expr, False)
 
-    def dump_qualifiers(self, node: Union[Symbol, FunctionDeclaration]) -> None:
+    def dump_qualifiers(self, node: Union[Symbol, FunctionDeclarationBase]) -> None:
         qualifiers: List[str] = []
         if node.qualifiers.is_const:
             qualifiers.append('const')
@@ -441,6 +441,22 @@ class DumpWriter:
         self.dump_function_definition('ClassMethod', node)
 
     @indent
+    def dumpCtor(self, node: Union[Node, str]) -> None:
+        node = cast(ClassMethod, node)
+        self.dump('Constructor')
+        self.dump_qualifiers(node)
+        assert isinstance(node.typ, FunctionType)
+        if len(node.typ.args) != 0:
+            self.print_node_list('Arguments:', node.typ.args)
+        if node.typ.is_variadic:
+            self.print_str('Variadic:')
+            self.increment_prefix(False)
+            assert node.typ.variadic_type is not None
+            self.print_node(node.typ.variadic_type, False)
+            self.decrement_prefix()
+        self.print_node_list('Body', node.body, False)
+
+    @indent
     def dumpClassProperty(self, node: Union[Node, str]) -> None:
         node = cast(ClassProperty, node)
         self.dump_variable_declaration('ClassProperty', node)
@@ -454,7 +470,9 @@ class DumpWriter:
             self.print_str('Forward declaration', False)
         else:
             self.print_node_list('Properties', node.properties)
-            self.print_node_list('Methods', node.methods, False)
+            self.print_node_list('Methods', node.methods, len(node.ctors) != 0)
+            for ctor in node.ctors:
+                self.print_node(ctor, ctor != node.ctors[-1])
 
     @indent
     def dumpEhEnum(self, node: Union[Node, str]) -> None:

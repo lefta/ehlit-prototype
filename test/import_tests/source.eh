@@ -73,4 +73,5 @@ class B {
         property = 42
     }
     str name
+    ctor(int some_arg)
 }

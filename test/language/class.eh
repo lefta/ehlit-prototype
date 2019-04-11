@@ -5,6 +5,8 @@ class test_class {
   str field2
   ref int[] field3
 
+  ctor() {}
+
   void set_fields(int f1, str f2, ref int[] f3) {
     field1 = f1
     field2 = f2
@@ -59,3 +61,11 @@ int main() {
   return 0
 }
 
+class ctor_args {
+  int foo
+
+  ctor(int i, str s) {}
+}
+
+void ctor_cls_fun(ctor_args cls)
+void ref_ctor_cls_fun(ref ctor_args cls)

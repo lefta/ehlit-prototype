@@ -452,6 +452,11 @@ def enum() -> GrammarType:
     return 'enum', identifier, Optional('{', ZeroOrMore(identifier), '}')
 
 
+def constructor() -> GrammarType:
+    return (ZeroOrMore(['priv', 'inline']), 'ctor', '(', function_arguments, ')',
+            Optional(control_structure_body_stub))
+
+
 def class_method() -> GrammarType:
     return ZeroOrMore(['priv', 'inline', 'cdecl']), function_prototype, control_structure_body_stub
 
@@ -461,7 +466,7 @@ def class_property() -> GrammarType:
 
 
 def class_contents() -> GrammarType:
-    return [class_method, class_property]
+    return [constructor, class_method, class_property]
 
 
 def eh_class() -> GrammarType:

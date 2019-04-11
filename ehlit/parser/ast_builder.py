@@ -652,6 +652,45 @@ class ASTBuilder(PTNodeVisitor):
             return ast.EhEnum(node.position, children[1], None)
         return ast.EhEnum(node.position, children[1], list(children[2:]))
 
+    def visit_constructor(self, node: ParseTreeNode,
+                          children: Tuple[str, Tuple[List[ast.VariableDeclaration],
+                                                     Optional[ast.Symbol]],
+                                          ast.UnparsedContents]
+                          ) -> ast.Ctor:
+        qualifiers: ast.Qualifier = ast.Qualifier.NONE
+        i: int = 0
+        while isinstance(children[i], str):
+            if children[i] == 'inline':
+                qualifiers |= ast.Qualifier.INLINE
+            elif children[i] == 'priv':
+                qualifiers |= ast.Qualifier.PRIVATE
+            elif children[i] == 'ctor':
+                break
+            i += 1
+        i += 1
+        args: List[ast.VariableDeclaration]
+        variadic_type: Optional[ast.Symbol]
+        body = None
+        if len(children) < i or isinstance(children[i], ast.UnparsedContents):
+            args = []
+            variadic_type = None
+            if len(children) > i:
+                body = children[i]
+        else:
+            child_i = children[i]
+            assert(isinstance(child_i, tuple))
+            args, variadic_type = child_i
+            if len(children) > i + 1:
+                body = children[i + 1]
+        typ = ast.TemplatedIdentifier('@func', [ast.FunctionType(
+            ast.CompoundIdentifier([ast.Identifier(node.position, '@void')]),
+            args,
+            variadic_type is not None,
+            variadic_type
+        )])
+        assert(body is None or isinstance(body, ast.UnparsedContents))
+        return ast.Ctor(node.position, qualifiers, typ, body)
+
     def visit_class_method(self, node: ParseTreeNode,
                            children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier],
                                            ast.UnparsedContents]) -> ast.ClassMethod:

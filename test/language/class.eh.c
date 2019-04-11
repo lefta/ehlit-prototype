@@ -11,6 +11,10 @@ struct _EC10test_class
     int32_t** field3;
 };
 
+void _EC10test_classI(struct _EC10test_class* this)
+{
+}
+
 void _EC10test_classF10set_fieldsB3intB3strrAB3int(struct _EC10test_class* this, int32_t f1, char* f2, int32_t** f3)
 {
     this->field1 = f1;
@@ -73,3 +77,14 @@ int32_t main(void)
     rcls = ((struct _EC10test_class*)0);
     return (0);
 }
+
+struct _EC9ctor_args
+{
+    int32_t foo;
+};
+
+void _EC9ctor_argsIB3intB3str(struct _EC9ctor_args* this, int32_t i, char* s)
+{
+}
+void _EF12ctor_cls_funC9ctor_args(struct _EC9ctor_args cls);
+void _EF16ref_ctor_cls_funrC9ctor_args(struct _EC9ctor_args* cls);

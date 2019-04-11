@@ -63,12 +63,7 @@ class ImportWriter:
             self.file.write('inline ')
         self.write_function_prototype(node)
         if node.qualifiers.is_inline:
-            self.file.write(' {\n')
-            self.indent += 1
-            for stmt in node.body:
-                self.write(stmt)
-            self.file.write('}')
-            self.indent -= 1
+            self.write_function_body(node)
         self.file.write('\n')
 
     def writeFunctionDeclaration(self, node: FunctionDeclaration) -> None:
@@ -88,6 +83,14 @@ class ImportWriter:
         else:
             self.writeArgumentDefinitionList(node.typ.args)
         self.file.write(")")
+
+    def write_function_body(self, node: FunctionDefinition) -> None:
+        self.file.write(' {\n')
+        self.indent += 1
+        for stmt in node.body:
+            self.write(stmt)
+        self.file.write('}')
+        self.indent -= 1
 
     def writeDeclaration(self, node: Declaration) -> None:
         self.write(node.typ_src)
@@ -250,6 +253,20 @@ class ImportWriter:
     def writeClassProperty(self, node: ClassProperty) -> None:
         self.writeVariableDeclaration(node)
 
+    def writeCtor(self, node: ClassMethod) -> None:
+        self.write_indent()
+        if node.qualifiers.is_private:
+            return
+        if node.qualifiers.is_inline:
+            self.file.write('inline ')
+        self.file.write('ctor(')
+        assert isinstance(node.typ, FunctionType)
+        self.writeArgumentDefinitionList(node.typ.args[1:])
+        self.file.write(')')
+        if node.qualifiers.is_inline:
+            self.write_function_body(node)
+        self.file.write('\n')
+
     def writeEhClass(self, node: EhClass) -> None:
         self.file.write('\n')
         self.write_indent()
@@ -263,6 +280,8 @@ class ImportWriter:
                 self.write(prop)
                 self.file.write('\n')
             self.file.write('\n')
+            for ctor in node.ctors:
+                self.write(ctor)
             for meth in node.methods:
                 self.write(meth)
             self.indent -= 1

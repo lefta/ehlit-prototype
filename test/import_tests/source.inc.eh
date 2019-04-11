@@ -53,5 +53,6 @@ class B {
     int property
     str name
 
+    ctor(int some_arg)
     void method()
 }

@@ -658,6 +658,9 @@ class SourceWriter:
             self.file.write('static ')
         self.writeDeclaration(node)
 
+    def writeCtor(self, node: ClassMethod) -> None:
+        self.writeFunctionDefinition(node)
+
     def writeEhClass(self, node: EhClass) -> None:
         self.file.write('\nstruct ')
         self.write(node.sym)
@@ -671,6 +674,8 @@ class SourceWriter:
             self.indent -= 1
             self.file.write('}')
         self.file.write(';\n')
+        for ctor in node.ctors:
+            self.write(ctor)
         for method in node.methods:
             self.write(method)
 
