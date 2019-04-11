@@ -137,7 +137,7 @@ class CDefine(ast.Declaration):
         self.declaration_type = ast.DeclarationType.C
 
 
-class CMacroFunction(ast.FunctionDeclaration):
+class CMacroFunction(ast.Function):
     def __init__(self, sym: ast.Identifier, arg_cnt: int) -> None:
         super().__init__(
             0,
@@ -301,7 +301,7 @@ def parse_FUNCTION_DECL(cursor: Cursor) -> ast.Node:
 
     ret_type = type_to_ehlit(cursor.type.get_result())
     assert isinstance(ret_type, ast.Symbol)
-    return ast.FunctionDeclaration(
+    return ast.Function(
         0,
         ast.Qualifier.NONE,
         ast.TemplatedIdentifier('@func', [ast.FunctionType(

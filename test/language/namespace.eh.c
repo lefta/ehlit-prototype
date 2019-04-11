@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+
 void _EF23non_namespaced_function(void);
 int32_t _EN3FooV13some_variable = 42;
 

@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 union _EU10test_union;
+
 void _EF9use_unionrU10test_union(union _EU10test_union* u);
 
 union _EU10test_union

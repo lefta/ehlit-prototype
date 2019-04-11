@@ -1,4 +1,5 @@
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: use_class
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -28,32 +29,31 @@
 │  │     └─ Identifier: field3
 │  ├─ Methods
 │  │  ├─ ClassMethod
-│  │  │  ├─ FunctionDeclaration
-│  │  │  │  ├─ Identifier: set_fields
-│  │  │  │  └─ FunctionType
-│  │  │  │     ├─ CompoundIdentifier
-│  │  │  │     │  └─ Identifier: @void
-│  │  │  │     └─ Arguments:
-│  │  │  │        ├─ VariableDeclaration
-│  │  │  │        │  ├─ Reference
-│  │  │  │        │  │  └─ CompoundIdentifier
-│  │  │  │        │  │     └─ Identifier: test_class
-│  │  │  │        │  └─ Identifier: this
-│  │  │  │        ├─ VariableDeclaration
-│  │  │  │        │  ├─ CompoundIdentifier
-│  │  │  │        │  │  └─ Identifier: @int
-│  │  │  │        │  └─ Identifier: f1
-│  │  │  │        ├─ VariableDeclaration
-│  │  │  │        │  ├─ CompoundIdentifier
-│  │  │  │        │  │  └─ Identifier: @str
-│  │  │  │        │  └─ Identifier: f2
-│  │  │  │        └─ VariableDeclaration
-│  │  │  │           ├─ Reference
-│  │  │  │           │  └─ Array
-│  │  │  │           │     └─ CompoundIdentifier
-│  │  │  │           │        └─ Identifier: @int
-│  │  │  │           └─ Identifier: f3
-│  │  │  └─ FunctionBody
+│  │  │  ├─ Identifier: set_fields
+│  │  │  ├─ FunctionType
+│  │  │  │  ├─ CompoundIdentifier
+│  │  │  │  │  └─ Identifier: @void
+│  │  │  │  └─ Arguments:
+│  │  │  │     ├─ VariableDeclaration
+│  │  │  │     │  ├─ Reference
+│  │  │  │     │  │  └─ CompoundIdentifier
+│  │  │  │     │  │     └─ Identifier: test_class
+│  │  │  │     │  └─ Identifier: this
+│  │  │  │     ├─ VariableDeclaration
+│  │  │  │     │  ├─ CompoundIdentifier
+│  │  │  │     │  │  └─ Identifier: @int
+│  │  │  │     │  └─ Identifier: f1
+│  │  │  │     ├─ VariableDeclaration
+│  │  │  │     │  ├─ CompoundIdentifier
+│  │  │  │     │  │  └─ Identifier: @str
+│  │  │  │     │  └─ Identifier: f2
+│  │  │  │     └─ VariableDeclaration
+│  │  │  │        ├─ Reference
+│  │  │  │        │  └─ Array
+│  │  │  │        │     └─ CompoundIdentifier
+│  │  │  │        │        └─ Identifier: @int
+│  │  │  │        └─ Identifier: f3
+│  │  │  └─ Body
 │  │  │     ├─ Statement
 │  │  │     │  └─ VariableAssignment
 │  │  │     │     ├─ CompoundIdentifier
@@ -83,18 +83,17 @@
 │  │  │                 └─ CompoundIdentifier
 │  │  │                    └─ Identifier: f3
 │  │  └─ ClassMethod
-│  │     ├─ FunctionDeclaration
-│  │     │  ├─ Identifier: this_test
-│  │     │  └─ FunctionType
-│  │     │     ├─ CompoundIdentifier
-│  │     │     │  └─ Identifier: @void
-│  │     │     └─ Arguments:
-│  │     │        └─ VariableDeclaration
-│  │     │           ├─ Reference
-│  │     │           │  └─ CompoundIdentifier
-│  │     │           │     └─ Identifier: test_class
-│  │     │           └─ Identifier: this
-│  │     └─ FunctionBody
+│  │     ├─ Identifier: this_test
+│  │     ├─ FunctionType
+│  │     │  ├─ CompoundIdentifier
+│  │     │  │  └─ Identifier: @void
+│  │     │  └─ Arguments:
+│  │     │     └─ VariableDeclaration
+│  │     │        ├─ Reference
+│  │     │        │  └─ CompoundIdentifier
+│  │     │        │     └─ Identifier: test_class
+│  │     │        └─ Identifier: this
+│  │     └─ Body
 │  │        ├─ Statement
 │  │        │  └─ Expression
 │  │        │     └─ FunctionCall
@@ -142,7 +141,8 @@
 ├─ Class
 │  ├─ Identifier: forward_decl
 │  └─ Forward declaration
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: cls_fun
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -152,7 +152,8 @@
 │           ├─ CompoundIdentifier
 │           │  └─ Identifier: test_class
 │           └─ Identifier: cls
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: ref_cls_fun
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -163,7 +164,8 @@
 │           │  └─ CompoundIdentifier
 │           │     └─ Identifier: test_class
 │           └─ Identifier: cls
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: ref_ref_cls_fun
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -175,62 +177,58 @@
 │           │     └─ CompoundIdentifier
 │           │        └─ Identifier: test_class
 │           └─ Identifier: cls
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: fun
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: i
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: class_fun
-│  │  └─ FunctionType
-│  │     ├─ Reference
-│  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: test_class
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: test_class
-│  │           └─ Identifier: cls
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: fun
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: i
+│  └─ Body
+├─ Function
+│  ├─ Identifier: class_fun
+│  ├─ FunctionType
+│  │  ├─ Reference
+│  │  │  └─ CompoundIdentifier
+│  │  │     └─ Identifier: test_class
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: test_class
+│  │        └─ Identifier: cls
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ CompoundIdentifier
 │                 └─ Identifier: cls
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: any_fun
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @any
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @any
-│  │           └─ Identifier: p
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: any_fun
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @any
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @any
+│  │        └─ Identifier: p
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ CompoundIdentifier
 │                 └─ Identifier: p
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: main
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @int
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: main
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @int
+│  └─ Body
 │     ├─ Statement
 │     │  └─ VariableDeclaration
 │     │     ├─ CompoundIdentifier
@@ -468,7 +466,8 @@
 │     │     │  └─ Identifier: @str
 │     │     └─ Identifier: s
 │     └─ Body
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: ctor_cls_fun
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -478,7 +477,8 @@
 │           ├─ CompoundIdentifier
 │           │  └─ Identifier: ctor_args
 │           └─ Identifier: cls
-└─ FunctionDeclaration
+└─ Function
+   ├─ Declaration
    ├─ Identifier: ref_ctor_cls_fun
    └─ FunctionType
       ├─ CompoundIdentifier

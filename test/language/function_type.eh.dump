@@ -1,68 +1,64 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: fun1
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @void
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: fun2
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @int
-│  │           └─ Identifier: i
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: fun3
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ CompoundIdentifier
-│  │        │  │  └─ Identifier: @int
-│  │        │  └─ Identifier: i
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @int
-│  │           └─ Identifier: j
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: fun4
-│  │  └─ FunctionType
-│  │     ├─ Reference
-│  │     │  └─ Array
-│  │     │     └─ CompoundIdentifier
-│  │     │        └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ Array
-│  │           │     └─ CompoundIdentifier
-│  │           │        └─ Identifier: @int
-│  │           └─ Identifier: arr
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: fun5
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @char
-│  │           └─ Identifier: c
-│  └─ FunctionBody
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Identifier: fun1
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @void
+│  └─ Body
+├─ Function
+│  ├─ Identifier: fun2
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @int
+│  │        └─ Identifier: i
+│  └─ Body
+├─ Function
+│  ├─ Identifier: fun3
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ CompoundIdentifier
+│  │     │  │  └─ Identifier: @int
+│  │     │  └─ Identifier: i
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @int
+│  │        └─ Identifier: j
+│  └─ Body
+├─ Function
+│  ├─ Identifier: fun4
+│  ├─ FunctionType
+│  │  ├─ Reference
+│  │  │  └─ Array
+│  │  │     └─ CompoundIdentifier
+│  │  │        └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ Array
+│  │        │     └─ CompoundIdentifier
+│  │        │        └─ Identifier: @int
+│  │        └─ Identifier: arr
+│  └─ Body
+├─ Function
+│  ├─ Identifier: fun5
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @char
+│  │        └─ Identifier: c
+│  └─ Body
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: vfun1
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -75,7 +71,8 @@
 │     └─ Variadic:
 │        └─ CompoundIdentifier
 │           └─ Identifier: @int
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: vfun2
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -84,7 +81,8 @@
 │        └─ Array
 │           └─ CompoundIdentifier
 │              └─ Identifier: @int
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: vfun3
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -97,7 +95,8 @@
 │     └─ Variadic:
 │        └─ CompoundIdentifier
 │           └─ Identifier: @any
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: vfun4
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -105,13 +104,12 @@
 │     └─ Variadic:
 │        └─ CompoundIdentifier
 │           └─ Identifier: @any
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ TemplatedIdentifier: @func

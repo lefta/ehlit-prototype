@@ -276,7 +276,8 @@
       │  │  └─ Length:
       │  │     └─ Number: 42
       │  └─ Identifier: sual
-      └─ FunctionDeclaration
+      └─ Function
+         ├─ Declaration
          ├─ Identifier: incomplete_array
          └─ FunctionType
             ├─ CompoundIdentifier

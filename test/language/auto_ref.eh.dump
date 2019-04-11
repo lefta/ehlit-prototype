@@ -1,15 +1,14 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: caller
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @int
-│  │           └─ Identifier: i
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: caller
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @int
+│  │        └─ Identifier: i
+│  └─ Body
 │     └─ Statement
 │        └─ Expression
 │           └─ FunctionCall
@@ -22,54 +21,51 @@
 │                 └─ Expression
 │                    └─ CompoundIdentifier
 │                       └─ Identifier: i
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: fun
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ CompoundIdentifier
-│  │        │  │  └─ Identifier: @int
-│  │        │  └─ Identifier: i
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: j
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: fun
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ CompoundIdentifier
+│  │     │  │  └─ Identifier: @int
+│  │     │  └─ Identifier: i
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: j
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ CompoundIdentifier
 │                 └─ Identifier: j
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: ref_fun
-│  │  └─ FunctionType
-│  │     ├─ Reference
-│  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: i
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: ref_fun
+│  ├─ FunctionType
+│  │  ├─ Reference
+│  │  │  └─ CompoundIdentifier
+│  │  │     └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: i
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ CompoundIdentifier
 │                 └─ Identifier: i
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

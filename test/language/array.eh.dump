@@ -1,32 +1,30 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: puts
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @str
-│  │           └─ Identifier: s
-│  └─ FunctionBody
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     ├─ CompoundIdentifier
-   │     │  └─ Identifier: @int
-   │     └─ Arguments:
-   │        ├─ VariableDeclaration
-   │        │  ├─ CompoundIdentifier
-   │        │  │  └─ Identifier: @int
-   │        │  └─ Identifier: ac
-   │        └─ VariableDeclaration
-   │           ├─ Array
-   │           │  └─ CompoundIdentifier
-   │           │     └─ Identifier: @str
-   │           └─ Identifier: av
-   └─ FunctionBody
+├─ Function
+│  ├─ Identifier: puts
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @str
+│  │        └─ Identifier: s
+│  └─ Body
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  ├─ CompoundIdentifier
+   │  │  └─ Identifier: @int
+   │  └─ Arguments:
+   │     ├─ VariableDeclaration
+   │     │  ├─ CompoundIdentifier
+   │     │  │  └─ Identifier: @int
+   │     │  └─ Identifier: ac
+   │     └─ VariableDeclaration
+   │        ├─ Array
+   │        │  └─ CompoundIdentifier
+   │        │     └─ Identifier: @str
+   │        └─ Identifier: av
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Array

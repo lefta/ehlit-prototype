@@ -41,13 +41,12 @@
 │     └─ Assignment
 │        └─ Expression
 │           └─ Number: 42
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Modifiers: static

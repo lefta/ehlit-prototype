@@ -15,7 +15,8 @@
       │  │                    └─ Identifier: @int{int_sz}
       │  └─ To:
       │     └─ Identifier: fun
-      └─ FunctionDeclaration
+      └─ Function
+         ├─ Declaration
          ├─ Identifier: fun2
          └─ FunctionType
             ├─ CompoundIdentifier

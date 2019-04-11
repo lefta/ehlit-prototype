@@ -26,11 +26,10 @@ from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char,
     ClassMethod, ClassProperty, CompoundIdentifier, Condition, ControlStructure, DecimalNumber,
     Declaration, EhClass, EhEnum, EhUnion, EnumField, Expression, ForDoLoop, FunctionCall,
-    FunctionDeclaration, FunctionDeclarationBase, FunctionDefinition, FunctionType, Identifier,
-    Include, Import, InitializationList, Namespace, Node, NullValue, Number, Operator,
-    PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return, Sizeof, Statement, String,
-    Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol,
-    TemplatedIdentifier, VariableAssignment, VariableDeclaration
+    Function, FunctionType, Identifier, Include, Import, InitializationList, Namespace, Node,
+    NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return,
+    Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
+    SwitchCaseTest, Symbol, TemplatedIdentifier, VariableAssignment, VariableDeclaration
 )
 
 IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
@@ -136,24 +135,21 @@ class DumpWriter:
         decl = cast(VariableDeclaration, decl)
         self.dump_variable_declaration('VariableDeclaration', decl)
 
-    @indent
-    def dumpFunctionDeclaration(self, fun: Union[Node, str]) -> None:
-        fun = cast(FunctionDeclaration, fun)
-        self.dump('FunctionDeclaration')
+    def dump_function(self, cls_name: str, fun: Function) -> None:
+        self.dump(cls_name)
+        if fun.body_str is None:
+            self.print_str('Declaration')
         if fun.sym is not None:
             self.print_node(fun.sym)
         self.dump_qualifiers(fun)
-        self.print_node(fun.typ, False)
-
-    def dump_function_definition(self, cls_name: str, fun: FunctionDefinition) -> None:
-        self.dump(cls_name)
-        self.dumpFunctionDeclaration(fun)
-        self.print_node_list('FunctionBody', fun.body, False)
+        self.print_node(fun.typ, fun.body_str is not None)
+        if fun.body_str is not None:
+            self.print_node_list('Body', fun.body, False)
 
     @indent
-    def dumpFunctionDefinition(self, fun: Union[Node, str]) -> None:
-        fun = cast(FunctionDefinition, fun)
-        self.dump_function_definition('FunctionDefinition', fun)
+    def dumpFunction(self, fun: Union[Node, str]) -> None:
+        fun = cast(Function, fun)
+        self.dump_function('Function', fun)
 
     @indent
     def dumpStatement(self, stmt: Union[Node, str]) -> None:
@@ -260,7 +256,7 @@ class DumpWriter:
         if ret.expr is not None:
             self.print_node(ret.expr, False)
 
-    def dump_qualifiers(self, node: Union[Symbol, FunctionDeclarationBase]) -> None:
+    def dump_qualifiers(self, node: Union[Symbol, Function]) -> None:
         qualifiers: List[str] = []
         if node.qualifiers.is_const:
             qualifiers.append('const')
@@ -438,7 +434,7 @@ class DumpWriter:
     @indent
     def dumpClassMethod(self, node: Union[Node, str]) -> None:
         node = cast(ClassMethod, node)
-        self.dump_function_definition('ClassMethod', node)
+        self.dump_function('ClassMethod', node)
 
     @indent
     def dumpCtor(self, node: Union[Node, str]) -> None:

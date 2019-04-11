@@ -26,12 +26,12 @@ from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayType, ArrayAccess, Assignment, AST, BoolValue, BuiltinType,
     Cast, Char, ClassMethod, ClassProperty, ClassType, CompoundIdentifier, Condition,
     ContainerStructure, ControlStructure, Container, DecimalNumber, Declaration, DeclarationBase,
-    DoWhileLoop, EhClass, EhEnum, EhUnion, Expression, ForDoLoop, FunctionCall, FunctionDeclaration,
-    FunctionDeclarationBase, FunctionDefinition, FunctionType, Identifier, Import, Include,
-    InitializationList, Namespace, Node, NullValue, Number, Operator, PrefixOperatorValue,
-    ReferenceToType, ReferenceToValue, ReferenceType, Return, Scope, Sizeof, Statement, String,
-    Struct, StructType, SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol,
-    TemplatedIdentifier, Type, UnionType, VariableAssignment, VariableDeclaration, Value
+    DoWhileLoop, EhClass, EhEnum, EhUnion, Expression, ForDoLoop, FunctionCall, Function,
+    FunctionType, Identifier, Import, Include, InitializationList, Namespace, Node, NullValue,
+    Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return,
+    Scope, Sizeof, Statement, String, Struct, StructType, SuffixOperatorValue, SwitchCase,
+    SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, Type, UnionType,
+    VariableAssignment, VariableDeclaration, Value
 )
 
 
@@ -97,7 +97,7 @@ class SourceWriter:
         decl: Optional[DeclarationBase] = node.decl
         if isinstance(decl, Alias):
             decl = decl.canonical
-        if isinstance(decl, FunctionDeclarationBase) and not isinstance(node, FunctionCall):
+        if isinstance(decl, Function) and not isinstance(node, FunctionCall):
             parent: Node = node.parent
             while (type(parent) is ReferenceToValue or type(parent) is CompoundIdentifier):
                 parent = parent.parent
@@ -247,7 +247,7 @@ class SourceWriter:
                 self.write(Array(variadic_type, None))
                 self.file.write(' _EB5vargs')
 
-    def writeFunctionPrototype(self, proto: FunctionDeclarationBase) -> None:
+    def write_function_prototype(self, proto: Function) -> None:
         assert isinstance(proto.typ, FunctionType)
         self.write_type_prefix(proto.typ.ret)
         self.write(proto.typ.ret)
@@ -267,8 +267,8 @@ class SourceWriter:
         for decl in node.predeclarations:
             # It is possible that we get the definition of the function, but we only want to write
             # its prototype. For all other declaration types, we can write it as is.
-            if isinstance(decl, FunctionDefinition):
-                self.writeFunctionDeclarationBase(decl)
+            if isinstance(decl, Function):
+                self.write_function_declaration(decl)
             elif isinstance(decl, (ContainerStructure, EhClass, EhEnum)):
                 self.write_indent()
                 prefix_mapping: Dict[typing.Type[Type], str] = {
@@ -285,21 +285,17 @@ class SourceWriter:
             else:
                 self.write(decl)
 
-    def writeFunctionDeclarationBase(self, fun: FunctionDeclarationBase) -> None:
+    def write_function_declaration(self, fun: Function) -> None:
         self.write_indent()
-        self.writeFunctionPrototype(fun)
+        self.write_function_prototype(fun)
         self.file.write(';\n')
 
-    def writeFunctionDeclaration(self, fun: FunctionDeclaration) -> None:
-        self.write_predeclarations(fun)
-        self.writeFunctionDeclarationBase(fun)
-
-    def writeFunctionDefinition(self, fun: FunctionDefinition) -> None:
+    def writeFunction(self, fun: Function) -> None:
         self.write_predeclarations(fun)
 
         if self.in_import > 0 and not fun.qualifiers.is_inline:
             if not fun.qualifiers.is_private:
-                self.writeFunctionDeclarationBase(fun)
+                self.write_function_declaration(fun)
             return
 
         self.write_indent()
@@ -308,15 +304,23 @@ class SourceWriter:
             self.file.write('inline ')
         if fun.qualifiers.is_private:
             self.file.write('static ')
-        self.writeFunctionPrototype(fun)
-        self.file.write("\n{\n")
+        self.write_function_prototype(fun)
 
-        self.indent += 1
-        for instruction in fun.body:
-            self.write(instruction)
-        self.indent -= 1
+        if self.needs_to_write_function_body(fun):
+            self.file.write("\n{\n")
+            self.indent += 1
+            for instruction in fun.body:
+                self.write(instruction)
+            self.indent -= 1
+            self.file.write('}')
+        else:
+            self.file.write(';')
+        self.file.write('\n')
 
-        self.file.write("}\n")
+    def needs_to_write_function_body(self, node: Function) -> bool:
+        return node.body_str is not None and (self.in_import == 0 or
+                                              (node.qualifiers.is_inline and
+                                               not node.qualifiers.is_private))
 
     def writeStatement(self, stmt: Statement) -> None:
         self.write_indent()
@@ -651,7 +655,7 @@ class SourceWriter:
         self.writeContainerStructure(node)
 
     def writeClassMethod(self, node: ClassMethod) -> None:
-        self.writeFunctionDefinition(node)
+        self.writeFunction(node)
 
     def writeClassProperty(self, node: ClassProperty) -> None:
         if node.static:
@@ -659,7 +663,7 @@ class SourceWriter:
         self.writeDeclaration(node)
 
     def writeCtor(self, node: ClassMethod) -> None:
-        self.writeFunctionDefinition(node)
+        self.writeFunction(node)
 
     def writeEhClass(self, node: EhClass) -> None:
         self.file.write('\nstruct ')

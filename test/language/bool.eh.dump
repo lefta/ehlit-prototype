@@ -1,15 +1,14 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: not_true
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @bool
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @bool
-│  │           └─ Identifier: v
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: not_true
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @bool
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @bool
+│  │        └─ Identifier: v
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
@@ -17,13 +16,12 @@
 │                 ├─ Operator: !
 │                 └─ CompoundIdentifier
 │                    └─ Identifier: v
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

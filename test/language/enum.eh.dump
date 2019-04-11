@@ -7,61 +7,57 @@
 ├─ Enum
 │  ├─ Identifier: forward_decl
 │  └─ Forward declaration
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: fun
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: TestEnum
-│  │           └─ Identifier: e
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: enum_fun
-│  │  └─ FunctionType
-│  │     ├─ Reference
-│  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: TestEnum
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: TestEnum
-│  │           └─ Identifier: s
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: fun
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: TestEnum
+│  │        └─ Identifier: e
+│  └─ Body
+├─ Function
+│  ├─ Identifier: enum_fun
+│  ├─ FunctionType
+│  │  ├─ Reference
+│  │  │  └─ CompoundIdentifier
+│  │  │     └─ Identifier: TestEnum
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: TestEnum
+│  │        └─ Identifier: s
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ CompoundIdentifier
 │                 └─ Identifier: s
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: any_fun
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @any
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @any
-│  │           └─ Identifier: p
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: any_fun
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @any
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @any
+│  │        └─ Identifier: p
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ CompoundIdentifier
 │                 └─ Identifier: p
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

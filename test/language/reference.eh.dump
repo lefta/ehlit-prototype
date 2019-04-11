@@ -1,16 +1,15 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: set_int
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: i
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: set_int
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: i
+│  └─ Body
 │     ├─ Statement
 │     │  └─ VariableAssignment
 │     │     ├─ CompoundIdentifier
@@ -23,25 +22,24 @@
 │           └─ Expression
 │              └─ CompoundIdentifier
 │                 └─ Identifier: i
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: set_int_to
-│  │  └─ FunctionType
-│  │     ├─ Reference
-│  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ Reference
-│  │        │  │  └─ CompoundIdentifier
-│  │        │  │     └─ Identifier: @int
-│  │        │  └─ Identifier: i
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: j
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: set_int_to
+│  ├─ FunctionType
+│  │  ├─ Reference
+│  │  │  └─ CompoundIdentifier
+│  │  │     └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ Reference
+│  │     │  │  └─ CompoundIdentifier
+│  │     │  │     └─ Identifier: @int
+│  │     │  └─ Identifier: i
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: j
+│  └─ Body
 │     ├─ Statement
 │     │  └─ VariableAssignment
 │     │     ├─ CompoundIdentifier
@@ -56,25 +54,24 @@
 │              └─ Reference
 │                 └─ CompoundIdentifier
 │                    └─ Identifier: i
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: set_int_ref
-│  │  └─ FunctionType
-│  │     ├─ Reference
-│  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ Reference
-│  │        │  │  └─ CompoundIdentifier
-│  │        │  │     └─ Identifier: @int
-│  │        │  └─ Identifier: i
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: j
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: set_int_ref
+│  ├─ FunctionType
+│  │  ├─ Reference
+│  │  │  └─ CompoundIdentifier
+│  │  │     └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ Reference
+│  │     │  │  └─ CompoundIdentifier
+│  │     │  │     └─ Identifier: @int
+│  │     │  └─ Identifier: i
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: j
+│  └─ Body
 │     ├─ Statement
 │     │  └─ VariableAssignment
 │     │     ├─ Reference
@@ -91,28 +88,27 @@
 │              └─ Reference
 │                 └─ CompoundIdentifier
 │                    └─ Identifier: i
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: set_int_ref_ref
-│  │  └─ FunctionType
-│  │     ├─ Reference
-│  │     │  └─ Reference
-│  │     │     └─ CompoundIdentifier
-│  │     │        └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ Reference
-│  │        │  │  └─ Reference
-│  │        │  │     └─ CompoundIdentifier
-│  │        │  │        └─ Identifier: @int
-│  │        │  └─ Identifier: i
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ Reference
-│  │           │     └─ CompoundIdentifier
-│  │           │        └─ Identifier: @int
-│  │           └─ Identifier: j
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: set_int_ref_ref
+│  ├─ FunctionType
+│  │  ├─ Reference
+│  │  │  └─ Reference
+│  │  │     └─ CompoundIdentifier
+│  │  │        └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ Reference
+│  │     │  │  └─ Reference
+│  │     │  │     └─ CompoundIdentifier
+│  │     │  │        └─ Identifier: @int
+│  │     │  └─ Identifier: i
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ Reference
+│  │        │     └─ CompoundIdentifier
+│  │        │        └─ Identifier: @int
+│  │        └─ Identifier: j
+│  └─ Body
 │     ├─ Statement
 │     │  └─ VariableAssignment
 │     │     ├─ Reference
@@ -132,26 +128,25 @@
 │                 └─ Reference
 │                    └─ CompoundIdentifier
 │                       └─ Identifier: i
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: set_int_ref_lv2
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ Reference
-│  │        │  │  └─ Reference
-│  │        │  │     └─ CompoundIdentifier
-│  │        │  │        └─ Identifier: @int
-│  │        │  └─ Identifier: i
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ Reference
-│  │           │     └─ CompoundIdentifier
-│  │           │        └─ Identifier: @int
-│  │           └─ Identifier: j
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: set_int_ref_lv2
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ Reference
+│  │     │  │  └─ Reference
+│  │     │  │     └─ CompoundIdentifier
+│  │     │  │        └─ Identifier: @int
+│  │     │  └─ Identifier: i
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ Reference
+│  │        │     └─ CompoundIdentifier
+│  │        │        └─ Identifier: @int
+│  │        └─ Identifier: j
+│  └─ Body
 │     └─ Statement
 │        └─ VariableAssignment
 │           ├─ Reference
@@ -162,13 +157,12 @@
 │                 └─ Reference
 │                    └─ CompoundIdentifier
 │                       └─ Identifier: j
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

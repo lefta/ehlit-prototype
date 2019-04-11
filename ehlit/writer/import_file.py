@@ -24,9 +24,8 @@ from typing import List, TextIO
 from ehlit.parser.ast import (
     Alias, Array, Assignment, AST, BoolValue, Cast, ClassMethod, ClassProperty, CompoundIdentifier,
     ContainerStructure, Declaration, DecimalNumber, EhClass, EhEnum, EhUnion, Expression,
-    FunctionDeclaration, FunctionDeclarationBase, FunctionDefinition, FunctionType, Identifier,
-    Import, Include, Namespace, Node, Number, Operator, ReferenceToType, Return, Statement, Struct,
-    TemplatedIdentifier, VariableDeclaration
+    Function, FunctionType, Identifier, Import, Include, Namespace, Node, Number, Operator,
+    ReferenceToType, Return, Statement, Struct, TemplatedIdentifier, VariableDeclaration
 )
 
 
@@ -55,7 +54,7 @@ class ImportWriter:
     def writeImport(self, node: Import) -> None:
         pass
 
-    def writeFunctionDefinition(self, node: FunctionDefinition) -> None:
+    def writeFunction(self, node: Function) -> None:
         self.write_indent()
         if node.qualifiers.is_private:
             return
@@ -66,12 +65,7 @@ class ImportWriter:
             self.write_function_body(node)
         self.file.write('\n')
 
-    def writeFunctionDeclaration(self, node: FunctionDeclaration) -> None:
-        self.write_indent()
-        self.write_function_prototype(node)
-        self.file.write('\n')
-
-    def write_function_prototype(self, node: FunctionDeclarationBase) -> None:
+    def write_function_prototype(self, node: Function) -> None:
         assert isinstance(node.typ, FunctionType)
         self.write(node.typ.ret)
         self.file.write(' ')
@@ -84,7 +78,7 @@ class ImportWriter:
             self.writeArgumentDefinitionList(node.typ.args)
         self.file.write(")")
 
-    def write_function_body(self, node: FunctionDefinition) -> None:
+    def write_function_body(self, node: Function) -> None:
         self.file.write(' {\n')
         self.indent += 1
         for stmt in node.body:
@@ -248,7 +242,7 @@ class ImportWriter:
         self.writeContainerStructure(node)
 
     def writeClassMethod(self, node: ClassMethod) -> None:
-        self.writeFunctionDefinition(node)
+        self.writeFunction(node)
 
     def writeClassProperty(self, node: ClassProperty) -> None:
         self.writeVariableDeclaration(node)

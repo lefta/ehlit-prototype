@@ -139,6 +139,7 @@ void _EF10call_vargs(void)
     int32_t __gen_fun_8[2] = { i, i };
     _EF20args3_vargs_explicitB3strB3intrB3intvB3int("Hello", i, &i, 2, __gen_fun_8);
 }
+
 void cdecl_proto(void);
 
 void cdecl_fun(void)

@@ -207,7 +207,7 @@ class Node:
         Scoping structures (like functions) would want to search symbols in this function. The
         default is to pass the lookup to the parent.
         @param sym @b str The symbol to find.
-        @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
+        @return @b Declaration The declaration if found, None otherwise.
         """
         return self.parent.find_declaration(sym)
 
@@ -216,7 +216,7 @@ class Node:
         Structures exposing symbols to their parent (like Import) would want to search symbols in
         this function.
         @param sym @b str The symbol to find
-        @return @b Declaration|FunctionDeclaration The declaration if found, None otherwise.
+        @return @b Declaration The declaration if found, None otherwise.
         """
         return DeclarationLookup(sym)
 
@@ -408,7 +408,7 @@ class GenericExternInclusion(UnorderedScope):
     def get_declaration(self, sym: str) -> DeclarationLookup:
         """! Look for a declaration from the imported file
         @param sym @b List[str] The symbol to look for
-        @return @b Declaration|FunctionDeclaration The declaration if found, @c None otherwise
+        @return @b Declaration The declaration if found, @c None otherwise
         """
         return DeclarationLookup(sym, self.syms)
 
@@ -615,7 +615,7 @@ class DeclarationBase(Node):
         """! Find a declaration strictly in children.
         Container types (like structs) would want to search symbols in this function.
         @param sym @b List[str] The symbol to find.
-        @return @b Declaration|FunctionDeclaration The inner declaration if found, None otherwise.
+        @return @b Declaration The inner declaration if found, None otherwise.
         """
         return DeclarationLookup(sym)
 
@@ -1177,7 +1177,7 @@ class VariableDeclaration(Declaration):
     @property
     def _is_mangled(self) -> bool:
         return not (self.declaration_type == DeclarationType.C or
-                    self.is_child_of(FunctionDeclarationBase) or self.is_child_of(Struct) or
+                    self.is_child_of(Function) or self.is_child_of(Struct) or
                     self.is_child_of(EhUnion) or self.is_child_of(EhClass))
 
     @property
@@ -1191,11 +1191,36 @@ class VariableDeclaration(Declaration):
             self._assign.parent = self
 
 
-class FunctionDeclarationBase(Declaration):
+class Function(Declaration, FlowScope):
     def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
-                 sym: 'Identifier') -> None:
+                 sym: 'Identifier', body_str: Optional[UnparsedContents] = None) -> None:
         super().__init__(pos, typ, sym, qualifiers)
+        FlowScope.__init__(self, pos, [])
         self.this_cls: Optional[EhClass] = None
+        self.body_str: Optional[UnparsedContents] = body_str
+        self.gen_var_count: int = 0
+
+    def build(self) -> 'Function':
+        super().build()
+        if self.is_child_of(Import):
+            return self
+        try:
+            assert isinstance(self.typ, FunctionType)
+            typ: Optional[DeclarationBase] = self.typ.ret.canonical
+            if self.body_str is None:
+                self.body = []
+            else:
+                self.body = function.parse(self.body_str.contents, not typ == BuiltinType('@void'))
+            for stmt in self.body:
+                stmt.parent = self
+            super().build()
+        except ParseError as err:
+            for f in err.failures:
+                self.fail(f.severity, f.pos, f.msg)
+        return self
+
+    def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
+        super().fail(severity, pos if self.body_str is None else pos + self.body_str.pos, msg)
 
     @property
     def qualifiers(self) -> Qualifier:
@@ -1223,44 +1248,6 @@ class FunctionDeclarationBase(Declaration):
             assert self.typ.variadic_type is not None
             name = '{}v{}'.format(name, self.typ.variadic_type.mangled)
         return name
-
-
-class FunctionDeclaration(FunctionDeclarationBase, Scope):
-    def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
-                 sym: 'Identifier') -> None:
-        super().__init__(pos, qualifiers, typ, sym)
-        Scope.__init__(self, pos)
-
-
-class FunctionDefinition(FunctionDeclarationBase, FlowScope):
-    def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
-                 sym: 'Identifier', body_str: Optional[UnparsedContents]) -> None:
-        super().__init__(pos, qualifiers, typ, sym)
-        FlowScope.__init__(self, pos, [])
-        self.body_str: Optional[UnparsedContents] = body_str
-        self.gen_var_count: int = 0
-
-    def build(self) -> 'FunctionDefinition':
-        super().build()
-        if self.is_child_of(Import):
-            return self
-        try:
-            assert isinstance(self.typ, FunctionType)
-            typ: Optional[DeclarationBase] = self.typ.ret.canonical
-            if self.body_str is None:
-                self.body = []
-            else:
-                self.body = function.parse(self.body_str.contents, not typ == BuiltinType('@void'))
-            for stmt in self.body:
-                stmt.parent = self
-            super().build()
-        except ParseError as err:
-            for f in err.failures:
-                self.fail(f.severity, f.pos, f.msg)
-        return self
-
-    def fail(self, severity: ParseError.Severity, pos: int, msg: str) -> None:
-        super().fail(severity, pos + (0 if self.body_str is None else self.body_str.pos), msg)
 
     def find_declaration(self, sym: str) -> DeclarationLookup:
         if sym != 'vargs':
@@ -1681,7 +1668,7 @@ class Return(Node):
         if self.expr is not None:
             self.expr = self.expr.build()
             decl: Node = self.parent
-            while not isinstance(decl, FunctionDefinition):
+            while not isinstance(decl, Function):
                 decl = decl.parent
             assert isinstance(decl.typ, FunctionType)
             self.expr.auto_cast(decl.typ.ret)
@@ -2126,11 +2113,7 @@ class EhUnion(ContainerStructure):
         return self.make(UnionType(self))
 
 
-class ClassMethod(FunctionDefinition):
-    def __init__(self, pos: int, qualifiers: Qualifier, typ: 'TemplatedIdentifier',
-                 sym: 'Identifier', body_str: Optional[UnparsedContents]) -> None:
-        super().__init__(pos, qualifiers, typ, sym, body_str)
-
+class ClassMethod(Function):
     def build(self) -> 'ClassMethod':
         assert isinstance(self.parent, EhClass)
         assert isinstance(self.typ, FunctionType)

@@ -1,33 +1,30 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: function
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @any
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: function
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @any
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ NullValue
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: get_null
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @any
-│  │           └─ Identifier: p
-│  └─ FunctionBody
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+├─ Function
+│  ├─ Identifier: get_null
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @any
+│  │        └─ Identifier: p
+│  └─ Body
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

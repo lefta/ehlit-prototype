@@ -100,13 +100,12 @@
 │        │     └─ Identifier: @str
 │        └─ To:
 │           └─ Identifier: MACRO_TYPE_STR
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: call_macros
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: MACRO_TYPE_STR
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: call_macros
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: MACRO_TYPE_STR
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

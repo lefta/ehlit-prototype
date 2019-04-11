@@ -2,7 +2,8 @@
    ├─ Path: c_parser/qualifiers.h
    └─ Symbols found
       ├─ No type
-      ├─ FunctionDeclaration
+      ├─ Function
+      │  ├─ Declaration
       │  ├─ Identifier: print_int
       │  └─ FunctionType
       │     ├─ Reference
@@ -18,7 +19,8 @@
       │           │     ├─ Modifiers: const
       │           │     └─ Identifier: @int{int_sz}
       │           └─ Identifier: i
-      ├─ FunctionDeclaration
+      ├─ Function
+      │  ├─ Declaration
       │  ├─ Identifier: update_ptrs
       │  └─ FunctionType
       │     ├─ CompoundIdentifier
@@ -36,7 +38,8 @@
       │           │  └─ CompoundIdentifier
       │           │     └─ Identifier: @int{int_sz}
       │           └─ Identifier: j
-      ├─ FunctionDeclaration
+      ├─ Function
+      │  ├─ Declaration
       │  ├─ Identifier: strcpy
       │  └─ FunctionType
       │     ├─ CompoundIdentifier
@@ -52,7 +55,8 @@
       │           │  ├─ Modifiers: const, restrict
       │           │  └─ Identifier: @str
       │           └─ Identifier: s2
-      ├─ FunctionDeclaration
+      ├─ Function
+      │  ├─ Declaration
       │  ├─ Identifier: strncpy
       │  └─ FunctionType
       │     ├─ CompoundIdentifier

@@ -1,32 +1,30 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: want_int
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @int
-│  │           └─ Identifier: n
-│  └─ FunctionBody
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     ├─ CompoundIdentifier
-   │     │  └─ Identifier: @int
-   │     └─ Arguments:
-   │        ├─ VariableDeclaration
-   │        │  ├─ CompoundIdentifier
-   │        │  │  └─ Identifier: @int
-   │        │  └─ Identifier: ac
-   │        └─ VariableDeclaration
-   │           ├─ Array
-   │           │  └─ CompoundIdentifier
-   │           │     └─ Identifier: @str
-   │           └─ Identifier: av
-   └─ FunctionBody
+├─ Function
+│  ├─ Identifier: want_int
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @int
+│  │        └─ Identifier: n
+│  └─ Body
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  ├─ CompoundIdentifier
+   │  │  └─ Identifier: @int
+   │  └─ Arguments:
+   │     ├─ VariableDeclaration
+   │     │  ├─ CompoundIdentifier
+   │     │  │  └─ Identifier: @int
+   │     │  └─ Identifier: ac
+   │     └─ VariableDeclaration
+   │        ├─ Array
+   │        │  └─ CompoundIdentifier
+   │        │     └─ Identifier: @str
+   │        └─ Identifier: av
+   └─ Body
       ├─ Statement
       │  └─ Expression
       │     └─ FunctionCall

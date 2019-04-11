@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 struct _ES11test_struct;
+
 void _EF10use_structrS11test_struct(struct _ES11test_struct* s);
 
 struct _ES11test_struct

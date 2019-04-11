@@ -1,20 +1,19 @@
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     ├─ CompoundIdentifier
-   │     │  └─ Identifier: @int
-   │     └─ Arguments:
-   │        ├─ VariableDeclaration
-   │        │  ├─ CompoundIdentifier
-   │        │  │  └─ Identifier: @int
-   │        │  └─ Identifier: ac
-   │        └─ VariableDeclaration
-   │           ├─ Array
-   │           │  └─ CompoundIdentifier
-   │           │     └─ Identifier: @str
-   │           └─ Identifier: av
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  ├─ CompoundIdentifier
+   │  │  └─ Identifier: @int
+   │  └─ Arguments:
+   │     ├─ VariableDeclaration
+   │     │  ├─ CompoundIdentifier
+   │     │  │  └─ Identifier: @int
+   │     │  └─ Identifier: ac
+   │     └─ VariableDeclaration
+   │        ├─ Array
+   │        │  └─ CompoundIdentifier
+   │        │     └─ Identifier: @str
+   │        └─ Identifier: av
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

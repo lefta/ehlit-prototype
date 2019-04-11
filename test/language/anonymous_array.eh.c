@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+
 char* _EF7strjoinAB3str(char** ary);
 
 int32_t main(void)

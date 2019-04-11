@@ -23,19 +23,18 @@
 │  │                    └─ Identifier: nb
 │  └─ To:
 │     └─ Identifier: pfn
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: inc
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: nothing
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: number
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: inc
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: nothing
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: number
+│  └─ Body
 │     ├─ ConditionBranches
 │     │  └─ ControlStructure: if
 │     │     ├─ Expression
@@ -55,25 +54,23 @@
 │              ├─ Operator: +
 │              └─ Expression
 │                 └─ Number: 1
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: do_nothing
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: nb
-│  │           └─ Identifier: n
-│  └─ FunctionBody
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: nb
-   └─ FunctionBody
+├─ Function
+│  ├─ Identifier: do_nothing
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: nb
+│  │        └─ Identifier: n
+│  └─ Body
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: nb
+   └─ Body
       ├─ Alias
       │  ├─ From:
       │  │  └─ CompoundIdentifier

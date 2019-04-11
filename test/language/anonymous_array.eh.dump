@@ -1,4 +1,5 @@
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: strjoin
 │  └─ FunctionType
 │     ├─ CompoundIdentifier
@@ -9,13 +10,12 @@
 │           │  └─ CompoundIdentifier
 │           │     └─ Identifier: @str
 │           └─ Identifier: ary
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Array

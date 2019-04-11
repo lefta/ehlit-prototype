@@ -20,9 +20,13 @@ int32_t** _EF4fun4rAB3int(int32_t** arr)
 void _EF4fun5rB4char(int8_t* c)
 {
 }
+
 void _EF5vfun1B3intvB3int(int32_t i, int32_t _EB9vargs_len, int32_t* _EB5vargs);
+
 void _EF5vfun2vAB3int(int32_t _EB9vargs_len, int32_t** _EB5vargs);
+
 void _EF5vfun3B3intvB3any(int32_t i, int32_t _EB9vargs_len, void** _EB5vargs);
+
 void _EF5vfun4vB3any(int32_t _EB9vargs_len, void** _EB5vargs);
 
 int32_t main(void)

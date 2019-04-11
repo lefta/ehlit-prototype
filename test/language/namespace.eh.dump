@@ -1,4 +1,5 @@
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: non_namespaced_function
 │  └─ FunctionType
 │     └─ CompoundIdentifier
@@ -14,13 +15,12 @@
 │     │     └─ Assignment
 │     │        └─ Expression
 │     │           └─ Number: 42
-│     └─ FunctionDefinition
-│        ├─ FunctionDeclaration
-│        │  ├─ Identifier: some_function
-│        │  └─ FunctionType
-│        │     └─ CompoundIdentifier
-│        │        └─ Identifier: @void
-│        └─ FunctionBody
+│     └─ Function
+│        ├─ Identifier: some_function
+│        ├─ FunctionType
+│        │  └─ CompoundIdentifier
+│        │     └─ Identifier: @void
+│        └─ Body
 │           └─ Statement
 │              └─ Expression
 │                 └─ FunctionCall
@@ -33,13 +33,12 @@
 │     └─ Namespace
 │        ├─ Identifier: Nested
 │        └─ Contents
-│           └─ FunctionDefinition
-│              ├─ FunctionDeclaration
-│              │  ├─ Identifier: some_nested_function
-│              │  └─ FunctionType
-│              │     └─ CompoundIdentifier
-│              │        └─ Identifier: @void
-│              └─ FunctionBody
+│           └─ Function
+│              ├─ Identifier: some_nested_function
+│              ├─ FunctionType
+│              │  └─ CompoundIdentifier
+│              │     └─ Identifier: @void
+│              └─ Body
 │                 └─ Statement
 │                    └─ Expression
 │                       └─ FunctionCall
@@ -53,26 +52,24 @@
 │     └─ Namespace
 │        ├─ Identifier: Nested
 │        └─ Contents
-│           └─ FunctionDefinition
-│              ├─ FunctionDeclaration
-│              │  ├─ Identifier: another_nested_function
-│              │  └─ FunctionType
-│              │     └─ CompoundIdentifier
-│              │        └─ Identifier: @void
-│              └─ FunctionBody
+│           └─ Function
+│              ├─ Identifier: another_nested_function
+│              ├─ FunctionType
+│              │  └─ CompoundIdentifier
+│              │     └─ Identifier: @void
+│              └─ Body
 │                 └─ Statement
 │                    └─ Expression
 │                       └─ FunctionCall
 │                          ├─ CompoundIdentifier
 │                          │  └─ Identifier: some_nested_function
 │                          └─ Arguments
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

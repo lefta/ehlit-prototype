@@ -1,17 +1,15 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: do_something
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @void
-│  └─ FunctionBody
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+├─ Function
+│  ├─ Identifier: do_something
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @void
+│  └─ Body
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

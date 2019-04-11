@@ -1,34 +1,32 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: returning_any
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @any
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @any
-│  │           └─ Identifier: data
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: returning_any
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @any
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @any
+│  │        └─ Identifier: data
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ CompoundIdentifier
 │                 └─ Identifier: data
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: same_with_ref_any
-│  │  └─ FunctionType
-│  │     ├─ Reference
-│  │     │  └─ CompoundIdentifier
-│  │     │     └─ Identifier: @any
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @any
-│  │           └─ Identifier: data
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: same_with_ref_any
+│  ├─ FunctionType
+│  │  ├─ Reference
+│  │  │  └─ CompoundIdentifier
+│  │  │     └─ Identifier: @any
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @any
+│  │        └─ Identifier: data
+│  └─ Body
 │     ├─ Statement
 │     │  └─ VariableDeclaration
 │     │     ├─ CompoundIdentifier
@@ -48,13 +46,12 @@
 │           └─ Expression
 │              └─ CompoundIdentifier
 │                 └─ Identifier: data
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

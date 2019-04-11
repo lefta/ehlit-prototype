@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 struct _EC10test_class;
+
 void _EF9use_classrC10test_class(struct _EC10test_class* cls);
 
 struct _EC10test_class
@@ -36,8 +37,11 @@ void _EC10test_classF9this_test(struct _EC10test_class* this)
 }
 
 struct _EC12forward_decl;
+
 void _EF7cls_funC10test_class(struct _EC10test_class cls);
+
 void _EF11ref_cls_funrC10test_class(struct _EC10test_class* cls);
+
 void _EF15ref_ref_cls_funrrC10test_class(struct _EC10test_class** cls);
 
 void _EF3funrB3int(int32_t* i)
@@ -86,5 +90,7 @@ struct _EC9ctor_args
 void _EC9ctor_argsIB3intB3str(struct _EC9ctor_args* this, int32_t i, char* s)
 {
 }
+
 void _EF12ctor_cls_funC9ctor_args(struct _EC9ctor_args cls);
+
 void _EF16ref_ctor_cls_funrC9ctor_args(struct _EC9ctor_args* cls);

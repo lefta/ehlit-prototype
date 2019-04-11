@@ -2,18 +2,21 @@
 │  ├─ Path: c_parser/function.h
 │  └─ Symbols found
 │     ├─ No type
-│     ├─ FunctionDeclaration
+│     ├─ Function
+│     │  ├─ Declaration
 │     │  ├─ Identifier: fun
 │     │  └─ FunctionType
 │     │     └─ CompoundIdentifier
 │     │        └─ Identifier: @void
-│     ├─ FunctionDeclaration
+│     ├─ Function
+│     │  ├─ Declaration
 │     │  ├─ Identifier: vargs_fun_no_arg
 │     │  └─ FunctionType
 │     │     ├─ CompoundIdentifier
 │     │     │  └─ Identifier: @void
 │     │     └─ Variadic (C)
-│     └─ FunctionDeclaration
+│     └─ Function
+│        ├─ Declaration
 │        ├─ Identifier: vargs_fun_args
 │        └─ FunctionType
 │           ├─ CompoundIdentifier
@@ -24,13 +27,12 @@
 │           │     │  └─ Identifier: @int{int_sz}
 │           │     └─ Identifier: i
 │           └─ Variadic (C)
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

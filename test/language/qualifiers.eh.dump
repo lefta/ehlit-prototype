@@ -1,87 +1,83 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: print_int
-│  │  └─ FunctionType
-│  │     ├─ Reference
-│  │     │  ├─ Modifiers: const
-│  │     │  └─ CompoundIdentifier
-│  │     │     ├─ Modifiers: const
-│  │     │     └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  ├─ Modifiers: const
-│  │           │  └─ CompoundIdentifier
-│  │           │     ├─ Modifiers: const
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: i
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: print_int
+│  ├─ FunctionType
+│  │  ├─ Reference
+│  │  │  ├─ Modifiers: const
+│  │  │  └─ CompoundIdentifier
+│  │  │     ├─ Modifiers: const
+│  │  │     └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  ├─ Modifiers: const
+│  │        │  └─ CompoundIdentifier
+│  │        │     ├─ Modifiers: const
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: i
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ Reference
 │                 └─ CompoundIdentifier
 │                    └─ Identifier: i
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: update_ptrs
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ Reference
-│  │        │  │  ├─ Modifiers: restrict
-│  │        │  │  └─ CompoundIdentifier
-│  │        │  │     └─ Identifier: @int32
-│  │        │  └─ Identifier: i
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  ├─ Modifiers: restrict
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: j
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: strcpy
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ CompoundIdentifier
-│  │        │  │  ├─ Modifiers: restrict
-│  │        │  │  └─ Identifier: @str
-│  │        │  └─ Identifier: s1
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  ├─ Modifiers: const, restrict
-│  │           │  └─ Identifier: @str
-│  │           └─ Identifier: s2
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: strncpy
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ CompoundIdentifier
-│  │        │  │  ├─ Modifiers: restrict
-│  │        │  │  └─ Identifier: @str
-│  │        │  └─ Identifier: s1
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ CompoundIdentifier
-│  │        │  │  ├─ Modifiers: const, restrict
-│  │        │  │  └─ Identifier: @str
-│  │        │  └─ Identifier: s2
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @size
-│  │           └─ Identifier: n
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: update_ptrs
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ Reference
+│  │     │  │  ├─ Modifiers: restrict
+│  │     │  │  └─ CompoundIdentifier
+│  │     │  │     └─ Identifier: @int32
+│  │     │  └─ Identifier: i
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  ├─ Modifiers: restrict
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: j
+│  └─ Body
+├─ Function
+│  ├─ Identifier: strcpy
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ CompoundIdentifier
+│  │     │  │  ├─ Modifiers: restrict
+│  │     │  │  └─ Identifier: @str
+│  │     │  └─ Identifier: s1
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  ├─ Modifiers: const, restrict
+│  │        │  └─ Identifier: @str
+│  │        └─ Identifier: s2
+│  └─ Body
+├─ Function
+│  ├─ Identifier: strncpy
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ CompoundIdentifier
+│  │     │  │  ├─ Modifiers: restrict
+│  │     │  │  └─ Identifier: @str
+│  │     │  └─ Identifier: s1
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ CompoundIdentifier
+│  │     │  │  ├─ Modifiers: const, restrict
+│  │     │  │  └─ Identifier: @str
+│  │     │  └─ Identifier: s2
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @size
+│  │        └─ Identifier: n
+│  └─ Body
 ├─ Statement
 │  └─ VariableDeclaration
 │     ├─ CompoundIdentifier
@@ -102,13 +98,12 @@
 │              │     └─ Identifier: @int
 │              └─ Expression
 │                 └─ Number: 42
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: main
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @int
-   └─ FunctionBody
+└─ Function
+   ├─ Identifier: main
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @int
+   └─ Body
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier

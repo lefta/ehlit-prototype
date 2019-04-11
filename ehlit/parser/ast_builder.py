@@ -544,13 +544,13 @@ class ASTBuilder(PTNodeVisitor):
 
     def visit_function_declaration(self, node: ParseTreeNode,
                                    children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier]]
-                                   ) -> ast.FunctionDeclaration:
+                                   ) -> ast.Function:
         i: int = 0
         cdecl: bool = False
         if isinstance(children[0], str) and children[0] == 'cdecl':
             cdecl = True
             i += 1
-        res = ast.FunctionDeclaration(node.position, ast.Qualifier.NONE, *children[i])
+        res = ast.Function(node.position, ast.Qualifier.NONE, *children[i])
         if cdecl:
             res.declaration_type = ast.DeclarationType.C
         return res
@@ -580,15 +580,14 @@ class ASTBuilder(PTNodeVisitor):
     def visit_function_definition(self, node: ParseTreeNode,
                                   children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier],
                                                   ast.UnparsedContents]
-                                  ) -> ast.FunctionDefinition:
+                                  ) -> ast.Function:
         qualifiers, typ, sym, body, cdecl = self.parse_function_definition(children)
-        res = ast.FunctionDefinition(node.position, qualifiers, typ, sym, body)
+        res = ast.Function(node.position, qualifiers, typ, sym, body)
         if cdecl:
             res.declaration_type = ast.DeclarationType.C
         return res
 
-    def visit_function(self, node: ParseTreeNode, children: Tuple[ast.FunctionDeclaration]
-                       ) -> ast.FunctionDeclaration:
+    def visit_function(self, node: ParseTreeNode, children: Tuple[ast.Function]) -> ast.Function:
         return children[0]
 
     # External includes

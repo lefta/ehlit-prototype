@@ -1,52 +1,48 @@
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: simple_fn
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @int
-│  │           └─ Identifier: i
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: simple_fn_str
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @str
-│  │           └─ Identifier: s
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: ref_call
-│  │  └─ FunctionType
-│  │     └─ Reference
-│  │        └─ CompoundIdentifier
-│  │           └─ Identifier: @int
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: simple_fn
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @int
+│  │        └─ Identifier: i
+│  └─ Body
+├─ Function
+│  ├─ Identifier: simple_fn_str
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @str
+│  │        └─ Identifier: s
+│  └─ Body
+├─ Function
+│  ├─ Identifier: ref_call
+│  ├─ FunctionType
+│  │  └─ Reference
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @int
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
 │              └─ NullValue
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: inc
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ Reference
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @int
-│  │           └─ Identifier: nb
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: inc
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ Reference
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @int
+│  │        └─ Identifier: nb
+│  └─ Body
 │     ├─ ConditionBranches
 │     │  └─ ControlStructure: if
 │     │     ├─ Expression
@@ -66,18 +62,17 @@
 │              ├─ Operator: +
 │              └─ Expression
 │                 └─ Number: 1
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: inner_parens
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @int
-│  │           └─ Identifier: i
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: inner_parens
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @int
+│  │        └─ Identifier: i
+│  └─ Body
 │     ├─ ConditionBranches
 │     │  └─ ControlStructure: if
 │     │     ├─ Expression
@@ -140,54 +135,51 @@
 │                    └─ Assignment
 │                       └─ Expression
 │                          └─ Number: 5
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: func_with_default_params
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ CompoundIdentifier
-│  │        │  │  └─ Identifier: @int
-│  │        │  └─ Identifier: par1
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @int
-│  │           ├─ Identifier: par2
-│  │           └─ Assignment
-│  │              └─ Expression
-│  │                 └─ Number: 0
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: func_with_trailing_comma
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Arguments:
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @int
-│  │           └─ Identifier: arg
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: main
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ CompoundIdentifier
-│  │        │  │  └─ Identifier: @int
-│  │        │  └─ Identifier: ac
-│  │        └─ VariableDeclaration
-│  │           ├─ Array
-│  │           │  └─ CompoundIdentifier
-│  │           │     └─ Identifier: @str
-│  │           └─ Identifier: av
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: func_with_default_params
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ CompoundIdentifier
+│  │     │  │  └─ Identifier: @int
+│  │     │  └─ Identifier: par1
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @int
+│  │        ├─ Identifier: par2
+│  │        └─ Assignment
+│  │           └─ Expression
+│  │              └─ Number: 0
+│  └─ Body
+├─ Function
+│  ├─ Identifier: func_with_trailing_comma
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Arguments:
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @int
+│  │        └─ Identifier: arg
+│  └─ Body
+├─ Function
+│  ├─ Identifier: main
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ CompoundIdentifier
+│  │     │  │  └─ Identifier: @int
+│  │     │  └─ Identifier: ac
+│  │     └─ VariableDeclaration
+│  │        ├─ Array
+│  │        │  └─ CompoundIdentifier
+│  │        │     └─ Identifier: @str
+│  │        └─ Identifier: av
+│  └─ Body
 │     ├─ Statement
 │     │  └─ Expression
 │     │     └─ FunctionCall
@@ -259,46 +251,42 @@
 │        └─ Return
 │           └─ Expression
 │              └─ Number: 0
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: declared_later
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @void
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: private_function
-│  │  ├─ Modifiers: private
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @void
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: inline_function
-│  │  ├─ Modifiers: inline
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @void
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: inline_and_private_function
-│  │  ├─ Modifiers: inline, private
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @int
-│  │     └─ Arguments:
-│  │        ├─ VariableDeclaration
-│  │        │  ├─ CompoundIdentifier
-│  │        │  │  └─ Identifier: @int
-│  │        │  └─ Identifier: a
-│  │        └─ VariableDeclaration
-│  │           ├─ CompoundIdentifier
-│  │           │  └─ Identifier: @int
-│  │           └─ Identifier: b
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: declared_later
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @void
+│  └─ Body
+├─ Function
+│  ├─ Identifier: private_function
+│  ├─ Modifiers: private
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @void
+│  └─ Body
+├─ Function
+│  ├─ Identifier: inline_function
+│  ├─ Modifiers: inline
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @void
+│  └─ Body
+├─ Function
+│  ├─ Identifier: inline_and_private_function
+│  ├─ Modifiers: inline, private
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @int
+│  │  └─ Arguments:
+│  │     ├─ VariableDeclaration
+│  │     │  ├─ CompoundIdentifier
+│  │     │  │  └─ Identifier: @int
+│  │     │  └─ Identifier: a
+│  │     └─ VariableDeclaration
+│  │        ├─ CompoundIdentifier
+│  │        │  └─ Identifier: @int
+│  │        └─ Identifier: b
+│  └─ Body
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
@@ -308,16 +296,15 @@
 │              └─ Expression
 │                 └─ CompoundIdentifier
 │                    └─ Identifier: b
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: vargs_any_implicit
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Variadic:
-│  │        └─ CompoundIdentifier
-│  │           └─ Identifier: @any
-│  └─ FunctionBody
+├─ Function
+│  ├─ Identifier: vargs_any_implicit
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Variadic:
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @any
+│  └─ Body
 │     ├─ Statement
 │     │  └─ VariableDeclaration
 │     │     ├─ CompoundIdentifier
@@ -339,124 +326,116 @@
 │                    │  └─ Number: 1
 │                    └─ CompoundIdentifier
 │                       └─ Identifier: vargs
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: vargs_any_explicit
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Variadic:
-│  │        └─ CompoundIdentifier
-│  │           └─ Identifier: @any
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: vargs_type
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Variadic:
-│  │        └─ CompoundIdentifier
-│  │           └─ Identifier: @int
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: vargs_complex_type
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     └─ Variadic:
-│  │        └─ Reference
-│  │           └─ CompoundIdentifier
-│  │              └─ Identifier: @int
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: args1_vargs_implicit
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     ├─ Arguments:
-│  │     │  └─ VariableDeclaration
-│  │     │     ├─ Reference
-│  │     │     │  └─ CompoundIdentifier
-│  │     │     │     └─ Identifier: @int
-│  │     │     └─ Identifier: i
-│  │     └─ Variadic:
-│  │        └─ CompoundIdentifier
-│  │           └─ Identifier: @any
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: args1_vargs_explicit
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     ├─ Arguments:
-│  │     │  └─ VariableDeclaration
-│  │     │     ├─ Reference
-│  │     │     │  └─ CompoundIdentifier
-│  │     │     │     └─ Identifier: @int
-│  │     │     └─ Identifier: i
-│  │     └─ Variadic:
-│  │        └─ CompoundIdentifier
-│  │           └─ Identifier: @int
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: args3_vargs_implicit
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     ├─ Arguments:
-│  │     │  ├─ VariableDeclaration
-│  │     │  │  ├─ CompoundIdentifier
-│  │     │  │  │  └─ Identifier: @str
-│  │     │  │  └─ Identifier: s
-│  │     │  ├─ VariableDeclaration
-│  │     │  │  ├─ CompoundIdentifier
-│  │     │  │  │  └─ Identifier: @int
-│  │     │  │  └─ Identifier: i
-│  │     │  └─ VariableDeclaration
-│  │     │     ├─ Reference
-│  │     │     │  └─ CompoundIdentifier
-│  │     │     │     └─ Identifier: @int
-│  │     │     └─ Identifier: ri
-│  │     └─ Variadic:
-│  │        └─ CompoundIdentifier
-│  │           └─ Identifier: @any
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: args3_vargs_explicit
-│  │  └─ FunctionType
-│  │     ├─ CompoundIdentifier
-│  │     │  └─ Identifier: @void
-│  │     ├─ Arguments:
-│  │     │  ├─ VariableDeclaration
-│  │     │  │  ├─ CompoundIdentifier
-│  │     │  │  │  └─ Identifier: @str
-│  │     │  │  └─ Identifier: s
-│  │     │  ├─ VariableDeclaration
-│  │     │  │  ├─ CompoundIdentifier
-│  │     │  │  │  └─ Identifier: @int
-│  │     │  │  └─ Identifier: i
-│  │     │  └─ VariableDeclaration
-│  │     │     ├─ Reference
-│  │     │     │  └─ CompoundIdentifier
-│  │     │     │     └─ Identifier: @int
-│  │     │     └─ Identifier: ri
-│  │     └─ Variadic:
-│  │        └─ CompoundIdentifier
-│  │           └─ Identifier: @int
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: call_vargs
-│  │  └─ FunctionType
+├─ Function
+│  ├─ Identifier: vargs_any_explicit
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Variadic:
 │  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @void
-│  └─ FunctionBody
+│  │        └─ Identifier: @any
+│  └─ Body
+├─ Function
+│  ├─ Identifier: vargs_type
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Variadic:
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @int
+│  └─ Body
+├─ Function
+│  ├─ Identifier: vargs_complex_type
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  └─ Variadic:
+│  │     └─ Reference
+│  │        └─ CompoundIdentifier
+│  │           └─ Identifier: @int
+│  └─ Body
+├─ Function
+│  ├─ Identifier: args1_vargs_implicit
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  ├─ Arguments:
+│  │  │  └─ VariableDeclaration
+│  │  │     ├─ Reference
+│  │  │     │  └─ CompoundIdentifier
+│  │  │     │     └─ Identifier: @int
+│  │  │     └─ Identifier: i
+│  │  └─ Variadic:
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @any
+│  └─ Body
+├─ Function
+│  ├─ Identifier: args1_vargs_explicit
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  ├─ Arguments:
+│  │  │  └─ VariableDeclaration
+│  │  │     ├─ Reference
+│  │  │     │  └─ CompoundIdentifier
+│  │  │     │     └─ Identifier: @int
+│  │  │     └─ Identifier: i
+│  │  └─ Variadic:
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @int
+│  └─ Body
+├─ Function
+│  ├─ Identifier: args3_vargs_implicit
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  ├─ Arguments:
+│  │  │  ├─ VariableDeclaration
+│  │  │  │  ├─ CompoundIdentifier
+│  │  │  │  │  └─ Identifier: @str
+│  │  │  │  └─ Identifier: s
+│  │  │  ├─ VariableDeclaration
+│  │  │  │  ├─ CompoundIdentifier
+│  │  │  │  │  └─ Identifier: @int
+│  │  │  │  └─ Identifier: i
+│  │  │  └─ VariableDeclaration
+│  │  │     ├─ Reference
+│  │  │     │  └─ CompoundIdentifier
+│  │  │     │     └─ Identifier: @int
+│  │  │     └─ Identifier: ri
+│  │  └─ Variadic:
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @any
+│  └─ Body
+├─ Function
+│  ├─ Identifier: args3_vargs_explicit
+│  ├─ FunctionType
+│  │  ├─ CompoundIdentifier
+│  │  │  └─ Identifier: @void
+│  │  ├─ Arguments:
+│  │  │  ├─ VariableDeclaration
+│  │  │  │  ├─ CompoundIdentifier
+│  │  │  │  │  └─ Identifier: @str
+│  │  │  │  └─ Identifier: s
+│  │  │  ├─ VariableDeclaration
+│  │  │  │  ├─ CompoundIdentifier
+│  │  │  │  │  └─ Identifier: @int
+│  │  │  │  └─ Identifier: i
+│  │  │  └─ VariableDeclaration
+│  │  │     ├─ Reference
+│  │  │     │  └─ CompoundIdentifier
+│  │  │     │     └─ Identifier: @int
+│  │  │     └─ Identifier: ri
+│  │  └─ Variadic:
+│  │     └─ CompoundIdentifier
+│  │        └─ Identifier: @int
+│  └─ Body
+├─ Function
+│  ├─ Identifier: call_vargs
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @void
+│  └─ Body
 │     ├─ Statement
 │     │  └─ VariableDeclaration
 │     │     ├─ Array
@@ -687,39 +666,36 @@
 │                 └─ Expression
 │                    └─ CompoundIdentifier
 │                       └─ Identifier: __gen_fun_8
-├─ FunctionDeclaration
+├─ Function
+│  ├─ Declaration
 │  ├─ Identifier: cdecl_proto
 │  └─ FunctionType
 │     └─ CompoundIdentifier
 │        └─ Identifier: @void
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: cdecl_fun
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @void
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: cdecl_priv_fun
-│  │  ├─ Modifiers: private
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @void
-│  └─ FunctionBody
-├─ FunctionDefinition
-│  ├─ FunctionDeclaration
-│  │  ├─ Identifier: cdecl_inl_fun
-│  │  ├─ Modifiers: inline
-│  │  └─ FunctionType
-│  │     └─ CompoundIdentifier
-│  │        └─ Identifier: @void
-│  └─ FunctionBody
-└─ FunctionDefinition
-   ├─ FunctionDeclaration
-   │  ├─ Identifier: cdecl_priv_inl_fun
-   │  ├─ Modifiers: inline, private
-   │  └─ FunctionType
-   │     └─ CompoundIdentifier
-   │        └─ Identifier: @void
-   └─ FunctionBody
+├─ Function
+│  ├─ Identifier: cdecl_fun
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @void
+│  └─ Body
+├─ Function
+│  ├─ Identifier: cdecl_priv_fun
+│  ├─ Modifiers: private
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @void
+│  └─ Body
+├─ Function
+│  ├─ Identifier: cdecl_inl_fun
+│  ├─ Modifiers: inline
+│  ├─ FunctionType
+│  │  └─ CompoundIdentifier
+│  │     └─ Identifier: @void
+│  └─ Body
+└─ Function
+   ├─ Identifier: cdecl_priv_inl_fun
+   ├─ Modifiers: inline, private
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @void
+   └─ Body
