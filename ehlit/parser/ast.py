@@ -386,9 +386,7 @@ class GenericExternInclusion(UnorderedScope):
         self.syms: List[Node] = []
 
     def build(self) -> 'GenericExternInclusion':
-        """! Build the node, this actually imports the file
-        @param parent @b Node The parent of this node
-        """
+        """! Build the node, this actually imports the file"""
         super().build()
         parsed: List[Node] = []
         try:
