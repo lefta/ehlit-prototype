@@ -1,4 +1,4 @@
-PROJECT_NAME           = "Ehlit Code"
+PROJECT_NAME           = "Ehlit Language"
 
 INPUT                  = "ehlit"
 EXTRACT_PRIVATE        = YES
