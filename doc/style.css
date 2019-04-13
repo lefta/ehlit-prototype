@@ -1,1 +1,99 @@
+/* Make sure users get Roboto, even if not installed */
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+
+/* Fix parameters style */
+.memname tbody, .memname tr { display: flex }
 .paramtype { display: none }
+
+/* Fix padding of code fragments */
+div.fragment { padding: .2em .3em }
+
+/* More beautiful style */
+
+#top {
+    background: #388e3c;
+    color: white;
+}
+
+#titlearea {
+    padding-right: 8px;
+    border-bottom: none;
+}
+
+#projectname {
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 2.5em;
+}
+
+#main-menu { background: none }
+
+@media(min-width:768px) {
+    #top {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+    }
+    #titlearea {
+        width: auto;
+    }
+    #main-nav {
+        flex-grow: 1;
+        padding-bottom: 7px;
+    }
+}
+
+.sm-dox a, .sm-dox a:hover, .sm-dox a:focus, .sm-dox a:active, .sm-dox a.highlighted {
+    color: white;
+    text-shadow: none;
+    font-size: 14px;
+    background-image: none;
+}
+.sm-dox a:hover { background: #186E1C }
+.sm-dox ul a:hover {
+    background: #388e3c;
+    text-shadow: none;
+}
+
+#MSearchBox .left, #MSearchBox .right, #MSearchField { background: white }
+#MSearchBox .left {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+#MSearchBox .right {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.navpath ul {
+    background: #c7ffd7;
+    border: none;
+    font-size: 12px;
+}
+.navpath li b {
+    font-weight: 500;
+}
+.navpath li.navelem a {
+    color: black;
+    font-family: inherit;
+    font-weight: 500;
+    text-shadow: none;
+}
+
+div.header { background: none }
+
+.memtitle, .memproto { background: #c7ffd7 }
+.memtitle {
+    margin: 0 0 -1;
+    padding: 8px 12px 4px;
+}
+.permalink { vertical-align: 1px }
+.memdoc { background-image: none }
+
+a {
+    color: #247A28;
+}
+
+.mdescLeft, .mdescRight, .memItemLeft, .memItemRight, .memTemplItemLeft, .memTemplItemRight,
+.memTemplParams {
+    background-color: #e9fff0;
+}
