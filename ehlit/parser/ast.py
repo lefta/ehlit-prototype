@@ -35,7 +35,19 @@ included: List[str] = []
 
 
 class DeclarationLookup(list):
+    """! List of found declarations for an identifier. """
     def __init__(self, name: str, decls: Optional[List['Node']] = None) -> None:
+        """!
+        Constructor
+
+        The optional @c decls param may be used as a shorthand for
+        @code{.py}
+        lookup = DeclarationLookup('foo')
+        lookup.find_in(decls)
+        @endcode
+        @param name @b str Name of the identifier to be found
+        @param decls @b List[Node] Initial list of nodes in which the symbol should be searched
+        """
         super().__init__()
         self._error: Optional[str] = None
         self._name = name
@@ -43,6 +55,12 @@ class DeclarationLookup(list):
             self.find_in(decls)
 
     def get_inner_declaration(self, sym: str) -> 'DeclarationLookup':
+        """!
+        Get an inner declaration in the declarations found by this lookup
+
+        @param sym @b str The name of the declaration to be found
+        @return @b DeclarationLookup The inner declarations matching @c sym
+        """
         res: DeclarationLookup = DeclarationLookup(sym)
         for decl in self:
             res.merge(decl.get_inner_declaration(sym))
@@ -50,21 +68,41 @@ class DeclarationLookup(list):
 
     @property
     def error(self) -> str:
+        """!
+        @c property @b str Error that occured during lookup
+
+        This property holds a user-friendly error string to be displayed when no declaration could
+        be found. It defaults to "use of undeclared identifier foo", but may be overriden to
+        display a more contextual message.
+        """
         if self._error is None:
             return "use of undeclared identifier {}".format(self._name)
         return self._error
 
+    """! @cond display_property_setter """
     @error.setter
     def error(self, err: str) -> None:
         self._error = err
+    """! @endcond display_property_setter """
 
     def merge(self, other: 'DeclarationLookup') -> None:
+        """!
+        Merge an other @c DeclarationLookup into this one
+
+        @note Both lookups must refer to the same symbol, otherwise an exception will be raised.
+        @param other @b DeclarationLookup The lookup that have to merged into this one.
+        """
         assert self._name == other._name
         self.extend(other)
         if self._error is None:
             self._error = other._error
 
     def find_in(self, decls: List['Node']) -> None:
+        """!
+        Find matching declarations in a list of nodes.
+
+        @param decls @b List[Node] The list of nodes in which to find the declaration.
+        """
         for decl in decls:
             self.merge(decl.get_declaration(self._name))
 
