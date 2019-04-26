@@ -306,6 +306,15 @@ class Node:
         """
         self.parent.do_before(do, self)
 
+    def do_after(self, do: 'Node', after: 'Node') -> None:
+        """! Do something after executing the current node
+        By default, this call is only propagated to this node's parent. It will get handled by node
+        types that are able to handle the requested action.
+        @param do @c Node The node representing the action to execute.
+        @param after @c Node The node after which the action shall be executed.
+        """
+        self.parent.do_after(do, self)
+
     def generate_var_name(self) -> str:
         """! Generate a variable name
         The generated variable name is ensured to be unique in its scope.
@@ -405,6 +414,18 @@ class FlowScope(Scope):
         assert isinstance(before, Statement)
         self.body.insert(self.body.index(before), self.make(do))
         self._counter += 1
+
+    def do_after(self, do: Node, after: Node) -> None:
+        """! Insert a @c Statement to be executed before @c before
+        @param do @b Node The @c Statement to be executed. It must be a @c Statement, otherwise it
+                          gets ignored
+        @param after @b Node The node after which the statement will be executed
+        """
+        if not isinstance(do, Statement):
+            super().do_after(do, after)
+            return
+        assert isinstance(after, Statement)
+        self.body.insert(self.body.index(after) + 1, do)
 
 
 class GenericExternInclusion(UnorderedScope):
