@@ -293,6 +293,7 @@ class ASTBuilder(PTNodeVisitor):
                     args.append(ast.VariableDeclaration(arg, None))
                 i += 2
         return ast.TemplatedIdentifier(
+            node.position,
             '@func',
             [ast.FunctionType(children[1], args, variadic, variadic_type)]
         )
@@ -538,6 +539,7 @@ class ASTBuilder(PTNodeVisitor):
             args = []
             variadic_type = None
         return ast.TemplatedIdentifier(
+            node.position,
             '@func',
             [ast.FunctionType(children[0], args, variadic_type is not None, variadic_type)]
         ), children[1]
@@ -681,7 +683,7 @@ class ASTBuilder(PTNodeVisitor):
             args, variadic_type = child_i
             if len(children) > i + 1:
                 body = children[i + 1]
-        typ = ast.TemplatedIdentifier('@func', [ast.FunctionType(
+        typ = ast.TemplatedIdentifier(node.position, '@func', [ast.FunctionType(
             ast.CompoundIdentifier([ast.Identifier(node.position, '@void')]),
             args,
             variadic_type is not None,

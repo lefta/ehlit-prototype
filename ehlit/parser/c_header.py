@@ -142,7 +142,7 @@ class CMacroFunction(ast.Function):
         super().__init__(
             0,
             ast.Qualifier.NONE,
-            ast.TemplatedIdentifier('@func', [ast.FunctionType(
+            ast.TemplatedIdentifier(0, '@func', [ast.FunctionType(
                 CAnyType.make_symbol(),
                 [ast.VariableDeclaration(CAnyType.make_symbol(), None)] * arg_cnt
             )]),
@@ -304,7 +304,7 @@ def parse_FUNCTION_DECL(cursor: Cursor) -> ast.Node:
     return ast.Function(
         0,
         ast.Qualifier.NONE,
-        ast.TemplatedIdentifier('@func', [ast.FunctionType(
+        ast.TemplatedIdentifier(0, '@func', [ast.FunctionType(
             ret_type,
             args,
             cursor.type.is_function_variadic()
@@ -518,7 +518,7 @@ def type_FUNCTIONPROTO(typ: Type) -> ast.Node:
         args.append(ast.VariableDeclaration(res, None))
     ret_type: ast.Node = type_to_ehlit(typ.get_result())
     assert isinstance(ret_type, ast.Symbol)
-    return ast.TemplatedIdentifier('@func', [ast.FunctionType(ret_type, args)])
+    return ast.TemplatedIdentifier(0, '@func', [ast.FunctionType(ret_type, args)])
 
 
 def type_UNEXPOSED(typ: Type) -> ast.Node:

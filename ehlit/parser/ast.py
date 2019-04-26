@@ -1065,7 +1065,7 @@ class FunctionType(Type):
         return FunctionType(self.ret, self.args, self.is_variadic)
 
     def from_any(self) -> Symbol:
-        return TemplatedIdentifier('func', [self])
+        return TemplatedIdentifier(self.pos, 'func', [self])
 
     @property
     def mangled(self) -> str:
@@ -1833,7 +1833,7 @@ class CompoundIdentifier(Symbol):
 
 
 class TemplatedIdentifier(Symbol):
-    def __init__(self, name: str, types: List[Union[Symbol, Type]]) -> None:
+    def __init__(self, pos: int, name: str, types: List[Union[Symbol, Type]]) -> None:
         super().__init__()
         self._name: str = name
         self.types: List[Union[Symbol, Type]] = types
