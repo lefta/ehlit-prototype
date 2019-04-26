@@ -79,11 +79,9 @@ class DeclarationLookup(list):
             return "use of undeclared identifier {}".format(self._name)
         return self._error
 
-    """! @cond display_property_setter """
     @error.setter
     def error(self, err: str) -> None:
         self._error = err
-    """! @endcond display_property_setter """
 
     def merge(self, other: 'DeclarationLookup') -> None:
         """!
