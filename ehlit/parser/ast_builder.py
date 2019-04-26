@@ -228,6 +228,10 @@ class ASTBuilder(PTNodeVisitor):
         typed_children[1].operator = typed_children[0]
         return typed_children[1]
 
+    def visit_cast(self, node: ParseTreeNode, children: Tuple[StrMatch, ast.Symbol, ast.Expression]
+                   ) -> ast.Cast:
+        return ast.Cast(node.position, children[1], children[2])
+
     # Types
     #######
 

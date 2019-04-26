@@ -56,7 +56,7 @@ int main() {
   func<ref test_class(ref test_class)> psf = class_fun
   ref rcls = any_fun(rcls)
   cls = any_fun(cls)
-  ref rcls = ref test_class(0)
+  ref rcls = cast<ref test_class>(0)
 
   return 0
 }

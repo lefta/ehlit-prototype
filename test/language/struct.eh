@@ -35,7 +35,7 @@ int main() {
   func<ref test_struct(ref test_struct)> psf = struct_fun
   ref rt = any_fun(rt)
   t = any_fun(t)
-  ref rt = ref test_struct(0)
+  ref rt = cast<ref test_struct>(0)
 
   return 0
 }

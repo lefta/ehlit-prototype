@@ -217,9 +217,9 @@ class ImportWriter:
             self.write(node.assign)
 
     def writeCast(self, node: Cast) -> None:
-        self.write(node.sym)
+        self.write(node.types[0])
         self.file.write('(')
-        self.write(node.args[0])
+        self.write(node.arg)
         self.file.write(')')
 
     def writeContainerStructure(self, node: ContainerStructure) -> None:

@@ -35,7 +35,7 @@ int main() {
   func<ref test_union(ref test_union)> psf = union_fun
   ref rt = any_fun(rt)
   t = any_fun(t)
-  ref rt = ref test_union(0)
+  ref rt = cast<ref test_union>(0)
 
   return 0
 }

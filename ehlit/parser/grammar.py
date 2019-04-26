@@ -142,8 +142,12 @@ def anonymous_array() -> GrammarType:
     return '[', OneOrMore(expression, sep=','), ']'
 
 
+def cast() -> GrammarType:
+    return 'cast', '<', full_type, '>', '(', expression, ')'
+
+
 def value() -> GrammarType:
-    return [null_value, bool_value, sizeof, function_call, prefix_operator_value,
+    return [cast, null_value, bool_value, sizeof, function_call, prefix_operator_value,
             suffix_operator_value, writable_value, string, char, decimal_number, number,
             anonymous_array], array_access
 

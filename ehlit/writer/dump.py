@@ -169,8 +169,8 @@ class DumpWriter:
     def dumpCast(self, node: Union[Node, str]) -> None:
         node = cast(Cast, node)
         self.dump('Cast')
-        self.print_node(node.sym)
-        self.print_node(node.args[0], False)
+        self.print_node(node.types[0])
+        self.print_node(node.arg, False)
 
     @indent
     def dumpFunctionCall(self, call: Union[Node, str]) -> None:

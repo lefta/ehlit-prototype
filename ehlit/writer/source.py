@@ -365,10 +365,11 @@ class SourceWriter:
     def writeCast(self, node: Cast) -> None:
         self.write_value(node)
         self.file.write('((')
-        self.write_type_prefix(node.sym)
-        self.write(node.sym)
+        assert isinstance(node.types[0], Symbol)
+        self.write_type_prefix(node.types[0])
+        self.write(node.types[0])
         self.file.write(')')
-        self.write(node.args[0])
+        self.write(node.arg)
         self.file.write(')')
 
     def writeFunctionCall(self, call: FunctionCall) -> None:

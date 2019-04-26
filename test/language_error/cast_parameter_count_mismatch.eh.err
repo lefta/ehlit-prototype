@@ -1,3 +1,0 @@
-language_error/cast_parameter_count_mismatch.eh:2:3: cast requires a value
-language_error/cast_parameter_count_mismatch.eh:4:3: too many values for cast expression
-language_error/cast_parameter_count_mismatch.eh:5:3: too many values for cast expression

@@ -28,7 +28,7 @@ int main() {
   func<ref TestEnum(ref TestEnum)> psf = enum_fun
   ref re = any_fun(re)
   e = any_fun(e)
-  ref re = ref TestEnum(0)
+  ref re = cast<ref TestEnum>(0)
 
   return 0
 }

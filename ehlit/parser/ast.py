@@ -1403,42 +1403,6 @@ class InitializationList(Value):
         return BuiltinType('@any')
 
 
-class Cast(Value):
-    def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
-        super().__init__(pos)
-        self.sym: Symbol = sym
-        self.args: List[Expression] = args
-        self.sym.parent = self
-        for node in self.args:
-            node.parent = self
-        assert isinstance(sym.canonical, Type)
-        self._typ: Type = sym.canonical
-
-    def build(self) -> 'Cast':
-        super().build()
-        if len(self.args) < 1:
-            self.error(self.pos, 'cast requires a value')
-        elif len(self.args) > 1:
-            self.error(self.pos, 'too many values for cast expression')
-        else:
-            self.args[0].build()
-        return self
-
-    @property
-    def typ(self) -> Type:
-        return self._typ
-
-    @property
-    def decl(self) -> Type:
-        return self._typ
-
-    def auto_cast(self, target: Union[Symbol, Type]) -> None:
-        sym_ref_offset: int = self.sym.ref_offset
-        self.sym.auto_cast(target)
-        self.ref_offset = self.sym.ref_offset
-        self.sym.ref_offset = sym_ref_offset
-
-
 class FunctionCall(Value):
     def __init__(self, pos: int, sym: Symbol, args: List[Expression]) -> None:
         super().__init__(pos)
@@ -1454,8 +1418,6 @@ class FunctionCall(Value):
         self.sym = self.sym.build()
         if self.this_ptr is not None:
             self.this_ptr = self.this_ptr.build()
-        if self.sym.is_type:
-            return self.parent.make(Cast(self.pos, self.sym, self.args))
         self.args = [a.build() for a in self.args]
         res = self._reorder()
         if self.sym.canonical is None:
@@ -1867,6 +1829,35 @@ class TemplatedIdentifier(Symbol):
     def mangled(self) -> str:
         assert isinstance(self.types[0], Type)
         return 't{}'.format(self.types[0].mangled)
+
+
+class Cast(TemplatedIdentifier):
+    def __init__(self, pos: int, sym: Symbol, arg: Expression) -> None:
+        super().__init__(pos, '@cast', [sym])
+        self.arg: Expression = arg
+        self.arg.parent = self
+
+    def build(self) -> 'Cast':
+        super().build()
+        self.arg = self.arg.build()
+        return self
+
+    @property
+    def typ(self) -> Type:
+        assert isinstance(self.types[0], Symbol)
+        assert isinstance(self.types[0].canonical, Type)
+        return self.types[0].canonical
+
+    @property
+    def decl(self) -> Type:
+        return self.typ
+
+    def auto_cast(self, target: Union[Symbol, Type]) -> None:
+        assert isinstance(self.types[0], Symbol)
+        sym_ref_offset: int = self.types[0].ref_offset
+        self.types[0].auto_cast(target)
+        self.ref_offset = self.types[0].ref_offset
+        self.types[0].ref_offset = sym_ref_offset
 
 
 class String(Value):
