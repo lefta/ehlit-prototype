@@ -1802,6 +1802,8 @@ class CompoundIdentifier(Symbol):
 
     @property
     def decl(self) -> Optional[DeclarationBase]:
+        if not self.built:
+            self._find_children_declarations()
         return self.elems[-1].decl
 
     @property
