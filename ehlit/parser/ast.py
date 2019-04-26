@@ -1188,9 +1188,7 @@ class VariableDeclaration(Declaration):
 
     def build(self) -> 'VariableDeclaration':
         super().build()
-        if self.assign is not None:
-            self.assign = self.assign.build()
-            self.assign.expr.auto_cast(self.typ)
+        self._construct()
         return self
 
     @property
@@ -1239,13 +1237,39 @@ class VariableDeclaration(Declaration):
 
     @property
     def assign(self) -> Optional[Assignment]:
+        if isinstance(self._assign, list):
+            return None
         return self._assign
 
     @assign.setter
-    def assign(self, assign: Optional[Assignment]) -> None:
-        self._assign = assign
-        if self._assign is not None:
+    def assign(self, assign: Optional[Union[Assignment, List['Expression']]]) -> None:
+        self._assign: Optional[Union[Assignment, List['Expression']]] = assign
+        if isinstance(self._assign, Assignment):
             self._assign.parent = self
+
+    def _construct(self) -> None:
+        if isinstance(self.assign, Assignment):
+            self.assign = self.assign.build()
+            if not self.is_child_of(FunctionType):
+                self.assign.expr.auto_cast(self.typ)
+        elif not self.is_child_of(FunctionType):
+            if isinstance(self.typ, EhClass):
+                self._call_ctor()
+
+    def _call_ctor(self) -> None:
+        assert isinstance(self.typ, EhClass)
+        if len(self.typ.ctors) == 0:
+            return
+        if self._assign is None:
+            self._assign = []
+        assert isinstance(self._assign, list)
+        assert self.sym is not None
+        self.do_after(Statement(FunctionCall(
+            self.pos,
+            CompoundIdentifier([self.sym, Identifier(self.pos, '@ctor')]),
+            self._assign
+        )), self)
+        self.assign = None
 
 
 class Function(Declaration, FlowScope):

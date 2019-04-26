@@ -109,9 +109,12 @@ def referenced_value() -> GrammarType:
     return 'ref', writable_value, array_access
 
 
+def function_args() -> GrammarType:
+    return '(', ZeroOrMore(expression, sep=','), trailing_comma, ')'
+
+
 def function_call() -> GrammarType:
-    return ([full_type, compound_identifier], '(', ZeroOrMore(expression, sep=','), trailing_comma,
-            ')')
+    return [full_type, compound_identifier], function_args
 
 
 def writable_value() -> GrammarType:
@@ -256,7 +259,7 @@ def variable_declaration() -> GrammarType:
 
 
 def variable_declaration_assignable() -> GrammarType:
-    return variable_declaration, Optional(assignment)
+    return variable_declaration, Optional([assignment, function_args])
 
 
 def local_variable_declaration() -> GrammarType:

@@ -235,6 +235,11 @@
 │     │     │  └─ Identifier: test_class
 │     │     └─ Identifier: cls
 │     ├─ Statement
+│     │  └─ FunctionCall
+│     │     ├─ CompoundIdentifier
+│     │     │  └─ Identifier: @ctor
+│     │     └─ Arguments
+│     ├─ Statement
 │     │  └─ VariableAssignment
 │     │     ├─ CompoundIdentifier
 │     │     │  ├─ Identifier: cls
@@ -477,15 +482,65 @@
 │           ├─ CompoundIdentifier
 │           │  └─ Identifier: ctor_args
 │           └─ Identifier: cls
+├─ Function
+│  ├─ Declaration
+│  ├─ Identifier: ref_ctor_cls_fun
+│  └─ FunctionType
+│     ├─ CompoundIdentifier
+│     │  └─ Identifier: @void
+│     └─ Arguments:
+│        └─ VariableDeclaration
+│           ├─ Reference
+│           │  └─ CompoundIdentifier
+│           │     └─ Identifier: ctor_args
+│           └─ Identifier: cls
 └─ Function
-   ├─ Declaration
-   ├─ Identifier: ref_ctor_cls_fun
-   └─ FunctionType
-      ├─ CompoundIdentifier
-      │  └─ Identifier: @void
-      └─ Arguments:
+   ├─ Identifier: ctor_dtor_tests
+   ├─ FunctionType
+   │  └─ CompoundIdentifier
+   │     └─ Identifier: @void
+   └─ Body
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: test_class
+      │     └─ Identifier: cls
+      ├─ Statement
+      │  └─ FunctionCall
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @ctor
+      │     └─ Arguments
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: test_class
+      │     ├─ Identifier: rcls
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ CompoundIdentifier
+      │              └─ Identifier: cls
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: ctor_args
+      │     └─ Identifier: cls2
+      ├─ Statement
+      │  └─ FunctionCall
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: @ctor
+      │     └─ Arguments
+      │        ├─ Expression
+      │        │  └─ Number: 42
+      │        └─ Expression
+      │           └─ String: Hello
+      └─ Statement
          └─ VariableDeclaration
             ├─ Reference
             │  └─ CompoundIdentifier
             │     └─ Identifier: ctor_args
-            └─ Identifier: cls
+            ├─ Identifier: rcls2
+            └─ Assignment
+               └─ Expression
+                  └─ CompoundIdentifier
+                     └─ Identifier: cls2

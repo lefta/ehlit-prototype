@@ -110,17 +110,13 @@ class ASTBuilder(PTNodeVisitor):
         children[2].set_child(children[1])
         return ast.Reference(children[2].to_array_access())
 
-    # children is variable length here, but typings do not allow to show it
+    def visit_function_args(self, node: ParseTreeNode, children: Tuple[ast.Expression]
+                            ) -> List[ast.Expression]:
+        return list(children)[::2]
+
     def visit_function_call(self, node: ParseTreeNode,
-                            children: Tuple[ast.Symbol, ast.Expression]) -> ast.FunctionCall:
-        args: List[ast.Expression] = []
-        i = 1
-        while i < len(children):
-            exp: Union[ast.Symbol, ast.Expression] = children[i]
-            assert isinstance(exp, ast.Expression)
-            args.append(exp)
-            i += 2
-        return ast.FunctionCall(node.position, children[0], args)
+                            children: Tuple[ast.Symbol, List[ast.Expression]]) -> ast.FunctionCall:
+        return ast.FunctionCall(node.position, children[0], children[1])
 
     def visit_prefix_operator_value(self, node: ParseTreeNode,
                                     children: Tuple[StrMatch, ast.Symbol]

@@ -61,6 +61,7 @@ void* _EF7any_funB3any(void* p)
 int32_t main(void)
 {
     struct _EC10test_class cls;
+    _EC10test_classI(&cls);
     cls.field1 = 0;
     cls.field2 = "123456";
     cls.field3 = NULL;
@@ -94,3 +95,13 @@ void _EC9ctor_argsIB3intB3str(struct _EC9ctor_args* this, int32_t i, char* s)
 void _EF12ctor_cls_funC9ctor_args(struct _EC9ctor_args cls);
 
 void _EF16ref_ctor_cls_funrC9ctor_args(struct _EC9ctor_args* cls);
+
+void _EF15ctor_dtor_tests(void)
+{
+    struct _EC10test_class cls;
+    _EC10test_classI(&cls);
+    struct _EC10test_class* rcls = &cls;
+    struct _EC9ctor_args cls2;
+    _EC9ctor_argsIB3intB3str(&cls2, 42, "Hello");
+    struct _EC9ctor_args* rcls2 = &cls2;
+}

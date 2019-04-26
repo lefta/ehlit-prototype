@@ -69,3 +69,11 @@ class ctor_args {
 
 void ctor_cls_fun(ctor_args cls)
 void ref_ctor_cls_fun(ref ctor_args cls)
+
+void ctor_dtor_tests() {
+  test_class cls
+  ref test_class rcls = cls
+
+  ctor_args cls2(42, "Hello")
+  ref ctor_args rcls2 = cls2
+}
