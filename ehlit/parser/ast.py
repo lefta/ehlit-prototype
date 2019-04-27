@@ -398,7 +398,8 @@ class FlowScope(Scope):
         super().build()
         self._counter: int = 0
         while self._counter < len(self.body):
-            self.body[self._counter] = self.make(self.body[self._counter])
+            res = self.make(self.body[self._counter])
+            self.body[self._counter] = res
             self._counter += 1
         return self
 
@@ -412,8 +413,11 @@ class FlowScope(Scope):
             super().do_before(do, before)
             return
         assert isinstance(before, Statement)
-        self.body.insert(self.body.index(before), self.make(do))
+        idx: int = self.body.index(before)
+        self.body.insert(idx, do)
         self._counter += 1
+        res = self.make(self.body[idx])
+        self.body[idx] = res
 
     def do_after(self, do: Node, after: Node) -> None:
         """! Insert a @c Statement to be executed before @c before
@@ -425,7 +429,12 @@ class FlowScope(Scope):
             super().do_after(do, after)
             return
         assert isinstance(after, Statement)
-        self.body.insert(self.body.index(after) + 1, do)
+        idx: int = self.body.index(after) + 1
+        if idx <= self._counter:
+            self.body.insert(idx, self.make(do))
+            self._counter += 1
+        else:
+            self.body.insert(idx, do)
 
 
 class GenericExternInclusion(UnorderedScope):
