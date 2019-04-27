@@ -446,6 +446,12 @@
 │     │              │     └─ Identifier: test_class
 │     │              └─ Expression
 │     │                 └─ Number: 0
+│     ├─ Statement
+│     │  └─ Expression
+│     │     └─ FunctionCall
+│     │        ├─ CompoundIdentifier
+│     │        │  └─ Identifier: @dtor
+│     │        └─ Arguments
 │     └─ Statement
 │        └─ Return
 │           └─ Expression
@@ -746,12 +752,48 @@
       │           │  └─ Number: 42
       │           └─ Expression
       │              └─ String: Hello
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: ref_ctor_cls_fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_5
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @dtor
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @dtor
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @dtor
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @dtor
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @dtor
+      │        └─ Arguments
       └─ Statement
          └─ Expression
             └─ FunctionCall
                ├─ CompoundIdentifier
-               │  └─ Identifier: ref_ctor_cls_fun
+               │  └─ Identifier: @dtor
                └─ Arguments
-                  └─ Expression
-                     └─ CompoundIdentifier
-                        └─ Identifier: __gen_fun_5

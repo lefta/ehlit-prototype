@@ -1299,6 +1299,9 @@ class VariableDeclaration(Declaration):
                 call = self.typ.call_ctor(CompoundIdentifier([self.sym]), self._assign)
                 if call is not None:
                     self.do_after(call, self)
+                call = self.typ.call_dtor(CompoundIdentifier([self.sym]))
+                if call is not None:
+                    self.do_at_end(call)
 
 
 class Function(Declaration, FlowScope):

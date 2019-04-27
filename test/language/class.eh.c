@@ -85,6 +85,7 @@ int32_t main(void)
     rcls = (struct EC10test_class*)EF7any_funB3any(rcls);
     cls = *(struct EC10test_class*)EF7any_funB3any(&cls);
     rcls = ((struct EC10test_class*)0);
+    EC10test_classD(&cls);
     return (0);
 }
 
@@ -138,4 +139,10 @@ void EF15ctor_dtor_tests(void)
     struct EC9ctor_args* __gen_fun_5 = malloc(sizeof(struct EC9ctor_args));
     EC9ctor_argsIB3intB3str(__gen_fun_5, 42, "Hello");
     EF16ref_ctor_cls_funrC9ctor_args(__gen_fun_5);
+    EC9ctor_argsD(&__gen_fun_4);
+    EC9ctor_argsD(&__gen_fun_3);
+    EC10test_classD(&__gen_fun_2);
+    EC10test_classD(&__gen_fun_1);
+    EC9ctor_argsD(&cls2);
+    EC10test_classD(&cls);
 }
