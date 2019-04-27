@@ -17,7 +17,7 @@ void _EC10test_classI(struct _EC10test_class* this)
 {
 }
 
-void _EC10test_classF10set_fieldsB3intB3strrAB3int(struct _EC10test_class* this, int32_t f1, char* f2, int32_t** f3)
+void _EC10test_classF10set_fieldsB3intB3strraB3int(struct _EC10test_class* this, int32_t f1, char* f2, int32_t** f3)
 {
     this->field1 = f1;
     this->field2 = f2;
@@ -67,13 +67,13 @@ int32_t main(void)
     cls.field2 = "123456";
     cls.field3 = NULL;
     _EF3funrB3int(&cls.field1);
-    _EC10test_classF10set_fieldsB3intB3strrAB3int(&cls, 42, "Hello", NULL);
+    _EC10test_classF10set_fieldsB3intB3strraB3int(&cls, 42, "Hello", NULL);
     struct _EC10test_class* rcls = &cls;
     rcls->field1 = 0;
     rcls->field2 = "123456";
     rcls->field3 = NULL;
     _EF3funrB3int(&rcls->field1);
-    _EC10test_classF10set_fieldsB3intB3strrAB3int(rcls, 42, "Hello", NULL);
+    _EC10test_classF10set_fieldsB3intB3strraB3int(rcls, 42, "Hello", NULL);
     rcls = _EF9class_funrC10test_class(&cls);
     size_t ss = sizeof(struct _EC10test_class);
     ss = sizeof(struct _EC10test_class*);

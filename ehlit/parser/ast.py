@@ -896,7 +896,7 @@ class Array(SymbolContainer):
 
     @property
     def mangled(self) -> str:
-        return '{}A{}'.format(self.qualifiers.mangled, self.child.mangled)
+        return '{}a{}'.format(self.qualifiers.mangled, self.child.mangled)
 
 
 class ArrayType(Type, Container):
@@ -929,7 +929,7 @@ class ArrayType(Type, Container):
 
     @property
     def mangled(self) -> str:
-        return 'A{}'.format(self.child.mangled)
+        return 'a{}'.format(self.child.mangled)
 
 
 class Reference(SymbolContainer):
