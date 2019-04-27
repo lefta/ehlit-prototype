@@ -1973,6 +1973,31 @@ class HeapAlloc(Value):
         return parent.make(CompoundIdentifier([Identifier(self.pos, var)]))
 
 
+class HeapDealloc(Node):
+    def __init__(self, pos: int, sym: CompoundIdentifier) -> None:
+        super().__init__(pos)
+        self.sym: CompoundIdentifier = sym
+        self.sym.parent = self
+
+    def build(self) -> 'HeapDealloc':
+        super().build()
+        self.sym = self.sym.build()
+        self.sym.auto_cast(BuiltinType('@any'))
+        self._destruct()
+        return self
+
+    def _destruct(self) -> None:
+        typ = self.sym.typ
+        if isinstance(typ, Container):
+            typ = typ.inner_child
+        if not isinstance(typ, ClassType):
+            return
+        assert isinstance(typ.decl, EhClass)
+        call = typ.decl.call_dtor(self.sym)
+        if call is not None:
+            self.do_before(call, self)
+
+
 class String(Value):
     def __init__(self, string: str) -> None:
         super().__init__()
@@ -2414,6 +2439,15 @@ class EhClass(Type, UnorderedScope):
             identifier.elems.append(Identifier(self.pos, elem.name))
         identifier.elems.append(Identifier(self.pos, '@ctor'))
         return Statement(Expression([FunctionCall(self.pos, identifier, args)], False))
+
+    def call_dtor(self, sym: CompoundIdentifier) -> Optional[Statement]:
+        if self.dtor is None:
+            return None
+        identifier = CompoundIdentifier([])
+        for elem in sym.elems:
+            identifier.elems.append(Identifier(self.pos, elem.name))
+        identifier.elems.append(Identifier(self.pos, '@dtor'))
+        return Statement(Expression([FunctionCall(self.pos, identifier, [])], False))
 
 
 class ContainerStructureType(Type):

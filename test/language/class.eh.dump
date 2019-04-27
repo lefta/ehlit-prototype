@@ -611,6 +611,28 @@
       │           └─ Expression
       │              └─ String: Hello
       ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @dtor
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ HeapDealloc
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: rcls
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @dtor
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ HeapDealloc
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: rcls2
+      ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ CompoundIdentifier
       │     │  └─ Identifier: test_class

@@ -119,6 +119,10 @@ void EF15ctor_dtor_tests(void)
     EC10test_classI(rcls);
     rcls2 = malloc(sizeof(struct EC9ctor_args));
     EC9ctor_argsIB3intB3str(rcls2, 42, "Hello");
+    EC10test_classD(rcls);
+    free(rcls);
+    EC9ctor_argsD(rcls2);
+    free(rcls2);
     struct EC10test_class __gen_fun_1;
     EC10test_classI(&__gen_fun_1);
     EF7cls_funC10test_class(__gen_fun_1);

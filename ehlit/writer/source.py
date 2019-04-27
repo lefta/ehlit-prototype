@@ -27,9 +27,9 @@ from ehlit.parser.ast import (
     Cast, Char, ClassMethod, ClassProperty, ClassType, CompoundIdentifier, Condition,
     ContainerStructure, ControlStructure, Container, DecimalNumber, Declaration, DeclarationBase,
     DoWhileLoop, EhClass, EhEnum, EhUnion, Expression, ForDoLoop, FunctionCall, Function,
-    FunctionType, HeapAlloc, Identifier, Import, Include, InitializationList, Namespace, Node,
-    NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
-    ReferenceType, Return, Scope, Sizeof, Statement, String, Struct, StructType,
+    FunctionType, HeapAlloc, HeapDealloc, Identifier, Import, Include, InitializationList,
+    Namespace, Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType,
+    ReferenceToValue, ReferenceType, Return, Scope, Sizeof, Statement, String, Struct, StructType,
     SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier,
     Type, UnionType, VariableAssignment, VariableDeclaration, Value
 )
@@ -581,6 +581,11 @@ class SourceWriter:
         self.write_type_prefix(node.sym)
         self.write(node.sym)
         self.file.write('))')
+
+    def writeHeapDealloc(self, node: HeapDealloc) -> None:
+        self.file.write('free(')
+        self.write(node.sym)
+        self.file.write(')')
 
     def writeChar(self, c: Char) -> None:
         self.file.write('\'')

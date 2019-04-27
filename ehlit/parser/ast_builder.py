@@ -154,6 +154,10 @@ class ASTBuilder(PTNodeVisitor):
             args = children[2]  # type: ignore
         return ast.HeapAlloc(node.position, children[1], args)
 
+    def visit_heap_dealloc(self, node: ParseTreeNode,
+                           children: Tuple[StrMatch, ast.CompoundIdentifier]) -> ast.HeapDealloc:
+        return ast.HeapDealloc(node.position, children[1])
+
     def visit_value(self, node: ParseTreeNode, children: Tuple[ast.Symbol, ArrayBuilder]
                     ) -> ast.Symbol:
         if len(children) == 1:

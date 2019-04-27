@@ -149,10 +149,14 @@ def heap_alloc() -> GrammarType:
     return 'new', compound_identifier, Optional(function_args)
 
 
+def heap_dealloc() -> GrammarType:
+    return 'del', compound_identifier
+
+
 def value() -> GrammarType:
-    return [heap_alloc, cast, null_value, bool_value, sizeof, function_call, prefix_operator_value,
-            suffix_operator_value, writable_value, string, char, decimal_number, number,
-            anonymous_array], array_access
+    return [heap_alloc, heap_dealloc, cast, null_value, bool_value, sizeof, function_call,
+            prefix_operator_value, suffix_operator_value, writable_value, string, char,
+            decimal_number, number, anonymous_array], array_access
 
 
 # Operators & assigment

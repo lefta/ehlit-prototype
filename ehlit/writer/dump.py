@@ -26,10 +26,11 @@ from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char,
     ClassMethod, ClassProperty, CompoundIdentifier, Condition, ControlStructure, DecimalNumber,
     Declaration, Dtor, EhClass, EhEnum, EhUnion, EnumField, Expression, ForDoLoop, FunctionCall,
-    Function, FunctionType, HeapAlloc, Identifier, Include, Import, InitializationList, Namespace,
-    Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
-    Return, Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
-    SwitchCaseTest, Symbol, TemplatedIdentifier, VariableAssignment, VariableDeclaration
+    Function, FunctionType, HeapAlloc, HeapDealloc, Identifier, Include, Import, InitializationList,
+    Namespace, Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType,
+    ReferenceToValue, Return, Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase,
+    SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, VariableAssignment,
+    VariableDeclaration
 )
 
 IndentedFnType = Callable[['DumpWriter', Union[Node, str]], None]
@@ -348,6 +349,12 @@ class DumpWriter:
         self.dump('HeapAlloc')
         self.print_node(node.sym)
         self.print_node_list('Arguments', node.args, False)
+
+    @indent
+    def dumpHeapDealloc(self, node: Union[Node, str]) -> None:
+        node = cast(HeapDealloc, node)
+        self.dump('HeapDealloc')
+        self.print_node(node.sym)
 
     @indent
     def dumpNumber(self, num: Union[Node, str]) -> None:
