@@ -58,7 +58,8 @@ def line_comment() -> GrammarType:
 def builtin_keyword() -> GrammarType:
     return ['null', 'ref', 'if', 'elif', 'else', 'while', 'do', 'for', 'return', 'func', 'alias',
             'switch', 'case', 'fallthrough', 'default', 'struct', 'union', 'const', 'restrict',
-            'volatile', 'inline', 'priv', 'namespace', 'class', bool_value]
+            'volatile', 'inline', 'priv', 'namespace', 'class', 'ctor', 'dtor', 'new', 'del',
+            bool_value]
 
 
 def builtin_type() -> GrammarType:
