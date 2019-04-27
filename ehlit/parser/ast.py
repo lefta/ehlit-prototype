@@ -315,6 +315,14 @@ class Node:
         """
         self.parent.do_after(do, self)
 
+    def do_at_end(self, do: 'Node') -> None:
+        """! Do something at the end of the current scope
+        By default, this call is only propagated to this node's parent. It will get handled by node
+        types that are able to handle the requested action.
+        @param do @c Node The node representing the action to execute.
+        """
+        self.parent.do_at_end(do)
+
     def generate_var_name(self) -> str:
         """! Generate a variable name
         The generated variable name is ensured to be unique in its scope.
@@ -390,16 +398,17 @@ class FlowScope(Scope):
     """
     def __init__(self, pos: int, body: List['Statement']) -> None:
         super().__init__(pos)
-        self.body: List[Statement] = body
-        for node in self.body:
+        self._body: List[Statement] = body
+        self._post_body: List[Statement] = []
+        for node in self._body:
             node.parent = self
 
     def build(self) -> Node:
         super().build()
         self._counter: int = 0
-        while self._counter < len(self.body):
-            res = self.make(self.body[self._counter])
-            self.body[self._counter] = res
+        while self._counter < len(self._body):
+            res = self.make(self._body[self._counter])
+            self._body[self._counter] = res
             self._counter += 1
         return self
 
@@ -413,14 +422,15 @@ class FlowScope(Scope):
             super().do_before(do, before)
             return
         assert isinstance(before, Statement)
-        idx: int = self.body.index(before)
-        self.body.insert(idx, do)
+        idx: int = self._body.index(before)
+        self._body.insert(idx, do)
         self._counter += 1
-        res = self.make(self.body[idx])
-        self.body[idx] = res
+        if not self._body[idx].built:
+            res = self.make(self._body[idx])
+            self._body[idx] = res
 
     def do_after(self, do: Node, after: Node) -> None:
-        """! Insert a @c Statement to be executed before @c before
+        """! Insert a @c Statement to be executed after @c after
         @param do @b Node The @c Statement to be executed. It must be a @c Statement, otherwise it
                           gets ignored
         @param after @b Node The node after which the statement will be executed
@@ -429,12 +439,33 @@ class FlowScope(Scope):
             super().do_after(do, after)
             return
         assert isinstance(after, Statement)
-        idx: int = self.body.index(after) + 1
+        idx: int = self._body.index(after) + 1
         if idx <= self._counter:
-            self.body.insert(idx, self.make(do))
+            self._body.insert(idx, self.make(do))
             self._counter += 1
         else:
-            self.body.insert(idx, do)
+            self._body.insert(idx, do)
+
+    def do_at_end(self, do: Node) -> None:
+        """! Execute a @c Statement at the end of this FlowScope
+        Statements stored this way will be executed in reverse order (latest appended will be
+        executed first).
+        @param do @b Node The @c Statement to be executed. It must be a @c Statement, otherwise it
+                          gets ignored
+        """
+        if not isinstance(do, Statement):
+            super().do_at_end(do)
+            return
+        self._post_body.insert(0, self.make(do))
+
+    @property
+    def body(self) -> List['Statement']:
+        if (len(self._body) != 0 and isinstance(self._body[-1], Statement) and
+                isinstance(self._body[-1].expr, Return)):
+            # Return writes end of scope itself to make sure it is executed. Only add it
+            # automatically if the scope have no return.
+            return self._body
+        return self._body + self._post_body
 
 
 class GenericExternInclusion(UnorderedScope):
@@ -1287,9 +1318,9 @@ class Function(Declaration, FlowScope):
             assert isinstance(self.typ, FunctionType)
             typ: Optional[DeclarationBase] = self.typ.ret.canonical
             if self.body_str is None:
-                self.body = []
+                self._body = []
             else:
-                self.body = function.parse(self.body_str.contents, not typ == BuiltinType('@void'))
+                self._body = function.parse(self.body_str.contents, not typ == BuiltinType('@void'))
             for stmt in self.body:
                 stmt.parent = self
             super().build()
@@ -1728,7 +1759,16 @@ class Return(Node):
                 decl = decl.parent
             assert isinstance(decl.typ, FunctionType)
             self.expr.auto_cast(decl.typ.ret)
+        self._finalize_scope()
         return self
+
+    def _finalize_scope(self) -> None:
+        parent: Node = self
+        while not isinstance(parent, Function):
+            parent = parent.parent
+            if isinstance(parent, FlowScope):
+                for stmt in parent._post_body:
+                    self.do_before(stmt, self)
 
 
 class Identifier(Value):
