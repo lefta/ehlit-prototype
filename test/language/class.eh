@@ -80,4 +80,12 @@ void ctor_dtor_tests() {
   ref rcls = new test_class
   ref rcls = new test_class()
   ref rcls2 = new ctor_args(42, "Hello")
+
+  cls_fun(test_class())
+  ref_cls_fun(test_class())
+
+  ctor_cls_fun(ctor_args(42, "Hello"))
+  ref_ctor_cls_fun(ctor_args(42, "Hello"))
+
+  ref_ctor_cls_fun(new ctor_args(42, "Hello"))
 }

@@ -1190,8 +1190,8 @@ class Declaration(DeclarationBase):
 
 
 class VariableDeclaration(Declaration):
-    def __init__(self, typ: Symbol, sym: Optional['Identifier'], assign: Optional[Assignment] = None
-                 ) -> None:
+    def __init__(self, typ: Symbol, sym: Optional['Identifier'],
+                 assign: Optional[Union[Assignment, List['Expression']]] = None) -> None:
         super().__init__(0, typ, sym, Qualifier.NONE)
         self.assign = assign
 
@@ -1461,6 +1461,8 @@ class FunctionCall(Value):
         self.sym = self.sym.build()
         if self.this_ptr is not None:
             self.this_ptr = self.this_ptr.build()
+        if self._is_type_creation:
+            return self._make_tmp_alloc()
         self.args = [a.build() for a in self.args]
         res = self._reorder()
         if self.sym.canonical is None:
@@ -1473,6 +1475,10 @@ class FunctionCall(Value):
         self._check_args(typ)
         self._auto_cast_args(typ)
         return res
+
+    @property
+    def _is_type_creation(self) -> bool:
+        return not isinstance(self.sym, Container) and isinstance(self.sym.canonical, Type)
 
     def _check_args(self, typ: FunctionType) -> None:
         diff = self.arg_count - len(typ.args)
@@ -1535,6 +1541,15 @@ class FunctionCall(Value):
         # Avoid symbol to write ref offsets, this will conflict with ours.
         self.sym.ref_offset = 0
         return parent
+
+    def _make_tmp_alloc(self) -> Value:
+        var: str = self.generate_var_name()
+        self.do_before(Statement(VariableDeclaration(
+            self.sym,
+            Identifier(self.pos, var),
+            self.args
+        )), self)
+        return self.make(CompoundIdentifier([Identifier(self.pos, var)]))
 
     @property
     def typ(self) -> Type:
@@ -1912,32 +1927,50 @@ class HeapAlloc(Value):
         for arg in self.args:
             arg.parent = self
 
-    def build(self) -> 'HeapAlloc':
+    def build(self) -> Value:
         super().build()
         self.sym = self.sym.build()
         if isinstance(self.sym.canonical, EhClass):
-            call = self.sym.canonical.call_ctor(self._var_sym, self.args)
-            if call is not None:
-                self.do_after(call, self)
+            return self._construct()
         return self
 
     @property
     def typ(self) -> Type:
         return self.make(ReferenceType(self.sym.typ))
 
+    def _construct(self) -> Value:
+        var_sym: Optional[CompoundIdentifier] = self._var_sym
+        if var_sym is None:
+            return self._make_tmp_alloc()
+        assert isinstance(self.sym.canonical, EhClass)
+        call = self.sym.canonical.call_ctor(var_sym, self.args)
+        if call is not None:
+            self.do_after(call, self)
+        return self
+
     @property
-    def _var_sym(self) -> CompoundIdentifier:
-        parent = self.parent
-        while not isinstance(parent, (VariableAssignment, VariableDeclaration)):
-            parent = parent.parent
+    def _var_sym(self) -> Optional[CompoundIdentifier]:
+        parent = self.parent.parent.parent
         if isinstance(parent, VariableAssignment):
             if isinstance(parent.var, Container):
                 assert isinstance(parent.var.inner_child, CompoundIdentifier)
                 return parent.var.inner_child
             assert isinstance(parent.var, CompoundIdentifier)
             return parent.var
-        assert parent.sym is not None
-        return CompoundIdentifier([parent.sym])
+        if isinstance(parent, VariableDeclaration):
+            assert parent.sym is not None
+            return CompoundIdentifier([parent.sym])
+        return None
+
+    def _make_tmp_alloc(self) -> Value:
+        var: str = self.generate_var_name()
+        parent = self.parent
+        arg = Expression([self], False)
+        self._parent = arg
+        decl = VariableDeclaration(Reference(self.sym), Identifier(self.pos, var), Assignment(arg))
+        self.sym._parent = decl
+        parent.do_before(Statement(decl), parent)
+        return parent.make(CompoundIdentifier([Identifier(self.pos, var)]))
 
 
 class String(Value):
@@ -2363,7 +2396,7 @@ class EhClass(Type, UnorderedScope):
         for elem in sym.elems:
             identifier.elems.append(Identifier(self.pos, elem.name))
         identifier.elems.append(Identifier(self.pos, '@ctor'))
-        return Statement(FunctionCall(self.pos, identifier, args))
+        return Statement(Expression([FunctionCall(self.pos, identifier, args)], False))
 
 
 class ContainerStructureType(Type):

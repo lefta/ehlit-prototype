@@ -235,10 +235,11 @@
 │     │     │  └─ Identifier: test_class
 │     │     └─ Identifier: cls
 │     ├─ Statement
-│     │  └─ FunctionCall
-│     │     ├─ CompoundIdentifier
-│     │     │  └─ Identifier: @ctor
-│     │     └─ Arguments
+│     │  └─ Expression
+│     │     └─ FunctionCall
+│     │        ├─ CompoundIdentifier
+│     │        │  └─ Identifier: @ctor
+│     │        └─ Arguments
 │     ├─ Statement
 │     │  └─ VariableAssignment
 │     │     ├─ CompoundIdentifier
@@ -506,10 +507,11 @@
       │     │  └─ Identifier: test_class
       │     └─ Identifier: cls
       ├─ Statement
-      │  └─ FunctionCall
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @ctor
-      │     └─ Arguments
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Reference
@@ -526,14 +528,15 @@
       │     │  └─ Identifier: ctor_args
       │     └─ Identifier: cls2
       ├─ Statement
-      │  └─ FunctionCall
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @ctor
-      │     └─ Arguments
-      │        ├─ Expression
-      │        │  └─ Number: 42
-      │        └─ Expression
-      │           └─ String: Hello
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 42
+      │           └─ Expression
+      │              └─ String: Hello
       ├─ Statement
       │  └─ VariableDeclaration
       │     ├─ Reference
@@ -556,10 +559,11 @@
       │              │  └─ Identifier: test_class
       │              └─ Arguments
       ├─ Statement
-      │  └─ FunctionCall
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @ctor
-      │     └─ Arguments
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
@@ -572,10 +576,11 @@
       │              │  └─ Identifier: test_class
       │              └─ Arguments
       ├─ Statement
-      │  └─ FunctionCall
-      │     ├─ CompoundIdentifier
-      │     │  └─ Identifier: @ctor
-      │     └─ Arguments
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
       ├─ Statement
       │  └─ VariableAssignment
       │     ├─ Reference
@@ -591,12 +596,136 @@
       │                 │  └─ Number: 42
       │                 └─ Expression
       │                    └─ String: Hello
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 42
+      │           └─ Expression
+      │              └─ String: Hello
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: test_class
+      │     └─ Identifier: __gen_fun_1
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: cls_fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_1
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: test_class
+      │     └─ Identifier: __gen_fun_2
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: ref_cls_fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_2
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: ctor_args
+      │     └─ Identifier: __gen_fun_3
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 42
+      │           └─ Expression
+      │              └─ String: Hello
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: ctor_cls_fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_3
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ CompoundIdentifier
+      │     │  └─ Identifier: ctor_args
+      │     └─ Identifier: __gen_fun_4
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 42
+      │           └─ Expression
+      │              └─ String: Hello
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: ref_ctor_cls_fun
+      │        └─ Arguments
+      │           └─ Expression
+      │              └─ CompoundIdentifier
+      │                 └─ Identifier: __gen_fun_4
+      ├─ Statement
+      │  └─ VariableDeclaration
+      │     ├─ Reference
+      │     │  └─ CompoundIdentifier
+      │     │     └─ Identifier: ctor_args
+      │     ├─ Identifier: __gen_fun_5
+      │     └─ Assignment
+      │        └─ Expression
+      │           └─ HeapAlloc
+      │              ├─ CompoundIdentifier
+      │              │  └─ Identifier: ctor_args
+      │              └─ Arguments
+      │                 ├─ Expression
+      │                 │  └─ Number: 42
+      │                 └─ Expression
+      │                    └─ String: Hello
+      ├─ Statement
+      │  └─ Expression
+      │     └─ FunctionCall
+      │        ├─ CompoundIdentifier
+      │        │  └─ Identifier: @ctor
+      │        └─ Arguments
+      │           ├─ Expression
+      │           │  └─ Number: 42
+      │           └─ Expression
+      │              └─ String: Hello
       └─ Statement
-         └─ FunctionCall
-            ├─ CompoundIdentifier
-            │  └─ Identifier: @ctor
-            └─ Arguments
-               ├─ Expression
-               │  └─ Number: 42
-               └─ Expression
-                  └─ String: Hello
+         └─ Expression
+            └─ FunctionCall
+               ├─ CompoundIdentifier
+               │  └─ Identifier: ref_ctor_cls_fun
+               └─ Arguments
+                  └─ Expression
+                     └─ CompoundIdentifier
+                        └─ Identifier: __gen_fun_5

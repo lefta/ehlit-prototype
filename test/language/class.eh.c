@@ -111,4 +111,19 @@ void _EF15ctor_dtor_tests(void)
     _EC10test_classI(rcls);
     rcls2 = malloc(sizeof(struct _EC9ctor_args));
     _EC9ctor_argsIB3intB3str(rcls2, 42, "Hello");
+    struct _EC10test_class __gen_fun_1;
+    _EC10test_classI(&__gen_fun_1);
+    _EF7cls_funC10test_class(__gen_fun_1);
+    struct _EC10test_class __gen_fun_2;
+    _EC10test_classI(&__gen_fun_2);
+    _EF11ref_cls_funrC10test_class(&__gen_fun_2);
+    struct _EC9ctor_args __gen_fun_3;
+    _EC9ctor_argsIB3intB3str(&__gen_fun_3, 42, "Hello");
+    _EF12ctor_cls_funC9ctor_args(__gen_fun_3);
+    struct _EC9ctor_args __gen_fun_4;
+    _EC9ctor_argsIB3intB3str(&__gen_fun_4, 42, "Hello");
+    _EF16ref_ctor_cls_funrC9ctor_args(&__gen_fun_4);
+    struct _EC9ctor_args* __gen_fun_5 = malloc(sizeof(struct _EC9ctor_args));
+    _EC9ctor_argsIB3intB3str(__gen_fun_5, 42, "Hello");
+    _EF16ref_ctor_cls_funrC9ctor_args(__gen_fun_5);
 }
