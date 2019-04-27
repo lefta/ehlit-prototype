@@ -25,7 +25,7 @@ from ehlit.parser.c_header import CDefine, CMacroFunction, CAnyType
 from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char,
     ClassMethod, ClassProperty, CompoundIdentifier, Condition, ControlStructure, DecimalNumber,
-    Declaration, EhClass, EhEnum, EhUnion, EnumField, Expression, ForDoLoop, FunctionCall,
+    Declaration, Dtor, EhClass, EhEnum, EhUnion, EnumField, Expression, ForDoLoop, FunctionCall,
     Function, FunctionType, HeapAlloc, Identifier, Include, Import, InitializationList, Namespace,
     Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
     Return, Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
@@ -460,6 +460,13 @@ class DumpWriter:
         self.print_node_list('Body', node.body, False)
 
     @indent
+    def dumpDtor(self, node: Union[Node, str]) -> None:
+        node = cast(Dtor, node)
+        self.dump('Destructor')
+        self.dump_qualifiers(node)
+        self.print_node_list('Body', node.body, False)
+
+    @indent
     def dumpClassProperty(self, node: Union[Node, str]) -> None:
         node = cast(ClassProperty, node)
         self.dump_variable_declaration('ClassProperty', node)
@@ -475,7 +482,9 @@ class DumpWriter:
             self.print_node_list('Properties', node.properties)
             self.print_node_list('Methods', node.methods, len(node.ctors) != 0)
             for ctor in node.ctors:
-                self.print_node(ctor, ctor != node.ctors[-1])
+                self.print_node(ctor, ctor != node.ctors[-1] or node.dtor is not None)
+            if node.dtor is not None:
+                self.print_node(node.dtor, False)
 
     @indent
     def dumpEhEnum(self, node: Union[Node, str]) -> None:

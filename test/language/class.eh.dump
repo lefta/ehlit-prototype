@@ -130,13 +130,15 @@
 │  │                    └─ Expression
 │  │                       └─ CompoundIdentifier
 │  │                          └─ Identifier: this
-│  └─ Constructor
-│     ├─ Arguments:
-│     │  └─ VariableDeclaration
-│     │     ├─ Reference
-│     │     │  └─ CompoundIdentifier
-│     │     │     └─ Identifier: test_class
-│     │     └─ Identifier: this
+│  ├─ Constructor
+│  │  ├─ Arguments:
+│  │  │  └─ VariableDeclaration
+│  │  │     ├─ Reference
+│  │  │     │  └─ CompoundIdentifier
+│  │  │     │     └─ Identifier: test_class
+│  │  │     └─ Identifier: this
+│  │  └─ Body
+│  └─ Destructor
 │     └─ Body
 ├─ Class
 │  ├─ Identifier: forward_decl
@@ -456,21 +458,23 @@
 │  │     │  └─ Identifier: @int
 │  │     └─ Identifier: foo
 │  ├─ Methods
-│  └─ Constructor
-│     ├─ Arguments:
-│     │  ├─ VariableDeclaration
-│     │  │  ├─ Reference
-│     │  │  │  └─ CompoundIdentifier
-│     │  │  │     └─ Identifier: ctor_args
-│     │  │  └─ Identifier: this
-│     │  ├─ VariableDeclaration
-│     │  │  ├─ CompoundIdentifier
-│     │  │  │  └─ Identifier: @int
-│     │  │  └─ Identifier: i
-│     │  └─ VariableDeclaration
-│     │     ├─ CompoundIdentifier
-│     │     │  └─ Identifier: @str
-│     │     └─ Identifier: s
+│  ├─ Constructor
+│  │  ├─ Arguments:
+│  │  │  ├─ VariableDeclaration
+│  │  │  │  ├─ Reference
+│  │  │  │  │  └─ CompoundIdentifier
+│  │  │  │  │     └─ Identifier: ctor_args
+│  │  │  │  └─ Identifier: this
+│  │  │  ├─ VariableDeclaration
+│  │  │  │  ├─ CompoundIdentifier
+│  │  │  │  │  └─ Identifier: @int
+│  │  │  │  └─ Identifier: i
+│  │  │  └─ VariableDeclaration
+│  │  │     ├─ CompoundIdentifier
+│  │  │     │  └─ Identifier: @str
+│  │  │     └─ Identifier: s
+│  │  └─ Body
+│  └─ Destructor
 │     └─ Body
 ├─ Function
 │  ├─ Declaration

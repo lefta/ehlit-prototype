@@ -55,5 +55,6 @@ class B {
     str name
 
     ctor(int some_arg)
+    dtor
     void method()
 }

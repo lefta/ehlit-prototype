@@ -261,6 +261,17 @@ class ImportWriter:
             self.write_function_body(node)
         self.file.write('\n')
 
+    def writeDtor(self, node: ClassMethod) -> None:
+        self.write_indent()
+        if node.qualifiers.is_private:
+            return
+        if node.qualifiers.is_inline:
+            self.file.write('inline ')
+        self.file.write('dtor')
+        if node.qualifiers.is_inline:
+            self.write_function_body(node)
+        self.file.write('\n')
+
     def writeEhClass(self, node: EhClass) -> None:
         self.file.write('\n')
         self.write_indent()
@@ -276,6 +287,8 @@ class ImportWriter:
             self.file.write('\n')
             for ctor in node.ctors:
                 self.write(ctor)
+            if node.dtor is not None:
+                self.write(node.dtor)
             for meth in node.methods:
                 self.write(meth)
             self.indent -= 1

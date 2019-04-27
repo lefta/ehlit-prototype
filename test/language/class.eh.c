@@ -17,6 +17,10 @@ void EC10test_classI(struct EC10test_class* this)
 {
 }
 
+void EC10test_classD(struct EC10test_class* this)
+{
+}
+
 void EC10test_classF10set_fieldsB3intB3strraB3int(struct EC10test_class* this, int32_t f1, char* f2, int32_t** f3)
 {
     this->field1 = f1;
@@ -90,6 +94,10 @@ struct EC9ctor_args
 };
 
 void EC9ctor_argsIB3intB3str(struct EC9ctor_args* this, int32_t i, char* s)
+{
+}
+
+void EC9ctor_argsD(struct EC9ctor_args* this)
 {
 }
 

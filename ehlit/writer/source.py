@@ -672,6 +672,9 @@ class SourceWriter:
     def writeCtor(self, node: ClassMethod) -> None:
         self.writeFunction(node)
 
+    def writeDtor(self, node: ClassMethod) -> None:
+        self.writeFunction(node)
+
     def writeEhClass(self, node: EhClass) -> None:
         self.file.write('\nstruct ')
         self.write(node.sym)
@@ -687,6 +690,8 @@ class SourceWriter:
         self.file.write(';\n')
         for ctor in node.ctors:
             self.write(ctor)
+        if node.dtor is not None:
+            self.write(node.dtor)
         for method in node.methods:
             self.write(method)
 

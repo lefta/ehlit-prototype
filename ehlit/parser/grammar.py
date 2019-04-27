@@ -466,6 +466,10 @@ def constructor() -> GrammarType:
             Optional(control_structure_body_stub))
 
 
+def destructor() -> GrammarType:
+    return (ZeroOrMore(['priv', 'inline']), 'dtor', Optional(control_structure_body_stub))
+
+
 def class_method() -> GrammarType:
     return ZeroOrMore(['priv', 'inline', 'cdecl']), function_prototype, control_structure_body_stub
 
@@ -475,7 +479,7 @@ def class_property() -> GrammarType:
 
 
 def class_contents() -> GrammarType:
-    return [constructor, class_method, class_property]
+    return [constructor, destructor, class_method, class_property]
 
 
 def eh_class() -> GrammarType:

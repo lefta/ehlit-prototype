@@ -72,6 +72,7 @@ class B {
     void method() {
         property = 42
     }
+    dtor
     str name
     ctor(int some_arg)
 }

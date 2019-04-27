@@ -2311,6 +2311,16 @@ class Ctor(ClassMethod):
         return name
 
 
+class Dtor(ClassMethod):
+    def __init__(self, pos: int, qualifiers: Qualifier, typ: TemplatedIdentifier,
+                 body_str: Optional[UnparsedContents]) -> None:
+        super().__init__(pos, qualifiers, typ, Identifier(pos, '@dtor'), body_str)
+
+    @property
+    def mangled(self) -> str:
+        return '{}D'.format(self.qualifiers.mangled)
+
+
 class EhClass(Type, UnorderedScope):
     FieldList = List[Union[ClassMethod, ClassProperty]]
 
@@ -2326,6 +2336,7 @@ class EhClass(Type, UnorderedScope):
         self._properties: List[ClassProperty] = []
         self._methods: List[ClassMethod] = []
         self._ctors: List[Ctor] = []
+        self._dtor: Optional[Dtor] = None
 
     def build(self) -> 'EhClass':
         if self.built:
@@ -2340,6 +2351,8 @@ class EhClass(Type, UnorderedScope):
                     self._properties.append(node)
                 elif isinstance(node, Ctor):
                     self._ctors.append(node)
+                elif isinstance(node, Dtor):
+                    self._dtor = node
                 else:
                     self._methods.append(node)
         return self
@@ -2385,6 +2398,10 @@ class EhClass(Type, UnorderedScope):
     @property
     def ctors(self) -> List[Ctor]:
         return self._ctors
+
+    @property
+    def dtor(self) -> Optional[Dtor]:
+        return self._dtor
 
     def call_ctor(self, sym: CompoundIdentifier, args: Optional[List[Expression]]
                   ) -> Optional[Statement]:

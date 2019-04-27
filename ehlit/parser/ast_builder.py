@@ -701,6 +701,29 @@ class ASTBuilder(PTNodeVisitor):
         assert(body is None or isinstance(body, ast.UnparsedContents))
         return ast.Ctor(node.position, qualifiers, typ, body)
 
+    def visit_destructor(self, node: ParseTreeNode, children: Tuple[str, ast.UnparsedContents]
+                         ) -> ast.Dtor:
+        qualifiers: ast.Qualifier = ast.Qualifier.NONE
+        i: int = 0
+        while isinstance(children[i], str):
+            if children[i] == 'inline':
+                qualifiers |= ast.Qualifier.INLINE
+            elif children[i] == 'priv':
+                qualifiers |= ast.Qualifier.PRIVATE
+            elif children[i] == 'dtor':
+                break
+            i += 1
+        i += 1
+        body = None
+        if len(children) > i:
+            body = children[i]
+        typ = ast.TemplatedIdentifier(node.position, '@func', [ast.FunctionType(
+            ast.CompoundIdentifier([ast.Identifier(node.position, '@void')]),
+            []
+        )])
+        assert(body is None or isinstance(body, ast.UnparsedContents))
+        return ast.Dtor(node.position, qualifiers, typ, body)
+
     def visit_class_method(self, node: ParseTreeNode,
                            children: Tuple[Tuple[ast.TemplatedIdentifier, ast.Identifier],
                                            ast.UnparsedContents]) -> ast.ClassMethod:
