@@ -24,13 +24,14 @@ from typing import List
 
 from ehlit.parser.ast import Statement
 from ehlit.parser.ast_builder import ASTBuilder
-from ehlit.parser.grammar import function_body_grammar, Context
+from ehlit.parser.grammar import comment_grammar, function_body_grammar, Context
 from ehlit.parser.error import handle_parse_error
 
 
 def parse(source: str, have_return_value: bool) -> List[Statement]:
     Context.return_value = have_return_value
-    parser: ParserPython = ParserPython(function_body_grammar, autokwd=True, memoization=True)
+    parser: ParserPython = ParserPython(function_body_grammar, comment_grammar, autokwd=True,
+                                        memoization=True)
     try:
         parsed: ParseTreeNode = parser.parse(source)
         body: List[Statement] = visit_parse_tree(parsed, ASTBuilder())

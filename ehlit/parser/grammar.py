@@ -52,10 +52,6 @@ def line_comment() -> GrammarType:
     return ('//', RegExMatch(r'.*$'))
 
 
-def comment() -> GrammarType:
-    return [line_comment, block_comment]
-
-
 # Values
 ########
 
@@ -289,7 +285,7 @@ def global_variable() -> GrammarType:
 
 
 def instruction() -> GrammarType:
-    return [comment, condition, for_do_loop, do_while_loop, while_loop, switch, alias, statement]
+    return [condition, for_do_loop, do_while_loop, while_loop, switch, alias, statement]
 
 
 # Control Structures
@@ -377,12 +373,14 @@ def control_structure_body_stub_braces() -> GrammarType:
 
 
 def control_structure_body_stub_inner() -> GrammarType:
-    return (open_brace, [control_structure_body_stub_braces,
-                         control_structure_potential_closing_brace], close_brace)
+    return open_brace, Sequence(
+        [control_structure_body_stub_braces, control_structure_potential_closing_brace],
+        close_brace, skipws=False
+    )
 
 
 def control_structure_body_stub() -> GrammarType:
-    return Sequence(control_structure_body_stub_inner, skipws=False)
+    return Sequence(control_structure_body_stub_inner)
 
 
 # Functions
@@ -445,7 +443,7 @@ def namespace() -> GrammarType:
 
 
 def global_statement() -> GrammarType:
-    return [comment, eh_class, struct, union, enum, alias, namespace, function, global_variable]
+    return [eh_class, struct, union, enum, alias, namespace, function, global_variable]
 
 
 # Container structures
@@ -493,3 +491,7 @@ def function_body_grammar() -> GrammarType:
 
 def grammar() -> GrammarType:
     return ZeroOrMore([import_instruction, include_instruction, global_statement]), EOF
+
+
+def comment_grammar() -> GrammarType:
+    return [line_comment, block_comment]

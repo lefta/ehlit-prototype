@@ -81,7 +81,8 @@ class Parser:
 class ParserPython(Parser):
     file_name: str
 
-    def __init__(self, fun: Callable[[], GrammarType], debug: bool = True, **kwargs: bool) -> None:
+    def __init__(self, fun: Callable[[], GrammarType], comments: Callable[[], GrammarType],
+                 debug: bool = True, **kwargs: bool) -> None:
         pass
 
     def parse_file(self, file_name: str) -> ParseTreeNode:

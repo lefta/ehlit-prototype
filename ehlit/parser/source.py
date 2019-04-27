@@ -22,13 +22,13 @@
 from arpeggio import ParserPython, ParseTreeNode, visit_parse_tree, NoMatch
 
 from ehlit.parser.ast import AST
-from ehlit.parser.grammar import grammar
+from ehlit.parser.grammar import comment_grammar, grammar
 from ehlit.parser.ast_builder import ASTBuilder
 from ehlit.parser.error import handle_parse_error
 
 
 def parse(source: str) -> AST:
-    parser: ParserPython = ParserPython(grammar, autokwd=True, memoization=True)
+    parser: ParserPython = ParserPython(grammar, comment_grammar, autokwd=True, memoization=True)
     try:
         parsed: ParseTreeNode = parser.parse_file(source)
         ast: AST = visit_parse_tree(parsed, ASTBuilder())
