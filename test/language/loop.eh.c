@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-void _EF12do_something(void)
+void EF12do_something(void)
 {
 }
 
@@ -11,7 +11,7 @@ int32_t main(void)
     int32_t i = 3;
     while (i)
     {
-        _EF12do_something();
+        EF12do_something();
         i = i - 1;
     }
     i = 3;
@@ -25,17 +25,17 @@ int32_t main(void)
     } while (i < 10);
     do
     {
-        _EF12do_something();
+        EF12do_something();
         i--;
     } while (i > 0);
     for (i = 0; i < 5; i++)
     {
-        _EF12do_something();
+        EF12do_something();
         ++i;
     }
-    for (int32_t j = 0, i = 10; i > 5 && j < 2; j++, i--, _EF12do_something())
+    for (int32_t j = 0, i = 10; i > 5 && j < 2; j++, i--, EF12do_something())
     {
-        _EF12do_something();
+        EF12do_something();
     }
     return (0);
 }

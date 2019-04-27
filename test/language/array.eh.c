@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-void _EF4putsB3str(char* s)
+void EF4putsB3str(char* s)
 {
 }
 
@@ -14,7 +14,7 @@ int32_t main(int32_t ac, char** av)
     {
         ac--;
         av2[ac] = av[ac + 1];
-        _EF4putsB3str(av[ac]);
+        EF4putsB3str(av[ac]);
     }
     int32_t** sarr1;
     int32_t sarr2[42][5];

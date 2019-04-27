@@ -243,9 +243,9 @@ class SourceWriter:
             if variadic_type is None:
                 self.file.write('...')
             else:
-                self.file.write('int32_t _EB9vargs_len, ')
+                self.file.write('int32_t EB9vargs_len, ')
                 self.write(Array(variadic_type, None))
-                self.file.write(' _EB5vargs')
+                self.file.write(' EB5vargs')
 
     def write_function_prototype(self, proto: Function) -> None:
         assert isinstance(proto.typ, FunctionType)

@@ -1359,7 +1359,7 @@ class VArgs(VariableDeclaration):
 
     @property
     def mangled_name(self) -> str:
-        return '_EB5vargs'
+        return 'EB5vargs'
 
     @property
     def mangled(self) -> str:
@@ -1376,7 +1376,7 @@ class VArgsLength(VariableDeclaration):
 
     @property
     def mangled_name(self) -> str:
-        return '_EB9vargs_len'
+        return 'EB9vargs_len'
 
     @property
     def mangled(self) -> str:
@@ -2647,7 +2647,7 @@ class AST(UnorderedScope):
 
     @property
     def mangled_scope(self) -> str:
-        return '_E'
+        return 'E'
 
 
 from ehlit.parser import source

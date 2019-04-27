@@ -1,11 +1,11 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
-typedef int32_t _ET2nb;
-typedef void _ET7nothing;
-typedef void(* _ET3pfn)(_ET2nb);
+typedef int32_t ET2nb;
+typedef void ET7nothing;
+typedef void(* ET3pfn)(ET2nb);
 
-_ET7nothing _EF3incrB3int(int32_t* number)
+ET7nothing EF3incrB3int(int32_t* number)
 {
     if (!number)
     {
@@ -14,16 +14,16 @@ _ET7nothing _EF3incrB3int(int32_t* number)
     *number += 1;
 }
 
-void _EF10do_nothingT2nb(_ET2nb n)
+void EF10do_nothingT2nb(ET2nb n)
 {
 }
 
-_ET2nb main(void)
+ET2nb main(void)
 {
-    _ET2nb i = 42;
-    _ET3pfn pdn = &_EF10do_nothingT2nb;
-    _EF3incrB3int(&i);
-    _EF10do_nothingT2nb(i);
+    ET2nb i = 42;
+    ET3pfn pdn = &EF10do_nothingT2nb;
+    EF3incrB3int(&i);
+    EF10do_nothingT2nb(i);
     pdn(i);
     return (i);
 }
