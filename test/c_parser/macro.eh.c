@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <c_parser/macro.h>
 
 MACRO_TYPE_STR _EF11call_macros(void)

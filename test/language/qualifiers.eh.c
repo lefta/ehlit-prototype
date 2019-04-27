@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 int32_t const* const _EF9print_intcrcB3int(int32_t const* const i)
 {

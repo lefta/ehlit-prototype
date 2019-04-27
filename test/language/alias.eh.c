@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 typedef int32_t _ET2nb;
 typedef void _ET7nothing;
 typedef void(* _ET3pfn)(_ET2nb);

@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 uint8_t _EV6global = !0;
 static int32_t _EV16universal_answer = 42;
 int32_t cdecl_var = 42;

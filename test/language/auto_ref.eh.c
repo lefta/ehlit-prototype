@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 int32_t _EF3funB3intrB3int(int32_t i, int32_t* j);
 

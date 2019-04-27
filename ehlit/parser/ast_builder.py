@@ -145,6 +145,15 @@ class ASTBuilder(PTNodeVisitor):
                               ) -> ast.AnonymousArray:
         return ast.AnonymousArray(node.position, list(children[::2]))
 
+    def visit_heap_alloc(self, node: ParseTreeNode,
+                         children: Union[Tuple[StrMatch, ast.CompoundIdentifier],
+                                         Tuple[StrMatch, ast.CompoundIdentifier,
+                                               List[ast.Expression]]]) -> ast.HeapAlloc:
+        args: List[ast.Expression] = []
+        if len(children) == 3:
+            args = children[2]  # type: ignore
+        return ast.HeapAlloc(node.position, children[1], args)
+
     def visit_value(self, node: ParseTreeNode, children: Tuple[ast.Symbol, ArrayBuilder]
                     ) -> ast.Symbol:
         if len(children) == 1:

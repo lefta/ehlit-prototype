@@ -1254,22 +1254,11 @@ class VariableDeclaration(Declaration):
                 self.assign.expr.auto_cast(self.typ)
         elif not self.is_child_of(FunctionType):
             if isinstance(self.typ, EhClass):
-                self._call_ctor()
-
-    def _call_ctor(self) -> None:
-        assert isinstance(self.typ, EhClass)
-        if len(self.typ.ctors) == 0:
-            return
-        if self._assign is None:
-            self._assign = []
-        assert isinstance(self._assign, list)
-        assert self.sym is not None
-        self.do_after(Statement(FunctionCall(
-            self.pos,
-            CompoundIdentifier([self.sym, Identifier(self.pos, '@ctor')]),
-            self._assign
-        )), self)
-        self.assign = None
+                assert self._assign is None or isinstance(self._assign, list)
+                assert self.sym is not None
+                call = self.typ.call_ctor(CompoundIdentifier([self.sym]), self._assign)
+                if call is not None:
+                    self.do_after(call, self)
 
 
 class Function(Declaration, FlowScope):
@@ -1905,6 +1894,43 @@ class Cast(TemplatedIdentifier):
         self.types[0].ref_offset = sym_ref_offset
 
 
+class HeapAlloc(Value):
+    def __init__(self, pos: int, sym: CompoundIdentifier, args: List[Expression]) -> None:
+        super().__init__(pos)
+        self.sym: CompoundIdentifier = sym
+        self.args: List[Expression] = args
+        self.sym.parent = self
+        for arg in self.args:
+            arg.parent = self
+
+    def build(self) -> 'HeapAlloc':
+        super().build()
+        self.sym = self.sym.build()
+        if isinstance(self.sym.canonical, EhClass):
+            call = self.sym.canonical.call_ctor(self._var_sym, self.args)
+            if call is not None:
+                self.do_after(call, self)
+        return self
+
+    @property
+    def typ(self) -> Type:
+        return self.make(ReferenceType(self.sym.typ))
+
+    @property
+    def _var_sym(self) -> CompoundIdentifier:
+        parent = self.parent
+        while not isinstance(parent, (VariableAssignment, VariableDeclaration)):
+            parent = parent.parent
+        if isinstance(parent, VariableAssignment):
+            if isinstance(parent.var, Container):
+                assert isinstance(parent.var.inner_child, CompoundIdentifier)
+                return parent.var.inner_child
+            assert isinstance(parent.var, CompoundIdentifier)
+            return parent.var
+        assert parent.sym is not None
+        return CompoundIdentifier([parent.sym])
+
+
 class String(Value):
     def __init__(self, string: str) -> None:
         super().__init__()
@@ -2317,6 +2343,18 @@ class EhClass(Type, UnorderedScope):
     @property
     def ctors(self) -> List[Ctor]:
         return self._ctors
+
+    def call_ctor(self, sym: CompoundIdentifier, args: Optional[List[Expression]]
+                  ) -> Optional[Statement]:
+        if len(self.ctors) == 0:
+            return None
+        if args is None:
+            args = []
+        identifier = CompoundIdentifier([])
+        for elem in sym.elems:
+            identifier.elems.append(Identifier(self.pos, elem.name))
+        identifier.elems.append(Identifier(self.pos, '@ctor'))
+        return Statement(FunctionCall(self.pos, identifier, args))
 
 
 class ContainerStructureType(Type):

@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 int32_t _EF7set_intrB3int(int32_t* i)
 {

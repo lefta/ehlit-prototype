@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 uint8_t _EF8not_trueB4bool(uint8_t v)
 {

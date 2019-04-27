@@ -26,9 +26,9 @@ from ehlit.parser.ast import (
     Alias, AnonymousArray, Array, ArrayAccess, Assignment, AST, BoolValue, Cast, Char,
     ClassMethod, ClassProperty, CompoundIdentifier, Condition, ControlStructure, DecimalNumber,
     Declaration, EhClass, EhEnum, EhUnion, EnumField, Expression, ForDoLoop, FunctionCall,
-    Function, FunctionType, Identifier, Include, Import, InitializationList, Namespace, Node,
-    NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, Return,
-    Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
+    Function, FunctionType, HeapAlloc, Identifier, Include, Import, InitializationList, Namespace,
+    Node, NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
+    Return, Sizeof, Statement, String, Struct, SuffixOperatorValue, SwitchCase, SwitchCaseBody,
     SwitchCaseTest, Symbol, TemplatedIdentifier, VariableAssignment, VariableDeclaration
 )
 
@@ -341,6 +341,13 @@ class DumpWriter:
         node = cast(TemplatedIdentifier, node)
         self.dump('TemplatedIdentifier: ' + node.name)
         self.print_node_list('Types', node.types, False)
+
+    @indent
+    def dumpHeapAlloc(self, node: Union[Node, str]) -> None:
+        node = cast(HeapAlloc, node)
+        self.dump('HeapAlloc')
+        self.print_node(node.sym)
+        self.print_node_list('Arguments', node.args, False)
 
     @indent
     def dumpNumber(self, num: Union[Node, str]) -> None:

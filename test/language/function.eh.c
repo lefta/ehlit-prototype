@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 void _EF9simple_fnB3int(int32_t i)
 {

@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 struct _EC10test_class;
 
@@ -104,4 +105,10 @@ void _EF15ctor_dtor_tests(void)
     struct _EC9ctor_args cls2;
     _EC9ctor_argsIB3intB3str(&cls2, 42, "Hello");
     struct _EC9ctor_args* rcls2 = &cls2;
+    rcls = malloc(sizeof(struct _EC10test_class));
+    _EC10test_classI(rcls);
+    rcls = malloc(sizeof(struct _EC10test_class));
+    _EC10test_classI(rcls);
+    rcls2 = malloc(sizeof(struct _EC9ctor_args));
+    _EC9ctor_argsIB3intB3str(rcls2, 42, "Hello");
 }

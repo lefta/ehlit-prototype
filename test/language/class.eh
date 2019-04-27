@@ -76,4 +76,8 @@ void ctor_dtor_tests() {
 
   ctor_args cls2(42, "Hello")
   ref ctor_args rcls2 = cls2
+
+  ref rcls = new test_class
+  ref rcls = new test_class()
+  ref rcls2 = new ctor_args(42, "Hello")
 }

@@ -27,11 +27,11 @@ from ehlit.parser.ast import (
     Cast, Char, ClassMethod, ClassProperty, ClassType, CompoundIdentifier, Condition,
     ContainerStructure, ControlStructure, Container, DecimalNumber, Declaration, DeclarationBase,
     DoWhileLoop, EhClass, EhEnum, EhUnion, Expression, ForDoLoop, FunctionCall, Function,
-    FunctionType, Identifier, Import, Include, InitializationList, Namespace, Node, NullValue,
-    Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue, ReferenceType, Return,
-    Scope, Sizeof, Statement, String, Struct, StructType, SuffixOperatorValue, SwitchCase,
-    SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier, Type, UnionType,
-    VariableAssignment, VariableDeclaration, Value
+    FunctionType, HeapAlloc, Identifier, Import, Include, InitializationList, Namespace, Node,
+    NullValue, Number, Operator, PrefixOperatorValue, ReferenceToType, ReferenceToValue,
+    ReferenceType, Return, Scope, Sizeof, Statement, String, Struct, StructType,
+    SuffixOperatorValue, SwitchCase, SwitchCaseBody, SwitchCaseTest, Symbol, TemplatedIdentifier,
+    Type, UnionType, VariableAssignment, VariableDeclaration, Value
 )
 
 
@@ -75,7 +75,7 @@ class SourceWriter:
             'switch': 'switch',
         }
 
-        self.file.write('#include <stddef.h>\n#include <stdint.h>\n')
+        self.file.write('#include <stddef.h>\n#include <stdint.h>\n#include <stdlib.h>\n')
 
         for node in ast:
             self.write(node)
@@ -575,6 +575,12 @@ class SourceWriter:
 
     def writeTemplatedIdentifier(self, node: TemplatedIdentifier) -> None:
         self.write(node.typ)
+
+    def writeHeapAlloc(self, node: HeapAlloc) -> None:
+        self.file.write('malloc(sizeof(')
+        self.write_type_prefix(node.sym)
+        self.write(node.sym)
+        self.file.write('))')
 
     def writeChar(self, c: Char) -> None:
         self.file.write('\'')
